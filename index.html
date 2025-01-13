@@ -52,17 +52,20 @@
         .text-off-white {
             color: var(--off-white);
         }
-
-        .privacy-link {
+        .footer-links {
             position: absolute;
             bottom: 1rem;
             right: 1rem;
             color: var(--off-white);
             opacity: 0.7;
+        }
+        .link {
+            margin-right:10px;
+            display:inline-block;
             transition: opacity 0.2s;
         }
 
-        .privacy-link:hover {
+        .link:hover {
             opacity: 1;
         }
 
@@ -112,11 +115,13 @@
     </main>
 
     <!-- Privacy Policy Link -->
-    <a href="/privacy-policy.html" class="privacy-link">
+    <div class="footer-links">
+    <a href="/privacy-policy.html" class="link">
         Privacy Policy
     </a>
      <a href="mailto:support@lyricgenie.app" class="privacy-link">
         Support
     </a>
+    </div>
 </body>
 </html>

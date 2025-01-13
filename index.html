@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LyricGenie - AI-Powered Songwriting Assistant</title>
+    <title>Lyric Genie - AI-Powered Songwriting Assistant</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <style>
         @font-face {
@@ -33,96 +33,76 @@
             font-display: swap;
         }
 
-        body {
-            font-family: 'Lufga', sans-serif;
+        :root {
+            --off-white: #F4EFD8;
         }
 
-        h1, h2, h3 {
+        body {
+            font-family: 'Lufga', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1 {
             font-family: 'Lufga', sans-serif;
             font-weight: 500;
         }
+
+        .text-off-white {
+            color: var(--off-white);
+        }
+
+        .privacy-link {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            color: var(--off-white);
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .privacy-link:hover {
+            opacity: 1;
+        }
+
+        .app-button {
+            background-color: var(--off-white);
+            color: #4C1D95;
+            transition: transform 0.2s;
+        }
+
+        .app-button:hover {
+            transform: translateY(-2px);
+        }
     </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-purple-900">
     <!-- Hero Section -->
-    <header class="bg-purple-900 text-white">
-        <div class="container mx-auto px-6 py-16">
+    <main class="flex-grow flex items-center">
+        <div class="container mx-auto px-6">
             <div class="flex flex-col md:flex-row items-center justify-between">
                 <div class="md:w-1/2 mb-8 md:mb-0">
-                    <h1 class="text-4xl md:text-5xl font-bold mb-4">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6 text-off-white">
                         Transform Your Songwriting with AI
                     </h1>
-                    <p class="text-xl mb-8">
+                    <p class="text-xl mb-8 text-off-white opacity-90">
                         Get instant lyric suggestions, rhymes, and creative sparks to break through writer's block and craft better songs.
                     </p>
-                    <a href="#" class="bg-purple-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-purple-600 transition">
+                    <a href="#" class="app-button px-8 py-3 rounded-lg font-semibold inline-block">
                         Download on the App Store
                     </a>
                 </div>
-                <div class="md:w-1/2">
-                    <img src="/api/placeholder/400/800" alt="LyricGenie App Screenshot" class="rounded-lg shadow-xl">
+                <div class="md:w-1/2 flex justify-center">
+                    <img src="/api/placeholder/400/800" alt="Lyric Genie App Screenshot" class="rounded-lg shadow-xl max-w-sm">
                 </div>
             </div>
         </div>
-    </header>
+    </main>
 
-    <!-- Features Section -->
-    <section class="py-16">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-12">Key Features</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <h3 class="text-xl font-semibold mb-4">Smart Suggestions</h3>
-                    <p>Get intelligent word and phrase alternatives tailored to your song's mood and style.</p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <h3 class="text-xl font-semibold mb-4">Rhyme Finder</h3>
-                    <p>Discover perfect rhymes and near-rhymes that fit your creative vision.</p>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <h3 class="text-xl font-semibold mb-4">Creative Spark</h3>
-                    <p>Break through writer's block with AI-generated song ideas and titles.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Screenshots Section -->
-    <section class="bg-gray-100 py-16">
-        <div class="container mx-auto px-6">
-            <h2 class="text-3xl font-bold text-center mb-12">App Screenshots</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <img src="/api/placeholder/300/600" alt="Screenshot 1" class="rounded-lg shadow">
-                <img src="/api/placeholder/300/600" alt="Screenshot 2" class="rounded-lg shadow">
-                <img src="/api/placeholder/300/600" alt="Screenshot 3" class="rounded-lg shadow">
-            </div>
-        </div>
-    </section>
-
-    <!-- By Songwriters Section -->
-    <section class="py-16">
-        <div class="container mx-auto px-6">
-            <div class="max-w-3xl mx-auto text-center">
-                <h2 class="text-3xl font-bold mb-6">Built By Songwriters, For Songwriters</h2>
-                <p class="text-xl mb-8">
-                    As career songwriters who've worked with some of the biggest names in music, we created LyricGenie because we know firsthand the challenges of the songwriting process. We believe AI isn't here to replace creativity – it's here to enhance it.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-8">
-        <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-4 md:mb-0">
-                    <p>&copy; 2025 LyricGenie. All rights reserved.</p>
-                </div>
-                <div>
-                    <a href="/privacy-policy" class="text-gray-300 hover:text-white">Privacy Policy</a>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <!-- Privacy Policy Link -->
+    <a href="/privacy-policy" class="privacy-link">
+        Privacy Policy
+    </a>
 </body>
 </html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lyric Genie - AI-Powered Lyric Editor</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+
+    
+    <style>
+        @font-face {
+            font-family: 'Lufga';
+            src: url('fonts/Lufga-Regular.woff2') format('woff2'),
+                 url('fonts/Lufga-Regular.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        
+        @font-face {
+            font-family: 'Lufga';
+            src: url('fonts/Lufga-Medium.woff2') format('woff2'),
+                 url('fonts/Lufga-Medium.woff') format('woff');
+            font-weight: 500;
+            font-style: normal;
+            font-display: swap;
+        }
+        
+        @font-face {
+            font-family: 'Lufga';
+            src: url('fonts/Lufga-Bold.woff2') format('woff2'),
+                 url('fonts/Lufga-Bold.woff') format('woff');
+            font-weight: bold;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        :root {
+            --off-white: #F6ECC9;
+        }
+
+        body {
+            font-family: 'Lufga', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 0 50px 0
+        }
+
+        h1 {
+            font-family: 'Lufga', sans-serif;
+            font-weight: 500;
+        }
+
+        .text-off-white {
+            color: var(--off-white);
+        }
+        .footer-links {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            color: var(--off-white);
+            opacity: 0.7;
+            padding: 1rem;
+        }
+        @media only screen and (max-width: 850px) {
+            .footer-links {
+                position:relative;
+                width:100%;
+                text-align:center;
+                margin-top:20px
+            }
+        }
+        .link {
+            margin-right:10px;
+            display:inline-block;
+            transition: opacity 0.2s;
+        }
+
+        .link:hover {
+            opacity: 1;
+        }
+
+        .app-button {
+            background-color: var(--off-white);
+            color: #4C1D95;
+            transition: transform 0.2s;
+        }
+
+        .app-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .logo {
+
+            width:200px;
+            margin-bottom:15px
+        }
+
+        .bg-purple {
+            background: linear-gradient(to bottom, #8850d8, #4d43a3)
+        }
+
+        @media (min-width: 768px) {
+            .md\:flex-row {
+                column-gap: 30px;
+            }
+        }
+
+
+    </style>
+</head>
+<body class="bg-purple">
+    <!-- Hero Section -->
+    <main class="flex-grow flex items-center">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="md:w-1/2 mb-8 md:mb-0">
+                    <p><img class="logo" src="LyricGenieLogo.svg" /></p>
+                    <h1 class="text-4xl md:text-5xl font-bold mb-6 text-off-white">
+                        An AI-powered lyric editor by songwriters for songwriters
+                    </h1>
+                    <p class="text-xl mb-8 text-off-white opacity-90">
+                        Get instant lyric suggestions, rhymes, and creative sparks to break through writer's block and craft better songs.
+                    </p>
+                    <a href="https://apps.apple.com/us/app/lyric-genie/id6739787614" target="_blank" class="app-button px-8 py-3 rounded-lg font-semibold inline-block">
+                        Download on the App Store
+                    </a>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <img src="Screenshot.jpg" alt="Lyric Genie App Screenshot" class="rounded-lg shadow-xl max-w-sm">
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Privacy Policy Link -->
+    <div class="footer-links">
+    <a href="/privacy-policy.html" class="link">
+        Privacy Policy
+    </a>
+     <a href="/support.html" class="link">
+        Support
+    </a>
+    </div>
+</body>
+</html>

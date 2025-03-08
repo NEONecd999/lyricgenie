@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lyric Genie Invitation</title>
+  <script>
+    function getParameterByName(name, url) {
+      if (!url) url = window.location.href;
+      name = name.replace(/[\[\]]/g, '\\$&');
+      var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+          results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, ' '));
+    }
+    
+    function openApp() {
+      var token = getParameterByName('token');
+      
+      // Try to open the app with the token
+      window.location.href = 'lyricgenie://invite?token=' + token;
+      
+      // Set a timer to redirect to app store if app doesn't open
+      setTimeout(function() {
+        window.location.href = 'https://apps.apple.com/app/lyricgenie/id123456789';
+      }, 2000);
+    }
+  </script>
+</head>
+<body onload="openApp()">
+  <h1>Redirecting to Lyric Genie...</h1>
+  <p>If you're not redirected automatically, <a href="#" onclick="openApp()">click here</a>.</p>
+</body>
+</html>

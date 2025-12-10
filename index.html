@@ -638,6 +638,7 @@
       cursor: pointer;
       font-size: 20px;
       transition: all 0.3s ease;
+      z-index: 25;
     }
 
     .arrow:hover {
@@ -653,6 +654,21 @@
 
     @media (max-width: 820px) {
       .arrow { display: flex; }
+    }
+
+    /* On mobile, position arrows at edges of hero-visual container */
+    @media (max-width: 940px) {
+      .hero-visual {
+        position: relative; /* Make hero-visual the positioning context */
+      }
+      
+      .arrow.prev {
+        left: 0; /* Position at left edge of hero-visual */
+      }
+      
+      .arrow.next {
+        right: 0; /* Position at right edge of hero-visual */
+      }
     }
 
     /* Floating UI Elements */
@@ -1001,11 +1017,13 @@
                 <button class="dot" role="tab" aria-selected="false" aria-controls="lg-slide-5"></button>
                 <button class="dot" role="tab" aria-selected="false" aria-controls="lg-slide-6"></button>
               </div>
-              <button class="arrow prev" aria-label="Previous screenshot">‹</button>
-              <button class="arrow next" aria-label="Next screenshot">›</button>
             </div>
           </div>
         </div>
+        
+        <!-- Carousel Arrows (outside device on mobile) -->
+        <button class="arrow prev" aria-label="Previous screenshot">‹</button>
+        <button class="arrow next" aria-label="Next screenshot">›</button>
 
         <!-- Floating UI Elements -->
         <div class="floating-ui feature1">
@@ -1117,8 +1135,10 @@
       if(!root) return;
       const slides = Array.from(root.querySelectorAll('.slide'));
       const dots = Array.from(root.querySelectorAll('.dot'));
-      const prevBtn = root.querySelector('.arrow.prev');
-      const nextBtn = root.querySelector('.arrow.next');
+      // Find arrows in the hero-visual container (they're outside lg-carousel now)
+      const heroVisual = root.closest('.hero-visual');
+      const prevBtn = heroVisual ? heroVisual.querySelector('.arrow.prev') : null;
+      const nextBtn = heroVisual ? heroVisual.querySelector('.arrow.next') : null;
       let idx = 0, timer = null, INTERVAL = 4000;
 
       function show(i){

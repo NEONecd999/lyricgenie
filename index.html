@@ -570,12 +570,13 @@
     @media (max-width: 940px) {
       .caption {
         bottom: auto;
-        top: 8px; /* Move closer to top on mobile */
-        padding: 8px 16px; /* Reduce padding */
+        top: 2px; /* Move almost to the top edge */
+        padding: 2px 8px; /* Minimal padding around the bubble */
       }
       
       .caption .cap-wrap {
-        padding: 12px 20px; /* Slightly smaller padding */
+        padding: 10px 12px; /* Less horizontal padding inside the bubble */
+        backdrop-filter: none; /* Remove blur effect on mobile */
       }
       
       .caption strong {
@@ -869,7 +870,7 @@
   <div class="app-store-bar">
     <div class="app-store-bar-content">
       <div class="app-store-bar-left">
-        <img src="app-icon.jpg" alt="Lyric Genie" class="app-store-bar-logo">
+        <img src="images/app-icon.jpg" alt="Lyric Genie" class="app-store-bar-logo">
         <div class="app-store-bar-info">
           <div class="app-store-bar-title">Lyric Genie</div>
           <div class="app-store-bar-subtitle">All-In-One Songwriter Notepad</div>

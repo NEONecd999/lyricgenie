@@ -165,23 +165,23 @@ const Navbar = () => {
           >
             <div className="flex flex-col gap-6">
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.label}
                   href={link.href}
                   className="text-2xl font-semibold text-[#F6ECC9]"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {link.label}
-                </a>
+                </Link>
               ))}
               <div className="flex flex-col gap-4 mt-6">
-                <Link
+                <a
                   href="https://apps.apple.com/us/app/lyric-genie/id6739787614"
                   target="_blank"
                   className="bg-[#F6ECC9] text-purple-900 px-6 py-3 rounded-full font-semibold text-center"
                 >
                   Download App
-                </Link>
+                </a>
               </div>
             </div>
           </motion.div>

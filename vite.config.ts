@@ -18,4 +18,5 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  base: '/' // Use '/' for custom domains or username.github.io
 }));

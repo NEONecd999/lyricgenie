@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Music, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom"; // 1. ADD THIS IMPORT
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -118,9 +119,9 @@ const Navbar = () => {
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-8">
               {navLinks.map((link) => (
-                <a
+               <Link // 2. CHANGE 'a' TO 'Link'
                   key={link.label}
-                  href={link.href}
+                  to={link.href} // 3. CHANGE 'href' TO 'to'
                   className={`font-medium transition-colors ${
                     isScrolled
                       ? "text-[#F6ECC9]/70 hover:text-[#F6ECC9]"
@@ -128,7 +129,7 @@ const Navbar = () => {
                   }`}
                 >
                   {link.label}
-                </a>
+                </Link>
               ))}
             </div>
 

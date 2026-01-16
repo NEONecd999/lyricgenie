@@ -1,0 +1,152 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Lufga Font Family */
+@font-face {
+  font-family: 'Lufga';
+  src: url('/fonts/Lufga-Regular.woff2') format('woff2'),
+       url('/fonts/Lufga-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Lufga';
+  src: url('/fonts/Lufga-Medium.woff2') format('woff2'),
+       url('/fonts/Lufga-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Lufga';
+  src: url('/fonts/Lufga-Bold.woff2') format('woff2'),
+       url('/fonts/Lufga-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Clean white base */
+    --background: 0 0% 100%;
+    --foreground: 270 30% 15%;
+
+    /* Card styling */
+    --card: 0 0% 100%;
+    --card-foreground: 270 30% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 270 30% 15%;
+
+    /* Rich Purple Primary */
+    --primary: 258 45% 53%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Soft lavender secondary */
+    --secondary: 258 25% 94%;
+    --secondary-foreground: 258 45% 35%;
+
+    /* Muted tones */
+    --muted: 240 5% 96%;
+    --muted-foreground: 270 15% 40%;
+
+    /* Accent - warm purple glow */
+    --accent: 280 60% 65%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 6% 90%;
+    --input: 240 6% 90%;
+    --ring: 258 45% 53%;
+
+    --radius: 1rem;
+
+    /* Pale yellow/cream for accent sections */
+    --cream: 47 68% 88%;
+    --cream-light: 47 60% 94%;
+
+    /* Navbar scrolled state colors */
+    --nav-scrolled: 268 35% 54%;
+    --nav-scrolled-border: 268 35% 46%;
+    --nav-text-scrolled: 47 68% 88%;
+    --nav-text-default: 258 45% 58%;
+
+    /* Custom tokens */
+    --gradient-primary: linear-gradient(135deg, hsl(258, 45%, 53%) 0%, hsl(280, 60%, 65%) 100%);
+    --gradient-hero: linear-gradient(180deg, hsl(0, 0%, 100%) 0%, hsl(258, 20%, 97%) 100%);
+    --gradient-card: linear-gradient(135deg, hsl(0, 0%, 100%) 0%, hsl(258, 25%, 98%) 100%);
+    --shadow-glow: 0 0 60px -15px hsl(258, 45%, 53% / 0.4);
+    --shadow-card: 0 4px 20px -4px hsl(270, 30%, 15% / 0.08);
+    --shadow-card-hover: 0 8px 30px -4px hsl(258, 45%, 53% / 0.2);
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 270 30% 25%;
+    --sidebar-primary: 258 45% 53%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 258 25% 94%;
+    --sidebar-accent-foreground: 258 45% 35%;
+    --sidebar-border: 240 6% 90%;
+    --sidebar-ring: 258 45% 53%;
+  }
+
+  .dark {
+    --background: 270 30% 8%;
+    --foreground: 47 78% 96%;
+
+    --card: 270 25% 12%;
+    --card-foreground: 47 78% 96%;
+
+    --popover: 270 25% 12%;
+    --popover-foreground: 47 78% 96%;
+
+    --primary: 258 50% 65%;
+    --primary-foreground: 270 30% 8%;
+
+    --secondary: 270 20% 18%;
+    --secondary-foreground: 47 78% 96%;
+
+    --muted: 270 20% 18%;
+    --muted-foreground: 47 40% 70%;
+
+    --accent: 280 50% 55%;
+    --accent-foreground: 47 78% 96%;
+
+    --destructive: 0 62.8% 50%;
+    --destructive-foreground: 47 78% 96%;
+
+    --border: 270 20% 18%;
+    --input: 270 20% 18%;
+    --ring: 258 50% 65%;
+
+    --sidebar-background: 270 25% 10%;
+    --sidebar-foreground: 47 78% 96%;
+    --sidebar-primary: 258 50% 65%;
+    --sidebar-primary-foreground: 270 30% 8%;
+    --sidebar-accent: 270 20% 18%;
+    --sidebar-accent-foreground: 47 78% 96%;
+    --sidebar-border: 270 20% 18%;
+    --sidebar-ring: 258 50% 65%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Lufga', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+}

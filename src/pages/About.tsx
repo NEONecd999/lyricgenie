@@ -4,8 +4,11 @@ import edanPhoto from "@/assets/edan-dover.jpg";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CTA from "@/components/CTA";
+import AppStoreBar from "@/components/AppStoreBar";
+
 const About = () => {
   return <div className="min-h-screen bg-background font-sans">
+      <AppStoreBar />
       <Navbar />
       
       {/* Hero Section */}

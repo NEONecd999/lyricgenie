@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Music, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom"; // 1. ADD THIS IMPORT
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -119,7 +119,7 @@ const Navbar = () => {
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-8">
               {navLinks.map((link) => (
-               <Link // 2. CHANGE 'a' TO 'Link'
+                <Link
                   key={link.label}
                   to={link.href} // 3. CHANGE 'href' TO 'to'
                   className={`font-medium transition-colors ${
@@ -137,7 +137,6 @@ const Navbar = () => {
             <div className="hidden md:flex items-center gap-4">
               <a
                 href="https://apps.apple.com/us/app/lyric-genie/id6739787614"
-                target="_blank"
                 className={`px-6 py-2 rounded-full font-semibold transition-all ${
                   isScrolled
                     ? "bg-[#F6ECC9] text-[rgb(127,98,196)] hover:bg-[#F6ECC9]/90"
@@ -149,8 +148,8 @@ const Navbar = () => {
             </div>
 
             {/* Mobile Menu Button */}
-            <button 
-              className={`md:hidden p-2 transition-colors ${isScrolled ? "text-[#F6ECC9]" : "text-[rgb(127,98,196)]"}`} 
+            <button
+              className={`md:hidden p-2 transition-colors ${isScrolled ? "text-[#F6ECC9]" : "text-[rgb(127,98,196)]"}`}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
               {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -170,7 +169,7 @@ const Navbar = () => {
           >
             <div className="flex flex-col gap-6">
               {navLinks.map((link) => (
-               <Link 
+                <Link
                   key={link.label}
                   href={link.href}
                   className="text-2xl font-semibold text-[#F6ECC9]"

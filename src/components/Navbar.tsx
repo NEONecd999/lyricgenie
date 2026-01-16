@@ -137,6 +137,7 @@ const Navbar = () => {
             <div className="hidden md:flex items-center gap-4">
               <a
                 href="https://apps.apple.com/us/app/lyric-genie/id6739787614"
+                target="_blank"
                 className={`px-6 py-2 rounded-full font-semibold transition-all ${
                   isScrolled
                     ? "bg-[#F6ECC9] text-[rgb(127,98,196)] hover:bg-[#F6ECC9]/90"
@@ -169,14 +170,14 @@ const Navbar = () => {
           >
             <div className="flex flex-col gap-6">
               {navLinks.map((link) => (
-                <a
+               <Link 
                   key={link.label}
                   href={link.href}
                   className="text-2xl font-semibold text-[#F6ECC9]"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {link.label}
-                </a>
+                </Link>
               ))}
               <div className="flex flex-col gap-4 mt-6">
                 <a

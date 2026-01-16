@@ -1,28 +1,25 @@
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Music, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [appStoreBarHidden, setAppStoreBarHidden] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+      setIsMobile(window.innerWidth <= 940);
     };
 
     checkMobile();
     window.addEventListener("resize", checkMobile);
 
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      setIsScrolled(currentScrollY > 20);
-      // AppStoreBar hides when scrolled past 20px
-      setAppStoreBarHidden(currentScrollY > 20);
+      setIsScrolled(window.scrollY > 20);
     };
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
       window.removeEventListener("resize", checkMobile);
@@ -43,11 +40,9 @@ const Navbar = () => {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
-        className={`fixed left-0 right-0 z-50 transition-all duration-300 ${
-          isMobile ? (appStoreBarHidden ? "top-0" : "top-[60px]") : "top-0"
-        } ${
+        className={`fixed left-0 right-0 z-50 transition-all duration-300 ${isMobile ? "top-[60px]" : "top-0"} ${
           isScrolled
-            ? "bg-nav-scrolled backdrop-blur-lg border-b border-nav-scrolled-border shadow-lg"
+            ? "bg-[rgb(117,88,186)] backdrop-blur-lg border-b border-[rgb(97,68,166)] shadow-lg"
             : "bg-transparent"
         }`}
       >
@@ -62,59 +57,59 @@ const Navbar = () => {
                 aria-label="Lyric Genie"
               >
                 <path
-                  className={`transition-colors duration-300 ${isScrolled ? "fill-nav-text-scrolled" : "fill-nav-text-default"}`}
+                  className={`transition-colors duration-300 ${isScrolled ? "fill-[#F6ECC9]" : "fill-[rgb(127,98,196)]"}`}
                   d="M25.29,6.43v6.06h5.61v2.01h-8.14V6.43h2.53Z"
                 />
                 <path
-                  className={`transition-colors duration-300 ${isScrolled ? "fill-nav-text-scrolled" : "fill-nav-text-default"}`}
+                  className={`transition-colors duration-300 ${isScrolled ? "fill-[#F6ECC9]" : "fill-[rgb(127,98,196)]"}`}
                   d="M32.84,11.38l-4.32-4.95h3.14l2.51,2.97,2.55-2.97h2.85l-4.2,4.95v3.12h-2.53v-3.12Z"
                 />
                 <path
-                  className={`transition-colors duration-300 ${isScrolled ? "fill-nav-text-scrolled" : "fill-nav-text-default"}`}
+                  className={`transition-colors duration-300 ${isScrolled ? "fill-[#F6ECC9]" : "fill-[rgb(127,98,196)]"}`}
                   d="M42.48,14.5h-2.53V6.43h6.51c2.69,0,3.5.93,3.5,2.09v.13c0,1.16-.97,1.59-1.5,1.77.82.24,1.53.81,1.53,1.85v1.18c0,.65.08.86.15.99v.05h-2.57c-.08-.1-.12-.22-.12-.51v-.93c0-.99-.43-1.42-1.68-1.42h-3.3v2.86ZM42.48,9.85h3.83c.73,0,1.02-.35,1.02-.79h0c0-.43-.28-.79-1.02-.79h-3.83v1.58Z"
                 />
                 <path
-                  className={`transition-colors duration-300 ${isScrolled ? "fill-nav-text-scrolled" : "fill-nav-text-default"}`}
+                  className={`transition-colors duration-300 ${isScrolled ? "fill-[#F6ECC9]" : "fill-[rgb(127,98,196)]"}`}
                   d="M53.53,14.5h-2.53V6.43h2.53v8.07Z"
                 />
                 <path
-                  className={`transition-colors duration-300 ${isScrolled ? "fill-nav-text-scrolled" : "fill-nav-text-default"}`}
+                  className={`transition-colors duration-300 ${isScrolled ? "fill-[#F6ECC9]" : "fill-[rgb(127,98,196)]"}`}
                   d="M59.85,14.65c-4.68,0-5.4-2.61-5.4-4.05v-.31c0-1.46.63-3.99,5.4-3.99h.45c4.68,0,5.4,2.23,5.4,3.18v.12h-2.68c-.06-.22-.39-1.35-2.95-1.35-2.42,0-2.97,1.08-2.97,2.09v.13c0,.95.64,2.21,2.99,2.21,2.61,0,2.88-1.25,2.94-1.43h2.68v.12c0,1.02-.8,3.28-5.41,3.28h-.45Z"
                 />
                 <path
-                  className={`transition-colors duration-300 ${isScrolled ? "fill-nav-text-scrolled" : "fill-nav-text-default"}`}
+                  className={`transition-colors duration-300 ${isScrolled ? "fill-[#F6ECC9]" : "fill-[rgb(127,98,196)]"}`}
                   d="M74.99,14.65c-4.37,0-5.38-2.44-5.38-4.06v-.3c0-1.57.82-3.99,5.47-3.99h.47c4.51,0,5.3,1.96,5.35,3.06h0s-2.69.01-2.69.01c-.07-.18-.36-1.15-2.88-1.15s-3.07,1.06-3.07,2.18v.12c0,1.05.82,2.17,3.05,2.17,2.4,0,3.12-.92,3.12-1.15v-.02h-3.17v-1.53h5.68v4.52h-1.52c-.03-.29-.18-.92-.33-1.26-.35.4-1.39,1.4-3.88,1.4h-.23Z"
                 />
                 <path
-                  className={`transition-colors duration-300 ${isScrolled ? "fill-nav-text-scrolled" : "fill-nav-text-default"}`}
+                  className={`transition-colors duration-300 ${isScrolled ? "fill-[#F6ECC9]" : "fill-[rgb(127,98,196)]"}`}
                   d="M90.61,6.43v1.83h-6.01v1.19h5.87v1.84h-5.87v1.32h6.12v1.88h-8.61V6.43h8.51Z"
                 />
                 <path
-                  className={`transition-colors duration-300 ${isScrolled ? "fill-nav-text-scrolled" : "fill-nav-text-default"}`}
+                  className={`transition-colors duration-300 ${isScrolled ? "fill-[#F6ECC9]" : "fill-[rgb(127,98,196)]"}`}
                   d="M94.6,6.43l5.15,5.08v-5.08h2.5v8.07h-2.5l-5.48-5.35v5.35h-2.5V6.43h2.82Z"
                 />
                 <path
-                  className={`transition-colors duration-300 ${isScrolled ? "fill-nav-text-scrolled" : "fill-nav-text-default"}`}
+                  className={`transition-colors duration-300 ${isScrolled ? "fill-[#F6ECC9]" : "fill-[rgb(127,98,196)]"}`}
                   d="M106.02,14.5h-2.53V6.43h2.53v8.07Z"
                 />
                 <path
-                  className={`transition-colors duration-300 ${isScrolled ? "fill-nav-text-scrolled" : "fill-nav-text-default"}`}
+                  className={`transition-colors duration-300 ${isScrolled ? "fill-[#F6ECC9]" : "fill-[rgb(127,98,196)]"}`}
                   d="M115.76,6.43v1.83h-6.01v1.19h5.87v1.84h-5.87v1.32h6.12v1.88h-8.61V6.43h8.51Z"
                 />
                 <path
-                  className={`transition-colors duration-300 ${isScrolled ? "fill-nav-text-scrolled" : "fill-nav-text-default"}`}
+                  className={`transition-colors duration-300 ${isScrolled ? "fill-[#F6ECC9]" : "fill-[rgb(127,98,196)]"}`}
                   d="M8.4,0c-1.43,0-2.6.85-2.6,1.51,0,.39.13.73.67.95.18-.21.86-.93,1.93-.93,1.07,0,1.75.73,1.93.93.54-.22.67-.57.67-.95,0-.67-1.16-1.51-2.6-1.51ZM8.4,2.1c-.93,0-1.53.77-1.53.77-.11.18-.17.38-.17.59,0,.76.76,1.37,1.69,1.37.94,0,1.69-.61,1.69-1.37,0-.2-.06-.41-.17-.59,0,0-.6-.77-1.53-.77ZM8.4,5.25c-3.73,0-6.76,1.35-6.76,3.01,0,.98,1.06,1.37,2.69,1.53,2.4.15,3.36-.88,5.21-1.83,0,0-.55-.15-1.93-.15s-1.93.15-1.93.15c0,0,.86-.57,2.87-.57s2.87.57,2.87.57c-.51.04-1.01.21-1.48.43-.34.16-.67.36-1,.56,1.06.68,2.53.89,3.53.84,1.63-.16,2.69-.55,2.69-1.53,0-1.66-3.03-3.01-6.76-3.01ZM8.34,9.33c-1.27.68-2.58,1.18-4.01,1.03.08.48.22.95.41,1.4.37.87.94,1.63,1.64,2.27.67.11,1.66.12,3.01-.25,1.4-.37,2.26-.9,2.79-1.34-.09-.22-.15-.44-.19-.68-.04-.32-.02-.65.08-.96.05-.16.12-.31.22-.45-1.47.13-2.78-.22-3.95-1.03h0ZM12.78,13.44c-.66.51-1.64,1.07-3.08,1.45-.6.16-1.14.26-1.63.3.41.21.84.38,1.28.51.72.21,1.46.33,2.16.59.35.13.69.31.98.54.29.23.54.52.7.86.21.46.24,1,.07,1.48-.16.48-.52.89-.97,1.12-.45.23-.99.28-1.47.14-.12-.03-.23-.08-.34-.14-.05-.02-.07,0-.02.04.33.24.71.41,1.1.51.77.19,1.6.08,2.3-.29.7-.37,1.24-1.01,1.51-1.76.26-.74.24-1.59-.06-2.31-.25-.6-.67-1.11-1.12-1.57-.45-.47-.94-.9-1.34-1.4-.02-.02-.04-.05-.05-.07Z"
                 />
                 <path
-                  className={`transition-colors duration-300 ${isScrolled ? "fill-nav-text-scrolled" : "fill-nav-text-default"}`}
+                  className={`transition-colors duration-300 ${isScrolled ? "fill-[#F6ECC9]" : "fill-[rgb(127,98,196)]"}`}
                   d="M.83,12.16l-.02,1.66c-.53-.11-.99.41-.75.92.27.57,1.13.44,1.23-.18l.02-2.03,1.47-.38v1.35c-.56-.11-1.01.43-.75.94.28.54,1.09.42,1.22-.17l.03-2.76h-.02s-2.43.63-2.43.63Z"
                 />
                 <path
-                  className={`transition-colors duration-300 ${isScrolled ? "fill-nav-text-scrolled" : "fill-nav-text-default"}`}
+                  className={`transition-colors duration-300 ${isScrolled ? "fill-[#F6ECC9]" : "fill-[rgb(127,98,196)]"}`}
                   d="M16.41,2.61v-.04l-.17-.54-1.1.3v1.65c-.74-.16-1.32.68-.83,1.29.45.58,1.35.3,1.44-.41v-2.06s.67-.19.67-.19Z"
                 />
                 <path
-                  className={`transition-colors duration-300 ${isScrolled ? "fill-nav-text-scrolled" : "fill-nav-text-default"}`}
+                  className={`transition-colors duration-300 ${isScrolled ? "fill-[#F6ECC9]" : "fill-[rgb(127,98,196)]"}`}
                   d="M18.85,5.54l-.18-.72-1.46.36v2.16c-1.08-.28-1.79,1.12-.9,1.82.65.51,1.6.08,1.68-.74v-2.62s.85-.26.85-.26Z"
                 />
               </svg>
@@ -128,8 +123,8 @@ const Navbar = () => {
                   href={link.href}
                   className={`font-medium transition-colors ${
                     isScrolled
-                      ? "text-nav-text-scrolled/70 hover:text-nav-text-scrolled"
-                      : "text-nav-text-default/70 hover:text-nav-text-default"
+                      ? "text-[#F6ECC9]/70 hover:text-[#F6ECC9]"
+                      : "text-[rgb(127,98,196)]/70 hover:text-[rgb(127,98,196)]"
                   }`}
                 >
                   {link.label}
@@ -143,36 +138,21 @@ const Navbar = () => {
                 href="https://apps.apple.com/us/app/lyric-genie/id6739787614"
                 className={`px-6 py-2 rounded-full font-semibold transition-all ${
                   isScrolled
-                    ? "bg-nav-text-scrolled text-nav-text-default hover:bg-nav-text-scrolled/90"
-                    : "bg-nav-text-default text-white hover:opacity-90"
+                    ? "bg-[#F6ECC9] text-[rgb(127,98,196)] hover:bg-[#F6ECC9]/90"
+                    : "bg-[rgb(127,98,196)] text-white hover:bg-[rgb(107,78,176)]"
                 }`}
               >
                 Download App
               </a>
             </div>
 
-            {/* Mobile: GET button + Menu Button */}
-            <div className="md:hidden flex items-center gap-3">
-              {/* GET button appears when AppStoreBar is hidden */}
-              {isMobile && appStoreBarHidden && (
-                <a
-                  href="https://apps.apple.com/us/app/lyric-genie/id6739787614"
-                  className={`font-semibold px-6 py-2 rounded-full text-sm transition-all ${
-                    isScrolled
-                      ? "bg-nav-text-scrolled text-primary hover:bg-nav-text-scrolled/90"
-                      : "bg-primary text-primary-foreground hover:opacity-90"
-                  }`}
-                >
-                  GET
-                </a>
-              )}
-              <button 
-                className={`p-2 transition-colors ${isScrolled ? "text-nav-text-scrolled" : "text-nav-text-default"}`} 
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              >
-                {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-              </button>
-            </div>
+            {/* Mobile Menu Button */}
+            <button 
+              className={`md:hidden p-2 transition-colors ${isScrolled ? "text-[#F6ECC9]" : "text-[rgb(127,98,196)]"}`} 
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
           </div>
         </div>
       </motion.nav>
@@ -184,16 +164,14 @@ const Navbar = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className={`fixed inset-0 z-40 bg-gradient-to-br from-primary via-primary to-accent px-6 md:hidden ${
-              isMobile ? (appStoreBarHidden ? "pt-24" : "pt-[140px]") : "pt-24"
-            }`}
+            className={`fixed inset-0 z-40 bg-gradient-to-br from-primary via-primary to-accent px-6 md:hidden ${isMobile ? "pt-[140px]" : "pt-24"}`}
           >
             <div className="flex flex-col gap-6">
               {navLinks.map((link) => (
                 <a
                   key={link.label}
                   href={link.href}
-                  className="text-2xl font-semibold text-nav-text-scrolled"
+                  className="text-2xl font-semibold text-[#F6ECC9]"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {link.label}
@@ -203,7 +181,7 @@ const Navbar = () => {
                 <a
                   href="https://apps.apple.com/us/app/lyric-genie/id6739787614"
                   target="_blank"
-                  className="bg-nav-text-scrolled text-primary px-6 py-3 rounded-full font-semibold text-center"
+                  className="bg-[#F6ECC9] text-purple-900 px-6 py-3 rounded-full font-semibold text-center"
                 >
                   Download App
                 </a>

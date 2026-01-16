@@ -41,7 +41,7 @@ const Navbar = () => {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
-        className={`fixed left-0 right-0 z-50 transition-all duration-300 ${isMobile ? "top-[60px]" : "top-0"} ${
+        className={`fixed left-0 right-0 z-50 transition-all duration-300 top-[60px] md:top-0 ${
           isScrolled
             ? "bg-[rgb(117,88,186)] backdrop-blur-lg border-b border-[rgb(97,68,166)] shadow-lg"
             : "bg-transparent"

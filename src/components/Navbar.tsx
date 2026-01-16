@@ -7,23 +7,19 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isAppStoreBarVisible, setIsAppStoreBarVisible] = useState(true);
 
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 940);
-    };
-
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      const scrolled = window.scrollY > 20;
+      setIsScrolled(scrolled);
+      // AppStoreBar hides when scrollY > 20 (matching AppStoreBar logic)
+      setIsAppStoreBarVisible(!scrolled);
     };
-    window.addEventListener("scroll", handleScroll);
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
-      window.removeEventListener("resize", checkMobile);
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
@@ -41,7 +37,7 @@ const Navbar = () => {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
-        className={`fixed left-0 right-0 z-50 transition-all duration-300 top-[60px] md:top-0 ${
+        className={`fixed left-0 right-0 z-50 transition-all duration-300 ${isAppStoreBarVisible ? "top-[60px]" : "top-0"} md:top-0 ${
           isScrolled
             ? "bg-[rgb(117,88,186)] backdrop-blur-lg border-b border-[rgb(97,68,166)] shadow-lg"
             : "bg-transparent"
@@ -165,27 +161,27 @@ const Navbar = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className={`fixed inset-0 z-40 bg-gradient-to-br from-primary via-primary to-accent px-6 md:hidden ${isMobile ? "pt-[140px]" : "pt-24"}`}
+            className={`fixed inset-0 z-40 bg-gradient-to-br from-primary via-primary to-accent px-6 md:hidden ${isAppStoreBarVisible ? "pt-[140px]" : "pt-24"}`}
           >
             <div className="flex flex-col gap-6">
               {navLinks.map((link) => (
-                <Link
+                <a
                   key={link.label}
                   href={link.href}
                   className="text-2xl font-semibold text-[#F6ECC9]"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {link.label}
-                </Link>
+                </a>
               ))}
               <div className="flex flex-col gap-4 mt-6">
-                <a
+                <Link
                   href="https://apps.apple.com/us/app/lyric-genie/id6739787614"
                   target="_blank"
                   className="bg-[#F6ECC9] text-purple-900 px-6 py-3 rounded-full font-semibold text-center"
                 >
                   Download App
-                </a>
+                </Link>
               </div>
             </div>
           </motion.div>

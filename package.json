@@ -88,6 +88,10 @@
     "source": "dist",
     "inlineCss": true,
     "puppeteerArgs": ["--no-sandbox", "--disable-setuid-sandbox"],
+    "puppeteerExecutablePath": "/usr/bin/chromium-browser",
+    "navigationTimeout": 60000,
+    "skipThirdPartyRequests": true,
+    "waitFor": 1000,
     "include": [
       "/",
       "/about",

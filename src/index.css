@@ -150,3 +150,19 @@ All colors MUST be HSL.
     font-family: 'Lufga', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
 }
+
+@layer components {
+  /* Blog/article typography fallbacks + spacing */
+  .prose p {
+    @apply my-8 leading-relaxed;
+  }
+
+  .prose ul,
+  .prose ol {
+    @apply my-8;
+  }
+
+  .prose li {
+    @apply my-2;
+  }
+}

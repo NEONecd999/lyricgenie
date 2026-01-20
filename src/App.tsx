@@ -21,10 +21,19 @@ import ScrollToHash from "./components/ScrollToHash";
 
 const queryClient = new QueryClient();
 
+// Detect if we're being prerendered by react-snap
+const isPrerendering = navigator.userAgent.includes('ReactSnap');
+
 const App = () => {
-  const [fontsLoaded, setFontsLoaded] = useState(false);
+  const [fontsLoaded, setFontsLoaded] = useState(isPrerendering); // Skip font wait during prerender
 
   useEffect(() => {
+    // Skip font loading check during prerendering
+    if (isPrerendering) {
+      setFontsLoaded(true);
+      return;
+    }
+
     // Wait for Lufga font to load before showing content
     document.fonts.ready.then(() => {
       // Check if Lufga is loaded, or set a small timeout as fallback

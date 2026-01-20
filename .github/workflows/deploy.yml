@@ -26,38 +26,17 @@ jobs:
       - name: Install Chromium dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y chromium-browser
-          echo "Chromium location: $(which chromium-browser)"
-          chromium-browser --version
+          sudo apt-get install -y chromium-browser libgbm1 libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxrandr2 libasound2
       
       - name: Install dependencies
         run: npm install
+        env:
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
       
-      - name: Install Puppeteer browsers
-        run: npx puppeteer browsers install chrome
-      
-      - name: Debug - Check environment
-        run: |
-          echo "Node version: $(node --version)"
-          echo "NPM version: $(npm --version)"
-          echo "PWD: $(pwd)"
-          echo "Files in directory:"
-          ls -la
-          echo "Checking for puppeteer cache:"
-          ls -la ~/.cache/puppeteer || echo "No puppeteer cache found"
-      
-      - name: Build with verbose output
-        run: npm run build -- --debug 2>&1 | tee build.log
+      - name: Build
+        run: npm run build
         env:
           PUPPETEER_EXECUTABLE_PATH: /usr/bin/chromium-browser
-          DEBUG: "*"
-      
-      - name: Upload build log on failure
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-log
-          path: build.log
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

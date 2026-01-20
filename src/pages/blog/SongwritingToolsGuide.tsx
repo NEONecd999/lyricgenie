@@ -6,6 +6,7 @@ const SongwritingToolsGuide = () => {
   return (
     <BlogArticle
       title="The Ultimate Songwriter's Toolkit: Every Tool You Need in 2026"
+      description="A comprehensive guide to the best songwriting tools in 2026. From rhyme dictionaries to collaboration apps, build the perfect toolkit for your workflow."
       date="January 15, 2026"
       readTime="7 min read"
       category="Tools & Resources"

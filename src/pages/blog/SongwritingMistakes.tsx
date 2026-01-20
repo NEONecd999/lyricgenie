@@ -5,6 +5,7 @@ const SongwritingMistakes = () => {
   return (
     <BlogArticle
       title="5 Songwriting Mistakes That Are Killing Your Songs (And How Top Writers Avoid Them)"
+      description="Avoid the common songwriting pitfalls that hold good writers back. Learn professional techniques for stronger hooks, better verses, and finished songs."
       date="January 8, 2025"
       readTime="6 min read"
       category="Tips"

@@ -6,6 +6,7 @@ const CoWritingSecrets = () => {
   return (
     <BlogArticle
       title="Inside the Room: Co-Writing Secrets from Nashville's Top Songwriters"
+      description="Learn the unwritten rules of professional co-writing sessions. Nashville songwriters share tips on collaboration, splits, and building lasting partnerships."
       date="January 5, 2025"
       readTime="8 min read"
       category="Industry"

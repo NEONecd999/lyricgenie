@@ -5,6 +5,7 @@ const HitSongsWrittenFast = () => {
   return (
     <BlogArticle
       title="7 Hit Songs That Were Written in Under 30 Minutes (And What They Have in Common)"
+      description="Discover how iconic songs like 'I Will Always Love You' and 'Yesterday' were written in under 30 minutes. Learn the patterns behind lightning-fast songwriting."
       date="January 15, 2025"
       readTime="5 min read"
       category="Inspiration"

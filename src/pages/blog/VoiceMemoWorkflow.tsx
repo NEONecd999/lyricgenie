@@ -5,6 +5,7 @@ const VoiceMemoWorkflow = () => {
   return (
     <BlogArticle
       title="From Voice Memo to Finished Song: The Workflow That Changed Everything"
+      description="Stop losing your best song ideas. Learn the capture-develop-archive system that professional songwriters use to turn voice memos into finished songs."
       date="January 2, 2025"
       readTime="6 min read"
       category="Workflow"

@@ -5,6 +5,7 @@ const RhymeSchemesThatWork = () => {
   return (
     <BlogArticle
       title="The Secret Rhyme Schemes That Make Songs Impossible to Forget"
+      description="Master the AABB, ABAB, ABBA, and XAXA rhyme schemes used in hit songs. Learn how internal rhymes and slant rhymes make lyrics unforgettable."
       date="January 12, 2025"
       readTime="7 min read"
       category="Craft"

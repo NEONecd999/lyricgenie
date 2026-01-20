@@ -6,6 +6,7 @@ const AIMusicTools2026 = () => {
   return (
     <BlogArticle
       title="AI Music Tools in 2026: What's Real, What's Hype, and What Songwriters Actually Need"
+      description="Cut through the AI music hype. A practical guide to Suno, Udio, and AI lyric tools—what works, what doesn't, and how to use AI without losing your voice."
       date="January 18, 2026"
       readTime="8 min read"
       category="AI & Technology"

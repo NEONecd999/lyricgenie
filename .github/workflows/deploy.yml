@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: ["main"] # Only runs when you push to the main branch
+    branches: ["main"]
   workflow_dispatch:
 
 permissions:
@@ -21,14 +21,22 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
+      - name: Install Chromium dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y chromium-browser
       - name: Install dependencies
         run: npm install
+      - name: Install Puppeteer with bundled Chromium
+        run: npx puppeteer browsers install chrome
       - name: Build
         run: npm run build
+        env:
+          PUPPETEER_EXECUTABLE_PATH: /usr/bin/chromium-browser
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist # Vite builds to the 'dist' folder by default
+          path: ./dist
 
   deploy:
     environment:

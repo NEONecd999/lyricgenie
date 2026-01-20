@@ -26,7 +26,7 @@ jobs:
       - name: Install Chromium dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y chromium-browser libgbm1 libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxrandr2 libasound2
+          sudo apt-get install -y chromium-browser libgbm1 libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxrandr2 libasound2t64
           echo "=== Chromium check ==="
           which chromium-browser
           chromium-browser --version
@@ -37,26 +37,14 @@ jobs:
           echo "=== Checking if puppeteer is installed ==="
           ls -la node_modules/puppeteer || echo "puppeteer not found in node_modules"
           ls -la node_modules/puppeteer-core || echo "puppeteer-core not found in node_modules"
-          cat package.json | grep -A5 -B5 puppeteer || echo "puppeteer not in package.json"
         env:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
-      
-      - name: Debug - Environment info
-        run: |
-          echo "=== Node/NPM versions ==="
-          node --version
-          npm --version
-          echo "=== Environment variables ==="
-          env | grep -i puppeteer || echo "No puppeteer env vars"
-          echo "=== Package.json scripts ==="
-          cat package.json | grep -A10 '"scripts"'
       
       - name: Build
         run: |
           npm run build 2>&1 | tee build.log
         env:
           PUPPETEER_EXECUTABLE_PATH: /usr/bin/chromium-browser
-          DEBUG: "puppeteer:*,vite:*"
       
       - name: Upload logs on failure
         if: failure()

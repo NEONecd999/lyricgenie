@@ -27,37 +27,24 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y chromium-browser libgbm1 libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxrandr2 libasound2t64
-          echo "=== Chromium check ==="
-          which chromium-browser
-          chromium-browser --version
       
       - name: Install dependencies
-        run: |
-          npm install
-          echo "=== Checking if puppeteer is installed ==="
-          ls -la node_modules/puppeteer || echo "puppeteer not found in node_modules"
+        run: npm install
         env:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
       
-      - name: Build
-        run: |
-          set -e
-          npm run build 2>&1 | tee build.log
-          echo "=== Build exit code: $? ==="
-          echo "=== Checking for dist folder ==="
-          ls -la
-          ls -la dist || echo "dist folder not found!"
-          ls -la dist/ || echo "dist folder is empty or missing"
+      - name: Build and Prerender
+        run: npm run build
         env:
           PUPPETEER_EXECUTABLE_PATH: /usr/bin/chromium-browser
       
-      - name: Upload logs on failure
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: debug-logs
-          path: |
-            build.log
+      - name: List dist contents
+        run: |
+          echo "=== dist folder contents ==="
+          ls -la dist/
+          echo "=== checking for prerendered pages ==="
+          ls -la dist/about/ || echo "no /about"
+          ls -la dist/blog/ || echo "no /blog"
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

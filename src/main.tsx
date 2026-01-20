@@ -1,5 +1,5 @@
 import "./index.css";
-import { ViteSSG } from "vite-plugin-ssg";
+import { ViteSSG } from "vite-ssg";
 import App from "./App";
 import Index from "./pages/Index";
 import About from "./pages/About";

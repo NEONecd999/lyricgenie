@@ -54,10 +54,6 @@ const App = () => {
     }
   }, [fontsLoaded]);
 
-  if (!fontsLoaded) {
-    return null; // Keep showing the HTML loader
-  }
-
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>

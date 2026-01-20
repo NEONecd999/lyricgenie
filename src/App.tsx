@@ -8,6 +8,14 @@ import Index from "./pages/Index";
 import About from "./pages/About";
 import Support from "./pages/Support";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Blog from "./pages/Blog";
+import HitSongsWrittenFast from "./pages/blog/HitSongsWrittenFast";
+import RhymeSchemesThatWork from "./pages/blog/RhymeSchemesThatWork";
+import SongwritingMistakes from "./pages/blog/SongwritingMistakes";
+import CoWritingSecrets from "./pages/blog/CoWritingSecrets";
+import VoiceMemoWorkflow from "./pages/blog/VoiceMemoWorkflow";
+import SongwritingToolsGuide from "./pages/blog/SongwritingToolsGuide";
+import AIMusicTools2026 from "./pages/blog/AIMusicTools2026";
 import NotFound from "./pages/NotFound";
 import ScrollToHash from "./components/ScrollToHash";
 
@@ -62,6 +70,14 @@ const App = () => {
             <Route path="/about" element={<About />} />
             <Route path="/support" element={<Support />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/hit-songs-written-in-under-30-minutes" element={<HitSongsWrittenFast />} />
+            <Route path="/blog/rhyme-schemes-that-make-songs-unforgettable" element={<RhymeSchemesThatWork />} />
+            <Route path="/blog/songwriting-mistakes-killing-your-songs" element={<SongwritingMistakes />} />
+            <Route path="/blog/co-writing-secrets-from-nashville" element={<CoWritingSecrets />} />
+            <Route path="/blog/voice-memos-to-finished-songs" element={<VoiceMemoWorkflow />} />
+            <Route path="/blog/songwriting-tools-guide-2026" element={<SongwritingToolsGuide />} />
+            <Route path="/blog/ai-music-tools-2026" element={<AIMusicTools2026 />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

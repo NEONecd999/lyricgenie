@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AppStoreBar from "@/components/AppStoreBar";
+import SEO from "@/components/SEO";
 import { getRelatedPosts } from "@/data/blogPosts";
 
 // Import images for static resolution
@@ -20,19 +21,29 @@ const imageMap: Record<string, string> = {
 
 interface BlogArticleProps {
   title: string;
+  description?: string;
   date: string;
   readTime: string;
   category: string;
   children: React.ReactNode;
 }
 
-const BlogArticle = ({ title, date, readTime, category, children }: BlogArticleProps) => {
+const BlogArticle = ({ title, description, date, readTime, category, children }: BlogArticleProps) => {
   const location = useLocation();
   const currentSlug = location.pathname.replace("/blog/", "");
   const relatedPosts = getRelatedPosts(currentSlug, 2);
+  
+  // Generate description from title if not provided
+  const metaDescription = description || `${title} - Tips and insights for songwriters from Lyric Genie.`;
 
   return (
     <div className="min-h-screen bg-background font-sans">
+      <SEO 
+        title={title}
+        description={metaDescription}
+        ogType="article"
+        publishedTime={date}
+      />
       <AppStoreBar />
       <Navbar />
 

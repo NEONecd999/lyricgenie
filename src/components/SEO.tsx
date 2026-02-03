@@ -68,4 +68,9 @@ const SEO = ({
     return () => {
       document.title = "Lyric Genie - Your All-in-One Songwriting Notepad";
     };
-  }, [fullTitle, des
+  }, [fullTitle, description, canonicalUrl, ogImage, ogType, publishedTime]);
+
+  return null;
+};
+
+export default SEO;

@@ -13,8 +13,8 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background font-sans">
       <SEO 
-        title="Lyric Genie - Your All-in-One Songwriting Notepad"
-        description="Capture ideas, shape lyrics, and co-write in real-time. Built for the flow of professional sessions. Rhyme dictionaries, voice memos, arrange mode, and more."
+        title="Lyric Genie - iOS Songwriting App | All-in-One Notepad"
+        description="Lyric Genie is the iOS songwriting app for capturing ideas, shaping lyrics, and co-writing in real-time. Built for the flow of professional sessions. Rhyme dictionaries, voice memos, arrange mode, and more."
       />
       <AppStoreBar />
       <Navbar />

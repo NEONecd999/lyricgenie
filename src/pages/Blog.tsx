@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
 import { blogPosts } from "@/data/blogPosts";
+import SEO from "@/components/SEO";
 
 // Import images for static resolution
 import blogAiMusic from "@/assets/blog-ai-music.jpg";
@@ -20,6 +21,10 @@ const imageMap: Record<string, string> = {
 const Blog = () => {
   return (
     <div className="min-h-screen bg-background font-sans">
+      <SEO 
+        title="Blog"
+        description="Songwriting tips, techniques, and insights from Lyric Genie. Learn about co-writing, lyric writing, and using AI tools for music creation."
+      />
       <AppStoreBar />
       <Navbar />
 

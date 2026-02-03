@@ -1,10 +1,15 @@
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { motion } from "framer-motion";
+import SEO from "@/components/SEO";
 
 const PrivacyPolicy = () => {
   return (
     <div className="min-h-screen bg-[#F4EFD8]">
+      <SEO 
+        title="Privacy Policy"
+        description="Lyric Genie's privacy policy. Learn how we protect your data and respect your privacy."
+      />
       {/* Header */}
       <header className="bg-[rgb(127,98,196)] text-[#F6ECC9] py-16 md:py-24">
         <div className="container mx-auto px-6 max-w-4xl">

@@ -1,10 +1,15 @@
 import { Link } from "react-router-dom";
 import { ArrowLeft, Mail, MessageCircle } from "lucide-react";
 import { motion } from "framer-motion";
+import SEO from "@/components/SEO";
 
 const Support = () => {
   return (
     <div className="min-h-screen bg-[#F4EFD8]">
+      <SEO 
+        title="Support"
+        description="Get help with Lyric Genie. Contact our support team for assistance with your songwriting app."
+      />
       {/* Header */}
       <header className="bg-[rgb(127,98,196)] text-[#F6ECC9] py-16 md:py-24">
         <div className="container mx-auto px-6 max-w-4xl">

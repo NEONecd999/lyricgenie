@@ -5,9 +5,14 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CTA from "@/components/CTA";
 import AppStoreBar from "@/components/AppStoreBar";
+import SEO from "@/components/SEO";
 
 const About = () => {
   return <div className="min-h-screen bg-background font-sans">
+      <SEO 
+        title="About"
+        description="Learn about Lyric Genie - the all-in-one songwriting app built by songwriters, for songwriters. Discover our story, mission, and commitment to helping you write better songs."
+      />
       <AppStoreBar />
       <Navbar />
       

@@ -1,0 +1,17 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": [
+          "3T9THY4WV5.edvn.LyricWriter",
+          "3T9THY4WV5.edvn.LyricWriter.dev"
+        ],
+        "paths": [
+          "/invite",
+          "/invite/*"
+        ]
+      }
+    ]
+  }
+}

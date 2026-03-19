@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lyric Genie - Song Invitation</title>
-  <meta http-equiv="refresh" content="2;url=https://apps.apple.com/app/id6739787614">
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -29,13 +28,30 @@
       border-radius: 999px;
       font-weight: 600;
     }
+    .status { font-size: 0.9rem; color: #888; margin-top: 1rem; }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>You've been invited to collaborate!</h1>
-    <p>Open this link on your iPhone with Lyric Genie installed, or download it below.</p>
+    <p>Opening Lyric Genie...</p>
     <a href="https://apps.apple.com/app/id6739787614">Get Lyric Genie</a>
+    <p class="status" id="status"></p>
   </div>
+  <script>
+    (function() {
+      var params = new URLSearchParams(window.location.search);
+      var code = params.get('code');
+      if (code) {
+        var appUrl = 'lyricgenie://invite?code=' + encodeURIComponent(code);
+        var appStoreUrl = 'https://apps.apple.com/app/id6739787614';
+        window.location.href = appUrl;
+        setTimeout(function() {
+          document.getElementById('status').textContent = 'App not found. Redirecting to App Store...';
+          window.location.href = appStoreUrl;
+        }, 1500);
+      }
+    })();
+  </script>
 </body>
 </html>

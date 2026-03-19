@@ -23,28 +23,22 @@ jobs:
           node-version: 20
           cache: 'npm'
       
-      - name: Install Chromium dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y chromium-browser libgbm1 libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxrandr2 libasound2t64
-      
       - name: Install dependencies
         run: npm install
-        env:
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
       
       - name: Build and Prerender
         run: npm run build
         env:
-          PUPPETEER_EXECUTABLE_PATH: /usr/bin/chromium-browser
+          PUPPETEER_EXECUTABLE_PATH: /usr/bin/google-chrome-stable
       
       - name: List dist contents
         run: |
           echo "=== dist folder contents ==="
           ls -la dist/
-          echo "=== checking for prerendered pages ==="
-          ls -la dist/about/ || echo "no /about"
-          ls -la dist/blog/ || echo "no /blog"
+          echo "=== checking .well-known ==="
+          ls -la dist/.well-known/ || echo "no .well-known"
+          echo "=== checking invite ==="
+          ls -la dist/invite/ || echo "no /invite"
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

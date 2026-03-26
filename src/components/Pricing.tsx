@@ -22,14 +22,14 @@ const plans = [
     price: "$4.99",
     period: "/month",
     description: "For songwriters and professional collaborators",
+    trial: "Start with a free trial",
     features: [
-      "Unlimited songs",
-      "Context-aware smart dictionaries",
+      "Everything in Free, plus:",
+      "Wish Workshop — AI-powered brainstorming",
+      "Spark — creative ideas & song concepts",
+      "Smart rhyming, thesaurus & sound-alikes",
+      "Smart syllable adjustments",
       "1,000 minutes of voice recordings",
-      "Real-time collaboration",
-      "Wish Workshop AI",
-      "Spark creative ideas",
-      "Syllable adjustment tools",
       "5,000 AI requests per month",
     ],
     cta: "Start Free Trial",
@@ -39,15 +39,15 @@ const plans = [
     name: "Pro Yearly",
     price: "$49.99",
     period: "/year",
-    description: "For professionals who want the best value",
+    description: "Best value — save over 15%",
+    trial: "Start with a free trial",
     features: [
-      "Unlimited songs",
-      "Context-aware smart dictionaries",
+      "Everything in Free, plus:",
+      "Wish Workshop — AI-powered brainstorming",
+      "Spark — creative ideas & song concepts",
+      "Smart rhyming, thesaurus & sound-alikes",
+      "Smart syllable adjustments",
       "1,000 minutes of voice recordings",
-      "Real-time collaboration",
-      "Wish Workshop AI",
-      "Spark creative ideas",
-      "Syllable adjustment tools",
       "5,000 AI requests per month",
     ],
     cta: "Start Free Trial",
@@ -75,7 +75,7 @@ const Pricing = () => {
             Pricing
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Choose the plan that fits your creative journey. Cancel at anytime.
+            Choose the plan that fits your creative journey. Cancel anytime.
           </p>
         </motion.div>
 
@@ -110,6 +110,9 @@ const Pricing = () => {
               <div className="mb-6">
                 <span className="font-display text-4xl font-bold">{plan.price}</span>
                 <span className="text-muted-foreground">{plan.period}</span>
+                {plan.trial && (
+                  <p className="text-primary text-sm font-medium mt-2">{plan.trial}</p>
+                )}
               </div>
 
               <ul className="space-y-3 mb-8">

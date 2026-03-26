@@ -11,7 +11,7 @@ const plans = [
     features: [
       "Unlimited songs",
       "Basic rhymes and synonyms",
-      "1000 minutes of voice recordings",
+      "60 minutes of voice recordings",
       "Real-time collaboration",
     ],
     cta: "Get Started Free",
@@ -25,11 +25,14 @@ const plans = [
     features: [
       "Unlimited songs",
       "Context-aware smart dictionaries",
-      "50,000 minutes of voice recordings",
+      "1,000 minutes of voice recordings",
       "Real-time collaboration",
       "Wish Workshop AI",
+      "Spark creative ideas",
+      "Syllable adjustment tools",
+      "5,000 AI requests per month",
     ],
-    cta: "Start Pro Trial",
+    cta: "Start Free Trial",
     popular: true,
   },
   {
@@ -40,11 +43,14 @@ const plans = [
     features: [
       "Unlimited songs",
       "Context-aware smart dictionaries",
-      "50,000 minutes of voice recordings",
+      "1,000 minutes of voice recordings",
       "Real-time collaboration",
       "Wish Workshop AI",
+      "Spark creative ideas",
+      "Syllable adjustment tools",
+      "5,000 AI requests per month",
     ],
-    cta: "Start Pro Trial",
+    cta: "Start Free Trial",
     popular: false,
   },
 ];

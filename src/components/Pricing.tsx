@@ -112,7 +112,7 @@ const Pricing = () => {
                 <span className="font-display text-4xl font-bold">{plan.price}</span>
                 <span className="text-muted-foreground">{plan.period}</span>
                 {plan.hasTrial && (
-                  <div className="mt-2 inline-flex items-center gap-1.5 bg-yellow-400/20 text-yellow-300 text-xs font-semibold px-3 py-1 rounded-full">
+                  <div className="mt-2 inline-flex items-center gap-1.5 bg-yellow-400/20 border border-yellow-400/30 text-gray-900 text-xs font-semibold px-3 py-1 rounded-full">
                     <span>✦</span> Free 14-day trial
                   </div>
                 )}

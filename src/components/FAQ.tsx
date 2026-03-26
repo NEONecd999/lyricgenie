@@ -8,6 +8,11 @@ const faqs = [
       "Currently, Lyric Genie is available exclusively on iOS. You can also download the iOS app and use it on your Mac Desktop!",
   },
   {
+    question: "Is there a free trial?",
+    answer:
+      "Yes! When you subscribe to Pro, Apple offers a free trial period so you can explore all the Pro features risk-free. If you cancel before the trial ends, you won't be charged. You can start your trial directly from the app.",
+  },
+  {
     question: "Can I use Lyric Genie on iPad or Mac Desktop?",
     answer:
       "Yes! Our app has been developed to work beautifully on both iPad and Mac Desktop. Just download it from the Apple App Store and you're good to go.",
@@ -24,7 +29,7 @@ const faqs = [
   },
   {
     question: "Can I export my lyrics?",
-    answer: "Absolutely! You can export your lyrics as sharable plain text, DOC or PDF.",
+    answer: "You can generate a lyric sheet hosted at a unique URL. This can be opened in your browser or shared with others. Lyric sheets can include publishing info should you wish to include it.",
   },
   {
     question: "Is my work kept private?",

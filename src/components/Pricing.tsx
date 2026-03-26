@@ -16,13 +16,13 @@ const plans = [
     ],
     cta: "Get Started Free",
     popular: false,
+    hasTrial: false,
   },
   {
     name: "Pro Monthly",
     price: "$4.99",
     period: "/month",
     description: "For songwriters and professional collaborators",
-    trial: "Start with a free trial",
     features: [
       "Everything in Free, plus:",
       "Wish Workshop — AI-powered brainstorming",
@@ -34,13 +34,13 @@ const plans = [
     ],
     cta: "Start Free Trial",
     popular: true,
+    hasTrial: true,
   },
   {
     name: "Pro Yearly",
     price: "$49.99",
     period: "/year",
     description: "Best value — save over 15%",
-    trial: "Start with a free trial",
     features: [
       "Everything in Free, plus:",
       "Wish Workshop — AI-powered brainstorming",
@@ -52,6 +52,7 @@ const plans = [
     ],
     cta: "Start Free Trial",
     popular: false,
+    hasTrial: true,
   },
 ];
 
@@ -107,12 +108,15 @@ const Pricing = () => {
                 <p className="text-muted-foreground text-sm">{plan.description}</p>
               </div>
 
+              {plan.hasTrial && (
+                <div className="mb-5 rounded-xl bg-yellow-400/15 border border-yellow-400/30 px-4 py-2.5 text-center">
+                  <span className="text-yellow-300 font-semibold text-sm">Free 14-Day Trial</span>
+                </div>
+              )}
+
               <div className="mb-6">
                 <span className="font-display text-4xl font-bold">{plan.price}</span>
                 <span className="text-muted-foreground">{plan.period}</span>
-                {plan.trial && (
-                  <p className="text-primary text-sm font-medium mt-2">{plan.trial}</p>
-                )}
               </div>
 
               <ul className="space-y-3 mb-8">
@@ -136,6 +140,9 @@ const Pricing = () => {
                   {plan.cta}
                 </Button>
               </a>
+              {plan.hasTrial && (
+                <p className="text-muted-foreground text-xs text-center mt-3">Trial starts in-app after download</p>
+              )}
             </motion.div>
           ))}
         </div>

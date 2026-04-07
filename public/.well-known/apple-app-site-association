@@ -7,12 +7,9 @@
           "3T9THY4WV5.edvn.LyricWriter.dev"
         ],
         "components": [
-          {
-            "/": "/invite"
-          },
-          {
-            "/": "/invite/*"
-          }
+          { "/": "/invite" },
+          { "/": "/invite/*" },
+          { "/": "/trial" }
         ]
       }
     ]

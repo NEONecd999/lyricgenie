@@ -25,7 +25,7 @@ const Philosophy = () => {
           </h2>
           <div className="space-y-5 text-muted-foreground text-lg leading-relaxed">
             <p>
-              Lyric Genie keeps the writer in control, preserving their voice while removing the friction of jumping between Notes, Voice Memos, and external tools. It's built around how songs actually come together — capture, refine, structure, and collaborate — making it the place <strong className="font-semibold text-foreground">where songs are written, not generated.</strong>
+              Lyric Genie keeps the writer in control, preserving their voice while removing the friction of jumping between Notes, Voice Memos, and external tools. It's built around how songs actually come together — capture, refine, structure, and collaborate — making it the place where songs are written, not generated. <strong className="font-semibold text-foreground">Real craft, not AI slop.</strong>
             </p>
           </div>
         </motion.div>

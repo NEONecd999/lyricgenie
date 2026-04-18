@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import HeroEnhanced from "@/components/HeroEnhanced";
 import AppStoreBar from "@/components/AppStoreBar";
+import Philosophy from "@/components/Philosophy";
 import Features from "@/components/Features";
 import Testimonials from "@/components/Testimonials";
 import Pricing from "@/components/Pricing";
@@ -12,13 +13,14 @@ import SEO from "@/components/SEO";
 const Index = () => {
   return (
     <div className="min-h-screen bg-background font-sans">
-      <SEO 
+      <SEO
         title="Lyric Genie - iOS Songwriting App | All-in-One Notepad"
-        description="Lyric Genie is the iOS songwriting app for capturing ideas, shaping lyrics, and co-writing in real-time. Built for the flow of professional sessions. Rhyme dictionaries, voice memos, arrange mode, and more."
+        description="Lyric Genie is the all-in-one iOS songwriting notepad for real writers. Capture lyrics, melodies, and ideas in one workspace, with AI woven into your flow — never replacing your voice."
       />
       <AppStoreBar />
       <Navbar />
       <HeroEnhanced />
+      <Philosophy />
       <div id="features">
         <Features />
       </div>

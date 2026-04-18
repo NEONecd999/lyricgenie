@@ -25,10 +25,10 @@ const Philosophy = () => {
           </h2>
           <div className="space-y-5 text-muted-foreground text-lg leading-relaxed">
             <p>
-              Lyric Genie isn't an AI generator. Instead of prompting a tool to spit out a full song, you write naturally in a clean, distraction-free workspace where lyrics, melodies, and ideas live together. AI sits inside your flow — suggesting lines, rewrites, and rhymes based on your actual song — so you can move forward without it taking over.
+              Lyric Genie isn't an AI generator. You write — lyrics, melodies, and ideas in one clean workspace — and AI suggests lines, rewrites, and rhymes based on what you've actually written.
             </p>
             <p>
-              You stay in control. Your voice stays intact. We just remove the friction of jumping between Notes, Voice Memos, and a stack of external tools — and give you the place where songs are actually written.
+              Your voice stays intact. No more juggling Notes, Voice Memos, and a stack of external tools.
             </p>
           </div>
         </motion.div>

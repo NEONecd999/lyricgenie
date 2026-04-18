@@ -20,10 +20,10 @@ const Index = () => {
       <AppStoreBar />
       <Navbar />
       <HeroEnhanced />
-      <Philosophy />
       <div id="features">
         <Features />
       </div>
+      <Philosophy />
       <Testimonials />
       <div id="pricing">
         <Pricing />

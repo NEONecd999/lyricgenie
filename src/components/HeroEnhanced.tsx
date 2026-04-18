@@ -99,12 +99,11 @@ const HeroEnhanced = () => {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="font-display text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6"
           >
-            Your{" "}
-            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              All-in-One
-            </span>
+            The place where songs are
             <br />
-            Songwriting Notepad
+            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              written, not generated.
+            </span>
           </motion.h1>
 
           {/* Subtitle */}
@@ -114,7 +113,7 @@ const HeroEnhanced = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10"
           >
-            Capture ideas, shape lyrics, and co-write in real-time – built for the flow of professional sessions.
+            An all-in-one songwriting notepad for real writers. Lyrics, melodies, and ideas live together in one clean workspace — with AI woven into your flow to suggest lines, rewrites, and rhymes based on your actual song.
           </motion.p>
 
           {/* CTA Buttons */}

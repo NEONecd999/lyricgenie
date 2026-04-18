@@ -17,7 +17,7 @@ const features = [
   {
     icon: Sparkles,
     title: "Wish Workshop",
-    description: "Stuck on a line? Get AI-powered suggestions that match your style. Like having a writing partner who never runs out of ideas.",
+    description: "Stuck on a line? Get suggestions, rewrites, and rhymes grounded in your actual song — never generic AI fill.",
     color: "from-primary to-accent",
   },
   {

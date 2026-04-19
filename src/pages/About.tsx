@@ -9,9 +9,9 @@ import SEO from "@/components/SEO";
 
 const About = () => {
   return <div className="min-h-screen bg-background font-sans">
-      <SEO 
+      <SEO
         title="About"
-        description="Learn about Lyric Genie - the all-in-one songwriting app built by songwriters, for songwriters. Discover our story, mission, and commitment to helping you write better songs."
+        description="Lyric Genie is an iOS app built by Edan Dover (Edan Dover Inc) — a native songwriting app for iPhone, iPad, Mac, and Vision Pro (iOS, iPadOS, macOS, and visionOS). Discover the story behind why it was built and the philosophy that drives it."
       />
       <AppStoreBar />
       <Navbar />
@@ -93,9 +93,10 @@ const About = () => {
                 duration: 0.5,
                 delay: 0.2
               }} className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-                  I'm a Los Angeles-based music producer and songwriter, and one half of the 
-                  multi-platinum band <strong className="text-foreground">The Score</strong>. Over the years, I've been lucky 
+                  I'm a Los Angeles-based music producer and songwriter, and one half of the
+                  multi-platinum band <strong className="text-foreground">The Score</strong>. Over the years, I've been lucky
                   enough to write songs that have connected with millions of people around the world.
+                  Lyric Genie is an iOS app I built for songwriters like me — a native experience for iPhone, iPad, Mac, and Vision Pro, made by Edan Dover Inc.
                 </motion.p>
               </div>
             </div>

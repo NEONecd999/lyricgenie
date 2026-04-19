@@ -14,8 +14,8 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background font-sans">
       <SEO
-        title="Lyric Genie - iOS Songwriting App | All-in-One Notepad"
-        description="Lyric Genie is the all-in-one iOS songwriting notepad for real writers. Capture lyrics, melodies, and ideas in one workspace, with AI woven into your flow — never replacing your voice."
+        title="Lyric Genie — iOS Songwriting App for iPhone, iPad & Mac"
+        description="Lyric Genie is a native iOS songwriting app for iPhone, iPad, Mac, and Vision Pro (iOS, iPadOS, macOS, and visionOS). Built by Edan Dover (Edan Dover Inc) — capture ideas, shape lyrics, and co-write in real-time. Available on the App Store."
       />
       <AppStoreBar />
       <Navbar />
@@ -26,7 +26,9 @@ const Index = () => {
       <div id="philosophy">
         <Philosophy />
       </div>
-      <Testimonials />
+      <div id="testimonials">
+        <Testimonials />
+      </div>
       <div id="pricing">
         <Pricing />
       </div>

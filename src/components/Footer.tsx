@@ -70,8 +70,9 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-border pt-8 text-center text-sm text-muted-foreground">
-          <p>© {currentYear} Lyric Genie. All rights reserved.</p>
+        <div className="border-t border-border pt-8 text-center text-sm text-muted-foreground space-y-2">
+          <p>Lyric Genie&reg; is a native iOS app by Edan Dover Inc.</p>
+          <p>&copy; {currentYear} Edan Dover Inc. All rights reserved.</p>
         </div>
       </div>
     </footer>

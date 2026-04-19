@@ -112,9 +112,19 @@ const HeroEnhanced = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10"
+            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-4"
           >
             Capture ideas, shape lyrics, and co-write in real-time – built for the flow of professional sessions.
+          </motion.p>
+
+          {/* Platform attribution — crawlable */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.25 }}
+            className="text-sm md:text-base text-muted-foreground/80 max-w-2xl mx-auto mb-10"
+          >
+            A native iOS app for iPhone, iPad, Mac, and Vision Pro. Available on the App Store from Edan Dover Inc.
           </motion.p>
 
           {/* CTA Buttons */}

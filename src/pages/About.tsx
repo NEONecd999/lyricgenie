@@ -96,7 +96,6 @@ const About = () => {
                   I'm a Los Angeles-based music producer and songwriter, and one half of the
                   multi-platinum band <strong className="text-foreground">The Score</strong>. Over the years, I've been lucky
                   enough to write songs that have connected with millions of people around the world.
-                  Lyric Genie is an iOS app I built for songwriters like me — a native experience for iPhone, iPad, Mac, and Vision Pro, made by Edan Dover Inc.
                 </motion.p>
               </div>
             </div>

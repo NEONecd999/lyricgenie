@@ -124,7 +124,7 @@ const HeroEnhanced = () => {
             transition={{ duration: 0.5, delay: 0.25 }}
             className="text-sm md:text-base text-muted-foreground/80 max-w-2xl mx-auto mb-10"
           >
-            A native iOS app for iPhone, iPad, Mac, and Vision Pro. Available on the App Store from Edan Dover Inc.
+            A native iOS app for iPhone, iPad, and Mac.
           </motion.p>
 
           {/* CTA Buttons */}

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Users, Mic, Sparkles, LayoutGrid, BookOpen, UserPlus } from "lucide-react";
+import { Users, Mic, Sparkles, LayoutGrid, BookOpen, NotebookPen } from "lucide-react";
 
 const features = [
   {
@@ -11,13 +11,13 @@ const features = [
   {
     icon: Mic,
     title: "Voice Recordings",
-    description: "Hum a melody, record a hook – keep every idea organized with your lyrics so nothing gets lost between sessions.",
+    description: "Hum a melody, record a hook – keep every idea linked to your lyrics so nothing gets lost between sessions.",
     color: "from-accent to-accent/80",
   },
   {
     icon: Sparkles,
     title: "Wish Workshop",
-    description: "Stuck on a line? Get suggestions, rewrites, and rhymes grounded in your actual song — never generic AI fill.",
+    description: "Stuck on a line? Get suggestions, rewrites, and rhymes grounded in your actual song — that retain your voice.",
     color: "from-primary to-accent",
   },
   {
@@ -33,9 +33,9 @@ const features = [
     color: "from-primary/90 to-accent/90",
   },
   {
-    icon: UserPlus,
-    title: "Invite Collaborators",
-    description: "Share songs with co-writers instantly. Perfect for remote sessions when you can't be in LA together.",
+    icon: NotebookPen,
+    title: "Concepts & Scratchpad",
+    description: "Park half-formed ideas, hooks, and titles before they become songs. Your songwriter's notebook — always with you.",
     color: "from-accent to-primary",
   },
 ];

@@ -217,16 +217,6 @@ const WISH_TONES: { label: string; pills: string[] }[] = [
     ],
   },
   {
-    label: "Simpler",
-    pills: [
-      "I got lost in all the sadness",
-      "I broke down into the darkness",
-      "I fell hard into the badness",
-      "I broke down in the darkness",
-      "I sank down into the darkness",
-    ],
-  },
-  {
     label: "More Visual",
     pills: [
       "I drowned in pools of silver ashes",

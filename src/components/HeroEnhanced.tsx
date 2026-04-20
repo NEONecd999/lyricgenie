@@ -378,12 +378,17 @@ const HeroEnhanced = () => {
 
             {/* Wish Workshop — purple eyebrow, filled Darker pill, one blue-highlighted rewrite */}
             <div
-              className="absolute hidden lg:block animate-float"
+              className="absolute hidden animate-float xl:block"
               style={{ top: 24, left: -260, width: 240 }}
             >
               <div
-                className="rounded-2xl p-3.5 shadow-[0_20px_40px_-12px_rgba(30,19,36,0.35)]"
-                style={{ background: "#F5EFD9" }}
+                className="rounded-2xl p-3.5 shadow-[0_10px_30px_-8px_rgba(30,19,36,0.22)]"
+                style={{
+                  background: "rgba(255,255,255,0.55)",
+                  backdropFilter: "blur(24px) saturate(180%)",
+                  WebkitBackdropFilter: "blur(24px) saturate(180%)",
+                  border: "1px solid rgba(255,255,255,0.6)",
+                }}
               >
                 <div className="mb-2 flex items-center gap-1.5">
                   <SfIcon name="sparkles" size={11} color="#6F50B8" />
@@ -426,12 +431,17 @@ const HeroEnhanced = () => {
 
             {/* Rhymes — mini rhyme sheet with the lookup word big, 4 tokens in a 2-col grid */}
             <div
-              className="absolute hidden lg:block animate-float"
+              className="absolute hidden animate-float xl:block"
               style={{ top: 170, right: -240, width: 210, animationDelay: "0.6s" }}
             >
               <div
-                className="rounded-2xl p-3.5 shadow-[0_20px_40px_-12px_rgba(30,19,36,0.35)]"
-                style={{ background: "#F5EFD9" }}
+                className="rounded-2xl p-3.5 shadow-[0_10px_30px_-8px_rgba(30,19,36,0.22)]"
+                style={{
+                  background: "rgba(255,255,255,0.55)",
+                  backdropFilter: "blur(24px) saturate(180%)",
+                  WebkitBackdropFilter: "blur(24px) saturate(180%)",
+                  border: "1px solid rgba(255,255,255,0.6)",
+                }}
               >
                 <div className="mb-2 flex items-center gap-1.5">
                   <SfIcon name="character.book.closed.fill" size={11} color="#6F50B8" />
@@ -468,12 +478,17 @@ const HeroEnhanced = () => {
 
             {/* Co-write — three colored writer dots + verse rail + session status */}
             <div
-              className="absolute hidden lg:block animate-float"
+              className="absolute hidden animate-float xl:block"
               style={{ top: 330, left: -240, width: 220, animationDelay: "1.2s" }}
             >
               <div
-                className="rounded-2xl p-3.5 shadow-[0_20px_40px_-12px_rgba(30,19,36,0.35)]"
-                style={{ background: "#F5EFD9" }}
+                className="rounded-2xl p-3.5 shadow-[0_10px_30px_-8px_rgba(30,19,36,0.22)]"
+                style={{
+                  background: "rgba(255,255,255,0.55)",
+                  backdropFilter: "blur(24px) saturate(180%)",
+                  WebkitBackdropFilter: "blur(24px) saturate(180%)",
+                  border: "1px solid rgba(255,255,255,0.6)",
+                }}
               >
                 <div className="mb-2 flex items-center gap-1.5">
                   <SfIcon name="person.2.fill" size={11} color="#6F50B8" />
@@ -527,12 +542,17 @@ const HeroEnhanced = () => {
 
             {/* Recordings — coral recordingtape + waveform + duration */}
             <div
-              className="absolute hidden lg:block animate-float"
+              className="absolute hidden animate-float xl:block"
               style={{ bottom: 40, right: -250, width: 230, animationDelay: "1.8s" }}
             >
               <div
-                className="rounded-2xl p-3.5 shadow-[0_20px_40px_-12px_rgba(30,19,36,0.35)]"
-                style={{ background: "#F5EFD9" }}
+                className="rounded-2xl p-3.5 shadow-[0_10px_30px_-8px_rgba(30,19,36,0.22)]"
+                style={{
+                  background: "rgba(255,255,255,0.55)",
+                  backdropFilter: "blur(24px) saturate(180%)",
+                  WebkitBackdropFilter: "blur(24px) saturate(180%)",
+                  border: "1px solid rgba(255,255,255,0.6)",
+                }}
               >
                 <div className="flex items-center gap-2.5">
                   <div

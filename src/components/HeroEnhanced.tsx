@@ -481,7 +481,7 @@ const HeroEnhanced = () => {
                     className="text-[9.5px] font-bold uppercase"
                     style={{ letterSpacing: ".12em", color: "#6F50B8" }}
                   >
-                    Live Session
+                    Collaborators
                   </span>
                 </div>
                 <div className="mb-2 flex flex-wrap gap-1">

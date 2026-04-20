@@ -280,7 +280,7 @@ const WishWorkshopSpotlight = ({ active }: { active: boolean }) => {
 
   return (
     <UIFrame tone="paper">
-      <div className="text-center" style={{ padding: "22px 28px 12px" }}>
+      <div className="text-center" style={{ padding: "22px 28px 14px" }}>
         <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: ".12em", color: LG_PURPLE }}>
           WISH WORKSHOP
         </div>
@@ -299,40 +299,10 @@ const WishWorkshopSpotlight = ({ active }: { active: boolean }) => {
         </div>
       </div>
 
-      {/* Tone buttons row — sits above the results so it reads as "pick a tone → get results" */}
-      <div
-        className="flex flex-wrap justify-center gap-1.5"
-        style={{ padding: "4px 18px 16px" }}
-      >
-        {WISH_TONES.map((t, i) => {
-          const isActive = i === toneIdx;
-          return (
-            <div
-              key={t.label}
-              style={{
-                padding: "7px 13px",
-                borderRadius: 9999,
-                border: `1.5px solid ${LG_PURPLE}`,
-                background: isActive ? LG_PURPLE : "transparent",
-                color: isActive ? "#fff" : LG_PURPLE,
-                fontSize: 12,
-                fontWeight: 600,
-                boxShadow: isActive
-                  ? "0 4px 14px rgba(127,98,196,.35)"
-                  : "none",
-                transition: "background .3s, color .3s, box-shadow .3s",
-              }}
-            >
-              {t.label}
-            </div>
-          );
-        })}
-      </div>
-
       <div
         key={toneIdx}
         className="flex flex-col items-center gap-2.5"
-        style={{ padding: "0 28px 0" }}
+        style={{ padding: "6px 28px 0" }}
       >
         {currentTone.pills.map((t, i) => {
           const isSel = i === pillSel;
@@ -361,10 +331,40 @@ const WishWorkshopSpotlight = ({ active }: { active: boolean }) => {
         })}
       </div>
 
-      {/* Toggles — sit just above the wish input */}
+      {/* Tone shift buttons — cycle through them; active tone is filled purple */}
+      <div
+        className="absolute flex flex-wrap justify-center gap-1.5"
+        style={{ left: 18, right: 18, bottom: 96 }}
+      >
+        {WISH_TONES.map((t, i) => {
+          const isActive = i === toneIdx;
+          return (
+            <div
+              key={t.label}
+              style={{
+                padding: "7px 13px",
+                borderRadius: 9999,
+                border: `1.5px solid ${LG_PURPLE}`,
+                background: isActive ? LG_PURPLE : "transparent",
+                color: isActive ? "#fff" : LG_PURPLE,
+                fontSize: 12,
+                fontWeight: 600,
+                boxShadow: isActive
+                  ? "0 4px 14px rgba(127,98,196,.35)"
+                  : "none",
+                transition: "background .3s, color .3s, box-shadow .3s",
+              }}
+            >
+              {t.label}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Toggles — above the tone buttons */}
       <div
         className="absolute flex justify-center gap-[18px]"
-        style={{ left: 22, right: 22, bottom: 82 }}
+        style={{ left: 22, right: 22, bottom: 150 }}
       >
         {[
           { l: "Keep end rhyme", on: true },
@@ -1171,7 +1171,7 @@ const Features = () => {
         <SpotlightRow
           eyebrow="WRITE LYRICS"
           title="An editor that feels like your favorite notebook, but smarter."
-          body="Write the way you actually do: messy stanzas, a verse you'll come back to, a chorus on fire. Tap any word for rhymes, synonyms, or sounds-alikes without ever breaking your flow."
+          body="Built for how songs actually come together, with lyrics structured by verse, chorus, and bridge. Tap any word for rhymes, synonyms, sound-alikes, or word associations, all without ever leaving the page."
           tint="rgba(111,168,60,.25)"
           child={(a) => <WriteLyricsSpotlight active={a} />}
         />

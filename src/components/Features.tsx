@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, ReactElement } from "react";
 import { motion } from "framer-motion";
+import SfIcon from "@/components/SfIcon";
 
 // ── Palette (from design reference) ─────────────────────────
 const LG_PAPER = "#F5EFD9";
@@ -674,7 +675,6 @@ const RhymeSpotlight = ({ active }: { active: boolean }) => {
       >
         {[
           "Replace Selection",
-          "Insert at Top",
           "Insert at Bottom",
           "Copy to Clipboard",
           "Add to Scratchpad",
@@ -1043,20 +1043,9 @@ const CompactFreestyle = () => (
             height: 42,
             background: LG_PINK,
             boxShadow: `0 8px 18px ${LG_PINK}60`,
-            color: "#fff",
           }}
         >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <rect x="9" y="2" width="6" height="12" rx="3" />
-            <path
-              d="M19 10v2a7 7 0 0 1-14 0v-2"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-            />
-            <line x1="12" y1="19" x2="12" y2="22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-          </svg>
+          <SfIcon name="music.microphone" size={22} color="#fff" />
         </div>
       </div>
     </div>
@@ -1159,19 +1148,16 @@ const CompactImport = () => {
                 height: 22,
                 borderRadius: 5,
                 background: t.color,
-                color: "#fff",
               }}
             >
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round">
-                <path d="M3 12h2l2-4 4 8 4-8 2 4h4" />
-              </svg>
+              <SfIcon name="recordingtape" size={13} color="#fff" />
             </div>
-            <div className="flex min-w-0 flex-col gap-0.5">
+            <div className="flex min-w-0 flex-1 flex-col gap-1">
               <div style={{ fontSize: 9, fontWeight: 700, color: LG_INK, lineHeight: 1 }}>
                 {t.name}
               </div>
               <div className="flex items-center gap-[1.5px]" style={{ height: 8 }}>
-                {Array.from({ length: 22 }).map((_, j) => (
+                {Array.from({ length: 42 }).map((_, j) => (
                   <span
                     key={j}
                     style={{
@@ -1180,6 +1166,7 @@ const CompactImport = () => {
                       background: t.color,
                       opacity: 0.65,
                       borderRadius: 1,
+                      flexShrink: 0,
                     }}
                   />
                 ))}
@@ -1283,14 +1270,14 @@ const Features = () => {
       tint: LG_AMBER,
     },
     {
-      eyebrow: "FREESTYLE MODE",
+      eyebrow: "FREESTYLE",
       title: "Sing it. We'll catch the words.",
       body: "Capture the magic by singing a melody idea off the cuff. Watch your lyrics appear as you sing, stored and linked to your song.",
       preview: <CompactFreestyle />,
       tint: LG_PINK,
     },
     {
-      eyebrow: "PERFORMANCE MODE",
+      eyebrow: "PERFORM",
       title: "Stage-ready lyrics.",
       body: "Big, bold white text on a pure-black screen so your lyrics stay readable from behind the mic.",
       preview: <CompactPerformance />,

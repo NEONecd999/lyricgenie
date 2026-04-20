@@ -334,7 +334,7 @@ const WishWorkshopSpotlight = ({ active }: { active: boolean }) => {
       {/* Tone shift buttons — cycle through them; active tone is filled purple */}
       <div
         className="absolute flex flex-wrap justify-center gap-1.5"
-        style={{ left: 18, right: 18, bottom: 80 }}
+        style={{ left: 18, right: 18, bottom: 96 }}
       >
         {WISH_TONES.map((t, i) => {
           const isActive = i === toneIdx;
@@ -364,7 +364,7 @@ const WishWorkshopSpotlight = ({ active }: { active: boolean }) => {
       {/* Toggles — above the tone buttons */}
       <div
         className="absolute flex justify-center gap-[18px]"
-        style={{ left: 22, right: 22, bottom: 134 }}
+        style={{ left: 22, right: 22, bottom: 150 }}
       >
         {[
           { l: "Keep end rhyme", on: true },

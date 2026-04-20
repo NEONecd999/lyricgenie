@@ -317,7 +317,7 @@ const WishWorkshopSpotlight = ({ active }: { active: boolean }) => {
                 color: isSel ? "#fff" : LG_INK,
                 fontSize: 14,
                 fontWeight: 500,
-                border: isSel ? "none" : "1px solid rgba(127,98,196,0.28)",
+                border: `1px solid ${isSel ? "transparent" : "rgba(127,98,196,0.28)"}`,
                 boxShadow: isSel ? "0 4px 16px rgba(58,123,208,.45)" : "none",
                 transition: "all .35s cubic-bezier(.4,.0,.2,1)",
                 transform: isSel ? "scale(1.04)" : "scale(1)",

@@ -71,11 +71,11 @@ const PhoneMockup = () => {
           <span>3:50</span>
           <span className="inline-flex items-center gap-1.5" style={{ color: "#1E1324" }}>
             {/* Cellular signal bars */}
-            <svg width="14" height="10" viewBox="0 0 14 10" fill="currentColor">
-              <rect x="0" y="7" width="2" height="3" rx="0.4" />
-              <rect x="3.5" y="5" width="2" height="5" rx="0.4" />
-              <rect x="7" y="3" width="2" height="7" rx="0.4" />
-              <rect x="10.5" y="0" width="2" height="10" rx="0.4" />
+            <svg width="16" height="10" viewBox="0 0 16 10" fill="currentColor">
+              <rect x="0" y="7" width="3" height="3" rx="0.8" />
+              <rect x="4" y="5" width="3" height="5" rx="0.8" />
+              <rect x="8" y="3" width="3" height="7" rx="0.8" />
+              <rect x="12" y="1" width="3" height="9" rx="0.8" />
             </svg>
             {/* Wi-Fi */}
             <svg width="12" height="10" viewBox="0 0 16 12" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">

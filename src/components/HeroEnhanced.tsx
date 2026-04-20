@@ -69,8 +69,30 @@ const PhoneMockup = () => {
           style={{ padding: "14px 22px 6px", fontSize: 12, fontWeight: 600, color: "#1E1324" }}
         >
           <span>3:50</span>
-          <span className="inline-flex items-center gap-1" style={{ fontSize: 11 }}>
-            ●●● <span style={{ letterSpacing: 1 }}>▮▮▮</span> 64
+          <span className="inline-flex items-center gap-1.5" style={{ color: "#1E1324" }}>
+            {/* Cellular signal bars */}
+            <svg width="14" height="10" viewBox="0 0 14 10" fill="currentColor">
+              <rect x="0" y="7" width="2" height="3" rx="0.4" />
+              <rect x="3.5" y="5" width="2" height="5" rx="0.4" />
+              <rect x="7" y="3" width="2" height="7" rx="0.4" />
+              <rect x="10.5" y="0" width="2" height="10" rx="0.4" />
+            </svg>
+            {/* Wi-Fi */}
+            <svg width="12" height="10" viewBox="0 0 16 12" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
+              <path d="M1.5 4.5a10 10 0 0 1 13 0" />
+              <path d="M4 7a6 6 0 0 1 8 0" />
+              <path d="M6.5 9.5a2.5 2.5 0 0 1 3 0" />
+              <circle cx="8" cy="11" r="0.5" fill="currentColor" stroke="none" />
+            </svg>
+            {/* Battery */}
+            <span className="inline-flex items-center gap-0.5">
+              <span style={{ fontSize: 10, fontWeight: 600 }}>64</span>
+              <svg width="22" height="11" viewBox="0 0 24 11" fill="none">
+                <rect x="0.5" y="0.5" width="20" height="10" rx="2.5" stroke="currentColor" strokeWidth="1" opacity="0.55" />
+                <rect x="21.5" y="3.5" width="2" height="4" rx="0.6" fill="currentColor" opacity="0.55" />
+                <rect x="2" y="2" width="12.5" height="7" rx="1" fill="currentColor" />
+              </svg>
+            </span>
           </span>
         </div>
 

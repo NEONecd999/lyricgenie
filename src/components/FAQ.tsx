@@ -71,7 +71,10 @@ const FAQ = () => {
             FAQ
           </div>
           <h2 className="font-display text-4xl md:text-5xl font-bold leading-[1.1] tracking-tight text-[#1E1324] mb-4">
-            Common questions
+            Frequently Asked{" "}
+            <span className="bg-gradient-to-r from-[#6F50B8] to-[#C48AE3] bg-clip-text text-transparent">
+              Questions
+            </span>
           </h2>
           <p className="mx-auto max-w-xl text-lg text-[#5D5065]">
             Got questions? We've got answers. If you can't find what you're looking for, reach out
@@ -91,7 +94,7 @@ const FAQ = () => {
               <AccordionItem
                 key={index}
                 value={`item-${index}`}
-                className="border-t border-[#E5E4E8] first:border-t-0 last:border-b"
+                className="border-b border-[#E5E4E8] last:border-b-0"
               >
                 <AccordionTrigger className="py-5 text-left text-[17px] font-semibold text-[#1E1324] hover:no-underline [&[data-state=open]>svg]:rotate-180">
                   {faq.question}

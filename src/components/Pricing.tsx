@@ -79,11 +79,14 @@ const Pricing = () => {
             Pricing
           </div>
           <h2 className="font-display mx-auto max-w-3xl text-4xl md:text-5xl font-bold leading-[1.1] tracking-tight text-[#1E1324] mb-4">
-            Pay only for what you write with
+            Simple,{" "}
+            <span className="bg-gradient-to-r from-[#6F50B8] to-[#C48AE3] bg-clip-text text-transparent">
+              Affordable
+            </span>{" "}
+            Pricing
           </h2>
           <p className="mx-auto max-w-xl text-lg text-[#5D5065]">
-            Start with a 14-day free trial. Cancel anytime. Every tier includes unlimited songs,
-            co-writers, and lyric sheets.
+            Choose the plan that fits your creative journey. Cancel anytime.
           </p>
         </motion.div>
 

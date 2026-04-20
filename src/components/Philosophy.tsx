@@ -1,34 +1,72 @@
 import { motion } from "framer-motion";
+import edanPhoto from "@/assets/edan-dover.jpg";
 
 const Philosophy = () => {
   return (
-    <section className="py-24 bg-[hsl(47_60%_94%)] relative overflow-hidden">
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-10 -left-20 w-80 h-80 bg-primary/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-10 -right-20 w-80 h-80 bg-accent/10 rounded-full blur-3xl" />
-      </div>
+    <section id="philosophy" className="relative overflow-hidden py-24 md:py-28 bg-[#FAF4DD]">
+      {/* Soft purple glow orbs */}
+      <div className="pointer-events-none absolute -top-20 -left-20 h-[340px] w-[340px] rounded-full bg-[#B19BE2]/30 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-16 -right-10 h-[280px] w-[280px] rounded-full bg-[#6F50B8]/20 blur-3xl" />
 
-      <div className="container mx-auto px-6 relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-          className="max-w-3xl mx-auto text-center"
-        >
-          <span className="inline-block text-primary font-semibold mb-4">OUR PHILOSOPHY</span>
-          <h2 className="font-display text-4xl md:text-5xl font-bold mb-8">
-            AI should support songwriting,{" "}
-            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              not replace it.
-            </span>
-          </h2>
-          <div className="space-y-5 text-muted-foreground text-lg leading-relaxed">
-            <p>
-              Lyric Genie keeps the writer in control, preserving their voice while removing the friction of jumping between Notes, Voice Memos, and external tools. It's built around how songs actually come together — capture, refine, structure, and collaborate — making it the place where songs are written, not generated. <strong className="font-semibold text-foreground">Real craft, not AI slop.</strong>
+      <div className="container relative z-10 mx-auto px-6">
+        <div className="grid items-center gap-12 md:grid-cols-[1fr_1.1fr] md:gap-16 lg:gap-20">
+          {/* Left column — eyebrow, headline, body */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="mb-4 text-[13px] font-semibold uppercase tracking-[0.12em] text-primary">
+              Our Philosophy
+            </div>
+            <h2 className="font-display text-4xl md:text-5xl lg:text-[52px] font-bold leading-[1.08] tracking-tight text-[#1E1324] mb-6">
+              Real craft,<br />
+              <span className="bg-gradient-to-r from-[#6F50B8] to-[#B167D1] bg-clip-text text-transparent">
+                not AI slop.
+              </span>
+            </h2>
+            <p className="max-w-xl text-lg leading-relaxed text-[#5D5065]">
+              Lyric Genie was built by working songwriters, not by generalist AI people. The AI lives
+              inside <em className="italic font-serif">Wish Workshop</em> — a tool for refining your
+              voice, not replacing it. Your lyrics are yours. We never train on them.
             </p>
-          </div>
-        </motion.div>
+          </motion.div>
+
+          {/* Right column — quote card */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.15 }}
+            className="relative rounded-[28px] border border-[#E5E4E8]/80 bg-white p-10 shadow-[0_20px_48px_-12px_rgba(30,19,36,0.12)]"
+          >
+            {/* Decorative quote mark — larger and dropped further from the top */}
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute left-9 select-none text-[140px] font-serif leading-none text-primary/30"
+              style={{ top: 28 }}
+            >
+              &ldquo;
+            </div>
+            <p className="font-serif italic text-[22px] leading-[1.5] text-[#1E1324] mt-14 mb-6">
+              Every line you write stays yours. We built it that way because we're writers too — we
+              know how it feels to hand your words to a machine and wonder where they end up.
+            </p>
+            <div className="flex items-center gap-3 border-t border-[#E5E4E8] pt-4">
+              <img
+                src={edanPhoto}
+                alt="Edan Dover"
+                loading="lazy"
+                className="h-11 w-11 rounded-full object-cover object-top"
+              />
+              <div>
+                <div className="text-sm font-semibold text-[#1E1324]">Edan Dover</div>
+                <div className="text-xs text-[#5D5065]">Producer &amp; Songwriter · Founder, Lyric Genie</div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
       </div>
     </section>
   );

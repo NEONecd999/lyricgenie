@@ -7,14 +7,14 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isAppStoreBarVisible, setIsAppStoreBarVisible] = useState(true);
+  const [isAnnouncementVisible, setIsAnnouncementVisible] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
       const scrolled = window.scrollY > 20;
       setIsScrolled(scrolled);
-      // AppStoreBar hides when scrollY > 20 (matching AppStoreBar logic)
-      setIsAppStoreBarVisible(!scrolled);
+      // AnnouncementStrip hides when scrollY > 20 (matching AnnouncementStrip logic)
+      setIsAnnouncementVisible(!scrolled);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -27,6 +27,7 @@ const Navbar = () => {
   const navLinks = [
     { label: "Features", href: "/#features" },
     { label: "Philosophy", href: "/#philosophy" },
+    { label: "Testimonials", href: "/#testimonials" },
     { label: "Pricing", href: "/#pricing" },
     { label: "FAQ", href: "/#faq" },
     { label: "About", href: "/about" },
@@ -38,7 +39,7 @@ const Navbar = () => {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
-        className={`fixed left-0 right-0 z-50 transition-all duration-300 ${isAppStoreBarVisible ? "top-[60px]" : "top-0"} md:top-0 ${
+        className={`fixed left-0 right-0 z-50 transition-all duration-300 ${isAnnouncementVisible ? "top-[40px]" : "top-0"} ${
           isScrolled
             ? "bg-[rgb(117,88,186)] backdrop-blur-lg border-b border-[rgb(97,68,166)] shadow-lg"
             : "bg-transparent"
@@ -162,7 +163,7 @@ const Navbar = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className={`fixed inset-0 z-40 bg-gradient-to-br from-primary via-primary to-accent px-6 md:hidden ${isAppStoreBarVisible ? "pt-[140px]" : "pt-24"}`}
+            className={`fixed inset-0 z-40 bg-gradient-to-br from-primary via-primary to-accent px-6 md:hidden ${isAnnouncementVisible ? "pt-[130px]" : "pt-24"}`}
           >
             <div className="flex flex-col gap-6">
               {navLinks.map((link) => (

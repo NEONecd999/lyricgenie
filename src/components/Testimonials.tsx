@@ -6,7 +6,7 @@ import royEnglish from "@/assets/roy-english.jpg";
 
 const testimonials = [
   {
-    name: "Cody Tarpleyy",
+    name: "Cody Tarpley",
     role: "Grammy-Winning Producer",
     credits: "Megan Thee Stallion, Aespa, Chris Brown",
     content: "Lyric Genie is such an inspiring tool that helps keep writing creative, quick and fun.",
@@ -35,8 +35,8 @@ const testimonials = [
 
 const Testimonials = () => {
   return (
-    <section className="py-24 bg-gradient-to-b from-background to-secondary/20 relative overflow-hidden">
-      <div className="absolute inset-0 overflow-hidden">
+    <section className="relative overflow-hidden py-24 bg-[#FBFAFD]">
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-accent/10 rounded-full blur-3xl" />
         <div className="absolute -top-20 -right-20 w-80 h-80 bg-primary/10 rounded-full blur-3xl" />
       </div>
@@ -47,57 +47,54 @@ const Testimonials = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-14"
         >
-          <span className="inline-block text-primary font-semibold mb-4">TESTIMONIALS</span>
-          <h2 className="font-display text-4xl md:text-5xl font-bold mb-6">
-            Trusted by{" "}
-            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Pro Writers</span>
+          <div className="mb-4 text-[13px] font-semibold uppercase tracking-[0.12em] text-primary">
+            Loved by songwriters
+          </div>
+          <h2 className="font-display mx-auto max-w-3xl text-4xl md:text-5xl font-bold leading-[1.1] tracking-tight text-[#1E1324]">
+            Used in writing rooms you've{" "}
+            <span className="bg-gradient-to-r from-[#6F50B8] to-[#C48AE3] bg-clip-text text-transparent">
+              heard on the radio
+            </span>
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Join professional songwriters who've made Lyric Genie their session essential.
-          </p>
         </motion.div>
 
         <div className="grid md:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
+          {testimonials.map((t, index) => (
             <motion.div
-              key={testimonial.name}
+              key={t.name}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="bg-card rounded-3xl p-8 border border-border hover:shadow-xl hover:shadow-primary/5 transition-all duration-300"
+              className="rounded-[28px] border border-[#E5E4E8] bg-card p-8 shadow-[0_4px_20px_-4px_rgba(30,19,36,0.08)] transition-all duration-300 hover:shadow-[0_20px_40px_-12px_rgba(127,98,196,0.2)] hover:-translate-y-0.5"
             >
+              {/* Name + photo + credits header (original layout) */}
               <div className="flex items-start gap-5 mb-5">
-                {testimonial.image ? (
-                  <img
-                    src={testimonial.image}
-                    alt={testimonial.name}
-                    loading="lazy"
-                    className="w-20 h-20 rounded-2xl object-cover flex-shrink-0"
-                  />
-                ) : (
-                  <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center text-primary-foreground text-2xl font-bold flex-shrink-0">
-                    {testimonial.name.charAt(0)}
-                  </div>
-                )}
+                <img
+                  src={t.image}
+                  alt={t.name}
+                  loading="lazy"
+                  className="h-20 w-20 flex-shrink-0 rounded-2xl object-cover"
+                />
                 <div className="pt-1">
-                  <p className="font-semibold text-lg">{testimonial.name}</p>
-                  <p className="text-sm text-muted-foreground">{testimonial.role}</p>
-                  {testimonial.credits && (
-                    <p className="text-xs text-primary mt-1 font-medium">{testimonial.credits}</p>
+                  <p className="text-lg font-semibold text-[#1E1324]">{t.name}</p>
+                  <p className="text-sm text-[#5D5065]">{t.role}</p>
+                  {t.credits && (
+                    <p className="mt-1 text-xs font-medium text-primary">{t.credits}</p>
                   )}
                 </div>
               </div>
 
-              <div className="flex gap-1 mb-4">
-                {Array.from({ length: testimonial.rating }).map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-primary text-primary" />
+              {/* Gold stars */}
+              <div className="mb-4 flex gap-1 text-[#D9A23A]">
+                {Array.from({ length: t.rating }).map((_, i) => (
+                  <Star key={i} className="h-4 w-4 fill-current" />
                 ))}
               </div>
 
-              <p className="text-foreground leading-relaxed">"{testimonial.content}"</p>
+              <p className="leading-relaxed text-[#1E1324]">"{t.content}"</p>
             </motion.div>
           ))}
         </div>

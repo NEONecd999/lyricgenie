@@ -1,40 +1,51 @@
 import { motion } from "framer-motion";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const faqs = [
   {
     question: "Is Lyric Genie available on Android or in a web browser?",
     answer:
-      "Currently, Lyric Genie is available exclusively on iOS. You can also download the iOS app and use it on your Mac Desktop!",
+      "No, and there aren't plans for one. Lyric Genie is a native iOS, iPadOS, and macOS (Apple Silicon) app so we can use system-level voice memos, spellcheck, and hand-off properly. Your songs sync instantly across iPhone, iPad, and Mac via iCloud.",
+  },
+  {
+    question: "Does Lyric Genie work on my iPad or Mac?",
+    answer:
+      "Yes — it's a native iOS, iPadOS, and macOS (Apple Silicon) app. Just download it from the App Store and your songs sync instantly across all three via iCloud.",
   },
   {
     question: "Is there a free trial?",
     answer:
-      "Yes! When you subscribe to Pro, Apple offers a free trial period so you can explore all the Pro features risk-free. If you cancel before the trial ends, you won't be charged. You can start your trial directly from the app.",
-  },
-  {
-    question: "Can I use Lyric Genie on iPad or Mac Desktop?",
-    answer:
-      "Yes! Our app has been developed to work beautifully on both iPad and Mac Desktop. Just download it from the Apple App Store and you're good to go.",
+      "Yes! When you subscribe to Pro, Apple offers a free 14-day trial so you can explore all the Pro features risk-free. If you cancel before the trial ends, you won't be charged. You can start your trial directly from the app.",
   },
   {
     question: "Can I collaborate with others in real-time?",
     answer:
-      "Yes! Real-time collaboration is one of our core features. Invite your co-writers, bandmates, or producers to edit lyrics together from anywhere in the world. Lyric changes and voice recordings sync instantly so you never lose a beat.",
+      "Yes — real-time collaboration is one of our core features. Invite your co-writers, bandmates, or producers to edit lyrics together from anywhere in the world. Lyric changes and voice recordings sync instantly so you never lose a beat.",
+  },
+  {
+    question: "Can I invite co-writers who don't have the app?",
+    answer:
+      "They'll need the free tier to join your session. It takes about ten seconds to set up with an Apple ID.",
   },
   {
     question: "How does the Wish Workshop AI work?",
     answer:
-      "The Wish Workshop is a powerful tool to help you find that elusive line or brainstorm new ideas. Choose from the suggested wishes (such as 'darker', 'more cinematic', 'more conversational', 'more Gen Z' and more) or give specific instructions for what you're looking for.",
+      "Wish Workshop is a powerful tool to help you find that elusive line or brainstorm new ideas. Choose from the suggested wishes (such as 'darker', 'more cinematic', 'more conversational', 'more Gen Z', and more) or give specific instructions for what you're looking for.",
   },
   {
     question: "Can I export my lyrics?",
-    answer: "You can generate a lyric sheet hosted at a unique URL. This can be opened in your browser or shared with others. Lyric sheets can include publishing info should you wish to include it.",
+    answer:
+      "Yes. You can generate a lyric sheet hosted at a unique URL. This can be opened in your browser or shared with others. Lyric sheets can include publishing info should you wish to include it.",
   },
   {
-    question: "Is my work kept private?",
+    question: "Is my lyric data used to train AI?",
     answer:
-      "Your creativity is sacred. All your songs are private by default and encrypted. You have complete control over who can view or edit your work. We never share or use your lyrics for any purpose without your explicit permission.",
+      "No. We never train on your lyrics and we never share them. Wish Workshop uses a third-party model with zero-retention — your text is discarded after the response. Your creativity is sacred, and all your songs are private by default.",
   },
   {
     question: "What if I need to cancel my subscription?",
@@ -45,45 +56,49 @@ const faqs = [
 
 const FAQ = () => {
   return (
-    <section id="faq" className="py-24 bg-background relative overflow-hidden">
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl" />
+    <section id="faq" className="relative overflow-hidden py-24 bg-background">
+      <div className="pointer-events-none absolute bottom-0 right-0 h-96 w-96 rounded-full bg-accent/10 blur-3xl" />
 
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container relative z-10 mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
-          <span className="inline-block text-primary font-semibold mb-4">FAQ</span>
-          <h2 className="font-display text-4xl md:text-5xl font-bold mb-6">
-            Frequently Asked{" "}
-            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Questions</span>
+          <div className="mb-4 text-[13px] font-semibold uppercase tracking-[0.12em] text-primary">
+            FAQ
+          </div>
+          <h2 className="font-display text-4xl md:text-5xl font-bold leading-[1.1] tracking-tight text-[#1E1324] mb-4">
+            Common questions
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Got questions? We've got answers. If you can't find what you're looking for, reach out to our support team.
+          <p className="mx-auto max-w-xl text-lg text-[#5D5065]">
+            Got questions? We've got answers. If you can't find what you're looking for, reach out
+            to our support team.
           </p>
         </motion.div>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+          transition={{ duration: 0.5, delay: 0.15 }}
           viewport={{ once: true }}
-          className="max-w-3xl mx-auto"
+          className="mx-auto max-w-3xl"
         >
-          <Accordion type="single" collapsible className="space-y-4">
+          <Accordion type="single" collapsible className="space-y-2">
             {faqs.map((faq, index) => (
               <AccordionItem
                 key={index}
                 value={`item-${index}`}
-                className="bg-card rounded-2xl border border-border px-6 data-[state=open]:shadow-lg data-[state=open]:border-primary/20 transition-all duration-300"
+                className="border-t border-[#E5E4E8] first:border-t-0 last:border-b"
               >
-                <AccordionTrigger className="text-left font-semibold hover:no-underline py-6">
+                <AccordionTrigger className="py-5 text-left text-[17px] font-semibold text-[#1E1324] hover:no-underline [&[data-state=open]>svg]:rotate-180">
                   {faq.question}
                 </AccordionTrigger>
-                <AccordionContent className="text-muted-foreground pb-6">{faq.answer}</AccordionContent>
+                <AccordionContent className="pb-5 text-[15px] leading-[1.6] text-[#5D5065]">
+                  {faq.answer}
+                </AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>

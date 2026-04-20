@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Sparkles, Download } from "lucide-react";
+import { Download } from "lucide-react";
 import { motion } from "framer-motion";
+import SfIcon from "@/components/SfIcon";
 
 const HeroEnhanced = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -71,12 +72,14 @@ const HeroEnhanced = () => {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-radial from-primary/5 to-transparent rounded-full" />
       </div>
 
-      {/* Musical notes decoration */}
-      <div className="absolute inset-0 pointer-events-none">
-        <span className="absolute top-32 left-[15%] text-4xl opacity-20 animate-float">♪</span>
-        <span className="absolute top-48 right-[20%] text-3xl opacity-15 animate-float" style={{ animationDelay: "0.5s" }}>♫</span>
-        <span className="absolute bottom-40 left-[25%] text-5xl opacity-10 animate-float" style={{ animationDelay: "1s" }}>♬</span>
-        <span className="absolute bottom-60 right-[15%] text-4xl opacity-20 animate-float" style={{ animationDelay: "1.5s" }}>♩</span>
+      {/* Musical notes decoration — positioned along outer edges so they clear content */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <span className="absolute top-24 left-[3%] text-6xl text-primary/25 font-serif italic animate-float">♪</span>
+        <span className="absolute top-40 right-[4%] text-7xl text-accent/20 font-serif italic animate-float" style={{ animationDelay: "0.5s" }}>♫</span>
+        <span className="absolute top-[55%] left-[2%] text-5xl text-primary/20 font-serif italic animate-float" style={{ animationDelay: "1s" }}>♬</span>
+        <span className="absolute top-[62%] right-[3%] text-6xl text-accent/25 font-serif italic animate-float" style={{ animationDelay: "1.5s" }}>♩</span>
+        <span className="absolute bottom-10 left-[8%] text-5xl text-primary/20 font-serif italic animate-float" style={{ animationDelay: "2s" }}>♪</span>
+        <span className="absolute bottom-24 right-[10%] text-4xl text-accent/25 font-serif italic animate-float" style={{ animationDelay: "2.5s" }}>♫</span>
       </div>
 
       <div className="container mx-auto px-6 relative z-10">
@@ -88,7 +91,7 @@ const HeroEnhanced = () => {
             transition={{ duration: 0.5 }}
             className="hidden md:inline-flex items-center gap-2 bg-card/80 backdrop-blur-sm border border-border px-4 py-2 rounded-full mb-8"
           >
-            <Sparkles className="w-4 h-4 text-primary" />
+            <SfIcon name="sparkles" size={16} color="hsl(var(--primary))" />
             <span className="text-sm font-medium text-muted-foreground">Built by pro songwriters in LA</span>
           </motion.div>
 

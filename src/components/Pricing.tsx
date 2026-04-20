@@ -1,8 +1,18 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Check, Sparkles } from "lucide-react";
 
-const plans = [
+type Plan = {
+  name: string;
+  price: string;
+  period: string;
+  description: string;
+  features: string[];
+  cta: string;
+  popular?: boolean;
+  isFree?: boolean;
+};
+
+const plans: Plan[] = [
   {
     name: "Free",
     price: "$0",
@@ -14,9 +24,8 @@ const plans = [
       "60 minutes of voice recordings",
       "Real-time collaboration",
     ],
-    cta: "Get Started Free",
-    popular: false,
-    hasTrial: false,
+    cta: "Download Now",
+    isFree: true,
   },
   {
     name: "Pro Monthly",
@@ -34,7 +43,6 @@ const plans = [
     ],
     cta: "Start Free Trial",
     popular: true,
-    hasTrial: true,
   },
   {
     name: "Pro Yearly",
@@ -51,36 +59,35 @@ const plans = [
       "5,000 AI requests per month",
     ],
     cta: "Start Free Trial",
-    popular: false,
-    hasTrial: true,
   },
 ];
 
 const Pricing = () => {
   return (
-    <section className="py-24 bg-gradient-to-b from-secondary/20 to-background relative overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-3xl" />
+    <section className="relative overflow-hidden py-24 bg-background">
+      <div className="pointer-events-none absolute top-1/2 left-1/2 h-[800px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/5 blur-3xl" />
 
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container relative z-10 mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-14"
         >
-          <span className="inline-block text-primary font-semibold mb-4">PRICING</span>
-          <h2 className="font-display text-4xl md:text-5xl font-bold mb-6">
-            Simple,{" "}
-            <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Affordable</span>{" "}
+          <div className="mb-4 text-[13px] font-semibold uppercase tracking-[0.12em] text-primary">
             Pricing
+          </div>
+          <h2 className="font-display mx-auto max-w-3xl text-4xl md:text-5xl font-bold leading-[1.1] tracking-tight text-[#1E1324] mb-4">
+            Pay only for what you write with
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Choose the plan that fits your creative journey. Cancel anytime.
+          <p className="mx-auto max-w-xl text-lg text-[#5D5065]">
+            Start with a 14-day free trial. Cancel anytime. Every tier includes unlimited songs,
+            co-writers, and lyric sheets.
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <div className="mx-auto grid max-w-6xl items-start gap-8 pt-6 md:grid-cols-3">
           {plans.map((plan, index) => (
             <motion.div
               key={plan.name}
@@ -88,60 +95,61 @@ const Pricing = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className={`relative bg-card rounded-3xl p-8 border transition-all duration-300 hover:shadow-xl ${
+              className={`relative rounded-[28px] bg-card p-9 transition-all duration-300 ${
                 plan.popular
-                  ? "border-primary shadow-lg shadow-primary/10 scale-105"
-                  : "border-border hover:border-primary/20"
+                  ? "scale-[1.04] border-2 border-primary shadow-[0_18px_44px_-12px_rgba(127,98,196,0.32)]"
+                  : "border border-[#E5E4E8] shadow-[0_4px_20px_-4px_rgba(30,19,36,0.08)] hover:shadow-xl"
               }`}
             >
               {plan.popular && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                  <span className="inline-flex items-center gap-1 bg-gradient-to-r from-primary to-accent text-primary-foreground text-sm font-semibold px-4 py-1 rounded-full">
-                    <Sparkles className="w-4 h-4" />
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
+                  <span className="rounded-full bg-[#6F50B8] px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.1em] text-white">
                     Most Popular
                   </span>
                 </div>
               )}
 
-              <div className="mb-6">
-                <h3 className="font-display text-2xl font-bold mb-2">{plan.name}</h3>
-                <p className="text-muted-foreground text-sm">{plan.description}</p>
+              <div className="mb-1.5 text-[13px] font-semibold uppercase tracking-[0.1em] text-primary">
+                {plan.name}
               </div>
-
-              <div className="mb-6">
-                <span className="font-display text-4xl font-bold">{plan.price}</span>
-                <span className="text-muted-foreground">{plan.period}</span>
-                {plan.hasTrial && (
-                  <div className="mt-2 inline-flex items-center gap-1.5 bg-yellow-400/20 border border-yellow-400/30 text-primary text-xs font-semibold px-3 py-1 rounded-full">
-                    <span>✦</span> Free 14-day trial
-                  </div>
-                )}
+              <div className="mb-1 flex items-baseline gap-1.5">
+                <span className="font-display text-5xl font-bold tracking-tight text-[#1E1324]">
+                  {plan.price}
+                </span>
+                <span className="text-sm text-[#5D5065]">{plan.period}</span>
               </div>
-
-              <ul className="space-y-3 mb-8">
-                {plan.features.map((feature) => (
-                  <li key={feature} className="flex items-center gap-3">
-                    <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      <Check className="w-3 h-3 text-primary" />
-                    </div>
-                    <span className="text-sm">{feature}</span>
-                  </li>
-                ))}
-              </ul>
+              <div className="mb-6 text-sm text-[#5D5065]">
+                {plan.isFree ? "✨ Free forever, no credit card" : "✦ 14-day free trial, cancel anytime"}
+              </div>
 
               <a
                 href="https://apps.apple.com/us/app/lyric-genie/id6739787614"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full"
+                className="block"
               >
-                <Button variant={plan.popular ? "hero" : "outline"} className="w-full" size="lg">
+                <Button
+                  variant={plan.popular ? "hero" : "outline"}
+                  size="lg"
+                  className="w-full justify-center"
+                >
                   {plan.cta}
                 </Button>
               </a>
-              {plan.hasTrial && (
-                <p className="text-muted-foreground text-xs text-center mt-3">Trial starts in-app after download</p>
-              )}
+
+              <ul className="mt-7 flex flex-col gap-3">
+                {plan.features.map((feature) => (
+                  <li
+                    key={feature}
+                    className="flex items-start gap-2.5 text-[15px] leading-[1.5] text-[#1E1324]"
+                  >
+                    <span className="mt-0.5 inline-flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-[#F4EEFE] text-xs font-bold text-primary">
+                      ✓
+                    </span>
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
             </motion.div>
           ))}
         </div>

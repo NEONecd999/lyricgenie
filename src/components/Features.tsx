@@ -608,6 +608,145 @@ const RhymeSpotlight = ({ active }: { active: boolean }) => {
 };
 
 // ══════════════════════════════════════════════════════════
+// Spotlight 5 · AI Context — mood/theme/similar artists sheet
+// ══════════════════════════════════════════════════════════
+const AI_CONTEXT_FIELDS = [
+  { label: "Mood", value: "cinematic, late-night, yearning but hopeful" },
+  { label: "Theme", value: "heartbreak, chasing an old flame through a city at 3am" },
+  { label: "Similar Artists", value: "Bon Iver, The 1975, Frank Ocean" },
+];
+
+const AiContextSpotlight = ({ active }: { active: boolean }) => {
+  const [fieldIdx, setFieldIdx] = useState(0);
+  const [typed, setTyped] = useState("");
+
+  useEffect(() => {
+    if (!active) {
+      setFieldIdx(0);
+      setTyped("");
+      return;
+    }
+    let cancel = false;
+    const run = async () => {
+      for (let i = 0; i < AI_CONTEXT_FIELDS.length && !cancel; i++) {
+        setFieldIdx(i);
+        const line = AI_CONTEXT_FIELDS[i].value;
+        for (let c = 0; c <= line.length && !cancel; c++) {
+          setTyped(line.slice(0, c));
+          await new Promise((r) => setTimeout(r, 22));
+        }
+        await new Promise((r) => setTimeout(r, 700));
+      }
+      await new Promise((r) => setTimeout(r, 2800));
+      if (!cancel) {
+        setFieldIdx(0);
+        setTyped("");
+        run();
+      }
+    };
+    run();
+    return () => {
+      cancel = true;
+    };
+  }, [active]);
+
+  return (
+    <UIFrame tone="paper">
+      <div style={{ padding: "22px 28px 10px" }}>
+        <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: ".12em", color: LG_PURPLE }}>
+          AI CONTEXT
+        </div>
+      </div>
+
+      <div className="flex flex-col gap-4" style={{ padding: "4px 28px 0" }}>
+        {AI_CONTEXT_FIELDS.map((f, i) => {
+          const done = i < fieldIdx;
+          const current = i === fieldIdx;
+          const text = done ? f.value : current ? typed : "";
+          return (
+            <div key={f.label}>
+              <div
+                style={{
+                  fontSize: 10.5,
+                  fontWeight: 700,
+                  color: LG_INK_MUTED,
+                  letterSpacing: ".08em",
+                  textTransform: "uppercase",
+                  marginBottom: 5,
+                }}
+              >
+                {f.label}
+              </div>
+              <div
+                style={{
+                  background: "#fff",
+                  border: "1px solid rgba(30,19,36,0.10)",
+                  borderRadius: 10,
+                  padding: "9px 12px",
+                  fontSize: 13.5,
+                  lineHeight: 1.4,
+                  color: LG_INK,
+                  minHeight: 36,
+                  boxShadow: "inset 0 1px 2px rgba(30,19,36,.03)",
+                }}
+              >
+                {text}
+                {current && (
+                  <span
+                    style={{
+                      display: "inline-block",
+                      width: 2,
+                      height: 14,
+                      marginLeft: 1,
+                      background: LG_PURPLE,
+                      verticalAlign: "-3px",
+                      animation: "lgCaret 0.9s steps(2) infinite",
+                    }}
+                  />
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Guiding list — which downstream AI features use this context */}
+      <div className="absolute" style={{ left: 28, right: 28, bottom: 22 }}>
+        <div
+          style={{
+            fontSize: 10.5,
+            fontWeight: 700,
+            letterSpacing: ".08em",
+            textTransform: "uppercase",
+            color: LG_INK_MUTED,
+            marginBottom: 7,
+          }}
+        >
+          Guiding
+        </div>
+        <div className="flex flex-wrap gap-1.5">
+          {["Wish Workshop", "Spark", "Rhyme Associations"].map((name) => (
+            <div
+              key={name}
+              style={{
+                fontSize: 11,
+                fontWeight: 600,
+                padding: "4px 10px",
+                borderRadius: 9999,
+                background: `${LG_PURPLE}18`,
+                color: LG_PURPLE,
+              }}
+            >
+              {name}
+            </div>
+          ))}
+        </div>
+      </div>
+    </UIFrame>
+  );
+};
+
+// ══════════════════════════════════════════════════════════
 // Compact row (below main spotlights)
 // ══════════════════════════════════════════════════════════
 const CompactVoice = () => {
@@ -876,6 +1015,13 @@ const Features = () => {
         />
         <SpotlightRow
           reverse
+          eyebrow="AI CONTEXT"
+          title="AI that actually knows your song."
+          body="Tell Lyric Genie the mood, theme, and reference artists behind your song. Every AI feature — Wish Workshop, Spark, Rhyme Associations — uses that context so suggestions sound like you, not a generic prompt."
+          tint="rgba(177,155,226,.3)"
+          child={(a) => <AiContextSpotlight active={a} />}
+        />
+        <SpotlightRow
           eyebrow="WISH WORKSHOP AI"
           title="Stuck on a line? Make a wish."
           body="Ask for a stronger hook, a moodier bridge, or one more rhyme that actually lands. You stay in the driver's seat — the AI just offers options, in your voice, never rewriting your song."
@@ -883,6 +1029,7 @@ const Features = () => {
           child={(a) => <WishWorkshopSpotlight active={a} />}
         />
         <SpotlightRow
+          reverse
           eyebrow="CO-WRITE IN REAL TIME"
           title="Every writer gets their own color."
           body="See who wrote what, whose idea spawned the chorus, whose voice memo inspired the bridge. Splits and credits stay unambiguous — because the session is the record."
@@ -890,7 +1037,6 @@ const Features = () => {
           child={(a) => <CowriteSpotlight active={a} />}
         />
         <SpotlightRow
-          reverse
           eyebrow="RHYME · THESAURUS · SOUNDS-LIKE · ASSOCIATIONS"
           title="A complete lookup suite, in one sheet."
           body="Rhymes, thesaurus, sounds-like and associations — all in one bottom sheet. Jump between perfect, near, multi-syllabic and phrase rhymes without leaving the line you're on."

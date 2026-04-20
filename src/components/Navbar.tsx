@@ -42,7 +42,7 @@ const Navbar = () => {
         className={`fixed left-0 right-0 z-50 transition-all duration-300 ${isAnnouncementVisible ? "top-[40px]" : "top-0"} ${
           isScrolled
             ? "bg-[#6F50B8] backdrop-blur-lg shadow-[0_2px_14px_rgba(30,19,36,0.12)]"
-            : "bg-transparent"
+            : "bg-white border-b border-[#E5E4E8]/60"
         }`}
       >
         <div className="container mx-auto px-6">

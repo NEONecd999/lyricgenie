@@ -575,24 +575,33 @@ const RhymeSpotlight = ({ active }: { active: boolean }) => {
       </div>
 
       <div
-        className="absolute flex items-center gap-2.5"
-        style={{ left: 24, right: 24, bottom: 22, color: LG_INK_MUTED, fontSize: 11.5 }}
+        className="absolute flex flex-wrap justify-center gap-1.5"
+        style={{ left: 18, right: 18, bottom: 22 }}
       >
-        <span
-          className="inline-flex items-center justify-center"
-          style={{
-            width: 18,
-            height: 18,
-            borderRadius: 6,
-            background: LG_PURPLE,
-            color: "#fff",
-            fontSize: 11,
-            fontWeight: 700,
-          }}
-        >
-          ↵
-        </span>
-        Tap a rhyme to replace the word in place
+        {[
+          "Replace Selection",
+          "Insert at Top",
+          "Insert at Bottom",
+          "Copy to Clipboard",
+          "Add to Scratchpad",
+        ].map((label) => (
+          <div
+            key={label}
+            style={{
+              padding: "5px 10px",
+              borderRadius: 9999,
+              border: `1px solid ${LG_PURPLE}`,
+              background: "#fff",
+              color: LG_PURPLE,
+              fontSize: 10.5,
+              fontWeight: 600,
+              whiteSpace: "nowrap",
+              boxShadow: "0 1px 2px rgba(30,19,36,.04)",
+            }}
+          >
+            {label}
+          </div>
+        ))}
       </div>
     </UIFrame>
   );

@@ -1279,7 +1279,7 @@ const Features = () => {
     {
       eyebrow: "PERFORM",
       title: "Stage-ready lyrics.",
-      body: "Big, bold white text on a pure-black screen so your lyrics stay readable from behind the mic.",
+      body: "Big, bold white text on a pure-black screen so your lyrics stay readable from behind the mic. Change the font size to your liking.",
       preview: <CompactPerformance />,
       tint: LG_GREEN,
     },

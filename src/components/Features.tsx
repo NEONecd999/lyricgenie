@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, ReactElement } from "react";
 import { motion } from "framer-motion";
+import SfIcon from "@/components/SfIcon";
 
 // ── Palette (from design reference) ─────────────────────────
 const LG_PAPER = "#F5EFD9";
@@ -610,21 +611,41 @@ const RhymeSpotlight = ({ active }: { active: boolean }) => {
 // ══════════════════════════════════════════════════════════
 // Spotlight 5 · AI Context — mood/theme/similar artists sheet
 // ══════════════════════════════════════════════════════════
-const AI_CONTEXT_SETS: { mood: string; theme: string; similar: string }[] = [
+const AI_CONTEXT_SETS: {
+  mood: string;
+  theme: string;
+  similar: string;
+  sparks: string[];
+}[] = [
   {
     mood: "cinematic, late-night, yearning but hopeful",
     theme: "heartbreak, chasing an old flame through a city at 3am",
     similar: "Bon Iver, The 1975, Frank Ocean",
+    sparks: [
+      "neon streetlights haunting me",
+      "the taste of cheap wine and goodbye",
+      "still chasing ghosts in every cab",
+    ],
   },
   {
     mood: "euphoric, neon, wide-open summer",
     theme: "meeting someone on the last day of vacation",
     similar: "HAIM, The Weeknd, Harry Styles",
+    sparks: [
+      "golden hour kissing your skin",
+      "endless highway, windows rolled down",
+      "one more night before the sun gives up",
+    ],
   },
   {
     mood: "nostalgic, dusty porch, slow-burn",
     theme: "coming home to a town that has changed since you left",
     similar: "Kacey Musgraves, Zach Bryan, Jason Isbell",
+    sparks: [
+      "mama's porch light burning low",
+      "the old oak still keeping time",
+      "hometown ghosts won't let me sleep",
+    ],
   },
 ];
 const AI_FIELD_LABELS = ["Mood", "Theme", "Similar Artists"] as const;
@@ -634,33 +655,43 @@ const AiContextSpotlight = ({ active }: { active: boolean }) => {
   const [setIdx, setSetIdx] = useState(0);
   const [fieldIdx, setFieldIdx] = useState(0);
   const [typed, setTyped] = useState("");
+  const [sparksShown, setSparksShown] = useState(0);
 
   useEffect(() => {
     if (!active) {
       setSetIdx(0);
       setFieldIdx(0);
       setTyped("");
+      setSparksShown(0);
       return;
     }
     let cancel = false;
     const run = async () => {
       for (let s = 0; s < AI_CONTEXT_SETS.length && !cancel; s++) {
         setSetIdx(s);
+        setSparksShown(0);
         const values = setAsArray(AI_CONTEXT_SETS[s]);
         for (let i = 0; i < values.length && !cancel; i++) {
           setFieldIdx(i);
           const line = values[i];
           for (let c = 0; c <= line.length && !cancel; c++) {
             setTyped(line.slice(0, c));
-            await new Promise((r) => setTimeout(r, 22));
+            await new Promise((r) => setTimeout(r, 20));
           }
-          await new Promise((r) => setTimeout(r, 600));
+          await new Promise((r) => setTimeout(r, 450));
+        }
+        // Reveal sparks one by one — the context "coming to life"
+        const sparkCount = AI_CONTEXT_SETS[s].sparks.length;
+        for (let i = 1; i <= sparkCount && !cancel; i++) {
+          setSparksShown(i);
+          await new Promise((r) => setTimeout(r, 650));
         }
         // Hold the fully filled card before clearing
-        await new Promise((r) => setTimeout(r, 2200));
+        await new Promise((r) => setTimeout(r, 2600));
         if (!cancel) {
           setFieldIdx(0);
           setTyped("");
+          setSparksShown(0);
         }
       }
       if (!cancel) run();
@@ -676,13 +707,13 @@ const AiContextSpotlight = ({ active }: { active: boolean }) => {
 
   return (
     <UIFrame tone="paper">
-      <div style={{ padding: "24px 28px 12px" }}>
+      <div style={{ padding: "22px 26px 10px" }}>
         <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: ".12em", color: LG_PURPLE }}>
           AI CONTEXT
         </div>
       </div>
 
-      <div className="flex flex-col gap-5" style={{ padding: "8px 28px 24px" }}>
+      <div className="flex flex-col gap-3" style={{ padding: "6px 26px 0" }}>
         {AI_FIELD_LABELS.map((label, i) => {
           const done = i < fieldIdx;
           const isCurrent = i === fieldIdx;
@@ -692,12 +723,12 @@ const AiContextSpotlight = ({ active }: { active: boolean }) => {
             <div key={label}>
               <div
                 style={{
-                  fontSize: 10,
+                  fontSize: 9.5,
                   fontWeight: 600,
                   letterSpacing: ".14em",
                   textTransform: "uppercase",
                   color: LG_INK_SOFT,
-                  marginBottom: 8,
+                  marginBottom: 5,
                 }}
               >
                 {label}
@@ -706,12 +737,12 @@ const AiContextSpotlight = ({ active }: { active: boolean }) => {
                 style={{
                   background: "#fff",
                   border: `1px solid ${focused ? LG_PURPLE : "#E5E4E8"}`,
-                  borderRadius: 14,
-                  padding: "14px 16px",
-                  fontSize: 15,
-                  lineHeight: 1.45,
+                  borderRadius: 12,
+                  padding: "11px 14px",
+                  fontSize: 14,
+                  lineHeight: 1.4,
                   color: LG_INK,
-                  minHeight: 52,
+                  minHeight: 44,
                   boxShadow: focused
                     ? `0 0 0 4px ${LG_PURPLE}1F`
                     : "inset 0 1px 2px rgba(30,19,36,.03)",
@@ -732,7 +763,7 @@ const AiContextSpotlight = ({ active }: { active: boolean }) => {
                     style={{
                       display: "inline-block",
                       width: 2,
-                      height: 17,
+                      height: 15,
                       marginLeft: 2,
                       background: LG_PURPLE,
                       verticalAlign: "-3px",
@@ -744,6 +775,62 @@ const AiContextSpotlight = ({ active }: { active: boolean }) => {
             </div>
           );
         })}
+      </div>
+
+      {/* Wish Workshop sparks — suggestions that match the current context */}
+      <div
+        className="absolute"
+        style={{
+          left: 26,
+          right: 26,
+          bottom: 18,
+          borderTop: "1px dashed rgba(30,19,36,.12)",
+          paddingTop: 12,
+        }}
+      >
+        <div
+          className="mb-2 flex items-center gap-2"
+          style={{ fontSize: 9.5, fontWeight: 700, letterSpacing: ".14em", color: LG_PURPLE }}
+        >
+          <SfIcon name="sparkles" size={12} color={LG_PURPLE} />
+          WISH WORKSHOP SPARKS
+        </div>
+        <div className="flex flex-col gap-1.5">
+          {current.sparks.map((spark, i) => {
+            const shown = i < sparksShown;
+            return (
+              <div
+                key={spark}
+                style={{
+                  background: "#fff",
+                  border: `1px solid ${LG_PURPLE}26`,
+                  borderRadius: 9999,
+                  padding: "6px 12px",
+                  fontSize: 12.5,
+                  color: LG_INK,
+                  boxShadow: "0 1px 2px rgba(30,19,36,.04)",
+                  opacity: shown ? 1 : 0,
+                  transform: shown ? "translateY(0)" : "translateY(6px)",
+                  transition: "opacity .4s, transform .4s",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                }}
+              >
+                <span
+                  style={{
+                    width: 4,
+                    height: 4,
+                    borderRadius: 9999,
+                    background: LG_PURPLE,
+                    flexShrink: 0,
+                  }}
+                />
+                {spark}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </UIFrame>
   );

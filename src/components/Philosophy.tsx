@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import edanPhoto from "@/assets/edan-dover.jpg";
+import edanPhoto from "@/assets/edan-dover-small.jpg";
 
 const Philosophy = () => {
   return (
@@ -54,15 +54,12 @@ const Philosophy = () => {
               real in their own unique voice, not replace it.
             </p>
             <div className="flex items-center gap-3 border-t border-[#E5E4E8] pt-4">
-              <div className="h-12 w-12 flex-shrink-0 overflow-hidden rounded-full">
-                <img
-                  src={edanPhoto}
-                  alt="Edan Dover"
-                  loading="lazy"
-                  className="h-full w-full object-cover"
-                  style={{ objectPosition: "44% 3%", transform: "scale(3.4)", transformOrigin: "44% 7%" }}
-                />
-              </div>
+              <img
+                src={edanPhoto}
+                alt="Edan Dover"
+                loading="lazy"
+                className="h-12 w-12 flex-shrink-0 rounded-full object-cover"
+              />
               <div>
                 <div className="text-sm font-semibold text-[#1E1324]">Edan Dover</div>
                 <div className="text-xs text-[#5D5065]">Producer &amp; Songwriter · Founder, Lyric Genie</div>

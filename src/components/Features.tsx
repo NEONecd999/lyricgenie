@@ -1254,7 +1254,7 @@ const Features = () => {
     },
     {
       eyebrow: "LYRIC SHEETS",
-      title: "Share with anyone, anywhere.",
+      title: "A clean lyric sheet, one tap away.",
       body: "Auto-formatted sheets with proper credits, PRO splits, and IPIs. Export to PDF or a public URL.",
       preview: <CompactSheet />,
       tint: LG_AMBER,

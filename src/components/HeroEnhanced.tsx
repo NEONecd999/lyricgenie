@@ -382,19 +382,19 @@ const HeroEnhanced = () => {
               style={{ top: 24, left: -260, width: 240 }}
             >
               <div
-                className="rounded-2xl p-3.5 shadow-[0_10px_30px_-8px_rgba(30,19,36,0.22)]"
+                className="rounded-2xl p-3.5 shadow-[0_18px_40px_-12px_rgba(30,19,36,0.55)]"
                 style={{
-                  background: "rgba(255,255,255,0.55)",
+                  background: "rgba(30,19,36,0.55)",
                   backdropFilter: "blur(24px) saturate(180%)",
                   WebkitBackdropFilter: "blur(24px) saturate(180%)",
-                  border: "1px solid rgba(255,255,255,0.6)",
+                  border: "1px solid rgba(255,255,255,0.15)",
                 }}
               >
                 <div className="mb-2 flex items-center gap-1.5">
-                  <SfIcon name="sparkles" size={11} color="#6F50B8" />
+                  <SfIcon name="sparkles" size={11} color="#F6ECC9" />
                   <span
                     className="text-[9.5px] font-bold uppercase"
-                    style={{ letterSpacing: ".12em", color: "#6F50B8" }}
+                    style={{ letterSpacing: ".12em", color: "#F6ECC9" }}
                   >
                     Wish Workshop
                   </span>
@@ -408,7 +408,7 @@ const HeroEnhanced = () => {
                   </span>
                   <span
                     className="rounded-full border px-2.5 py-0.5 text-[10px] font-semibold"
-                    style={{ borderColor: "#6F50B8", color: "#6F50B8" }}
+                    style={{ borderColor: "#B19BE2", color: "#B19BE2" }}
                   >
                     Happier
                   </span>
@@ -417,8 +417,8 @@ const HeroEnhanced = () => {
                   className="font-serif italic"
                   style={{
                     fontSize: 13.5,
-                    color: "#1E1324",
-                    background: "rgba(58,123,208,0.12)",
+                    color: "#fff",
+                    background: "rgba(58,123,208,0.35)",
                     borderRadius: 10,
                     padding: "7px 10px",
                     lineHeight: 1.35,
@@ -435,19 +435,19 @@ const HeroEnhanced = () => {
               style={{ top: 170, right: -240, width: 210, animationDelay: "0.6s" }}
             >
               <div
-                className="rounded-2xl p-3.5 shadow-[0_10px_30px_-8px_rgba(30,19,36,0.22)]"
+                className="rounded-2xl p-3.5 shadow-[0_18px_40px_-12px_rgba(30,19,36,0.55)]"
                 style={{
-                  background: "rgba(255,255,255,0.55)",
+                  background: "rgba(30,19,36,0.55)",
                   backdropFilter: "blur(24px) saturate(180%)",
                   WebkitBackdropFilter: "blur(24px) saturate(180%)",
-                  border: "1px solid rgba(255,255,255,0.6)",
+                  border: "1px solid rgba(255,255,255,0.15)",
                 }}
               >
                 <div className="mb-2 flex items-center gap-1.5">
-                  <SfIcon name="character.book.closed.fill" size={11} color="#6F50B8" />
+                  <SfIcon name="character.book.closed.fill" size={11} color="#F6ECC9" />
                   <span
                     className="text-[9.5px] font-bold uppercase"
-                    style={{ letterSpacing: ".12em", color: "#6F50B8" }}
+                    style={{ letterSpacing: ".12em", color: "#F6ECC9" }}
                   >
                     Rhymes
                   </span>
@@ -457,7 +457,7 @@ const HeroEnhanced = () => {
                   style={{
                     fontSize: 20,
                     fontWeight: 700,
-                    color: "#1E1324",
+                    color: "#fff",
                     letterSpacing: "-0.015em",
                     lineHeight: 1,
                   }}
@@ -466,7 +466,7 @@ const HeroEnhanced = () => {
                 </div>
                 <div
                   className="grid grid-cols-2"
-                  style={{ gap: "3px 12px", fontSize: 12, color: "#6F50B8" }}
+                  style={{ gap: "3px 12px", fontSize: 12, color: "#B19BE2" }}
                 >
                   <span>alone</span>
                   <span>stone</span>
@@ -482,36 +482,36 @@ const HeroEnhanced = () => {
               style={{ top: 330, left: -240, width: 220, animationDelay: "1.2s" }}
             >
               <div
-                className="rounded-2xl p-3.5 shadow-[0_10px_30px_-8px_rgba(30,19,36,0.22)]"
+                className="rounded-2xl p-3.5 shadow-[0_18px_40px_-12px_rgba(30,19,36,0.55)]"
                 style={{
-                  background: "rgba(255,255,255,0.55)",
+                  background: "rgba(30,19,36,0.55)",
                   backdropFilter: "blur(24px) saturate(180%)",
                   WebkitBackdropFilter: "blur(24px) saturate(180%)",
-                  border: "1px solid rgba(255,255,255,0.6)",
+                  border: "1px solid rgba(255,255,255,0.15)",
                 }}
               >
                 <div className="mb-2 flex items-center gap-1.5">
-                  <SfIcon name="person.2.fill" size={11} color="#6F50B8" />
+                  <SfIcon name="person.2.fill" size={11} color="#F6ECC9" />
                   <span
                     className="text-[9.5px] font-bold uppercase"
-                    style={{ letterSpacing: ".12em", color: "#6F50B8" }}
+                    style={{ letterSpacing: ".12em", color: "#F6ECC9" }}
                   >
                     Collaborators
                   </span>
                 </div>
                 <div className="mb-2 flex flex-wrap gap-1">
                   {[
-                    { c: "#6FA83C", n: "Edan" },
-                    { c: "#6F50B8", n: "Anton" },
-                    { c: "#C9932E", n: "Kasper" },
+                    { c: "#6FA83C", light: "#9DD366", n: "Edan" },
+                    { c: "#6F50B8", light: "#B19BE2", n: "Anton" },
+                    { c: "#C9932E", light: "#E6B859", n: "Kasper" },
                   ].map((p) => (
                     <span
                       key={p.n}
                       className="inline-flex items-center gap-1 rounded-full"
                       style={{
                         padding: "2px 7px 2px 5px",
-                        background: `${p.c}22`,
-                        color: p.c,
+                        background: `${p.c}33`,
+                        color: p.light,
                         fontSize: 10,
                         fontWeight: 700,
                       }}
@@ -521,7 +521,7 @@ const HeroEnhanced = () => {
                           width: 5,
                           height: 5,
                           borderRadius: 9999,
-                          background: p.c,
+                          background: p.light,
                         }}
                       />
                       {p.n}
@@ -529,10 +529,10 @@ const HeroEnhanced = () => {
                   ))}
                 </div>
                 <div className="flex items-center gap-2">
-                  <span style={{ width: 3, height: 14, background: "#6FA83C", borderRadius: 2 }} />
+                  <span style={{ width: 3, height: 14, background: "#9DD366", borderRadius: 2 }} />
                   <span
                     className="text-[10px] font-bold"
-                    style={{ color: "#6FA83C", letterSpacing: ".05em" }}
+                    style={{ color: "#9DD366", letterSpacing: ".05em" }}
                   >
                     CHORUS · 3 writers
                   </span>
@@ -546,12 +546,12 @@ const HeroEnhanced = () => {
               style={{ bottom: 40, right: -250, width: 230, animationDelay: "1.8s" }}
             >
               <div
-                className="rounded-2xl p-3.5 shadow-[0_10px_30px_-8px_rgba(30,19,36,0.22)]"
+                className="rounded-2xl p-3.5 shadow-[0_18px_40px_-12px_rgba(30,19,36,0.55)]"
                 style={{
-                  background: "rgba(255,255,255,0.55)",
+                  background: "rgba(30,19,36,0.55)",
                   backdropFilter: "blur(24px) saturate(180%)",
                   WebkitBackdropFilter: "blur(24px) saturate(180%)",
-                  border: "1px solid rgba(255,255,255,0.6)",
+                  border: "1px solid rgba(255,255,255,0.15)",
                 }}
               >
                 <div className="flex items-center gap-2.5">
@@ -569,7 +569,7 @@ const HeroEnhanced = () => {
                   <div className="min-w-0 flex-1">
                     <div
                       className="mb-1"
-                      style={{ fontSize: 11.5, fontWeight: 700, color: "#1E1324", lineHeight: 1 }}
+                      style={{ fontSize: 11.5, fontWeight: 700, color: "#fff", lineHeight: 1 }}
                     >
                       Verse Melody
                     </div>
@@ -578,16 +578,17 @@ const HeroEnhanced = () => {
                         {[5, 10, 16, 9, 13, 6, 11, 4, 14, 8].map((h, i) => (
                           <span
                             key={i}
-                            className="rounded-sm bg-primary"
+                            className="rounded-sm"
                             style={{
                               width: 2,
                               height: h,
+                              background: "#F6ECC9",
                               animation: `wave 1.2s ease-in-out ${i * 0.08}s infinite`,
                             }}
                           />
                         ))}
                       </div>
-                      <span style={{ fontSize: 10, color: "#5D5065" }}>0:42</span>
+                      <span style={{ fontSize: 10, color: "rgba(255,255,255,0.7)" }}>0:42</span>
                     </div>
                   </div>
                 </div>

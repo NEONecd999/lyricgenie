@@ -9,7 +9,7 @@ const AppStoreBar = () => {
       <div className="flex items-center justify-between px-4 py-2">
         <div className="flex items-center gap-3">
           <img
-            src="/images/app-icon.jpg"
+            src="/images/app-icon-glass.png"
             alt="Lyric Genie"
             className="h-12 w-12 rounded-xl shadow-sm"
           />

@@ -312,11 +312,11 @@ const WishWorkshopSpotlight = ({ active }: { active: boolean }) => {
             <div
               key={t}
               style={{
-                padding: "10px 20px",
+                padding: "11px 22px",
                 borderRadius: 9999,
                 background: isSel ? LG_BLUE : "rgba(127,98,196,0.18)",
                 color: isSel ? "#fff" : LG_INK,
-                fontSize: 14,
+                fontSize: 16,
                 fontWeight: 500,
                 border: `1px solid ${isSel ? "transparent" : "rgba(127,98,196,0.28)"}`,
                 boxShadow: isSel ? "0 4px 16px rgba(58,123,208,.45)" : "none",

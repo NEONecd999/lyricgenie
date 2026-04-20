@@ -54,12 +54,15 @@ const Philosophy = () => {
               through your own unique voice — not a one-click prompt that generates a song for you.
             </p>
             <div className="flex items-center gap-3 border-t border-[#E5E4E8] pt-4">
-              <img
-                src={edanPhoto}
-                alt="Edan Dover"
-                loading="lazy"
-                className="h-11 w-11 rounded-full object-cover object-top"
-              />
+              <div className="h-12 w-12 flex-shrink-0 overflow-hidden rounded-full">
+                <img
+                  src={edanPhoto}
+                  alt="Edan Dover"
+                  loading="lazy"
+                  className="h-full w-full object-cover"
+                  style={{ objectPosition: "50% 18%", transform: "scale(1.9)", transformOrigin: "50% 22%" }}
+                />
+              </div>
               <div>
                 <div className="text-sm font-semibold text-[#1E1324]">Edan Dover</div>
                 <div className="text-xs text-[#5D5065]">Producer &amp; Songwriter · Founder, Lyric Genie</div>

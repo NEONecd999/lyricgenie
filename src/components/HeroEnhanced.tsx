@@ -303,7 +303,7 @@ const HeroEnhanced = () => {
 
       <div className="container relative z-10 mx-auto grid grid-cols-1 items-center gap-10 px-4 md:px-6 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] lg:gap-14">
         {/* Left column — copy */}
-        <div className="max-w-[640px]">
+        <div className="mx-auto max-w-[640px] text-center lg:mx-0 lg:text-left">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -346,12 +346,13 @@ const HeroEnhanced = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
+            className="mx-auto lg:mx-0"
             style={{
               fontSize: 19,
               lineHeight: 1.55,
               color: "rgba(255,255,255,.85)",
               maxWidth: 560,
-              margin: "0 0 12px",
+              margin: "0 auto 12px",
             }}
           >
             Capture ideas, shape lyrics, break writer's block with AI, and co-write in real-time.
@@ -371,7 +372,7 @@ const HeroEnhanced = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex flex-wrap gap-3"
+            className="flex flex-wrap justify-center gap-3 lg:justify-start"
           >
             <a
               href="https://apps.apple.com/us/app/lyric-genie/id6739787614"

@@ -32,21 +32,33 @@ function useInView(threshold = 0.25): [React.RefObject<HTMLDivElement>, boolean]
 }
 
 // ── Reusable UI frame ───────────────────────────────────────
-const UIFrame = ({ children, tone = "paper" }: { children: React.ReactNode; tone?: "paper" | "white" }) => (
-  <div
-    className="relative w-full max-w-[520px]"
-    style={{
-      aspectRatio: "5/6",
-      background: tone === "paper" ? LG_PAPER : "#fff",
-      borderRadius: 28,
-      overflow: "hidden",
-      boxShadow:
-        "0 30px 80px -20px rgba(30,19,36,.35), 0 0 0 1px rgba(30,19,36,.06), inset 0 1px 0 rgba(255,255,255,.5)",
-    }}
-  >
-    {children}
-  </div>
-);
+const UIFrame = ({
+  children,
+  tone = "paper",
+  mobileAspect = "sm",
+}: {
+  children: React.ReactNode;
+  tone?: "paper" | "white";
+  /** How tall to render on mobile (< md). "sm" ≈ slight expansion, "lg" ≈ much more.
+      From md up the card uses the standard 5/6 aspect. */
+  mobileAspect?: "sm" | "lg";
+}) => {
+  const mobileClass = mobileAspect === "lg" ? "aspect-[5/9]" : "aspect-[5/7]";
+  return (
+    <div
+      className={`relative w-full max-w-[520px] ${mobileClass} md:aspect-[5/6]`}
+      style={{
+        background: tone === "paper" ? LG_PAPER : "#fff",
+        borderRadius: 28,
+        overflow: "hidden",
+        boxShadow:
+          "0 30px 80px -20px rgba(30,19,36,.35), 0 0 0 1px rgba(30,19,36,.06), inset 0 1px 0 rgba(255,255,255,.5)",
+      }}
+    >
+      {children}
+    </div>
+  );
+};
 
 // ══════════════════════════════════════════════════════════
 // Spotlight 1 · Write Lyrics — typewriter
@@ -271,7 +283,7 @@ const WishWorkshopSpotlight = ({ active }: { active: boolean }) => {
   const currentTone = WISH_TONES[toneIdx];
 
   return (
-    <UIFrame tone="paper">
+    <UIFrame tone="paper" mobileAspect="lg">
       <div className="text-center" style={{ padding: "22px 28px 14px" }}>
         <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: ".12em", color: LG_PURPLE }}>
           WISH WORKSHOP
@@ -484,7 +496,7 @@ const CowriteSpotlight = ({ active }: { active: boolean }) => {
   }, [active]);
 
   return (
-    <UIFrame tone="paper">
+    <UIFrame tone="paper" mobileAspect="lg">
       <div style={{ padding: "22px 28px 14px" }}>
         <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: ".12em", color: LG_PURPLE }}>
           LIVE SESSION · 3 WRITERS
@@ -586,7 +598,7 @@ const RhymeSpotlight = ({ active }: { active: boolean }) => {
   const tokens = RHYME_DATA[cur.key];
 
   return (
-    <UIFrame tone="paper">
+    <UIFrame tone="paper" mobileAspect="lg">
       <div className="text-center" style={{ padding: "22px 28px 10px" }}>
         <div
           className="flex flex-wrap justify-center gap-2.5"

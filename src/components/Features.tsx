@@ -10,6 +10,7 @@ const LG_PURPLE = "#6F50B8";
 const LG_PURPLE_SOFT = "#B19BE2";
 const LG_GREEN = "#6FA83C";
 const LG_CORAL = "#E8663C";
+const LG_PINK = "#E45C7A";
 const LG_AMBER = "#C9932E";
 const LG_BLUE = "#3A7BD0";
 
@@ -263,10 +264,10 @@ const WishWorkshopSpotlight = ({ active }: { active: boolean }) => {
         const pills = WISH_TONES[t].pills;
         for (let p = 0; p < pills.length && !cancel; p++) {
           setPillSel(p);
-          await new Promise((r) => setTimeout(r, 950));
+          await new Promise((r) => setTimeout(r, 1500));
         }
         // Brief hold on the last pill before switching tone
-        await new Promise((r) => setTimeout(r, 500));
+        await new Promise((r) => setTimeout(r, 700));
       }
       if (!cancel) run();
     };
@@ -1008,6 +1009,190 @@ const CompactSheet = () => (
 );
 
 // ══════════════════════════════════════════════════════════
+// Compact preview · Freestyle Mode
+// Pulsing live-mic with a streaming transcription caption
+// ══════════════════════════════════════════════════════════
+const CompactFreestyle = () => (
+  <div className="absolute inset-0">
+    <div className="absolute" style={{ top: "38%", left: "50%", transform: "translate(-50%,-50%)" }}>
+      <div className="relative flex items-center justify-center">
+        <span
+          className="absolute rounded-full"
+          style={{
+            width: 86,
+            height: 86,
+            border: `2px solid ${LG_PINK}`,
+            opacity: 0.45,
+            animation: "lgPing 1.8s ease-out infinite",
+          }}
+        />
+        <span
+          className="absolute rounded-full"
+          style={{
+            width: 62,
+            height: 62,
+            border: `2px solid ${LG_PINK}`,
+            opacity: 0.7,
+            animation: "lgPing 1.8s ease-out .45s infinite",
+          }}
+        />
+        <div
+          className="flex items-center justify-center rounded-full"
+          style={{
+            width: 42,
+            height: 42,
+            background: LG_PINK,
+            boxShadow: `0 8px 18px ${LG_PINK}60`,
+            color: "#fff",
+          }}
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <rect x="9" y="2" width="6" height="12" rx="3" />
+            <path
+              d="M19 10v2a7 7 0 0 1-14 0v-2"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
+            <line x1="12" y1="19" x2="12" y2="22" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div
+      className="absolute flex items-center gap-2"
+      style={{ left: 18, right: 18, bottom: 16 }}
+    >
+      <span
+        style={{
+          width: 6,
+          height: 6,
+          borderRadius: 9999,
+          background: LG_PINK,
+          flexShrink: 0,
+          animation: "lgCaret 1s steps(2) infinite",
+        }}
+      />
+      <span style={{ fontSize: 11, color: LG_INK_SOFT, fontStyle: "italic" }}>
+        "I fell deep into the madness…"
+      </span>
+    </div>
+  </div>
+);
+
+// ══════════════════════════════════════════════════════════
+// Compact preview · Performance Mode
+// Black stage-screen with big bold white lyrics
+// ══════════════════════════════════════════════════════════
+const CompactPerformance = () => (
+  <div className="absolute inset-0 flex items-center justify-center" style={{ padding: "16px 22px" }}>
+    <div
+      className="relative flex h-full w-full flex-col items-center justify-center text-center"
+      style={{
+        background: "#0A0A0A",
+        borderRadius: 10,
+        padding: "14px 16px",
+        boxShadow: "0 10px 24px -6px rgba(10,10,10,.5), inset 0 0 0 1px rgba(255,255,255,.04)",
+      }}
+    >
+      <div
+        className="absolute flex items-center gap-1.5"
+        style={{ top: 8, left: 10, fontSize: 8, fontWeight: 700, letterSpacing: ".14em", color: "rgba(255,255,255,.55)" }}
+      >
+        <span
+          style={{
+            width: 5,
+            height: 5,
+            borderRadius: 9999,
+            background: "#E8663C",
+          }}
+        />
+        LIVE
+      </div>
+      <div
+        className="font-display"
+        style={{ color: "#fff", fontWeight: 800, fontSize: 17, lineHeight: 1.2, letterSpacing: "-0.01em" }}
+      >
+        I fell deep
+      </div>
+      <div
+        className="font-display"
+        style={{ color: "#fff", fontWeight: 800, fontSize: 17, lineHeight: 1.2, letterSpacing: "-0.01em" }}
+      >
+        into the madness
+      </div>
+    </div>
+  </div>
+);
+
+// ══════════════════════════════════════════════════════════
+// Compact preview · Import Audio
+// Stack of mini audio cards "landing" into the song
+// ══════════════════════════════════════════════════════════
+const CompactImport = () => {
+  const tracks = [
+    { name: "Voice Memos", color: "#E45C7A", from: 0 },
+    { name: "Logic Pro", color: "#3A7BD0", from: 1 },
+    { name: "Files", color: "#6FA83C", from: 2 },
+  ];
+  return (
+    <div className="absolute inset-0" style={{ padding: "14px 18px" }}>
+      <div className="flex h-full flex-col gap-1.5">
+        {tracks.map((t, i) => (
+          <div
+            key={t.name}
+            className="flex items-center gap-2"
+            style={{
+              background: "#fff",
+              borderRadius: 8,
+              padding: "7px 10px",
+              boxShadow: "0 2px 8px rgba(30,19,36,.08), 0 0 0 1px rgba(30,19,36,.04)",
+              transform: `translateX(${t.from * 6}px)`,
+              flex: 1,
+            }}
+          >
+            <div
+              className="flex flex-shrink-0 items-center justify-center"
+              style={{
+                width: 22,
+                height: 22,
+                borderRadius: 5,
+                background: t.color,
+                color: "#fff",
+              }}
+            >
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round">
+                <path d="M3 12h2l2-4 4 8 4-8 2 4h4" />
+              </svg>
+            </div>
+            <div className="flex min-w-0 flex-col gap-0.5">
+              <div style={{ fontSize: 9, fontWeight: 700, color: LG_INK, lineHeight: 1 }}>
+                {t.name}
+              </div>
+              <div className="flex items-center gap-[1.5px]" style={{ height: 8 }}>
+                {Array.from({ length: 22 }).map((_, j) => (
+                  <span
+                    key={j}
+                    style={{
+                      width: 1.5,
+                      height: 2 + Math.abs(Math.sin(i * 3 + j * 0.6)) * 6,
+                      background: t.color,
+                      opacity: 0.65,
+                      borderRadius: 1,
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// ══════════════════════════════════════════════════════════
 // Row wrapper
 // ══════════════════════════════════════════════════════════
 const SpotlightRow = ({
@@ -1077,7 +1262,7 @@ const SpotlightRow = ({
 const Features = () => {
   const compactItems = [
     {
-      eyebrow: "VOICE MEMOS",
+      eyebrow: "RECORDINGS",
       title: "Hum it. Keep it linked.",
       body: "Voice memos attach to the exact lyric line they belong to. Nothing gets lost between sessions.",
       preview: <CompactVoice />,
@@ -1096,6 +1281,27 @@ const Features = () => {
       body: "Auto-formatted sheets with proper credits, PRO splits, and IPIs. Export to PDF or a public URL.",
       preview: <CompactSheet />,
       tint: LG_AMBER,
+    },
+    {
+      eyebrow: "FREESTYLE MODE",
+      title: "Sing it. We'll catch the words.",
+      body: "Capture the magic by singing a melody idea off the cuff. Watch your lyrics appear as you sing, stored and linked to your song.",
+      preview: <CompactFreestyle />,
+      tint: LG_PINK,
+    },
+    {
+      eyebrow: "PERFORMANCE MODE",
+      title: "Stage-ready lyrics.",
+      body: "Big, bold white text on a pure-black screen so your lyrics stay readable from behind the mic.",
+      preview: <CompactPerformance />,
+      tint: LG_GREEN,
+    },
+    {
+      eyebrow: "IMPORT AUDIO",
+      title: "Pull in demos from anywhere.",
+      body: "Attach song demos, voice memos, or recordings from any app and keep them side-by-side with your lyrics.",
+      preview: <CompactImport />,
+      tint: LG_BLUE,
     },
   ];
 

@@ -1201,7 +1201,7 @@ const Features = () => {
         <SpotlightRow
           eyebrow="RHYME · THESAURUS · SOUNDS-LIKE · ASSOCIATIONS"
           title="A complete lookup suite, in one sheet."
-          body="Rhymes, thesaurus, sounds-like and associations, all in one bottom sheet. Jump between perfect, near, multi-syllabic and phrase rhymes without leaving the line you're on."
+          body="Rhymes, synonyms, sound-alikes and word associations, all in one bottom sheet. Jump between perfect, near, multi-syllabic and phrase rhymes without losing your place."
           tint="rgba(58,123,208,.22)"
           child={(a) => <RhymeSpotlight active={a} />}
         />

@@ -17,7 +17,17 @@ const Philosophy = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <div className="mb-4 text-[13px] font-semibold uppercase tracking-[0.12em] text-primary">
+            <div
+              className="mb-4 inline-block rounded-full uppercase"
+              style={{
+                padding: "6px 14px",
+                background: "rgba(127,98,196,.1)",
+                color: "#6F50B8",
+                fontSize: 12,
+                fontWeight: 700,
+                letterSpacing: ".12em",
+              }}
+            >
               Our Philosophy
             </div>
             <h2 className="font-display text-4xl md:text-5xl lg:text-[52px] font-bold leading-[1.08] tracking-tight text-[#1E1324] mb-6">

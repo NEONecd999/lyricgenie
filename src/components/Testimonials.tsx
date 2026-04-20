@@ -49,7 +49,17 @@ const Testimonials = () => {
           viewport={{ once: true }}
           className="text-center mb-14"
         >
-          <div className="mb-4 text-[13px] font-semibold uppercase tracking-[0.12em] text-primary">
+          <div
+            className="mb-4 inline-block rounded-full uppercase"
+            style={{
+              padding: "6px 14px",
+              background: "rgba(127,98,196,.1)",
+              color: "#6F50B8",
+              fontSize: 12,
+              fontWeight: 700,
+              letterSpacing: ".12em",
+            }}
+          >
             Loved by songwriters
           </div>
           <h2 className="font-display mx-auto max-w-3xl text-4xl md:text-5xl font-bold leading-[1.1] tracking-tight text-[#1E1324]">

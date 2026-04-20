@@ -1404,7 +1404,19 @@ const Features = () => {
         {/* Compact cards — AND MORE */}
         <div className="mt-[60px]">
           <div className="mb-6 text-center">
-            <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: ".14em", color: LG_PURPLE }}>AND MORE</div>
+            <div
+              className="inline-block rounded-full"
+              style={{
+                padding: "6px 14px",
+                background: "rgba(127,98,196,.1)",
+                color: LG_PURPLE,
+                fontSize: 12,
+                fontWeight: 700,
+                letterSpacing: ".14em",
+              }}
+            >
+              AND MORE
+            </div>
           </div>
           <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-3">
             {compactItems.map((it) => (

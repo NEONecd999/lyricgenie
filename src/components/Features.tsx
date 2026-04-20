@@ -698,37 +698,21 @@ const AI_CONTEXT_SETS: {
   mood: string;
   theme: string;
   similar: string;
-  sparks: string[];
 }[] = [
   {
     mood: "cinematic, late-night, yearning but hopeful",
     theme: "heartbreak, chasing an old flame through a city at 3am",
     similar: "Bon Iver, The 1975, Frank Ocean",
-    sparks: [
-      "neon streetlights haunting me",
-      "the taste of cheap wine and goodbye",
-      "still chasing ghosts in every cab",
-    ],
   },
   {
     mood: "euphoric, neon, wide-open summer",
     theme: "meeting someone on the last day of vacation",
     similar: "HAIM, The Weeknd, Harry Styles",
-    sparks: [
-      "golden hour kissing your skin",
-      "endless highway, windows rolled down",
-      "one more night before the sun gives up",
-    ],
   },
   {
     mood: "nostalgic, dusty porch, slow-burn",
     theme: "coming home to a town that has changed since you left",
     similar: "Kacey Musgraves, Zach Bryan, Jason Isbell",
-    sparks: [
-      "mama's porch light burning low",
-      "the old oak still keeping time",
-      "hometown ghosts won't let me sleep",
-    ],
   },
 ];
 const AI_FIELD_LABELS = ["Mood", "Theme", "Similar Artists"] as const;
@@ -778,20 +762,58 @@ const AiContextSpotlight = ({ active }: { active: boolean }) => {
   const current = AI_CONTEXT_SETS[setIdx];
   const values = setAsArray(current);
 
+  // Split a value string into already-completed chips (pre-comma) + pending text (post-last-comma).
+  const parseTokens = (text: string) => {
+    const parts = text.split(",");
+    const chips = parts.slice(0, -1).map((p) => p.trim()).filter(Boolean);
+    const pending = parts[parts.length - 1].replace(/^\s+/, "");
+    return { chips, pending };
+  };
+
+  const placeholderFor = (label: string) =>
+    label === "Mood"
+      ? "e.g. cinematic, late-night…"
+      : label === "Theme"
+      ? "What's the story?"
+      : "e.g. Bon Iver, Phoebe Bridgers…";
+
   return (
     <UIFrame tone="paper">
-      <div style={{ padding: "22px 26px 10px" }}>
+      {/* Song title bar — anchors the sheet to a specific song */}
+      <div
+        className="flex items-center justify-center"
+        style={{
+          padding: "16px 20px 12px",
+          borderBottom: "1px solid rgba(30,19,36,.08)",
+        }}
+      >
+        <div
+          className="font-display"
+          style={{
+            fontWeight: 700,
+            fontSize: 16,
+            color: LG_INK,
+            letterSpacing: "-0.015em",
+          }}
+        >
+          Night Ride
+        </div>
+      </div>
+
+      <div style={{ padding: "18px 26px 6px" }}>
         <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: ".12em", color: LG_PURPLE }}>
           AI CONTEXT
         </div>
       </div>
 
-      <div className="flex flex-col gap-3" style={{ padding: "6px 26px 0" }}>
+      <div className="flex flex-col gap-4" style={{ padding: "8px 26px 0" }}>
         {AI_FIELD_LABELS.map((label, i) => {
           const done = i < fieldIdx;
           const isCurrent = i === fieldIdx;
           const text = done ? values[i] : isCurrent ? typed : "";
           const focused = isCurrent;
+          const { chips, pending } = parseTokens(text);
+          const hasContent = chips.length > 0 || pending.length > 0;
           return (
             <div key={label}>
               <div
@@ -801,55 +823,70 @@ const AiContextSpotlight = ({ active }: { active: boolean }) => {
                   letterSpacing: ".14em",
                   textTransform: "uppercase",
                   color: LG_INK_SOFT,
-                  marginBottom: 5,
+                  marginBottom: 6,
                 }}
               >
                 {label}
               </div>
               <div
+                className="flex flex-wrap items-center gap-1.5"
                 style={{
                   background: "#fff",
                   border: `1px solid ${focused ? LG_PURPLE : "#E5E4E8"}`,
                   borderRadius: 12,
-                  padding: "11px 14px",
-                  fontSize: 14,
-                  lineHeight: 1.4,
-                  color: LG_INK,
-                  minHeight: 44,
+                  padding: "10px 12px",
+                  minHeight: 48,
                   boxShadow: focused
                     ? `0 0 0 4px ${LG_PURPLE}1F`
                     : "inset 0 1px 2px rgba(30,19,36,.03)",
                   transition: "border-color .25s, box-shadow .25s",
                 }}
               >
-                {text || (
-                  <span style={{ color: "#A39CA8" }}>
-                    {label === "Mood"
-                      ? "e.g. cinematic, late-night…"
-                      : label === "Theme"
-                      ? "What's the story?"
-                      : "e.g. Bon Iver, Phoebe Bridgers…"}
-                  </span>
-                )}
-                {isCurrent && (
+                {chips.map((chip) => (
                   <span
+                    key={chip}
                     style={{
-                      display: "inline-block",
-                      width: 2,
-                      height: 15,
-                      marginLeft: 2,
-                      background: LG_PURPLE,
-                      verticalAlign: "-3px",
-                      animation: "lgCaret 0.9s steps(2) infinite",
+                      background: `${LG_PURPLE}14`,
+                      color: LG_INK,
+                      borderRadius: 8,
+                      padding: "4px 9px",
+                      fontSize: 13,
+                      lineHeight: 1.2,
+                      fontWeight: 500,
+                      animation: "lgFadeUp .28s cubic-bezier(.4,.0,.2,1) both",
+                      opacity: 0,
                     }}
-                  />
+                  >
+                    {chip}
+                  </span>
+                ))}
+                {hasContent ? (
+                  <span style={{ fontSize: 14, color: LG_INK, lineHeight: 1.2 }}>
+                    {pending}
+                    {isCurrent && (
+                      <span
+                        style={{
+                          display: "inline-block",
+                          width: 2,
+                          height: 15,
+                          marginLeft: 1,
+                          background: LG_PURPLE,
+                          verticalAlign: "-3px",
+                          animation: "lgCaret 0.9s steps(2) infinite",
+                        }}
+                      />
+                    )}
+                  </span>
+                ) : (
+                  <span style={{ color: "#A39CA8", fontSize: 14 }}>
+                    {placeholderFor(label)}
+                  </span>
                 )}
               </div>
             </div>
           );
         })}
       </div>
-
     </UIFrame>
   );
 };

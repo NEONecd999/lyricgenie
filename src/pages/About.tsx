@@ -4,7 +4,7 @@ import edanPhoto from "@/assets/edan-dover.jpg";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CTA from "@/components/CTA";
-import AppStoreBar from "@/components/AppStoreBar";
+import AnnouncementStrip from "@/components/AnnouncementStrip";
 import SEO from "@/components/SEO";
 
 const About = () => {
@@ -13,7 +13,7 @@ const About = () => {
         title="About"
         description="Lyric Genie is an iOS app built by Edan Dover (Edan Dover Inc) — a native songwriting app for iPhone, iPad, Mac, and Vision Pro (iOS, iPadOS, macOS, and visionOS). Discover the story behind why it was built and the philosophy that drives it."
       />
-      <AppStoreBar />
+      <AnnouncementStrip />
       <Navbar />
       
       {/* Hero Section */}

@@ -1,6 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import AppStoreBar from "@/components/AppStoreBar";
+import AnnouncementStrip from "@/components/AnnouncementStrip";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Calendar, Clock, ArrowRight } from "lucide-react";
@@ -25,7 +25,7 @@ const Blog = () => {
         title="Blog"
         description="Songwriting tips, techniques, and insights from Lyric Genie. Learn about co-writing, lyric writing, and using AI tools for music creation."
       />
-      <AppStoreBar />
+      <AnnouncementStrip />
       <Navbar />
 
       {/* Hero Section */}

@@ -189,51 +189,59 @@ const WriteLyricsSpotlight = ({ active }: { active: boolean }) => {
 // ══════════════════════════════════════════════════════════
 // Spotlight 2 · Wish Workshop — tone buttons cycle through results
 // Tone copy matches the real prompt guidance in AnthropicClient.swift.
-// Base line being rewritten: "These summer nights"
+// Base line being rewritten: "I fell deep into the madness"
 // ══════════════════════════════════════════════════════════
+const WISH_BASE_LINE = "I fell deep into the madness";
+
 const WISH_TONES: { label: string; pills: string[] }[] = [
   {
-    label: "Darker",
+    label: "Rewrite",
     pills: [
-      "these sleepless, suffocating nights",
-      "nights that never let me go",
-      "through the black of summer",
-      "haunted, breathless summer nights",
-      "nights that bury everything",
-      "these aching, endless nights",
+      "I dove straight into the blackness",
+      "I crashed into the sadness",
+      "I slipped beneath the darkness",
+      "I broke through all the static",
+      "I burned inside the ashes",
+    ],
+  },
+  {
+    label: "Happier",
+    pills: [
+      "I found light beyond the sadness",
+      "I broke free from all the madness",
+      "I saw hope beyond the madness",
+      "I stepped right into the brightness",
+      "I kept searching for the magic",
+    ],
+  },
+  {
+    label: "Simpler",
+    pills: [
+      "I got lost in all the sadness",
+      "I broke down into the darkness",
+      "I fell hard into the badness",
+      "I broke down in the darkness",
+      "I sank down into the darkness",
     ],
   },
   {
     label: "More Visual",
     pills: [
-      "neon reflections on wet streets",
-      "steam rising off July pavement",
-      "fireflies drifting past the pier",
-      "hot asphalt under bare feet",
-      "headlights slicing through the heat",
-      "August moon over the boardwalk",
-    ],
-  },
-  {
-    label: "More Conversational",
-    pills: [
-      "you know how these summer nights go",
-      "remember those summer nights?",
-      "one of those nights, you and me",
-      "we'd stay out late just talking",
-      "talking 'til the sun came up",
-      "just another one of those nights",
+      "I drowned in pools of silver ashes",
+      "I bled out through the canvas",
+      "Slipped through cracks of midnight blackness",
+      "I crashed through mirrors made of glass",
+      "Plunged through smoke and burning patches",
     ],
   },
   {
     label: "More Gen Z",
     pills: [
-      "these summer nights hit different",
-      "main-character summer nights",
-      "no cap, this summer is lore",
-      "these nights lowkey slap",
-      "summer nights, fr fr",
-      "rent-free in these summer nights",
+      "Crashed hard into the panic",
+      "Headfirst into the chaos",
+      "Went feral in the madness",
+      "Went off the deep end, no cap",
+      "Caught feels then went unhinged",
     ],
   },
 ];
@@ -287,7 +295,7 @@ const WishWorkshopSpotlight = ({ active }: { active: boolean }) => {
         >
           {currentTone.label}{" "}
           <span style={{ color: LG_INK_MUTED, fontWeight: 500 }}>·</span>{" "}
-          <span style={{ fontWeight: 500, color: LG_INK_MUTED }}>These summer nights</span>
+          <span style={{ fontWeight: 500, color: LG_INK_MUTED }}>{WISH_BASE_LINE}</span>
         </div>
       </div>
 

@@ -30,7 +30,7 @@ const CTA = () => {
           className="text-center max-w-3xl mx-auto"
         >
           <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-            Ready to Write Your <span className="text-[#F6ECC9]">Next Hit?</span>
+            Ready to Write Your <span className="whitespace-nowrap text-[#F6ECC9]">Next Hit?</span>
           </h2>
           <p className="text-white/80 text-lg md:text-xl mb-10">
             Join professional songwriters who trust Lyric Genie for every session. 

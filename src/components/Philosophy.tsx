@@ -60,7 +60,7 @@ const Philosophy = () => {
                   alt="Edan Dover"
                   loading="lazy"
                   className="h-full w-full object-cover"
-                  style={{ objectPosition: "50% 15%", transform: "scale(3.4)", transformOrigin: "50% 18%" }}
+                  style={{ objectPosition: "45% 4%", transform: "scale(3.4)", transformOrigin: "45% 8%" }}
                 />
               </div>
               <div>

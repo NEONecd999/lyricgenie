@@ -53,9 +53,9 @@ const Testimonials = () => {
             Loved by songwriters
           </div>
           <h2 className="font-display mx-auto max-w-3xl text-4xl md:text-5xl font-bold leading-[1.1] tracking-tight text-[#1E1324]">
-            Used in writing rooms you've{" "}
+            Used in writing rooms behind{" "}
             <span className="bg-gradient-to-r from-[#6F50B8] to-[#C48AE3] bg-clip-text text-transparent">
-              heard on the radio
+              platinum hits
             </span>
           </h2>
         </motion.div>

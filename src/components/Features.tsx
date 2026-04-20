@@ -770,8 +770,17 @@ const AiContextSpotlight = ({ active }: { active: boolean }) => {
   const current = AI_CONTEXT_SETS[setIdx];
   const values = setAsArray(current);
 
-  // Split a value string into already-completed chips (pre-comma) + pending text (post-last-comma).
-  const parseTokens = (text: string) => {
+  // Split a value into chips + pending. While typing, only segments before
+  // the last comma become chips (the last segment is still "pending"). Once
+  // the field is fully typed, promote the trailing segment to a chip too.
+  const parseTokens = (text: string, done: boolean) => {
+    if (done) {
+      const chips = text
+        .split(",")
+        .map((p) => p.trim())
+        .filter(Boolean);
+      return { chips, pending: "" };
+    }
     const parts = text.split(",");
     const chips = parts.slice(0, -1).map((p) => p.trim()).filter(Boolean);
     const pending = parts[parts.length - 1].replace(/^\s+/, "");
@@ -820,7 +829,7 @@ const AiContextSpotlight = ({ active }: { active: boolean }) => {
           const isCurrent = i === fieldIdx;
           const text = done ? values[i] : isCurrent ? typed : "";
           const focused = isCurrent;
-          const { chips, pending } = parseTokens(text);
+          const { chips, pending } = parseTokens(text, done);
           const hasContent = chips.length > 0 || pending.length > 0;
           return (
             <div key={label}>

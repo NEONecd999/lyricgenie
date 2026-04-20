@@ -72,7 +72,7 @@ export default {
       fontFamily: {
         sans: ['Lufga', 'system-ui', '-apple-system', 'sans-serif'],
         display: ['Lufga', 'system-ui', '-apple-system', 'sans-serif'],
-        serif: ['Academico', 'Source Serif 4', 'Source Serif Pro', 'Georgia', 'Times New Roman', 'serif'],
+        serif: ['Academico', '"Source Serif 4"', '"Source Serif Pro"', 'Georgia', '"Times New Roman"', 'serif'],
       },
       keyframes: {
         "accordion-down": {

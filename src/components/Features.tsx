@@ -368,7 +368,7 @@ const WishWorkshopSpotlight = ({ active }: { active: boolean }) => {
       >
         {[
           { l: "Keep end rhyme", on: true },
-          { l: "Keep meter", on: true },
+          { l: "Keep meter & syllables", on: true },
         ].map(({ l, on }) => (
           <div key={l} className="flex items-center gap-[7px]" style={{ fontSize: 11.5, color: LG_INK, fontWeight: 600 }}>
             <div

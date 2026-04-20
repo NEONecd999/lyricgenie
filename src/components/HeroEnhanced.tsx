@@ -76,8 +76,8 @@ const PhoneMockup = () => {
 
         {/* Top toolbar */}
         <div className="flex items-center gap-2" style={{ padding: "6px 14px 8px" }}>
-          <div className="flex h-[22px] w-[22px] items-center justify-center" style={{ color: "#6F50B8" }}>
-            ‹
+          <div className="flex h-[22px] w-[22px] items-center justify-center">
+            <SfIcon name="chevron.left" size={16} color="#6F50B8" />
           </div>
           <div className="flex h-[22px] w-[22px] items-center justify-center" style={{ color: "#8B6FC9", fontSize: 17 }}>
             ↶
@@ -123,8 +123,8 @@ const PhoneMockup = () => {
           <div className="flex h-[22px] w-[22px] items-center justify-center" style={{ color: "#8B6FC9", fontSize: 14 }}>
             ≡
           </div>
-          <div className="flex h-[22px] w-[22px] items-center justify-center" style={{ color: "#8B6FC9", fontSize: 16 }}>
-            ⋯
+          <div className="flex h-[22px] w-[22px] items-center justify-center">
+            <SfIcon name="ellipsis" size={16} color="#8B6FC9" />
           </div>
         </div>
 
@@ -157,7 +157,7 @@ const PhoneMockup = () => {
           >
             High speed car chase · No turning back, end…
           </span>
-          <span style={{ color: "rgba(30,19,36,.5)" }}>⌄</span>
+          <SfIcon name="chevron.down" size={11} color="rgba(30,19,36,.5)" />
         </div>
 
         {/* Song title + sparkle */}
@@ -227,12 +227,9 @@ const PhoneMockup = () => {
               height: 16,
               borderRadius: 5,
               background: "#6FA83C",
-              color: "#fff",
-              fontSize: 9,
-              fontWeight: 700,
             }}
           >
-            ⋯
+            <SfIcon name="ellipsis" size={11} color="#fff" />
           </div>
         </div>
 
@@ -269,14 +266,11 @@ const PhoneMockup = () => {
             className="flex h-10 w-10 items-center justify-center rounded-full"
             style={{
               background: "#B19BE2",
-              color: "#fff",
               boxShadow: "0 10px 22px -6px rgba(127,98,196,.55), 0 1px 3px rgba(30,19,36,.15)",
             }}
             title="Wish Workshop"
           >
-            <svg width="20" height="20" viewBox="0 0 24 22" fill="currentColor">
-              <path d="M9 4V2h3v2h1.5a3.5 3.5 0 0 1 3 5.2l-.5.8H7l-.5-.8A3.5 3.5 0 0 1 9.5 4H9zm-6 8c.5 2 2.5 3 5 3.2.3 1.6 1.2 3 2.5 3.8H4v2h16v-2h-6.5c1.3-.8 2.2-2.2 2.5-3.8 2.5-.2 4.5-1.2 5-3.2H3zM4.5 10c-1.5 0-1.5 2 0 2H6v-2H4.5z" />
-            </svg>
+            <SfIcon src="/images/genie-icon.svg" size={22} color="#fff" />
           </div>
           <div
             className="flex h-10 w-10 items-center justify-center rounded-full"

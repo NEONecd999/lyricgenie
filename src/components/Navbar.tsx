@@ -37,10 +37,10 @@ const Navbar = () => {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
-        className={`sticky top-0 z-50 w-full transition-all duration-300 ${
+        className={`sticky top-0 z-50 w-full transition-colors duration-300 ${
           isScrolled
-            ? "bg-[#6F50B8] backdrop-blur-lg shadow-[0_2px_14px_rgba(30,19,36,0.12)]"
-            : "bg-white border-b border-[#E5E4E8]/60"
+            ? "bg-[#6F50B8] shadow-[0_2px_14px_rgba(30,19,36,0.12)]"
+            : "bg-white shadow-[0_1px_0_rgba(229,228,232,0.6)]"
         }`}
       >
         <div className="container mx-auto px-6">

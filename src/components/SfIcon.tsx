@@ -1,15 +1,19 @@
 import { CSSProperties } from "react";
 
 interface SfIconProps {
-  name: string;
+  /** SF Symbol name from public/sf-symbols (omit if using `src`). */
+  name?: string;
+  /** Custom SVG path (absolute URL). Overrides `name` when provided. */
+  src?: string;
   size?: number;
   color?: string;
   className?: string;
   style?: CSSProperties;
 }
 
-const SfIcon = ({ name, size = 22, color = "currentColor", className = "", style }: SfIconProps) => {
-  const mask = `url(/sf-symbols/${name}.svg) center/contain no-repeat`;
+const SfIcon = ({ name, src, size = 22, color = "currentColor", className = "", style }: SfIconProps) => {
+  const url = src ?? (name ? `/sf-symbols/${name}.svg` : "");
+  const mask = `url(${url}) center/contain no-repeat`;
   return (
     <span
       aria-hidden="true"

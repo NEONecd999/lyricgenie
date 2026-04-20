@@ -419,7 +419,7 @@ const HeroEnhanced = () => {
             {/* Floating bubbles — original site content with bobbing animation */}
             <div
               className="absolute hidden lg:block animate-float"
-              style={{ top: 24, left: -220, width: 220 }}
+              style={{ top: 24, left: -250, width: 220 }}
             >
               <div className="mb-1 text-[11px] font-semibold uppercase tracking-wider text-[#F6ECC9]/80">
                 Smart Dictionaries
@@ -436,7 +436,7 @@ const HeroEnhanced = () => {
 
             <div
               className="absolute hidden lg:block animate-float"
-              style={{ top: 160, right: -210, width: 210, animationDelay: "0.6s" }}
+              style={{ top: 160, right: -240, width: 210, animationDelay: "0.6s" }}
             >
               <div className="mb-1 text-[11px] font-semibold uppercase tracking-wider text-[#F6ECC9]/80">
                 Syllable Tool
@@ -456,7 +456,7 @@ const HeroEnhanced = () => {
 
             <div
               className="absolute hidden lg:block animate-float"
-              style={{ top: 320, left: -200, width: 210, animationDelay: "1.2s" }}
+              style={{ top: 320, left: -230, width: 210, animationDelay: "1.2s" }}
             >
               <div className="mb-1 text-[11px] font-semibold uppercase tracking-wider text-[#F6ECC9]/80">
                 Voice Recording
@@ -483,7 +483,7 @@ const HeroEnhanced = () => {
 
             <div
               className="absolute hidden lg:block animate-float"
-              style={{ bottom: 40, right: -220, width: 220, animationDelay: "1.8s" }}
+              style={{ bottom: 40, right: -250, width: 220, animationDelay: "1.8s" }}
             >
               <div className="mb-1 text-[11px] font-semibold uppercase tracking-wider text-[#F6ECC9]/80">
                 Wish Workshop

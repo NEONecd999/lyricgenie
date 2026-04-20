@@ -354,7 +354,7 @@ const HeroEnhanced = () => {
               margin: "0 0 12px",
             }}
           >
-            Capture ideas, shape lyrics, break writer's block with AI, and co-write in real-time – built for the flow of professional sessions.
+            Capture ideas, shape lyrics, break writer's block with AI, and co-write in real-time.
           </motion.p>
 
           <motion.p

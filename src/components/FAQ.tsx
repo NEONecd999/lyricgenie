@@ -8,11 +8,6 @@ import {
 
 const faqs = [
   {
-    question: "Is Lyric Genie available on Android or in a web browser?",
-    answer:
-      "No, and there aren't plans for one. Lyric Genie is a native iOS, iPadOS, and macOS (Apple Silicon) app so we can use system-level voice memos, spellcheck, and hand-off properly. Your songs sync instantly across iPhone, iPad, and Mac via iCloud.",
-  },
-  {
     question: "Does Lyric Genie work on my iPad or Mac?",
     answer:
       "Yes — it's a native iOS, iPadOS, and macOS (Apple Silicon) app. Just download it from the App Store and your songs sync instantly across all three via iCloud.",
@@ -30,7 +25,7 @@ const faqs = [
   {
     question: "Can I invite co-writers who don't have the app?",
     answer:
-      "They'll need the free tier to join your session. It takes about ten seconds to set up with an Apple ID.",
+      "Yes, from within the app you can share a join link that will allow them to download the app and join your song, free.",
   },
   {
     question: "How does the Wish Workshop AI work?",

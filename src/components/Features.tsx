@@ -1379,7 +1379,7 @@ const Features = () => {
         <SpotlightRow
           eyebrow="WISH WORKSHOP AI"
           title="Stuck on a line? Make a wish."
-          body="Ask for a stronger hook, a moodier bridge, or one more rhyme that actually lands. You stay in the driver's seat. The AI offers options in your voice, never rewriting your song."
+          body="Explore new perspectives and moods. Spark fresh ideas and directions. Iterate until you find the perfect line. Then insert it right into your lyrics or save it for later."
           tint="rgba(127,98,196,.3)"
           child={(a) => <WishWorkshopSpotlight active={a} />}
         />

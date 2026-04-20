@@ -610,39 +610,60 @@ const RhymeSpotlight = ({ active }: { active: boolean }) => {
 // ══════════════════════════════════════════════════════════
 // Spotlight 5 · AI Context — mood/theme/similar artists sheet
 // ══════════════════════════════════════════════════════════
-const AI_CONTEXT_FIELDS = [
-  { label: "Mood", value: "cinematic, late-night, yearning but hopeful" },
-  { label: "Theme", value: "heartbreak, chasing an old flame through a city at 3am" },
-  { label: "Similar Artists", value: "Bon Iver, The 1975, Frank Ocean" },
+const AI_CONTEXT_SETS: { mood: string; theme: string; similar: string }[] = [
+  {
+    mood: "cinematic, late-night, yearning but hopeful",
+    theme: "heartbreak, chasing an old flame through a city at 3am",
+    similar: "Bon Iver, The 1975, Frank Ocean",
+  },
+  {
+    mood: "euphoric, neon, wide-open summer",
+    theme: "meeting someone on the last day of vacation",
+    similar: "HAIM, The Weeknd, Harry Styles",
+  },
+  {
+    mood: "nostalgic, dusty porch, slow-burn",
+    theme: "coming home to a town that has changed since you left",
+    similar: "Kacey Musgraves, Zach Bryan, Jason Isbell",
+  },
 ];
+const AI_FIELD_LABELS = ["Mood", "Theme", "Similar Artists"] as const;
+const setAsArray = (s: (typeof AI_CONTEXT_SETS)[number]) => [s.mood, s.theme, s.similar];
 
 const AiContextSpotlight = ({ active }: { active: boolean }) => {
+  const [setIdx, setSetIdx] = useState(0);
   const [fieldIdx, setFieldIdx] = useState(0);
   const [typed, setTyped] = useState("");
 
   useEffect(() => {
     if (!active) {
+      setSetIdx(0);
       setFieldIdx(0);
       setTyped("");
       return;
     }
     let cancel = false;
     const run = async () => {
-      for (let i = 0; i < AI_CONTEXT_FIELDS.length && !cancel; i++) {
-        setFieldIdx(i);
-        const line = AI_CONTEXT_FIELDS[i].value;
-        for (let c = 0; c <= line.length && !cancel; c++) {
-          setTyped(line.slice(0, c));
-          await new Promise((r) => setTimeout(r, 22));
+      for (let s = 0; s < AI_CONTEXT_SETS.length && !cancel; s++) {
+        setSetIdx(s);
+        const values = setAsArray(AI_CONTEXT_SETS[s]);
+        for (let i = 0; i < values.length && !cancel; i++) {
+          setFieldIdx(i);
+          const line = values[i];
+          for (let c = 0; c <= line.length && !cancel; c++) {
+            setTyped(line.slice(0, c));
+            await new Promise((r) => setTimeout(r, 22));
+          }
+          await new Promise((r) => setTimeout(r, 600));
         }
-        await new Promise((r) => setTimeout(r, 700));
+        // Hold the fully filled card before clearing
+        await new Promise((r) => setTimeout(r, 2200));
+        if (!cancel) {
+          setFieldIdx(0);
+          setTyped("");
+        }
       }
-      await new Promise((r) => setTimeout(r, 2800));
-      if (!cancel) {
-        setFieldIdx(0);
-        setTyped("");
-        run();
-      }
+      if (!cancel) run();
     };
     run();
     return () => {
@@ -650,54 +671,69 @@ const AiContextSpotlight = ({ active }: { active: boolean }) => {
     };
   }, [active]);
 
+  const current = AI_CONTEXT_SETS[setIdx];
+  const values = setAsArray(current);
+
   return (
     <UIFrame tone="paper">
-      <div style={{ padding: "22px 28px 10px" }}>
+      <div style={{ padding: "24px 28px 12px" }}>
         <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: ".12em", color: LG_PURPLE }}>
           AI CONTEXT
         </div>
       </div>
 
-      <div className="flex flex-col gap-4" style={{ padding: "4px 28px 0" }}>
-        {AI_CONTEXT_FIELDS.map((f, i) => {
+      <div className="flex flex-col gap-5" style={{ padding: "8px 28px 24px" }}>
+        {AI_FIELD_LABELS.map((label, i) => {
           const done = i < fieldIdx;
-          const current = i === fieldIdx;
-          const text = done ? f.value : current ? typed : "";
+          const isCurrent = i === fieldIdx;
+          const text = done ? values[i] : isCurrent ? typed : "";
+          const focused = isCurrent;
           return (
-            <div key={f.label}>
+            <div key={label}>
               <div
                 style={{
-                  fontSize: 10.5,
-                  fontWeight: 700,
-                  color: LG_INK_MUTED,
-                  letterSpacing: ".08em",
+                  fontSize: 10,
+                  fontWeight: 600,
+                  letterSpacing: ".14em",
                   textTransform: "uppercase",
-                  marginBottom: 5,
+                  color: LG_INK_SOFT,
+                  marginBottom: 8,
                 }}
               >
-                {f.label}
+                {label}
               </div>
               <div
                 style={{
                   background: "#fff",
-                  border: "1px solid rgba(30,19,36,0.10)",
-                  borderRadius: 10,
-                  padding: "9px 12px",
-                  fontSize: 13.5,
-                  lineHeight: 1.4,
+                  border: `1px solid ${focused ? LG_PURPLE : "#E5E4E8"}`,
+                  borderRadius: 14,
+                  padding: "14px 16px",
+                  fontSize: 15,
+                  lineHeight: 1.45,
                   color: LG_INK,
-                  minHeight: 36,
-                  boxShadow: "inset 0 1px 2px rgba(30,19,36,.03)",
+                  minHeight: 52,
+                  boxShadow: focused
+                    ? `0 0 0 4px ${LG_PURPLE}1F`
+                    : "inset 0 1px 2px rgba(30,19,36,.03)",
+                  transition: "border-color .25s, box-shadow .25s",
                 }}
               >
-                {text}
-                {current && (
+                {text || (
+                  <span style={{ color: "#A39CA8" }}>
+                    {label === "Mood"
+                      ? "e.g. cinematic, late-night…"
+                      : label === "Theme"
+                      ? "What's the story?"
+                      : "e.g. Bon Iver, Phoebe Bridgers…"}
+                  </span>
+                )}
+                {isCurrent && (
                   <span
                     style={{
                       display: "inline-block",
                       width: 2,
-                      height: 14,
-                      marginLeft: 1,
+                      height: 17,
+                      marginLeft: 2,
                       background: LG_PURPLE,
                       verticalAlign: "-3px",
                       animation: "lgCaret 0.9s steps(2) infinite",
@@ -708,39 +744,6 @@ const AiContextSpotlight = ({ active }: { active: boolean }) => {
             </div>
           );
         })}
-      </div>
-
-      {/* Guiding list — which downstream AI features use this context */}
-      <div className="absolute" style={{ left: 28, right: 28, bottom: 22 }}>
-        <div
-          style={{
-            fontSize: 10.5,
-            fontWeight: 700,
-            letterSpacing: ".08em",
-            textTransform: "uppercase",
-            color: LG_INK_MUTED,
-            marginBottom: 7,
-          }}
-        >
-          Guiding
-        </div>
-        <div className="flex flex-wrap gap-1.5">
-          {["Wish Workshop", "Spark", "Rhyme Associations"].map((name) => (
-            <div
-              key={name}
-              style={{
-                fontSize: 11,
-                fontWeight: 600,
-                padding: "4px 10px",
-                borderRadius: 9999,
-                background: `${LG_PURPLE}18`,
-                color: LG_PURPLE,
-              }}
-            >
-              {name}
-            </div>
-          ))}
-        </div>
       </div>
     </UIFrame>
   );
@@ -1017,7 +1020,7 @@ const Features = () => {
           reverse
           eyebrow="AI CONTEXT"
           title="AI that actually knows your song."
-          body="Tell Lyric Genie the mood, theme, and reference artists behind your song. Every AI feature — Wish Workshop, Spark, Rhyme Associations — uses that context so suggestions sound like you, not a generic prompt."
+          body="Tell Lyric Genie the mood, theme, and reference artists behind your song. Every AI feature — Wish Workshop, Spark, Rhyme Associations — uses that context so suggestions are stronger and more specific to your song."
           tint="rgba(177,155,226,.3)"
           child={(a) => <AiContextSpotlight active={a} />}
         />

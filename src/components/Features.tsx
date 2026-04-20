@@ -1362,7 +1362,7 @@ const Features = () => {
           reverse
           eyebrow="AI CONTEXT"
           title="AI that actually knows your song."
-          body="Tell Lyric Genie the mood, theme, and reference artists behind your song. Every AI feature uses that context, so Wish Workshop, Spark, and Rhyme Associations all give you suggestions that are stronger and more specific to your song."
+          body="Tell Lyric Genie the mood, theme, and reference artists behind your song. Every AI feature uses that context to give you suggestions that are stronger and more specific to your song."
           tint="rgba(177,155,226,.3)"
           child={(a) => <AiContextSpotlight active={a} />}
         />

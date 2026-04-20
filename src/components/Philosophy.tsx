@@ -50,8 +50,9 @@ const Philosophy = () => {
               &ldquo;
             </div>
             <p className="font-serif italic text-[22px] leading-[1.5] text-[#1E1324] mt-14 mb-6">
-              Prompting isn't songwriting. AI should help writers say something real in their own
-              unique voice, not replace it.
+              One-shot prompting isn't songwriting. Songwriting is editing, revising, iterating,
+              exploring. AI should help writers say something real in their own unique voice, not
+              replace it.
             </p>
             <div className="flex items-center gap-3 border-t border-[#E5E4E8] pt-4">
               <img

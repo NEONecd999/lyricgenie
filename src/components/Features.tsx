@@ -43,7 +43,7 @@ const UIFrame = ({
       From md up the card uses the standard 5/6 aspect. */
   mobileAspect?: "sm" | "lg";
 }) => {
-  const mobileClass = mobileAspect === "lg" ? "aspect-[5/9]" : "aspect-[5/7]";
+  const mobileClass = mobileAspect === "lg" ? "aspect-[2/3]" : "aspect-[10/13]";
   return (
     <div
       className={`relative w-full max-w-[520px] ${mobileClass} md:aspect-[5/6]`}

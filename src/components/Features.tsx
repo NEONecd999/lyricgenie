@@ -338,7 +338,7 @@ const WishWorkshopSpotlight = ({ active }: { active: boolean }) => {
                 padding: "7px 13px",
                 borderRadius: 9999,
                 border: `1.5px solid ${LG_PURPLE}`,
-                background: isActive ? LG_PURPLE : "#fff",
+                background: isActive ? LG_PURPLE : "transparent",
                 color: isActive ? "#fff" : LG_PURPLE,
                 fontSize: 12,
                 fontWeight: 600,
@@ -677,12 +677,11 @@ const RhymeSpotlight = ({ active }: { active: boolean }) => {
               padding: "5px 10px",
               borderRadius: 9999,
               border: `1px solid ${LG_PURPLE}`,
-              background: "#fff",
+              background: "transparent",
               color: LG_PURPLE,
               fontSize: 10.5,
               fontWeight: 600,
               whiteSpace: "nowrap",
-              boxShadow: "0 1px 2px rgba(30,19,36,.04)",
             }}
           >
             {label}
@@ -887,13 +886,12 @@ const AiContextSpotlight = ({ active }: { active: boolean }) => {
               <div
                 key={spark}
                 style={{
-                  background: "#fff",
+                  background: "transparent",
                   border: `1px solid ${LG_PURPLE}26`,
                   borderRadius: 9999,
                   padding: "6px 12px",
                   fontSize: 12.5,
                   color: LG_INK,
-                  boxShadow: "0 1px 2px rgba(30,19,36,.04)",
                   opacity: shown ? 1 : 0,
                   transform: shown ? "translateY(0)" : "translateY(6px)",
                   transition: "opacity .4s, transform .4s",

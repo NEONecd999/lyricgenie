@@ -27,9 +27,10 @@ const Philosophy = () => {
               </span>
             </h2>
             <p className="max-w-xl text-lg leading-relaxed text-[#5D5065]">
-              Lyric Genie was built by working songwriters, not by generalist AI people. The AI lives
-              inside <em className="italic font-serif">Wish Workshop</em> — a tool for refining your
-              voice, not replacing it. Your lyrics are yours. We never train on them.
+              Lyric Genie was built by working songwriters, not AI techies. We've developed tools
+              that use AI to help you brainstorm ideas, explore new perspectives and push past
+              writer's block — a tool for refining your voice, not replacing it. Our responsible
+              AI tools yield better results.
             </p>
           </motion.div>
 

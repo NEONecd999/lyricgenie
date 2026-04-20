@@ -22,14 +22,16 @@ const Navbar = () => {
     };
   }, []);
 
-  const navLinks = [
+  const allLinks = [
     { label: "Features", href: "/#features" },
-    { label: "Philosophy", href: "/#philosophy" },
-    { label: "Testimonials", href: "/#testimonials" },
+    { label: "Philosophy", href: "/#philosophy", mobileOnly: true },
+    { label: "Testimonials", href: "/#testimonials", mobileOnly: true },
     { label: "Pricing", href: "/#pricing" },
     { label: "FAQ", href: "/#faq" },
     { label: "About", href: "/about" },
   ];
+  const desktopLinks = allLinks.filter((l) => !l.mobileOnly);
+  const mobileLinks = allLinks;
 
   return (
     <>
@@ -111,7 +113,7 @@ const Navbar = () => {
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-8">
-              {navLinks.map((link) => (
+              {desktopLinks.map((link) => (
                 <Link
                   key={link.label}
                   to={link.href} // 3. CHANGE 'href' TO 'to'
@@ -161,7 +163,7 @@ const Navbar = () => {
             className="fixed inset-0 z-40 bg-gradient-to-br from-primary via-primary to-accent px-6 pt-24 md:hidden"
           >
             <div className="flex flex-col gap-6">
-              {navLinks.map((link) => (
+              {mobileLinks.map((link) => (
                 <Link
                   key={link.label}
                   href={link.href}

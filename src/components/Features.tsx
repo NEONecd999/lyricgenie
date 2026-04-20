@@ -195,7 +195,6 @@ const WISH_PILLS = [
   "Through these neon lights",
   "In electric flights",
   "Where our hearts collide",
-  "When the bass takes flight",
   "In these stolen nights",
 ];
 
@@ -245,9 +244,10 @@ const WishWorkshopSpotlight = ({ active }: { active: boolean }) => {
         })}
       </div>
 
+      {/* Tone shift buttons — sit just above the wish input */}
       <div
         className="absolute flex flex-wrap justify-center gap-1.5"
-        style={{ left: 18, right: 18, bottom: 116 }}
+        style={{ left: 18, right: 18, bottom: 80 }}
       >
         {["Darker", "More Visual", "Simpler", "More Gen Z"].map((t) => (
           <div
@@ -255,9 +255,9 @@ const WishWorkshopSpotlight = ({ active }: { active: boolean }) => {
             style={{
               padding: "7px 13px",
               borderRadius: 9999,
-              border: "1px solid rgba(127,98,196,0.32)",
+              border: `1.5px solid ${LG_PURPLE}`,
               background: "#fff",
-              color: LG_INK,
+              color: LG_PURPLE,
               fontSize: 12,
               fontWeight: 600,
               boxShadow: "0 1px 2px rgba(30,19,36,.04)",
@@ -268,9 +268,10 @@ const WishWorkshopSpotlight = ({ active }: { active: boolean }) => {
         ))}
       </div>
 
+      {/* Toggles — above the tone buttons */}
       <div
         className="absolute flex justify-center gap-[18px]"
-        style={{ left: 22, right: 22, bottom: 74 }}
+        style={{ left: 22, right: 22, bottom: 134 }}
       >
         {[
           { l: "Keep end rhyme", on: true },

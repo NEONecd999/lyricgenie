@@ -33,10 +33,7 @@ const Navbar = () => {
 
   return (
     <>
-      <motion.nav
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.5 }}
+      <nav
         className={`sticky top-0 z-50 w-full transition-colors duration-300 ${
           isScrolled
             ? "bg-[#6F50B8] shadow-[0_2px_14px_rgba(30,19,36,0.12)]"
@@ -152,7 +149,7 @@ const Navbar = () => {
             </button>
           </div>
         </div>
-      </motion.nav>
+      </nav>
 
       {/* Mobile Menu */}
       <AnimatePresence>

@@ -335,10 +335,10 @@ const WishWorkshopSpotlight = ({ active }: { active: boolean }) => {
         })}
       </div>
 
-      {/* Tone shift buttons — cycle through them; active tone is filled purple */}
+      {/* Tone shift buttons — single row, scrolls horizontally if it overflows */}
       <div
-        className="absolute flex flex-wrap justify-center gap-1.5"
-        style={{ left: 18, right: 18, bottom: 96 }}
+        className="absolute flex items-center gap-1.5 overflow-x-auto [&::-webkit-scrollbar]:hidden"
+        style={{ left: 14, right: 14, bottom: 96, scrollbarWidth: "none", padding: "0 4px" }}
       >
         {WISH_TONES.map((t, i) => {
           const isActive = i === toneIdx;
@@ -353,6 +353,8 @@ const WishWorkshopSpotlight = ({ active }: { active: boolean }) => {
                 color: isActive ? "#fff" : LG_PURPLE,
                 fontSize: 12,
                 fontWeight: 600,
+                whiteSpace: "nowrap",
+                flexShrink: 0,
                 boxShadow: isActive
                   ? "0 4px 14px rgba(127,98,196,.35)"
                   : "none",
@@ -621,21 +623,23 @@ const RhymeSpotlight = ({ active }: { active: boolean }) => {
         </div>
       </div>
 
-      <div className="flex justify-center gap-2" style={{ padding: "14px 20px 6px" }}>
+      <div className="flex items-center justify-center gap-1.5" style={{ padding: "14px 14px 6px" }}>
         {RHYME_TABS.map((t, i) => {
           const on = i === tab;
           return (
             <div
               key={t.key}
               style={{
-                padding: "6px 14px",
+                padding: "5px 11px",
                 borderRadius: 9999,
                 background: on ? `${t.color}22` : "rgba(30,19,36,0.05)",
                 color: on ? t.color : LG_INK_MUTED,
-                fontSize: 12.5,
+                fontSize: 11,
                 fontWeight: 700,
-                letterSpacing: "-0.005em",
+                letterSpacing: "-0.01em",
                 border: on ? `1px solid ${t.color}45` : "1px solid transparent",
+                whiteSpace: "nowrap",
+                flexShrink: 0,
                 transition: "all .3s",
               }}
             >
@@ -672,8 +676,8 @@ const RhymeSpotlight = ({ active }: { active: boolean }) => {
       </div>
 
       <div
-        className="absolute flex flex-wrap justify-center gap-1.5"
-        style={{ left: 18, right: 18, bottom: 22 }}
+        className="absolute flex items-center gap-1.5 overflow-x-auto [&::-webkit-scrollbar]:hidden"
+        style={{ left: 14, right: 14, bottom: 22, scrollbarWidth: "none", padding: "0 4px" }}
       >
         {[
           "Replace Selection",
@@ -692,6 +696,7 @@ const RhymeSpotlight = ({ active }: { active: boolean }) => {
               fontSize: 10.5,
               fontWeight: 600,
               whiteSpace: "nowrap",
+              flexShrink: 0,
             }}
           >
             {label}
@@ -1404,19 +1409,7 @@ const Features = () => {
         {/* Compact cards — AND MORE */}
         <div className="mt-[60px]">
           <div className="mb-6 text-center">
-            <div
-              className="inline-block rounded-full"
-              style={{
-                padding: "6px 14px",
-                background: "rgba(127,98,196,.1)",
-                color: LG_PURPLE,
-                fontSize: 12,
-                fontWeight: 700,
-                letterSpacing: ".14em",
-              }}
-            >
-              AND MORE
-            </div>
+            <div style={{ fontSize: 12, fontWeight: 700, letterSpacing: ".14em", color: LG_PURPLE }}>AND MORE</div>
           </div>
           <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-3">
             {compactItems.map((it) => (

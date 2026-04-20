@@ -304,7 +304,7 @@ const WishWorkshopSpotlight = ({ active }: { active: boolean }) => {
       <div
         key={toneIdx}
         className="flex flex-col items-center gap-2.5"
-        style={{ padding: "6px 28px 0" }}
+        style={{ padding: "20px 28px 0" }}
       >
         {currentTone.pills.map((t, i) => {
           const isSel = i === pillSel;

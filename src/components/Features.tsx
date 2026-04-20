@@ -1353,7 +1353,7 @@ const Features = () => {
 
         <SpotlightRow
           eyebrow="WRITE LYRICS"
-          title="Everything you need to write songs, in one place."
+          title="Write, rhyme, record, arrange — all in one place."
           body="Built for how songs actually come together, with lyrics structured by verse, chorus, and bridge. Tap any word for rhymes, synonyms, sound-alikes, or word associations, all without ever leaving the page."
           tint="rgba(111,168,60,.25)"
           child={(a) => <WriteLyricsSpotlight active={a} />}

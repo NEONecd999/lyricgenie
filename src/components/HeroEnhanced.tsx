@@ -354,7 +354,7 @@ const HeroEnhanced = () => {
               margin: "0 0 12px",
             }}
           >
-            Capture ideas, shape lyrics, and co-write in real-time – built for the flow of professional sessions.
+            Capture ideas, shape lyrics, break writer's block with AI, and co-write in real-time – built for the flow of professional sessions.
           </motion.p>
 
           <motion.p
@@ -418,7 +418,7 @@ const HeroEnhanced = () => {
                     className="text-[9.5px] font-bold uppercase"
                     style={{ letterSpacing: ".12em", color: "#F6ECC9" }}
                   >
-                    Wish Workshop
+                    Wish Workshop AI
                   </span>
                 </div>
                 <div className="mb-2 flex flex-wrap gap-1">

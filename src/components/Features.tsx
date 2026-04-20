@@ -188,40 +188,117 @@ const WriteLyricsSpotlight = ({ active }: { active: boolean }) => {
 };
 
 // ══════════════════════════════════════════════════════════
-// Spotlight 2 · Wish Workshop — pills cycle
+// Spotlight 2 · Wish Workshop — tone buttons cycle through results
+// Tone copy matches the real prompt guidance in AnthropicClient.swift.
+// Base line being rewritten: "These summer nights"
 // ══════════════════════════════════════════════════════════
-const WISH_PILLS = [
-  "These summer nights",
-  "When the world ignites",
-  "Through these neon lights",
-  "In electric flights",
-  "Where our hearts collide",
-  "In these stolen nights",
+const WISH_TONES: { label: string; pills: string[] }[] = [
+  {
+    label: "Darker",
+    pills: [
+      "these sleepless, suffocating nights",
+      "nights that never let me go",
+      "through the black of summer",
+      "haunted, breathless summer nights",
+      "nights that bury everything",
+      "these aching, endless nights",
+    ],
+  },
+  {
+    label: "More Visual",
+    pills: [
+      "neon reflections on wet streets",
+      "steam rising off July pavement",
+      "fireflies drifting past the pier",
+      "hot asphalt under bare feet",
+      "headlights slicing through the heat",
+      "August moon over the boardwalk",
+    ],
+  },
+  {
+    label: "More Conversational",
+    pills: [
+      "you know how these summer nights go",
+      "remember those summer nights?",
+      "one of those nights, you and me",
+      "we'd stay out late just talking",
+      "talking 'til the sun came up",
+      "just another one of those nights",
+    ],
+  },
+  {
+    label: "More Gen Z",
+    pills: [
+      "these summer nights hit different",
+      "main-character summer nights",
+      "no cap, this summer is lore",
+      "these nights lowkey slap",
+      "summer nights, fr fr",
+      "rent-free in these summer nights",
+    ],
+  },
 ];
 
 const WishWorkshopSpotlight = ({ active }: { active: boolean }) => {
-  const [sel, setSel] = useState(0);
+  const [toneIdx, setToneIdx] = useState(0);
+  const [pillSel, setPillSel] = useState(0);
+
   useEffect(() => {
-    if (!active) return;
-    const id = setInterval(() => setSel((s) => (s + 1) % WISH_PILLS.length), 1600);
-    return () => clearInterval(id);
+    if (!active) {
+      setToneIdx(0);
+      setPillSel(0);
+      return;
+    }
+    let cancel = false;
+    const run = async () => {
+      for (let t = 0; t < WISH_TONES.length && !cancel; t++) {
+        setToneIdx(t);
+        const pills = WISH_TONES[t].pills;
+        for (let p = 0; p < pills.length && !cancel; p++) {
+          setPillSel(p);
+          await new Promise((r) => setTimeout(r, 950));
+        }
+        // Brief hold on the last pill before switching tone
+        await new Promise((r) => setTimeout(r, 500));
+      }
+      if (!cancel) run();
+    };
+    run();
+    return () => {
+      cancel = true;
+    };
   }, [active]);
+
+  const currentTone = WISH_TONES[toneIdx];
 
   return (
     <UIFrame tone="paper">
       <div className="text-center" style={{ padding: "22px 28px 14px" }}>
-        <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: ".12em", color: LG_PURPLE }}>WISH WORKSHOP</div>
-        <div style={{ fontSize: 17, fontWeight: 700, color: LG_INK, marginTop: 10, letterSpacing: "-0.01em" }}>
-          Rewrite <span style={{ color: LG_INK_MUTED, fontWeight: 500 }}>—</span> These summer nights
+        <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: ".12em", color: LG_PURPLE }}>
+          WISH WORKSHOP
+        </div>
+        <div
+          style={{
+            fontSize: 17,
+            fontWeight: 700,
+            color: LG_INK,
+            marginTop: 10,
+            letterSpacing: "-0.01em",
+          }}
+        >
+          {currentTone.label}{" "}
+          <span style={{ color: LG_INK_MUTED, fontWeight: 500 }}>·</span>{" "}
+          <span style={{ fontWeight: 500, color: LG_INK_MUTED }}>These summer nights</span>
         </div>
       </div>
 
       <div
+        key={toneIdx}
         className="flex flex-col items-center gap-2.5"
         style={{ padding: "6px 28px 0" }}
       >
-        {WISH_PILLS.map((t, i) => {
-          const isSel = i === sel;
+        {currentTone.pills.map((t, i) => {
+          const isSel = i === pillSel;
           return (
             <div
               key={t}
@@ -230,13 +307,15 @@ const WishWorkshopSpotlight = ({ active }: { active: boolean }) => {
                 borderRadius: 9999,
                 background: isSel ? LG_BLUE : "rgba(127,98,196,0.18)",
                 color: isSel ? "#fff" : LG_INK,
-                fontSize: 14.5,
+                fontSize: 14,
                 fontWeight: 500,
                 border: isSel ? "none" : "1px solid rgba(127,98,196,0.28)",
                 boxShadow: isSel ? "0 4px 16px rgba(58,123,208,.45)" : "none",
                 transition: "all .35s cubic-bezier(.4,.0,.2,1)",
                 transform: isSel ? "scale(1.04)" : "scale(1)",
                 whiteSpace: "nowrap",
+                animation: `lgFadeUp .35s ${i * 40}ms cubic-bezier(.4,.0,.2,1) both`,
+                opacity: 0,
               }}
             >
               {t}
@@ -245,28 +324,34 @@ const WishWorkshopSpotlight = ({ active }: { active: boolean }) => {
         })}
       </div>
 
-      {/* Tone shift buttons — sit just above the wish input */}
+      {/* Tone shift buttons — cycle through them; active tone is filled purple */}
       <div
         className="absolute flex flex-wrap justify-center gap-1.5"
         style={{ left: 18, right: 18, bottom: 80 }}
       >
-        {["Darker", "More Visual", "Simpler", "More Gen Z"].map((t) => (
-          <div
-            key={t}
-            style={{
-              padding: "7px 13px",
-              borderRadius: 9999,
-              border: `1.5px solid ${LG_PURPLE}`,
-              background: "#fff",
-              color: LG_PURPLE,
-              fontSize: 12,
-              fontWeight: 600,
-              boxShadow: "0 1px 2px rgba(30,19,36,.04)",
-            }}
-          >
-            {t}
-          </div>
-        ))}
+        {WISH_TONES.map((t, i) => {
+          const isActive = i === toneIdx;
+          return (
+            <div
+              key={t.label}
+              style={{
+                padding: "7px 13px",
+                borderRadius: 9999,
+                border: `1.5px solid ${LG_PURPLE}`,
+                background: isActive ? LG_PURPLE : "#fff",
+                color: isActive ? "#fff" : LG_PURPLE,
+                fontSize: 12,
+                fontWeight: 600,
+                boxShadow: isActive
+                  ? "0 4px 14px rgba(127,98,196,.35)"
+                  : "0 1px 2px rgba(30,19,36,.04)",
+                transition: "background .3s, color .3s, box-shadow .3s",
+              }}
+            >
+              {t.label}
+            </div>
+          );
+        })}
       </div>
 
       {/* Toggles — above the tone buttons */}

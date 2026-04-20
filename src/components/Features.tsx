@@ -481,9 +481,10 @@ const RHYME_DATA: Record<string, string[]> = {
     "rhinestone", "brownstone", "baritone", "xylophone", "gramophone",
   ],
   phrases: [
-    "on my own", "all alone", "far from home", "feel at home",
-    "long way home", "broken home", "carry me home", "miles from home",
-    "find my way home", "bring it home", "home stretch", "nobody's home",
+    "far from home", "long way home", "nobody's home",
+    "rolling stone", "cold to the bone", "lost in the zone",
+    "all on my own", "made of chrome", "into the unknown",
+    "set in stone", "heart of stone", "out on my own",
   ],
 };
 
@@ -491,7 +492,7 @@ const RhymeSpotlight = ({ active }: { active: boolean }) => {
   const [tab, setTab] = useState(0);
   useEffect(() => {
     if (!active) return;
-    const id = setInterval(() => setTab((t) => (t + 1) % RHYME_TABS.length), 3000);
+    const id = setInterval(() => setTab((t) => (t + 1) % RHYME_TABS.length), 6000);
     return () => clearInterval(id);
   }, [active]);
 

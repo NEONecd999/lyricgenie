@@ -927,14 +927,14 @@ const Features = () => {
     {
       eyebrow: "CONCEPTS",
       title: "Capture half-formed ideas.",
-      body: "Mood-colored concept cards for titles, themes, and hooks — without breaking the song you're writing.",
+      body: "Mood-colored concept cards for titles, themes, and hooks, without breaking the song you're writing.",
       preview: <CompactConcepts />,
       tint: LG_PURPLE,
     },
     {
       eyebrow: "LYRIC SHEETS",
       title: "Share with anyone, anywhere.",
-      body: "Auto-formatted sheets with proper credits, PRO splits, and IPIs — export to PDF or a public URL.",
+      body: "Auto-formatted sheets with proper credits, PRO splits, and IPIs. Export to PDF or a public URL.",
       preview: <CompactSheet />,
       tint: LG_AMBER,
     },
@@ -1011,8 +1011,8 @@ const Features = () => {
 
         <SpotlightRow
           eyebrow="WRITE LYRICS"
-          title="An editor that feels like your favorite notebook — but smarter."
-          body="Write the way you actually do: messy stanzas, a verse you'll come back to, a chorus on fire. Tap any word for rhymes, synonyms, or sounds-alikes — never break your flow to open another app."
+          title="An editor that feels like your favorite notebook, but smarter."
+          body="Write the way you actually do: messy stanzas, a verse you'll come back to, a chorus on fire. Tap any word for rhymes, synonyms, or sounds-alikes without ever breaking your flow."
           tint="rgba(111,168,60,.25)"
           child={(a) => <WriteLyricsSpotlight active={a} />}
         />
@@ -1020,14 +1020,14 @@ const Features = () => {
           reverse
           eyebrow="AI CONTEXT"
           title="AI that actually knows your song."
-          body="Tell Lyric Genie the mood, theme, and reference artists behind your song. Every AI feature — Wish Workshop, Spark, Rhyme Associations — uses that context so suggestions are stronger and more specific to your song."
+          body="Tell Lyric Genie the mood, theme, and reference artists behind your song. Every AI feature uses that context, so Wish Workshop, Spark, and Rhyme Associations all give you suggestions that are stronger and more specific to your song."
           tint="rgba(177,155,226,.3)"
           child={(a) => <AiContextSpotlight active={a} />}
         />
         <SpotlightRow
           eyebrow="WISH WORKSHOP AI"
           title="Stuck on a line? Make a wish."
-          body="Ask for a stronger hook, a moodier bridge, or one more rhyme that actually lands. You stay in the driver's seat — the AI just offers options, in your voice, never rewriting your song."
+          body="Ask for a stronger hook, a moodier bridge, or one more rhyme that actually lands. You stay in the driver's seat. The AI offers options in your voice, never rewriting your song."
           tint="rgba(127,98,196,.3)"
           child={(a) => <WishWorkshopSpotlight active={a} />}
         />
@@ -1035,14 +1035,14 @@ const Features = () => {
           reverse
           eyebrow="CO-WRITE IN REAL TIME"
           title="Every writer gets their own color."
-          body="See who wrote what, whose idea spawned the chorus, whose voice memo inspired the bridge. Splits and credits stay unambiguous — because the session is the record."
+          body="See who wrote what, whose idea spawned the chorus, whose voice memo inspired the bridge. Splits and credits stay unambiguous, because the session is the record."
           tint="rgba(232,102,60,.22)"
           child={(a) => <CowriteSpotlight active={a} />}
         />
         <SpotlightRow
           eyebrow="RHYME · THESAURUS · SOUNDS-LIKE · ASSOCIATIONS"
           title="A complete lookup suite, in one sheet."
-          body="Rhymes, thesaurus, sounds-like and associations — all in one bottom sheet. Jump between perfect, near, multi-syllabic and phrase rhymes without leaving the line you're on."
+          body="Rhymes, thesaurus, sounds-like and associations, all in one bottom sheet. Jump between perfect, near, multi-syllabic and phrase rhymes without leaving the line you're on."
           tint="rgba(58,123,208,.22)"
           child={(a) => <RhymeSpotlight active={a} />}
         />

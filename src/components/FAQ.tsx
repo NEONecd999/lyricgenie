@@ -10,7 +10,7 @@ const faqs = [
   {
     question: "Does Lyric Genie work on my iPad or Mac?",
     answer:
-      "Yes — it's a native iOS, iPadOS, and macOS (Apple Silicon) app. Just download it from the App Store and your songs sync instantly across all three via iCloud.",
+      "Yes. It's a native iOS, iPadOS, and macOS (Apple Silicon) app. Just download it from the App Store and your songs sync instantly across all three via iCloud.",
   },
   {
     question: "Is there a free trial?",
@@ -20,7 +20,7 @@ const faqs = [
   {
     question: "Can I collaborate with others in real-time?",
     answer:
-      "Yes — real-time collaboration is one of our core features. Invite your co-writers, bandmates, or producers to edit lyrics together from anywhere in the world. Lyric changes and voice recordings sync instantly so you never lose a beat.",
+      "Yes. Real-time collaboration is one of our core features. Invite your co-writers, bandmates, or producers to edit lyrics together from anywhere in the world. Lyric changes and voice recordings sync instantly so you never lose a beat.",
   },
   {
     question: "Can I invite co-writers who don't have the app?",
@@ -40,7 +40,7 @@ const faqs = [
   {
     question: "Is my lyric data used to train AI?",
     answer:
-      "No. We never train on your lyrics and we never share them. Wish Workshop uses a third-party model with zero-retention — your text is discarded after the response. Your creativity is sacred, and all your songs are private by default.",
+      "No. We never train on your lyrics and we never share them. Wish Workshop uses a third-party model with zero retention, so your text is discarded after the response. Your creativity is sacred, and all your songs are private by default.",
   },
   {
     question: "What if I need to cancel my subscription?",

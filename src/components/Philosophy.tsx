@@ -50,8 +50,8 @@ const Philosophy = () => {
               &ldquo;
             </div>
             <p className="font-serif italic text-[22px] leading-[1.5] text-[#1E1324] mt-14 mb-6">
-              Every line you write stays yours. We built it that way because we're writers too — we
-              know how it feels to hand your words to a machine and wonder where they end up.
+              I believe responsible AI in songwriting means tools that help you say something real
+              through your own unique voice — not a one-click prompt that generates a song for you.
             </p>
             <div className="flex items-center gap-3 border-t border-[#E5E4E8] pt-4">
               <img

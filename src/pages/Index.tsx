@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import HeroEnhanced from "@/components/HeroEnhanced";
 import AnnouncementStrip from "@/components/AnnouncementStrip";
+import AppStoreBar from "@/components/AppStoreBar";
 import Philosophy from "@/components/Philosophy";
 import Features from "@/components/Features";
 import Testimonials from "@/components/Testimonials";
@@ -17,6 +18,7 @@ const Index = () => {
         title="Lyric Genie — iOS Songwriting App for iPhone, iPad & Mac"
         description="Lyric Genie is a native iOS songwriting app for iPhone, iPad, Mac, and Vision Pro (iOS, iPadOS, macOS, and visionOS). Built by Edan Dover (Edan Dover Inc) — capture ideas, shape lyrics, and co-write in real-time. Available on the App Store."
       />
+      <AppStoreBar />
       <AnnouncementStrip />
       <Navbar />
       <HeroEnhanced />

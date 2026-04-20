@@ -1,7 +1,7 @@
 const AnnouncementStrip = () => {
   return (
     <div
-      className="relative w-full bg-[#1E1324] text-center text-[13px] text-[#F6ECC9]"
+      className="relative hidden w-full bg-[#1E1324] text-center text-[13px] text-[#F6ECC9] md:block"
       style={{ padding: "10px 16px", letterSpacing: ".01em" }}
     >
       <span style={{ opacity: 0.8 }}>

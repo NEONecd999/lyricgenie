@@ -51,12 +51,8 @@ const plans: Plan[] = [
     description: "Best value, save over 15%",
     features: [
       "Everything in Free, plus:",
-      "Wish Workshop AI-powered brainstorming",
-      "Spark creative ideas & song concepts",
-      "Smart rhyming, thesaurus & sound-alikes",
-      "Smart syllable adjustments",
-      "1,000 minutes of voice recordings",
-      "5,000 AI requests per month",
+      "Everything in Pro Monthly",
+      "Two months free",
     ],
     cta: "Start Free Trial",
   },
@@ -115,15 +111,21 @@ const Pricing = () => {
               <div className="mb-1.5 text-[13px] font-semibold uppercase tracking-[0.1em] text-primary">
                 {plan.name}
               </div>
-              <div className="mb-1 flex items-baseline gap-1.5">
+              <div className="mb-2 flex items-baseline gap-1.5">
                 <span className="font-display text-5xl font-bold tracking-tight text-[#1E1324]">
                   {plan.price}
                 </span>
                 <span className="text-sm text-[#5D5065]">{plan.period}</span>
               </div>
-              <div className="mb-6 text-sm text-[#5D5065]">
-                {plan.isFree ? "✨ Free forever, no credit card" : "✦ 14-day free trial, cancel anytime"}
-              </div>
+              {plan.isFree ? (
+                <div className="mb-6 text-sm text-[#5D5065]">
+                  ✨ Free forever, no credit card
+                </div>
+              ) : (
+                <div className="mb-6 inline-flex items-center gap-1.5 rounded-full border border-yellow-400/40 bg-yellow-400/20 px-3 py-1 text-xs font-semibold text-primary">
+                  <span>✦</span> 14-day free trial, cancel anytime
+                </div>
+              )}
 
               <a
                 href="https://apps.apple.com/us/app/lyric-genie/id6739787614"

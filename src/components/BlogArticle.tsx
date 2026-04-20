@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AnnouncementStrip from "@/components/AnnouncementStrip";
+import AppStoreBar from "@/components/AppStoreBar";
 import SEO from "@/components/SEO";
 import { getRelatedPosts } from "@/data/blogPosts";
 
@@ -44,6 +45,7 @@ const BlogArticle = ({ title, description, date, readTime, category, children }:
         ogType="article"
         publishedTime={date}
       />
+      <AppStoreBar />
       <AnnouncementStrip />
       <Navbar />
 

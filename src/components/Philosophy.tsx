@@ -50,8 +50,9 @@ const Philosophy = () => {
               &ldquo;
             </div>
             <p className="font-serif italic text-[22px] leading-[1.5] text-[#1E1324] mt-14 mb-6">
-              I believe responsible AI in songwriting means tools that help you say something real
-              through your own unique voice — not a one-click prompt that generates a song for you.
+              A one-click prompt generator isn't songwriting — it's output without a voice behind
+              it. The right role for AI is to help writers say something real in their own unique
+              voice, not replace it.
             </p>
             <div className="flex items-center gap-3 border-t border-[#E5E4E8] pt-4">
               <div className="h-12 w-12 flex-shrink-0 overflow-hidden rounded-full">
@@ -60,7 +61,7 @@ const Philosophy = () => {
                   alt="Edan Dover"
                   loading="lazy"
                   className="h-full w-full object-cover"
-                  style={{ objectPosition: "50% 18%", transform: "scale(1.9)", transformOrigin: "50% 22%" }}
+                  style={{ objectPosition: "50% 15%", transform: "scale(3.4)", transformOrigin: "50% 18%" }}
                 />
               </div>
               <div>

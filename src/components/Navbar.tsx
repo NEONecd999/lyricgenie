@@ -7,14 +7,12 @@ import { Link } from "react-router-dom";
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isAnnouncementVisible, setIsAnnouncementVisible] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrolled = window.scrollY > 20;
-      setIsScrolled(scrolled);
-      // AnnouncementStrip hides when scrollY > 20 (matching AnnouncementStrip logic)
-      setIsAnnouncementVisible(!scrolled);
+      // Announcement strip is ~40px tall and is in flow; once user scrolls past it
+      // the nav is effectively flush with the top of the viewport — flip to purple then.
+      setIsScrolled(window.scrollY > 40);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -39,7 +37,7 @@ const Navbar = () => {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
-        className={`fixed left-0 right-0 z-50 transition-all duration-300 ${isAnnouncementVisible ? "top-[40px]" : "top-0"} ${
+        className={`sticky top-0 z-50 w-full transition-all duration-300 ${
           isScrolled
             ? "bg-[#6F50B8] backdrop-blur-lg shadow-[0_2px_14px_rgba(30,19,36,0.12)]"
             : "bg-white border-b border-[#E5E4E8]/60"
@@ -163,7 +161,7 @@ const Navbar = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className={`fixed inset-0 z-40 bg-gradient-to-br from-primary via-primary to-accent px-6 md:hidden ${isAnnouncementVisible ? "pt-[130px]" : "pt-24"}`}
+            className="fixed inset-0 z-40 bg-gradient-to-br from-primary via-primary to-accent px-6 pt-24 md:hidden"
           >
             <div className="flex flex-col gap-6">
               {navLinks.map((link) => (

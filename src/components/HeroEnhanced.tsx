@@ -307,7 +307,7 @@ const HeroEnhanced = () => {
       style={{
         background: "linear-gradient(135deg,#6F50B8 0%, #7F62C4 55%, #B19BE2 100%)",
         color: "#fff",
-        padding: "120px 0 110px",
+        padding: "60px 0 110px",
       }}
     >
       {/* Orbs */}

@@ -175,8 +175,12 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
+  /* overflow-x: hidden breaks position: sticky on descendants because it
+     turns the element into a scroll container. Use `clip` instead so the
+     navbar can still stick to the viewport while horizontal overflow
+     (decorative orbs etc.) is still clipped away. */
   html, body {
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   body {

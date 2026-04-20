@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { Download } from "lucide-react";
 import { motion } from "framer-motion";
 import SfIcon from "@/components/SfIcon";
@@ -397,12 +396,13 @@ const HeroEnhanced = () => {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="flex flex-wrap gap-3"
           >
-            <Button variant="hero" size="xl" asChild className="bg-[#F6ECC9] !text-[#6F50B8] hover:bg-[#F6ECC9]/90">
-              <a href="https://apps.apple.com/us/app/lyric-genie/id6739787614">
-                <Download className="h-5 w-5" />
-                Download on App Store
-              </a>
-            </Button>
+            <a
+              href="https://apps.apple.com/us/app/lyric-genie/id6739787614"
+              className="inline-flex items-center gap-2 rounded-full bg-[#F6ECC9] px-9 py-4 text-[15.5px] font-semibold text-[#6F50B8] shadow-[0_10px_30px_-10px_rgba(30,19,36,0.35)] transition-all duration-300 hover:bg-[#FBF2D6] hover:shadow-[0_14px_40px_-10px_rgba(30,19,36,0.45)]"
+            >
+              <Download className="h-5 w-5" />
+              Download on App Store
+            </a>
           </motion.div>
         </div>
 

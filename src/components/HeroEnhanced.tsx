@@ -241,7 +241,7 @@ const PhoneMockup = () => {
             }}
             title="Wish Workshop"
           >
-            <SfIcon src="/images/genie-icon.svg" size={22} color="#fff" />
+            <SfIcon src="/images/lamp.svg" size={22} color="#fff" />
           </div>
           <div
             className="flex h-10 w-10 items-center justify-center rounded-full"

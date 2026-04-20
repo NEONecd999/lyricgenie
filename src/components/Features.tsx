@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState, ReactElement } from "react";
 import { motion } from "framer-motion";
-import SfIcon from "@/components/SfIcon";
 
 // ── Palette (from design reference) ─────────────────────────
 const LG_PAPER = "#F5EFD9";
@@ -739,21 +738,18 @@ const AiContextSpotlight = ({ active }: { active: boolean }) => {
   const [setIdx, setSetIdx] = useState(0);
   const [fieldIdx, setFieldIdx] = useState(0);
   const [typed, setTyped] = useState("");
-  const [sparksShown, setSparksShown] = useState(0);
 
   useEffect(() => {
     if (!active) {
       setSetIdx(0);
       setFieldIdx(0);
       setTyped("");
-      setSparksShown(0);
       return;
     }
     let cancel = false;
     const run = async () => {
       for (let s = 0; s < AI_CONTEXT_SETS.length && !cancel; s++) {
         setSetIdx(s);
-        setSparksShown(0);
         const values = setAsArray(AI_CONTEXT_SETS[s]);
         for (let i = 0; i < values.length && !cancel; i++) {
           setFieldIdx(i);
@@ -764,18 +760,11 @@ const AiContextSpotlight = ({ active }: { active: boolean }) => {
           }
           await new Promise((r) => setTimeout(r, 450));
         }
-        // Reveal sparks one by one — the context "coming to life"
-        const sparkCount = AI_CONTEXT_SETS[s].sparks.length;
-        for (let i = 1; i <= sparkCount && !cancel; i++) {
-          setSparksShown(i);
-          await new Promise((r) => setTimeout(r, 650));
-        }
-        // Hold the fully filled card before clearing
+        // Hold the fully filled card before clearing for the next set
         await new Promise((r) => setTimeout(r, 2600));
         if (!cancel) {
           setFieldIdx(0);
           setTyped("");
-          setSparksShown(0);
         }
       }
       if (!cancel) run();
@@ -861,60 +850,6 @@ const AiContextSpotlight = ({ active }: { active: boolean }) => {
         })}
       </div>
 
-      {/* Wish Workshop sparks — suggestions that match the current context */}
-      <div
-        className="absolute"
-        style={{
-          left: 26,
-          right: 26,
-          bottom: 18,
-          borderTop: "1px dashed rgba(30,19,36,.12)",
-          paddingTop: 12,
-        }}
-      >
-        <div
-          className="mb-2 flex items-center gap-2"
-          style={{ fontSize: 9.5, fontWeight: 700, letterSpacing: ".14em", color: LG_PURPLE }}
-        >
-          <SfIcon name="sparkles" size={12} color={LG_PURPLE} />
-          WISH WORKSHOP SPARKS
-        </div>
-        <div className="flex flex-col gap-1.5">
-          {current.sparks.map((spark, i) => {
-            const shown = i < sparksShown;
-            return (
-              <div
-                key={spark}
-                style={{
-                  background: "transparent",
-                  border: `1px solid ${LG_PURPLE}26`,
-                  borderRadius: 9999,
-                  padding: "6px 12px",
-                  fontSize: 12.5,
-                  color: LG_INK,
-                  opacity: shown ? 1 : 0,
-                  transform: shown ? "translateY(0)" : "translateY(6px)",
-                  transition: "opacity .4s, transform .4s",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 8,
-                }}
-              >
-                <span
-                  style={{
-                    width: 4,
-                    height: 4,
-                    borderRadius: 9999,
-                    background: LG_PURPLE,
-                    flexShrink: 0,
-                  }}
-                />
-                {spark}
-              </div>
-            );
-          })}
-        </div>
-      </div>
     </UIFrame>
   );
 };

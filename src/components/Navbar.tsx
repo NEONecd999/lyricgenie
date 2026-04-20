@@ -40,8 +40,8 @@ const Navbar = () => {
             : "bg-white shadow-[0_1px_0_rgba(229,228,232,0.6)]"
         }`}
       >
-        <div className="container mx-auto px-6">
-          <div className="flex items-center justify-between h-20">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="flex items-center justify-between h-20 gap-4">
             {/* Logo - Show SVG logo instead of icon on desktop */}
             <a href="/" className="flex items-center gap-2">
               <svg

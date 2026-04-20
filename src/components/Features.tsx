@@ -867,7 +867,7 @@ const SpotlightRow = ({
   return (
     <div
       ref={ref}
-      className="grid items-center gap-10 py-[70px] md:grid-cols-2 md:gap-[72px]"
+      className="grid items-center gap-8 py-10 md:grid-cols-2 md:gap-[72px] md:py-[70px]"
     >
       <div
         className={`relative flex justify-center ${reverse ? "md:order-2" : "md:order-1"}`}
@@ -938,7 +938,7 @@ const Features = () => {
   ];
 
   return (
-    <section id="features" className="relative overflow-hidden" style={{ padding: "110px 0 90px" }}>
+    <section id="features" className="relative overflow-hidden py-16 md:py-20 lg:pt-[110px] lg:pb-[90px]">
       <style>{`
         @keyframes lgCaret  { 50% { opacity: 0 } }
         @keyframes lgFadeUp { to { opacity: 1; transform: translateY(0) } }

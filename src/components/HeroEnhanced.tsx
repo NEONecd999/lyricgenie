@@ -262,11 +262,10 @@ const PhoneMockup = () => {
 const HeroEnhanced = () => {
   return (
     <section
-      className="relative overflow-hidden"
+      className="relative overflow-hidden py-12 md:py-16 lg:pb-28 lg:pt-16"
       style={{
         background: "linear-gradient(135deg,#6F50B8 0%, #7F62C4 55%, #B19BE2 100%)",
         color: "#fff",
-        padding: "60px 0 110px",
       }}
     >
       {/* Orbs */}
@@ -280,10 +279,7 @@ const HeroEnhanced = () => {
       />
       <FloatingNotes />
 
-      <div
-        className="container relative z-10 mx-auto grid items-center gap-10 px-6 lg:gap-14"
-        style={{ gridTemplateColumns: "minmax(0,1.35fr) minmax(0,1fr)" }}
-      >
+      <div className="container relative z-10 mx-auto grid grid-cols-1 items-center gap-10 px-4 md:px-6 lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)] lg:gap-14">
         {/* Left column — copy */}
         <div className="max-w-[640px]">
           <motion.div
@@ -303,7 +299,7 @@ const HeroEnhanced = () => {
             className="font-display text-white"
             style={{
               fontWeight: 700,
-              fontSize: "clamp(48px, 6.5vw, 82px)",
+              fontSize: "clamp(40px, 9vw, 82px)",
               lineHeight: 1.02,
               letterSpacing: "-0.035em",
               margin: "0 0 22px",

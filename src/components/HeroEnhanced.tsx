@@ -79,52 +79,34 @@ const PhoneMockup = () => {
           <div className="flex h-[22px] w-[22px] items-center justify-center">
             <SfIcon name="chevron.left" size={16} color="#6F50B8" />
           </div>
-          <div className="flex h-[22px] w-[22px] items-center justify-center" style={{ color: "#8B6FC9", fontSize: 17 }}>
-            ↶
+          <div className="flex h-[22px] w-[22px] items-center justify-center">
+            <SfIcon name="arrow.uturn.backward" size={14} color="#8B6FC9" />
           </div>
-          <div className="flex h-[22px] w-[22px] items-center justify-center" style={{ color: "#8B6FC9", fontSize: 17 }}>
-            ↷
+          <div className="flex h-[22px] w-[22px] items-center justify-center">
+            <SfIcon name="arrow.uturn.forward" size={14} color="#8B6FC9" />
           </div>
           <div
             className="mx-auto flex items-center gap-0.5"
             style={{ background: "#EFE6C3", borderRadius: 9999, padding: 3 }}
           >
-            <div
-              className="flex h-[26px] w-[30px] items-center justify-center rounded-full"
-              style={{ color: "#8B6FC9" }}
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                <path d="M3 12h2l2-4 4 8 4-8 2 4h4" />
-              </svg>
+            <div className="flex h-[26px] w-[30px] items-center justify-center rounded-full">
+              <SfIcon name="recordingtape" size={14} color="#8B6FC9" />
             </div>
             <div
               className="flex h-[26px] w-[30px] items-center justify-center rounded-full"
-              style={{ background: "#FCF7E1", color: "#6F50B8", boxShadow: "0 1px 2px rgba(30,19,36,.08)" }}
+              style={{ background: "#FCF7E1", boxShadow: "0 1px 2px rgba(30,19,36,.08)" }}
             >
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                <circle cx="12" cy="12" r="9" />
-                <circle cx="12" cy="12" r="4" fill="currentColor" />
-              </svg>
+              <SfIcon name="record.circle" size={15} color="#6F50B8" />
             </div>
-            <div
-              className="flex h-[26px] w-[30px] items-center justify-center rounded-full"
-              style={{ color: "#8B6FC9" }}
-            >
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
-                <rect x="9" y="2" width="6" height="12" rx="3" />
-                <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
-                <line x1="12" y1="19" x2="12" y2="22" />
-              </svg>
+            <div className="flex h-[26px] w-[30px] items-center justify-center rounded-full">
+              <SfIcon name="music.microphone" size={14} color="#8B6FC9" />
             </div>
-          </div>
-          <div className="flex h-[22px] w-[22px] items-center justify-center" style={{ color: "#8B6FC9", fontSize: 14 }}>
-            ▦
-          </div>
-          <div className="flex h-[22px] w-[22px] items-center justify-center" style={{ color: "#8B6FC9", fontSize: 14 }}>
-            ≡
           </div>
           <div className="flex h-[22px] w-[22px] items-center justify-center">
-            <SfIcon name="ellipsis" size={16} color="#8B6FC9" />
+            <SfIcon name="person.2.fill" size={16} color="#8B6FC9" />
+          </div>
+          <div className="flex h-[22px] w-[22px] items-center justify-center">
+            <SfIcon name="ellipsis.circle" size={18} color="#8B6FC9" />
           </div>
         </div>
 
@@ -207,18 +189,7 @@ const PhoneMockup = () => {
 
         {/* Verse 1 header */}
         <div className="flex items-center gap-1.5" style={{ padding: "10px 18px 2px" }}>
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            style={{ color: "rgba(30,19,36,.38)" }}
-          >
-            <path d="M3 12h2l2-4 4 8 4-8 2 4h4" />
-          </svg>
+          <SfIcon name="recordingtape" size={14} color="rgba(30,19,36,.38)" />
           <div style={{ color: "#6FA83C", fontWeight: 700, fontSize: 14, letterSpacing: "-0.005em" }}>Verse 1</div>
           <div
             className="ml-auto flex items-center justify-center"
@@ -276,17 +247,11 @@ const PhoneMockup = () => {
             className="flex h-10 w-10 items-center justify-center rounded-full"
             style={{
               background: "#B19BE2",
-              color: "#fff",
               boxShadow: "0 10px 22px -6px rgba(127,98,196,.55), 0 1px 3px rgba(30,19,36,.15)",
             }}
-            title="Grid"
+            title="Arrange"
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <rect x="3" y="3" width="8" height="8" rx="1.5" />
-              <rect x="13" y="3" width="8" height="8" rx="1.5" />
-              <rect x="3" y="13" width="8" height="8" rx="1.5" />
-              <rect x="13" y="13" width="8" height="8" rx="1.5" />
-            </svg>
+            <SfIcon name="square.grid.2x2" size={18} color="#fff" />
           </div>
         </div>
       </div>

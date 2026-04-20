@@ -466,10 +466,25 @@ const RHYME_TABS = [
   { key: "phrases", label: "Phrases", color: LG_BLUE },
 ];
 const RHYME_DATA: Record<string, string[]> = {
-  perfect: ["light", "bright", "sight", "flight", "might", "right", "fight", "tight"],
-  near: ["white", "write", "kite", "quite", "time", "mind", "line", "shine"],
-  multi: ["tonight", "delight", "ignite", "excite", "unite", "invite", "daylight", "moonlight"],
-  phrases: ["through the night", "into the night", "one last night", "summer night", "starry night", "middle of the night"],
+  perfect: [
+    "alone", "bone", "chrome", "clone", "dome", "drone",
+    "foam", "loan", "moan", "own", "phone", "roam",
+    "stone", "tone", "zone",
+  ],
+  near: [
+    "cold", "gold", "sold", "told", "bold", "hold",
+    "old", "rolled", "fold", "ghost", "coast", "most",
+  ],
+  multi: [
+    "unknown", "overthrown", "overgrown", "saxophone", "microphone",
+    "telephone", "monotone", "undertone", "rolling stone", "cobblestone",
+    "rhinestone", "brownstone", "baritone", "xylophone", "gramophone",
+  ],
+  phrases: [
+    "on my own", "all alone", "far from home", "feel at home",
+    "long way home", "broken home", "carry me home", "miles from home",
+    "find my way home", "bring it home", "home stretch", "nobody's home",
+  ],
 };
 
 const RhymeSpotlight = ({ active }: { active: boolean }) => {
@@ -502,7 +517,7 @@ const RhymeSpotlight = ({ active }: { active: boolean }) => {
             boxShadow: "0 4px 14px rgba(30,19,36,.08), 0 0 0 1px rgba(30,19,36,.05)",
           }}
         >
-          <span style={{ fontSize: 22, fontWeight: 700, color: LG_INK, letterSpacing: "-0.01em" }}>night</span>
+          <span style={{ fontSize: 22, fontWeight: 700, color: LG_INK, letterSpacing: "-0.01em" }}>home</span>
           <span style={{ fontSize: 11, color: LG_INK_MUTED }}>∙ Verse 1, line 1</span>
         </div>
       </div>

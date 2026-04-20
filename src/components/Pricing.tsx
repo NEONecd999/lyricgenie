@@ -86,7 +86,7 @@ const Pricing = () => {
             Pricing
           </h2>
           <p className="mx-auto max-w-xl text-lg text-[#5D5065]">
-            Choose the plan that fits your creative journey. Cancel anytime.
+            Get access to Lyric Genie's AI tools, risk-free. Cancel anytime.
           </p>
         </motion.div>
 

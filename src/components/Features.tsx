@@ -39,11 +39,18 @@ const UIFrame = ({
 }: {
   children: React.ReactNode;
   tone?: "paper" | "white";
-  /** How tall to render on mobile (< md). "sm" ≈ slight expansion, "lg" ≈ much more.
-      From md up the card uses the standard 5/6 aspect. */
-  mobileAspect?: "sm" | "lg";
+  /** How tall to render on mobile (< md).
+      sm ≈ slight expansion (default), lg ≈ more room, xl ≈ tallest
+      (room for wrapping pills / dense chrome). From md up the card
+      uses the standard 5/6 aspect. */
+  mobileAspect?: "sm" | "lg" | "xl";
 }) => {
-  const mobileClass = mobileAspect === "lg" ? "aspect-[2/3]" : "aspect-[10/13]";
+  const mobileClass =
+    mobileAspect === "xl"
+      ? "aspect-[5/9]"
+      : mobileAspect === "lg"
+      ? "aspect-[2/3]"
+      : "aspect-[10/13]";
   return (
     <div
       className={`relative w-full max-w-[520px] ${mobileClass} md:aspect-[5/6]`}
@@ -283,7 +290,7 @@ const WishWorkshopSpotlight = ({ active }: { active: boolean }) => {
   const currentTone = WISH_TONES[toneIdx];
 
   return (
-    <UIFrame tone="paper" mobileAspect="lg">
+    <UIFrame tone="paper" mobileAspect="xl">
       <div className="text-center" style={{ padding: "22px 28px 14px" }}>
         <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: ".12em", color: LG_PURPLE }}>
           WISH WORKSHOP

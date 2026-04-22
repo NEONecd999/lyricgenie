@@ -1213,47 +1213,70 @@ const SpotlightRow = ({
   tint: string;
 }) => {
   const [ref, inView] = useInView(0.25);
-  return (
+
+  const eyebrowEl = (
     <div
-      ref={ref}
-      className="grid items-center gap-8 py-10 md:grid-cols-2 md:gap-[72px] md:py-[70px]"
+      className="mb-3.5"
+      style={{ fontSize: 12, fontWeight: 700, letterSpacing: ".14em", color: LG_PURPLE }}
     >
-      <div
-        className={`relative flex justify-center ${reverse ? "md:order-2" : "md:order-1"}`}
-      >
-        <div
-          className="pointer-events-none absolute rounded-full"
-          style={{
-            inset: "-8% -4%",
-            background: tint,
-            filter: "blur(80px)",
-            opacity: 0.55,
-          }}
-        />
-        <div className="relative z-10 w-full max-w-[520px]">{child(inView)}</div>
+      {eyebrow}
+    </div>
+  );
+  const titleEl = (
+    <h3
+      className="font-display"
+      style={{
+        fontSize: "clamp(30px, 3.2vw, 44px)",
+        fontWeight: 700,
+        lineHeight: 1.08,
+        letterSpacing: "-0.025em",
+        margin: "0 0 18px",
+        color: LG_INK,
+      }}
+    >
+      {title}
+    </h3>
+  );
+  const bodyEl = (
+    <p style={{ fontSize: 17, lineHeight: 1.6, color: LG_INK_SOFT, margin: 0 }}>{body}</p>
+  );
+
+  return (
+    <div ref={ref} className="py-10 md:py-[70px]">
+      {/* Mobile-only: eyebrow + title ABOVE the visual */}
+      <div className="mb-7 max-w-[440px] md:hidden">
+        {eyebrowEl}
+        {titleEl}
       </div>
-      <div className={`max-w-[440px] ${reverse ? "md:order-1" : "md:order-2"}`}>
+
+      <div className="grid items-center gap-8 md:grid-cols-2 md:gap-[72px]">
         <div
-          className="mb-3.5"
-          style={{ fontSize: 12, fontWeight: 700, letterSpacing: ".14em", color: LG_PURPLE }}
+          className={`relative flex justify-center ${reverse ? "md:order-2" : "md:order-1"}`}
         >
-          {eyebrow}
+          <div
+            className="pointer-events-none absolute rounded-full"
+            style={{
+              inset: "-8% -4%",
+              background: tint,
+              filter: "blur(80px)",
+              opacity: 0.55,
+            }}
+          />
+          <div className="relative z-10 w-full max-w-[520px]">{child(inView)}</div>
         </div>
-        <h3
-          className="font-display"
-          style={{
-            fontSize: "clamp(30px, 3.2vw, 44px)",
-            fontWeight: 700,
-            lineHeight: 1.08,
-            letterSpacing: "-0.025em",
-            margin: "0 0 18px",
-            color: LG_INK,
-          }}
+
+        {/* Desktop text column — hidden on mobile (mobile renders eyebrow/title above and body below instead) */}
+        <div
+          className={`hidden max-w-[440px] md:block ${reverse ? "md:order-1" : "md:order-2"}`}
         >
-          {title}
-        </h3>
-        <p style={{ fontSize: 17, lineHeight: 1.6, color: LG_INK_SOFT, margin: 0 }}>{body}</p>
+          {eyebrowEl}
+          {titleEl}
+          {bodyEl}
+        </div>
       </div>
+
+      {/* Mobile-only: body BELOW the visual */}
+      <div className="mt-7 max-w-[440px] md:hidden">{bodyEl}</div>
     </div>
   );
 };

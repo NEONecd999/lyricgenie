@@ -324,7 +324,8 @@ const WishWorkshopSpotlight = ({ active }: { active: boolean }) => {
                 boxShadow: isSel ? "0 4px 16px rgba(58,123,208,.45)" : "none",
                 transition: "all .35s cubic-bezier(.4,.0,.2,1)",
                 transform: isSel ? "scale(1.04)" : "scale(1)",
-                whiteSpace: "nowrap",
+                maxWidth: "100%",
+                textAlign: "center",
                 animation: `lgFadeUp .35s ${i * 40}ms cubic-bezier(.4,.0,.2,1) both`,
                 opacity: 0,
               }}

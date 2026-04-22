@@ -346,13 +346,12 @@ const HeroEnhanced = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="mx-auto lg:mx-0"
+            className="mx-auto mb-3 lg:mx-0"
             style={{
               fontSize: 19,
               lineHeight: 1.55,
               color: "rgba(255,255,255,.85)",
               maxWidth: 560,
-              margin: "0 auto 12px",
             }}
           >
             Capture ideas, shape lyrics, break writer's block with AI, and co-write in real-time.

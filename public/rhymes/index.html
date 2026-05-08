@@ -230,14 +230,16 @@
 
     /* ─── Main app-shell content area ─── */
     /* Flex column: headline-search + options-row are fixed height,
-       #results flexes to fill the remaining viewport. max-width caps
-       horizontal sprawl on ultra-wide displays. */
+       #results flexes to fill the remaining viewport. No max-width —
+       columns use the entire viewport width on ultra-wide displays
+       so users can see more chips per column at once. The headline-
+       search and options-row have their own narrower max-widths so
+       they stay centered + readable while the columns stretch. */
     main {
       flex: 1;
       min-height: 0;
       width: 100%;
-      max-width: 1400px;
-      margin: 0 auto;
+      margin: 0;
       padding: 0 24px;
       display: flex;
       flex-direction: column;

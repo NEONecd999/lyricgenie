@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Redirecting to /rhymes — Lyric Genie</title>
+  <!-- Three-layered redirect for /rhyme → /rhymes:
+       1. <link rel="canonical"> tells crawlers the real URL is /rhymes/
+       2. <meta http-equiv="refresh"> redirects on legacy browsers + bots
+       3. <script> location.replace handles modern browsers without any
+          flicker (replace, not assign, so /rhyme doesn't pollute history). -->
+  <link rel="canonical" href="https://lyricgenie.app/rhymes/" />
+  <meta http-equiv="refresh" content="0; url=/rhymes/" />
+  <meta name="robots" content="noindex" />
+  <script>
+    // Preserve any query string + hash so e.g. /rhyme?word=remember works.
+    location.replace('/rhymes/' + location.search + location.hash);
+  </script>
+  <style>
+    body {
+      font-family: -apple-system, system-ui, sans-serif;
+      background: #F4EFD8;
+      color: #1E1324;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+    }
+    a { color: #6F50B8; }
+  </style>
+</head>
+<body>
+  <p>Redirecting to <a href="/rhymes/">/rhymes/</a>…</p>
+</body>
+</html>

@@ -24,6 +24,9 @@ window.PHRASES = {
 
   // ─── Common idioms & "of-the" patterns ───
   "OUT OF THE QUESTION":   phrase("OUT OF THE QUESTION",   "AW1 T | AH1 V | DH AH0 | K W EH1 S CH AH0 N"),
+  "HOLD ALL THE CARDS":    phrase("HOLD ALL THE CARDS",    "HH OW1 L D | AO1 L | DH AH0 | K AA1 R D Z"),
+  "KNOW WHO YOU ARE":      phrase("KNOW WHO YOU ARE",      "N OW1 | HH UW1 | Y UW1 | AA1 R"),
+  "WHO I AM":              phrase("WHO I AM",              "HH UW1 | AY1 | AE1 M"),
   "KEEP IT TOGETHER":      phrase("KEEP IT TOGETHER",      "K IY1 P | IH1 T | T AH0 G EH1 DH ER0"),
   "GET YOUR ACT TOGETHER": phrase("GET YOUR ACT TOGETHER", "G EH1 T | Y AO1 R | AE1 K T | T AH0 G EH1 DH ER0"),
   "REIGN OF TERROR":       phrase("REIGN OF TERROR",       "R EY1 N | AH1 V | T EH1 R ER0"),

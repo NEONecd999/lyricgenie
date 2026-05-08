@@ -786,12 +786,13 @@
       background: var(--accent-soft);
       color: var(--accent);
     }
-    /* Phrases get a slightly muted color (so they read as a distinct
-       category at a glance) but render in normal upright style — no
-       italic — for visual consistency with single-word results. */
-    .chip.phrase {
-      color: var(--ink-muted);
-    }
+    /* Phrase chips render identically to single-word chips — only
+       the tier classes drive color. (Earlier we muted .chip.phrase
+       to mark them as a distinct category, but that incorrectly
+       dimmed STRICT-tier phrases like "all heart" or "bad start"
+       so they looked like loose rhymes when they're actually
+       perfect.) The .phrase class is preserved as a hook for any
+       future per-phrase styling without affecting color. */
     .chip.tier-loose { color: var(--ink-muted); }
     .chip.tier-slant {
       color: var(--ink-faint);

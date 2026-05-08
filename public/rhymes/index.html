@@ -125,12 +125,12 @@
     html { height: 100%; }
 
     /* ─── Top bar — matches lyricgenie.app Navbar ───
-       Layout: SVG wordmark logo flush left, single back link to the
-       main site, brand-purple "Download App" pill flush right.
-       Background stays white (no scroll-flip) since this is a single
-       self-contained page, unlike the marketing site nav which
-       transitions purple-on-scroll. Compact 60px height to maximize
-       the column area below. */
+       Layout: SVG wordmark logo flush left, "Learn more" + Download
+       App pill clustered together flush right. No max-width — the
+       bar spans the full viewport so the wordmark hugs the left edge
+       and the CTA cluster hugs the right, mirroring the pattern on
+       the marketing site. Compact 60px height keeps the column area
+       below as tall as possible. */
     .topbar {
       display: flex;
       align-items: center;
@@ -138,8 +138,8 @@
       gap: 16px;
       padding: 0 24px;
       height: 60px;
-      max-width: 1400px;
-      margin: 0 auto;
+      width: 100%;
+      margin: 0;
     }
     .wordmark {
       display: inline-flex;
@@ -166,10 +166,14 @@
       border-radius: 6px;
       vertical-align: middle;
     }
+    /* Right cluster: "Learn more" + Download App pill ride together
+       so the CTA pair feels like a unit. The gap is intentionally
+       smaller than a typical full nav so the two elements read as
+       paired action affordances, not separate menu items. */
     .topbar-nav {
       display: flex;
       align-items: center;
-      gap: 28px;
+      gap: 18px;
       margin-left: auto;
     }
     .topbar-nav a.nav-link {
@@ -352,11 +356,23 @@
     }
 
     /* ─── Empty state ─── */
+    /* Used both for the initial "type to begin" hint AND the
+       not-found state when a word isn't in the dictionary. The
+       not-found variant adds the .not-found modifier which swaps in
+       the closed-book illustration and a softer copy block. */
     .empty-state {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 32px 24px;
       text-align: center;
-      color: var(--ink-faint);
-      padding: 60px 20px;
+      color: var(--ink-muted);
       font-size: 15px;
+      line-height: 1.5;
     }
     .empty-state code {
       font-family: var(--font-mono);
@@ -365,20 +381,63 @@
       border-radius: 4px;
       color: var(--ink-muted);
     }
-    .error {
-      max-width: 600px;
-      margin: 24px auto;
-      padding: 18px 22px;
-      background: var(--surface);
-      border: 1px solid var(--rule);
-      border-radius: var(--radius);
+    .empty-state .es-icon {
+      width: 56px;
+      height: 56px;
+      color: var(--accent);
+      opacity: 0.85;
+      flex-shrink: 0;
+    }
+    .empty-state .es-icon svg {
+      width: 100%;
+      height: 100%;
+      fill: currentColor;
+    }
+    .empty-state .es-headline {
+      font-family: var(--font-display);
+      font-size: clamp(22px, 3vw, 28px);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin: 0;
+      line-height: 1.2;
+    }
+    .empty-state .es-headline .word {
+      color: var(--accent);
+      font-style: italic;
+    }
+    .empty-state .es-body {
+      max-width: 460px;
+      margin: 0;
       color: var(--ink-muted);
       font-size: 14px;
+      line-height: 1.5;
     }
-    .error code {
-      background: rgba(0,0,0,0.05);
-      padding: 2px 6px;
-      border-radius: 4px;
+    .empty-state .es-suggestions {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 4px;
+    }
+    .empty-state .es-suggestion {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 12px;
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+    .empty-state .es-suggestion:hover {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--accent);
     }
 
     /* ─── Anchor strip (syllable pills under the headline-input) ─── */
@@ -860,7 +919,7 @@
       <span class="meta">Rhymes</span>
     </a>
     <nav class="topbar-nav">
-      <a href="https://lyricgenie.app" class="nav-link">← lyricgenie.app</a>
+      <a href="https://lyricgenie.app" class="nav-link">Learn more</a>
       <a href="https://apps.apple.com/us/app/lyric-genie/id6739787614" class="get-app-btn" id="getAppBtn">
         Download App
       </a>
@@ -901,7 +960,7 @@
     <div class="options-row">
       <label class="opt-toggle">
         <input type="checkbox" id="slantMode" />
-        <span>Slant</span>
+        <span>Include Slant Rhymes</span>
       </label>
       <button class="smart-sort-btn" id="smartSortBtn" type="button" title="AI Picks: rhymes that fit your song's mood + lyrics">
         <!-- SF Symbol "sparkles" inlined; fills with currentColor so
@@ -913,9 +972,9 @@
     </div>
 
     <div id="results">
-      <div class="empty-state">
-        Type a word to start. Try <code>remember</code>, <code>night light</code>, or <code>in plain sight</code>.
-      </div>
+      <!-- Initial empty-state is populated by renderEmpty() on JS load
+           so all three states (initial / not-found / results) share the
+           same .empty-state markup + flex-centered layout. -->
     </div>
   </main>
 
@@ -1032,28 +1091,89 @@
       render(result);
     }
 
+    // Closed-book SF Symbol (character.book.closed.fill) — inlined so
+    // the empty-state illustrations require no external asset fetch.
+    // Pairs naturally with "we don't have that in our dictionary".
+    const BOOK_ICON_SVG = `<svg viewBox="0 0 419.336 538.477" aria-hidden="true">
+      <path d="M74.0234 538.477L402.148 538.477C411.719 538.477 419.336 530.859 419.336 521.094C419.336 513.867 414.258 507.227 407.617 504.688C374.414 489.453 367.188 447.656 399.023 414.648C408.789 404.688 419.336 391.406 419.336 366.992L419.336 76.3672C419.336 25.9766 394.141 0.390625 344.141 0.390625L75.1953 0.390625C25.1953 0.390625 0 25.7812 0 76.3672L0 464.648C0 513.281 25.3906 538.477 74.0234 538.477ZM75.7812 503.906C49.2188 503.906 34.5703 489.453 34.5703 464.258C34.5703 440.43 51.1719 425.391 77.5391 425.391L339.844 425.391C344.727 425.391 348.828 424.805 352.734 423.828C338.867 451.953 341.797 481.641 358.984 503.906ZM67.5781 389.648C60.7422 389.648 54.8828 383.984 54.8828 376.953L54.8828 49.8047C54.8828 42.5781 60.7422 36.9141 67.5781 36.9141C74.6094 36.9141 80.4688 42.5781 80.4688 49.8047L80.4688 376.953C80.4688 383.984 74.6094 389.648 67.5781 389.648ZM165.039 311.719C155.859 311.719 150 306.25 150 298.047C150 294.922 150.391 292.188 152.148 287.891L218.555 110.156C222.461 99.8047 229.688 94.5312 240.43 94.5312C251.367 94.5312 258.789 99.8047 262.695 110.156L329.102 287.891C330.859 292.188 331.25 294.922 331.25 298.242C331.25 306.25 325.391 311.719 316.406 311.719C308.984 311.719 304.102 308.398 300.781 299.023L282.617 247.266L198.633 247.266L180.273 299.023C177.148 308.594 172.266 311.719 165.039 311.719ZM206.836 222.656L274.414 222.656L241.602 129.883L239.648 129.883Z"/>
+    </svg>`;
+
+    // Sparkles SF Symbol (decorative for the initial empty state).
+    const SPARKLES_ICON_SVG = `<svg viewBox="0 0 463 620" aria-hidden="true">
+      <path d="M217.4 121.5c3.1 0 4.7-2 5.3-4.9 6.8-40 6.2-43.4 50.7-50.8 2.9-.4 4.7-2.2 4.7-5.1s-1.8-4.9-4.7-5.3c-44.5-7.4-44-10.7-50.7-50.7C222 1.8 220.5 0 217.4 0c-3.1 0-4.7 1.8-5.3 4.7-6.8 40-6.2 43.4-50.8 50.8-2.9.4-4.7 2.2-4.7 5.3s1.8 4.9 4.7 5.3c44.5 7.4 44 10.7 50.8 50.7.6 2.9 2.2 4.9 5.3 4.9zM94.5 293.6c3.9 0 6.8-2.7 7.4-6.6 9.4-67.6 11-67 80.5-80.3 3.7-.8 6.6-3.3 6.6-7.4s-3-6.8-6.6-7.4c-69.5-10.5-71.3-11.9-80.5-80.1-.6-4.1-3.5-6.8-7.4-6.8s-6.8 2.7-7.4 7c-8.8 67.4-11.3 66.6-80.5 79.9-3.7.8-6.6 3.3-6.6 7.4 0 4.3 2.9 6.6 7.4 7.4 68.8 11.5 71 12.5 79.7 79.9.6 4.3 3.5 7 7.4 7zM265.4 573.6c6.1 0 10.5-4.1 11.4-10.4 17.2-142 35.5-160.7 175.2-175.4 6.4-.6 10.7-5.1 10.7-11.1s-4.3-10.7-10.7-11.3c-139.6-14.6-158-33.4-175.2-175.4-.8-6-5.3-10.3-11.4-10.3s-10.3 4.3-11.3 10.3c-17.2 142-35.5 160.7-175.2 175.4-6.4.6-10.7 5.1-10.7 11.1s4.3 10.5 10.7 11.1c139.3 18 156.9 33.6 175.2 175.4 1 6.3 4.4 10.6 10.5 10.6z"/>
+    </svg>`;
+
     function renderEmpty() {
       lastResult = null;
       anchorStripEl.innerHTML = '';
       headlineStatusEl.innerHTML = '';
       resultsEl.innerHTML = `
         <div class="empty-state">
-          Type a word to start. Try <code>remember</code>, <code>night light</code>, or <code>in plain sight</code>.
+          <div class="es-icon">${SPARKLES_ICON_SVG}</div>
+          <h2 class="es-headline">Find every rhyme</h2>
+          <p class="es-body">Type a word above to see perfect, near, slant and multi-syllable matches across our 135K-word dictionary.</p>
+          <div class="es-suggestions" id="esSuggestions">
+            <button type="button" class="es-suggestion" data-q="remember">remember</button>
+            <button type="button" class="es-suggestion" data-q="night light">night light</button>
+            <button type="button" class="es-suggestion" data-q="in plain sight">in plain sight</button>
+          </div>
         </div>
       `;
+      wireSuggestionClicks();
+    }
+
+    function renderNotFound(result) {
+      // Clear the anchor strip — it would still show the LAST successful
+      // word's syllables, which is misleading next to a "not found"
+      // message about a different word.
+      anchorStripEl.innerHTML = '';
+      headlineStatusEl.innerHTML = '';
+      lastResult = null;
+
+      const word = escapeHtml(result.word);
+      const isPhrase = result.reason === 'unknown_word_in_phrase';
+      const headline = isPhrase
+        ? `Hmm, one of those words is missing`
+        : `Hmm, no rhymes for <span class="word">${word}</span> yet`;
+      const body = isPhrase
+        ? `“${word}” contains a word we don't recognize. Try replacing it with a more common word — our dictionary has 135K English words and phrases.`
+        : `It might be a typo, a proper noun we haven't catalogued, or a regional/slang form. Try a different spelling, an inflected form, or one of these:`;
+
+      resultsEl.innerHTML = `
+        <div class="empty-state not-found">
+          <div class="es-icon">${BOOK_ICON_SVG}</div>
+          <h2 class="es-headline">${headline}</h2>
+          <p class="es-body">${body}</p>
+          ${isPhrase ? '' : `
+            <div class="es-suggestions" id="esSuggestions">
+              <button type="button" class="es-suggestion" data-q="remember">remember</button>
+              <button type="button" class="es-suggestion" data-q="midnight">midnight</button>
+              <button type="button" class="es-suggestion" data-q="forever young">forever young</button>
+            </div>
+          `}
+        </div>
+      `;
+      wireSuggestionClicks();
+    }
+
+    // Wire the suggestion chips inside the empty / not-found states
+    // so clicking one fills the input + triggers a fresh search.
+    function wireSuggestionClicks() {
+      const container = document.getElementById('esSuggestions');
+      if (!container) return;
+      container.querySelectorAll('.es-suggestion').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const q = btn.getAttribute('data-q') || btn.textContent.trim();
+          anchorOverride = null;
+          input.value = q;
+          runSearch(q);
+        });
+      });
     }
 
     function render(result) {
       if (!result.found) {
-        // Unknown word — keep the previous anchor strip so the user
-        // sees what they had, but clear the columns and show the error
-        // inline below the input (subtle status, not a giant block).
-        const isPhrase = result.reason === 'unknown_word_in_phrase';
-        const msg = isPhrase
-          ? `One or more words in “${escapeHtml(result.word)}” aren’t in our dictionary.`
-          : `“${escapeHtml(result.word)}” isn’t in our dictionary yet.`;
-        headlineStatusEl.innerHTML = `<span style="color:var(--ink-muted)">${msg}</span>`;
-        resultsEl.innerHTML = '';
+        renderNotFound(result);
         return;
       }
 
@@ -1449,6 +1569,12 @@
         .replace(/"/g, '&quot;')
         .replace(/'/g, '&#39;');
     }
+
+    // Render the initial empty-state on first load — replaces the old
+    // inline placeholder markup. renderEmpty() also wires the
+    // suggestion-chip clicks so users can sample the engine with one
+    // tap.
+    renderEmpty();
   </script>
 </body>
 </html>

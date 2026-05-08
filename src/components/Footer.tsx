@@ -98,6 +98,14 @@ const Footer = () => {
               </li>
               <li>
                 <a
+                  href="/rhymes/"
+                  className="block py-1 text-[rgba(246,236,201,0.7)] transition-colors hover:text-[#F6ECC9]"
+                >
+                  Free Rhyme Tool
+                </a>
+              </li>
+              <li>
+                <a
                   href="/#pricing"
                   className="block py-1 text-[rgba(246,236,201,0.7)] transition-colors hover:text-[#F6ECC9]"
                 >

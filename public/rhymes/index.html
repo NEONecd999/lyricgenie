@@ -360,9 +360,15 @@
 
     /* ─── Empty state ─── */
     /* Used both for the initial "type to begin" hint AND the
-       not-found state when a word isn't in the dictionary. The
-       not-found variant adds the .not-found modifier which swaps in
-       the closed-book illustration and a softer copy block. */
+       not-found state when a word isn't in the dictionary. The two
+       share the same flex-centered shell but render very different
+       payloads (see .empty-state.initial vs .empty-state.not-found):
+         - initial: minimal — just suggestion chips with a tiny
+           "Try:" label, so the giant headline-input above wins the
+           visual hierarchy battle
+         - not-found: elaborate — closed-book illustration, headline,
+           body copy, and recovery suggestions, because this is an
+           error state where the user needs help getting unstuck */
     .empty-state {
       flex: 1;
       min-height: 0;
@@ -376,6 +382,28 @@
       color: var(--ink-muted);
       font-size: 15px;
       line-height: 1.5;
+    }
+    /* Initial state: dial the visuals all the way down so the input
+       above is unambiguously THE thing to look at. No big icon, no
+       big headline, just a quiet label + chips. */
+    .empty-state.initial {
+      gap: 10px;
+      justify-content: flex-start;
+      padding-top: 48px;
+    }
+    .empty-state.initial .es-icon,
+    .empty-state.initial .es-headline,
+    .empty-state.initial .es-body {
+      display: none;
+    }
+    .empty-state.initial .es-label {
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--ink-faint);
+      text-transform: uppercase;
+      margin: 0;
     }
     .empty-state code {
       font-family: var(--font-mono);
@@ -1110,11 +1138,13 @@
       lastResult = null;
       anchorStripEl.innerHTML = '';
       headlineStatusEl.innerHTML = '';
+      // Minimal initial state: just a "Try:" label + 3 suggestion
+      // chips. The giant headline-input above already says "Type a
+      // word or phrase…" — repeating that here would just compete
+      // for visual attention.
       resultsEl.innerHTML = `
-        <div class="empty-state">
-          <div class="es-icon">${SPARKLES_ICON_SVG}</div>
-          <h2 class="es-headline">Find every rhyme</h2>
-          <p class="es-body">Type a word or phrase above to see perfect, near, slant and multi-syllable matches across our 135K-word dictionary.</p>
+        <div class="empty-state initial">
+          <p class="es-label">Or try:</p>
           <div class="es-suggestions" id="esSuggestions">
             <button type="button" class="es-suggestion" data-q="remember">remember</button>
             <button type="button" class="es-suggestion" data-q="night light">night light</button>

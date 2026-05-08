@@ -786,8 +786,10 @@
       background: var(--accent-soft);
       color: var(--accent);
     }
+    /* Phrases get a slightly muted color (so they read as a distinct
+       category at a glance) but render in normal upright style — no
+       italic — for visual consistency with single-word results. */
     .chip.phrase {
-      font-style: italic;
       color: var(--ink-muted);
     }
     .chip.tier-loose { color: var(--ink-muted); }

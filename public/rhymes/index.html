@@ -1151,7 +1151,13 @@
     // ─── Search + render ───
     function runSearch(query) {
       lastQuery = query;
-      activeColumnId = null;  // reset mobile selection on new query
+      // NOTE: activeColumnId is intentionally NOT reset here.
+      // Songwriters tend to dwell on a particular shape (e.g. the
+      // 'A·B' / one-weak-between column) while iterating across many
+      // query words — clearing the pill on every search makes them
+      // re-tap the same pill repeatedly. render() validates that the
+      // remembered pill still exists in the new result and falls
+      // back to a default only if it doesn't.
       const opts = {
         mustEndWithB: true,
         slant: slantToggle.checked
@@ -1322,9 +1328,20 @@
       lastResult = result;
       const cols = buildColumns(result);
 
-      // On first render of a query, default the active mobile column to
-      // the most useful one based on query shape (B for two-anchor,
-      // Multi for single-anchor) so phone users land in a meaty column.
+      // Validate the persisted pill against the new query's columns.
+      // The synthetic 'A_B' pill needs BOTH A and B columns to exist;
+      // every other pill just needs its own ID present. If the
+      // remembered pill is invalid for this query (e.g. user had
+      // 'A·B' selected — a two-anchor column — then searched a
+      // single-anchor word like "light"), fall through to the
+      // default-picker so they land somewhere productive.
+      if (activeColumnId !== null) {
+        const validIds = new Set(cols.map(c => c.id));
+        const stillValid = activeColumnId === 'A_B'
+          ? (validIds.has('A') && validIds.has('B'))
+          : validIds.has(activeColumnId);
+        if (!stillValid) activeColumnId = null;
+      }
       if (activeColumnId === null) {
         activeColumnId = pickDefaultMobileColumn(result, cols);
       }

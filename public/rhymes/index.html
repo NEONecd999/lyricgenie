@@ -7,6 +7,28 @@
   <meta name="theme-color" content="#1A1322" media="(prefers-color-scheme: dark)" />
   <meta name="description" content="Free rhyme finder for songwriters. Phonetic engine, multi-syllable rhymes, slant matches. By Lyric Genie." />
   <title>Rhymes — Lyric Genie</title>
+
+  <!-- ─── Google Analytics 4 (Firebase Analytics) ─────────────────
+       Same measurement ID as the lyricgenie-625c4 (prod) Firebase
+       project. Loaded async so it never blocks first paint. We
+       only emit one custom event from this page right now —
+       'dictionary_miss' — fired when a typed query isn't in the
+       dictionary, so we can see which words to add over time.
+       Standard GA4 page_view + session events fire automatically. -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XK9NRLWK3K"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-XK9NRLWK3K', {
+      // Anonymize IP at collection time (GA4 already does this by
+      // default but explicit is good).
+      anonymize_ip: true,
+      // Tag the page so we can filter rhymes-page events distinctly
+      // from anything else served on lyricgenie.app.
+      page_title: 'Lyric Genie — Rhymes'
+    });
+  </script>
   <style>
     /* ─────────────────────────────────────────────────────────
        Lyric Genie public rhyme tool
@@ -1229,6 +1251,26 @@
       anchorStripEl.innerHTML = '';
       headlineStatusEl.innerHTML = '';
       lastResult = null;
+
+      // ─── Telemetry: log the missed word to GA4 ───────────────
+      // This is how we learn what to add to the dictionary.
+      // Aggregated reports in Firebase Analytics → Events let us
+      // see the most common misses over time. Wrapped in try/catch
+      // and a typeof guard so an ad-blocker (which suppresses
+      // gtag) never breaks the user-facing experience.
+      try {
+        if (typeof gtag === 'function') {
+          gtag('event', 'dictionary_miss', {
+            // GA4 truncates string params at 100 chars — fine for any
+            // realistic word/phrase but we slice defensively.
+            word: String(result.word || '').slice(0, 100),
+            reason: result.reason || 'unknown',
+            // Word length is useful for spotting typos vs proper-noun
+            // misses vs phrase issues at a glance in the report.
+            word_length: String(result.word || '').length
+          });
+        }
+      } catch (_) { /* never break UX over telemetry */ }
 
       const word = escapeHtml(result.word);
       const isPhrase = result.reason === 'unknown_word_in_phrase';

@@ -1083,8 +1083,15 @@
       if (q) runSearch(q);
       input.blur();  // dismiss the iOS keyboard so results are visible
     });
+    // Slant toggle re-runs the search with the current option state.
+    // Read the input directly (not lastQuery) so toggling with an
+    // empty input is a no-op and toggling with a typed word doesn't
+    // resurrect a stale search from earlier in the session. Anchor
+    // override is preserved — slant is orthogonal to anchor choice.
     slantToggle.addEventListener('change', () => {
-      if (lastQuery) runSearch(lastQuery);
+      const q = input.value.trim();
+      if (!q) return;
+      runSearch(q);
     });
     smartSortBtn.addEventListener('click', openSmartSortModal);
     modalCloseBtn.addEventListener('click', closeSmartSortModal);

@@ -494,6 +494,45 @@
       border-color: var(--accent);
       color: var(--accent);
     }
+    /* "Suggest this word for our dictionary" CTA — only appears in
+       the not-found state. Visually subordinate to the primary
+       suggestion chips above it (smaller, link-styled, no border)
+       so the user's first action is "try one of these" not "wait,
+       maybe submit a request". After click, swaps to a confirmation
+       state that's locked + tinted green via :disabled. */
+    .empty-state .suggest-word {
+      margin-top: 8px;
+      padding: 8px 14px;
+      background: transparent;
+      border: 1px dashed var(--rule);
+      border-radius: 999px;
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--ink-faint);
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+    .empty-state .suggest-word .suggest-word-name {
+      color: var(--ink-muted);
+      font-style: italic;
+      margin: 0 2px;
+    }
+    .empty-state .suggest-word:hover:not(:disabled) {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+    .empty-state .suggest-word:hover:not(:disabled) .suggest-word-name {
+      color: var(--accent);
+    }
+    .empty-state .suggest-word:disabled {
+      cursor: default;
+      border-style: solid;
+      border-color: var(--green-border);
+      background: var(--green-tint);
+      color: var(--green-fg);
+    }
 
     /* ─── Anchor strip (syllable pills under the headline-input) ─── */
     /* Renders the syllable structure of the queried word, with the
@@ -1068,6 +1107,63 @@
     <a href="https://lyricgenie.app">lyricgenie.app</a>
   </footer>
 
+  <!-- ─── Instant initial-state render ─────────────────────────────
+       Runs synchronously BEFORE the ~2.7MB of engine + dictionary
+       scripts below. Renders the "OR TRY:" suggestion chips into
+       #results immediately so the page never appears blank waiting
+       for the dictionary to download + RhymeEngine.buildIndex() to
+       run (which together can take 1-2s on a typical connection).
+       The main inline script below reuses window.__STARTER_SUGGESTIONS
+       so the 80-entry pool isn't duplicated. Click handlers attach
+       once the engine is ready (any clicks before then are just
+       ignored, but in practice no user clicks within the first
+       second of page load). -->
+  <script>
+    window.__STARTER_SUGGESTIONS = [
+      'remember','midnight','shadow','forever','horizon',
+      'hurricane','tomorrow','silhouette','promises','photograph',
+      'lonely','broken','whisper','summer','mystery','yesterday',
+      'electric','wildfire','memory','everlasting','melancholy',
+      'paradise','neon','velvet','porcelain','satellite',
+      'replay','getaway','heartbreak','goodbye','sunshine','airplane',
+      'downtown','skyline','rhapsody','reverie','wanderer','sympathy',
+      'heartache','wonderland','passenger','prisoner','midsummer',
+      'heaven','aftermath','rainfall','heartbeat',
+      'night light','city lights','moonlight','broken heart','old soul',
+      'last call','dead end','highway','ocean blue','silver screen',
+      'fading fast','new wave','burning bridges','raining diamonds',
+      'stolen moments','summer rain','midnight train','honey moon',
+      'chasing dreams',
+      'in plain sight','under the sun','end of the road','fire in the sky',
+      'the long way home','nothing to lose','back to you','forever young',
+      'out of time','kiss me slowly','tale as old as time','love of my life',
+      'house of cards','ghost of you','edge of seventeen'
+    ];
+    (function renderInitialChipsInstantly() {
+      const arr = window.__STARTER_SUGGESTIONS.slice();
+      // Partial Fisher-Yates shuffle, last 3 = our random picks
+      for (let i = arr.length - 1; i > arr.length - 4; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      const picks = arr.slice(arr.length - 3);
+      const esc = s => String(s)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+      const chips = picks.map(s =>
+        `<button type="button" class="es-suggestion" data-q="${esc(s)}">${esc(s)}</button>`
+      ).join('');
+      const resultsEl = document.getElementById('results');
+      if (resultsEl) {
+        resultsEl.innerHTML =
+          '<div class="empty-state initial">' +
+            '<p class="es-label">Or try:</p>' +
+            '<div class="es-suggestions" id="esSuggestions">' + chips + '</div>' +
+          '</div>';
+      }
+    })();
+  </script>
+
   <!-- Engine + dictionaries -->
   <script src="engine.js?v=10"></script>
   <script src="phrases-mined.js?v=10"></script>
@@ -1185,37 +1281,17 @@
 
     // ─── Curated suggestion pool ──────────────────────────────────
     // Hand-picked for breadth + songwriter resonance. Mix of single
-    // multi-syllable words (which produce rich multi-anchor results),
-    // 2-word phrases (the most common songwriter form), and longer
-    // phrases (to showcase the multi-syllable engine on hooks). Every
-    // entry has been validated against the dictionary — they all
-    // resolve to a found-result, so users never get a not-found
-    // state from a suggestion. On each page load, 3 are picked at
-    // random so repeat visitors discover different facets of the
-    // dictionary.
-    const STARTER_SUGGESTIONS = [
-      // Single multi-syllable words
-      'remember','midnight','shadow','forever','horizon',
-      'hurricane','tomorrow','silhouette','promises','photograph',
-      'lonely','broken','whisper','summer','mystery','yesterday',
-      'electric','wildfire','memory','everlasting','melancholy',
-      'paradise','neon','velvet','porcelain','satellite',
-      'replay','getaway','heartbreak','goodbye','sunshine','airplane',
-      'downtown','skyline','rhapsody','reverie','wanderer','sympathy',
-      'heartache','wonderland','passenger','prisoner','midsummer',
-      'heaven','aftermath','rainfall','heartbeat',
-      // Two-word phrases
-      'night light','city lights','moonlight','broken heart','old soul',
-      'last call','dead end','highway','ocean blue','silver screen',
-      'fading fast','new wave','burning bridges','raining diamonds',
-      'stolen moments','summer rain','midnight train','honey moon',
-      'chasing dreams',
-      // Longer phrases — showcase the multi-syllable engine
-      'in plain sight','under the sun','end of the road','fire in the sky',
-      'the long way home','nothing to lose','back to you','forever young',
-      'out of time','kiss me slowly','tale as old as time','love of my life',
-      'house of cards','ghost of you','edge of seventeen'
-    ];
+    // multi-syllable words, 2-word phrases, and longer phrases.
+    // Every entry has been validated against the dictionary so users
+    // never get a not-found from a suggestion.
+    //
+    // The pool itself is defined in the small inline <script> ABOVE
+    // the engine/dictionary <script> tags (window.__STARTER_SUGGESTIONS),
+    // so the initial chips render INSTANTLY before the heavy 2.7MB
+    // of dictionary JS loads. We just alias it here for the rest of
+    // the app. Subsequent renderEmpty() calls (when the user clears
+    // the input) re-pick from the same pool.
+    const STARTER_SUGGESTIONS = window.__STARTER_SUGGESTIONS;
 
     function pickRandomSuggestions(n) {
       // Fisher-Yates partial shuffle: O(n) and produces n distinct
@@ -1252,6 +1328,10 @@
       wireSuggestionClicks();
     }
 
+    // Track which words have already been requested so the user
+    // can't double-submit the same word from the same session.
+    const requestedWords = new Set();
+
     function renderNotFound(result) {
       // Clear the anchor strip — it would still show the LAST successful
       // word's syllables, which is misleading next to a "not found"
@@ -1259,26 +1339,6 @@
       anchorStripEl.innerHTML = '';
       headlineStatusEl.innerHTML = '';
       lastResult = null;
-
-      // ─── Telemetry: log the missed word to GA4 ───────────────
-      // This is how we learn what to add to the dictionary.
-      // Aggregated reports in Firebase Analytics → Events let us
-      // see the most common misses over time. Wrapped in try/catch
-      // and a typeof guard so an ad-blocker (which suppresses
-      // gtag) never breaks the user-facing experience.
-      try {
-        if (typeof gtag === 'function') {
-          gtag('event', 'dictionary_miss', {
-            // GA4 truncates string params at 100 chars — fine for any
-            // realistic word/phrase but we slice defensively.
-            word: String(result.word || '').slice(0, 100),
-            reason: result.reason || 'unknown',
-            // Word length is useful for spotting typos vs proper-noun
-            // misses vs phrase issues at a glance in the report.
-            word_length: String(result.word || '').length
-          });
-        }
-      } catch (_) { /* never break UX over telemetry */ }
 
       const word = escapeHtml(result.word);
       const isPhrase = result.reason === 'unknown_word_in_phrase';
@@ -1288,6 +1348,19 @@
       const body = isPhrase
         ? `“${word}” contains a word we don't recognize. Try replacing it with a more common word — our dictionary has 135K English words and phrases.`
         : `It might be a typo, a proper noun we haven't catalogued, or a regional/slang form. Try a different spelling, an inflected form, or one of these:`;
+
+      // "Suggest this word" CTA: explicit user-driven submission
+      // (much better signal than auto-logging every typo). Only show
+      // for the single-word path; phrase misses are usually a typo
+      // in one component word, not a missing entry as a whole.
+      const alreadyRequested = requestedWords.has(result.word);
+      const suggestBtn = isPhrase ? '' : `
+        <button type="button" class="suggest-word" id="suggestWordBtn"
+          data-word="${word}" data-reason="${result.reason || 'unknown'}"
+          ${alreadyRequested ? 'disabled' : ''}>
+          ${alreadyRequested ? '✓ Thanks — we’ll review it' : `Suggest <span class="suggest-word-name">${word}</span> for our dictionary`}
+        </button>
+      `;
 
       resultsEl.innerHTML = `
         <div class="empty-state not-found">
@@ -1301,9 +1374,40 @@
               <button type="button" class="es-suggestion" data-q="forever young">forever young</button>
             </div>
           `}
+          ${suggestBtn}
         </div>
       `;
       wireSuggestionClicks();
+      wireSuggestWordButton();
+    }
+
+    // ─── "Suggest this word" submission ─────────────────────────
+    // Single explicit click → one GA4 event. We use GA4 rather than
+    // a Firestore write so there's no Firestore rules / spam-filter
+    // overhead; aggregated reports in Firebase Console (or BigQuery
+    // export) tell us which words users want most. The button locks
+    // after one click per session-per-word so a user can't spam the
+    // same submission.
+    function wireSuggestWordButton() {
+      const btn = document.getElementById('suggestWordBtn');
+      if (!btn) return;
+      btn.addEventListener('click', () => {
+        const word = btn.getAttribute('data-word') || '';
+        const reason = btn.getAttribute('data-reason') || 'unknown';
+        if (!word || requestedWords.has(word)) return;
+        try {
+          if (typeof gtag === 'function') {
+            gtag('event', 'dictionary_request', {
+              word: word.slice(0, 100),
+              reason,
+              word_length: word.length
+            });
+          }
+        } catch (_) { /* never break UX over telemetry */ }
+        requestedWords.add(word);
+        btn.disabled = true;
+        btn.innerHTML = '✓ Thanks — we’ll review it';
+      });
     }
 
     // Wire the suggestion chips inside the empty / not-found states
@@ -1731,11 +1835,13 @@
         .replace(/'/g, '&#39;');
     }
 
-    // Render the initial empty-state on first load — replaces the old
-    // inline placeholder markup. renderEmpty() also wires the
-    // suggestion-chip clicks so users can sample the engine with one
-    // tap.
-    renderEmpty();
+    // The initial OR-TRY chips were already rendered into #results
+    // by the small inline <script> above the engine tags (so users
+    // see them in <100ms instead of after the dictionary loads).
+    // Just attach the click handlers now that the engine is ready
+    // — anyone who clicked in the first second was unlucky, but
+    // in practice nobody does.
+    wireSuggestionClicks();
   </script>
 </body>
 </html>

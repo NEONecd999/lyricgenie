@@ -1204,6 +1204,7 @@ const SpotlightRow = ({
   child,
   reverse,
   tint,
+  cta,
 }: {
   eyebrow: string;
   title: string;
@@ -1211,6 +1212,10 @@ const SpotlightRow = ({
   child: (active: boolean) => ReactElement;
   reverse?: boolean;
   tint: string;
+  // Optional pill button rendered below the body. Used by the Rhymes
+  // row to drive traffic to the standalone /rhymes/ web tool — every
+  // other row has no companion product so the prop is unused.
+  cta?: { label: string; href: string };
 }) => {
   const [ref, inView] = useInView(0.25);
 
@@ -1237,8 +1242,23 @@ const SpotlightRow = ({
       {title}
     </h3>
   );
+  // Body + optional CTA button. The CTA is brand-purple pill style
+  // matching the Navbar's "Download App" so the action visually
+  // belongs to Lyric Genie's CTA family, not a third-party link.
   const bodyEl = (
-    <p style={{ fontSize: 17, lineHeight: 1.6, color: LG_INK_SOFT, margin: 0 }}>{body}</p>
+    <>
+      <p style={{ fontSize: 17, lineHeight: 1.6, color: LG_INK_SOFT, margin: 0 }}>{body}</p>
+      {cta && (
+        <a
+          href={cta.href}
+          className="mt-5 inline-flex items-center gap-1.5 rounded-full px-5 py-2.5 text-sm font-semibold text-white shadow-[0_4px_20px_-4px_rgba(30,19,36,0.12)] transition-all hover:bg-[#5F43A8]"
+          style={{ background: LG_PURPLE }}
+        >
+          {cta.label}
+          <span aria-hidden="true">→</span>
+        </a>
+      )}
+    </>
   );
 
   return (
@@ -1435,6 +1455,7 @@ const Features = () => {
           body="Rhymes, synonyms, sound-alikes and word associations, all in one bottom sheet. Jump between perfect, near, multi-syllabic and phrase rhymes without losing your place."
           tint="rgba(58,123,208,.22)"
           child={(a) => <RhymeSpotlight active={a} />}
+          cta={{ label: "Try the rhyme engine free", href: "/rhymes/" }}
         />
 
         {/* Compact cards — AND MORE */}

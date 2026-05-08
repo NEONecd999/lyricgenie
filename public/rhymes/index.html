@@ -304,7 +304,12 @@
       display: block;
       width: 100%;
       margin: 0;
-      padding: 2px 4px 6px;
+      /* Symmetric horizontal padding reserves clearance for the
+         absolute-positioned clear (×) button on the right while
+         keeping the centered text optically centered inside the
+         input wrapper. With text-align:center, asymmetric padding
+         would shift the text off-center by half the difference. */
+      padding: 2px 44px 6px 44px;
       background: transparent;
       color: var(--ink);
       font-family: var(--font-display);
@@ -1057,7 +1062,16 @@
       }
       .headline-input {
         font-size: clamp(24px, 7vw, 36px);
-        padding: 6px 4px 8px;
+        /* Slightly less side padding on mobile (36px instead of 44px)
+           so the placeholder still has comfortable room at narrow
+           viewports while still clearing the (slightly smaller) ×
+           button. */
+        padding: 6px 36px 8px 36px;
+      }
+      .headline-clear {
+        width: 36px;
+        height: 36px;
+        font-size: 26px;
       }
       .headline-status {
         margin-top: 4px;

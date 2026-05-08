@@ -797,8 +797,12 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 30px;
       margin: 0 auto 16px;
+    }
+    .modal .modal-icon svg {
+      width: 32px;
+      height: 32px;
+      fill: currentColor;
     }
     .modal h2 {
       font-family: var(--font-display);
@@ -1012,7 +1016,15 @@
   <!-- AI Picks upsell modal -->
   <div class="modal-backdrop" id="smartSortModal" aria-hidden="true" role="dialog">
     <div class="modal">
-      <div class="modal-icon">✨</div>
+      <!-- SF Symbol "sparkle" (single 4-pointed star) — inlined so
+           the icon ships with the page and inherits brand-accent
+           color via fill:currentColor. Pairs with the multi-sparkle
+           on the AI Picks button without duplicating the same shape. -->
+      <div class="modal-icon">
+        <svg viewBox="0 0 490.82 490.82" aria-hidden="true">
+          <path d="M245.508 490.43C254.492 490.43 261.328 484.18 262.695 474.805C283.594 301.758 305.078 279.883 474.609 262.5C483.984 261.523 490.82 254.297 490.82 245.312C490.82 236.133 483.984 228.906 474.609 228.125C305.078 210.547 283.594 188.867 262.695 15.8203C261.328 6.25 254.492 0 245.508 0C236.719 0 229.688 6.25 228.125 15.8203C207.422 188.867 185.742 210.547 16.4062 228.125C6.83594 228.906 0 236.133 0 245.312C0 254.297 6.83594 261.328 16.4062 262.5C185.352 284.18 205.859 301.562 228.125 474.805C229.688 484.18 236.719 490.43 245.508 490.43Z"/>
+        </svg>
+      </div>
       <h2>AI Picks is in the app</h2>
       <p>AI Picks uses a fast Claude model to highlight the rhymes that fit YOUR song's mood, theme, and lyrics so far. It's free in the Lyric Genie iOS app.</p>
       <div class="modal-btns">

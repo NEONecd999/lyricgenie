@@ -32,16 +32,18 @@ const Navbar = () => {
 
   const allLinks = [
     { label: "Features", href: "/#features" },
-    // /rhymes/ is a static HTML page in public/rhymes/, NOT a React
-    // route — `external: true` makes the renderer use a regular <a>
-    // so the browser does a full navigation (the Lyric Genie rhymes
-    // page is a self-contained app-shell with its own JS).
-    { label: "Rhymes", href: "/rhymes/", external: true },
     { label: "Philosophy", href: "/#philosophy", mobileOnly: true },
     { label: "Testimonials", href: "/#testimonials", mobileOnly: true },
     { label: "Pricing", href: "/#pricing" },
     { label: "FAQ", href: "/#faq" },
     { label: "About", href: "/about" },
+    // /rhymes/ is a static HTML page in public/rhymes/, NOT a React
+    // route — `external: true` makes the renderer use a regular <a>
+    // so the browser does a full navigation (the Lyric Genie rhymes
+    // page is a self-contained app-shell with its own JS). Sits at
+    // the end of the nav as a distinct "tool" link rather than mixed
+    // into the marketing page anchors above it.
+    { label: "Rhymes", href: "/rhymes/", external: true },
   ];
   const desktopLinks = allLinks.filter((l) => !l.mobileOnly);
   const mobileLinks = allLinks;

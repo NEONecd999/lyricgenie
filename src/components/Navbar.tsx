@@ -24,6 +24,11 @@ const Navbar = () => {
 
   const allLinks = [
     { label: "Features", href: "/#features" },
+    // /rhymes/ is a static HTML page in public/rhymes/, NOT a React
+    // route — `external: true` makes the renderer use a regular <a>
+    // so the browser does a full navigation (the Lyric Genie rhymes
+    // page is a self-contained app-shell with its own JS).
+    { label: "Rhymes", href: "/rhymes/", external: true },
     { label: "Philosophy", href: "/#philosophy", mobileOnly: true },
     { label: "Testimonials", href: "/#testimonials", mobileOnly: true },
     { label: "Pricing", href: "/#pricing" },
@@ -113,19 +118,29 @@ const Navbar = () => {
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-8">
-              {desktopLinks.map((link) => (
-                <Link
-                  key={link.label}
-                  to={link.href} // 3. CHANGE 'href' TO 'to'
-                  className={`font-medium transition-colors ${
-                    isScrolled
-                      ? "text-[#F6ECC9]/85 hover:text-[#F6ECC9]"
-                      : "text-[#1E1324]/75 hover:text-[#1E1324]"
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              ))}
+              {desktopLinks.map((link) => {
+                const cls = `font-medium transition-colors ${
+                  isScrolled
+                    ? "text-[#F6ECC9]/85 hover:text-[#F6ECC9]"
+                    : "text-[#1E1324]/75 hover:text-[#1E1324]"
+                }`;
+                // External / static links (e.g. /rhymes/) need a real
+                // <a> so the browser performs a full navigation — using
+                // <Link> would let React Router try to match the path
+                // against client routes and show NotFound.
+                if (link.external) {
+                  return (
+                    <a key={link.label} href={link.href} className={cls}>
+                      {link.label}
+                    </a>
+                  );
+                }
+                return (
+                  <Link key={link.label} to={link.href} className={cls}>
+                    {link.label}
+                  </Link>
+                );
+              })}
             </div>
 
             {/* CTA */}
@@ -163,16 +178,29 @@ const Navbar = () => {
             className="fixed inset-0 z-40 bg-gradient-to-br from-primary via-primary to-accent px-6 pt-24 md:hidden"
           >
             <div className="flex flex-col gap-6">
-              {mobileLinks.map((link) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  className="text-2xl font-semibold text-[#F6ECC9]"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {link.label}
-                </Link>
-              ))}
+              {mobileLinks.map((link) => {
+                const cls = "text-2xl font-semibold text-[#F6ECC9]";
+                const onClick = () => setIsMobileMenuOpen(false);
+                // External links (e.g. /rhymes/) use <a> to force a
+                // full navigation, same rationale as the desktop block.
+                if (link.external) {
+                  return (
+                    <a key={link.label} href={link.href} className={cls} onClick={onClick}>
+                      {link.label}
+                    </a>
+                  );
+                }
+                return (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    className={cls}
+                    onClick={onClick}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
               <div className="flex flex-col gap-4 mt-6">
                 <a
                   href="https://apps.apple.com/us/app/lyric-genie/id6739787614"

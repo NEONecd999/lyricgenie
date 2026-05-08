@@ -330,6 +330,46 @@
     .headline-input:focus {
       border-bottom-color: var(--accent);
     }
+    /* Clear (×) button — sits at the right edge of the input,
+       absolute-positioned inside the form. Only visible when the
+       input has text (.is-visible toggled by JS on input event).
+       Subtle faded look so it doesn't compete with the giant
+       headline; bumps to full opacity on hover. */
+    #searchForm { position: relative; }
+    .headline-clear {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      border: none;
+      background: transparent;
+      color: var(--ink-faint);
+      border-radius: 50%;
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      font-weight: 400;
+      line-height: 1;
+      font-family: var(--font-display);
+      transition: opacity 0.15s, background 0.15s, color 0.15s;
+    }
+    .headline-clear.is-visible {
+      opacity: 0.5;
+      pointer-events: auto;
+    }
+    .headline-clear.is-visible:hover {
+      opacity: 1;
+      background: rgba(30, 19, 36, 0.06);
+      color: var(--ink);
+    }
+    .headline-clear:active { transform: translateY(-50%) scale(0.92); }
     /* Status hint that lives under the input — used by the anchor-
        override indicator ("Custom stress · ↻ reset") when active.
        Collapses to zero height when empty (the common case) so the
@@ -376,7 +416,10 @@
       justify-content: center;
       gap: 18px;
       flex-wrap: wrap;
-      margin: 6px auto 0;
+      /* Margin matches the mobile breakpoint (12px) so the breathing
+         room between the syllable strip above and the slant + AI
+         Picks row reads consistently across viewport sizes. */
+      margin: 12px auto 0;
       max-width: 720px;
     }
     .opt-toggle {
@@ -1085,18 +1128,33 @@
           autocapitalize="off"
           autocorrect="off"
           spellcheck="false"
-          placeholder="Type a word/phrase…"
+          placeholder="Type a word or phrase…"
           aria-label="Search for rhymes"
           autofocus
         />
+        <!-- Clear button: subtle "×" at the right edge. Hidden by
+             default (opacity:0 + pointer-events:none); JS toggles
+             .is-visible whenever the input has text. -->
+        <button
+          type="button"
+          id="searchClear"
+          class="headline-clear"
+          aria-label="Clear search"
+          tabindex="-1"
+        >×</button>
       </form>
+      <!-- Anchor strip + override-status sit RIGHT under the input so
+           they read as live feedback on whatever the user typed —
+           "this is the word and this is how the engine parses it".
+           Tap-to-promote on a weak syllable feels grounded to the
+           input above. The toolbar (Slant + AI Picks) sits below this
+           cluster as occasional refinements. -->
       <div id="anchorStrip" aria-live="polite"></div>
       <div id="headlineStatus" class="headline-status" aria-live="polite"></div>
     </section>
 
     <!-- Slant + AI Picks: standalone toolbar centered under the
-         headline. No more .control-bar wrapper since there's no longer
-         a search-form sibling to flex against. -->
+         headline + syllable cluster. -->
     <div class="options-row">
       <label class="opt-toggle">
         <input type="checkbox" id="slantMode" />
@@ -1131,7 +1189,7 @@
         </svg>
       </div>
       <h2>AI Picks is in the app</h2>
-      <p>AI Picks uses a fast Claude model to highlight the rhymes that fit YOUR song's mood, theme, and lyrics so far. It's free in the Lyric Genie iOS app.</p>
+      <p>AI Picks highlights the rhymes that fit YOUR song's mood, theme, and lyrics so far. It's free in the Lyric Genie iOS app.</p>
       <div class="modal-btns">
         <a href="https://lyricgenie.app/download" class="btn-primary" id="modalGetApp">Get Lyric Genie — Free</a>
         <button class="btn-secondary" id="modalClose">Maybe later</button>
@@ -1220,6 +1278,7 @@
 
     const form = document.getElementById('searchForm');
     const input = document.getElementById('searchInput');
+    const clearBtn = document.getElementById('searchClear');
     const resultsEl = document.getElementById('results');
     const anchorStripEl = document.getElementById('anchorStrip');
     const headlineStatusEl = document.getElementById('headlineStatus');
@@ -1234,13 +1293,34 @@
     let anchorOverride = null;     // { aIdx, bIdx } or null — user-promoted anchor pair
     let searchDebounceTimer = null;
 
+    // ─── Responsive placeholder ──────────────────────────────────
+    // Desktop has room for "Type a word or phrase…" (the canonical
+    // copy + default in the HTML). Below 720px we swap to the
+    // shorter "Type a word/phrase…" so the placeholder fits the
+    // smaller headline-input width without truncation. Listening to
+    // the media query handles orientation changes + window resizing.
+    const PLACEHOLDER_DESKTOP = 'Type a word or phrase…';
+    const PLACEHOLDER_MOBILE = 'Type a word/phrase…';
+    const mobilePlaceholderMQ = window.matchMedia('(max-width: 720px)');
+    const syncPlaceholder = () => {
+      input.placeholder = mobilePlaceholderMQ.matches ? PLACEHOLDER_MOBILE : PLACEHOLDER_DESKTOP;
+    };
+    syncPlaceholder();
+    mobilePlaceholderMQ.addEventListener('change', syncPlaceholder);
+
     // ─── Event wiring ───
     // Live debounced search on every keystroke. Switching the search
     // word ALWAYS clears any anchor override (the override only makes
-    // sense for the word the user picked it on).
+    // sense for the word the user picked it on). The clear (×) button
+    // visibility tracks input.value.length — visible only when there's
+    // something to clear.
+    const updateClearBtn = () => {
+      clearBtn.classList.toggle('is-visible', input.value.length > 0);
+    };
     input.addEventListener('input', () => {
       clearTimeout(searchDebounceTimer);
       anchorOverride = null;
+      updateClearBtn();
       const q = input.value.trim();
       if (!q) {
         renderEmpty();
@@ -1248,6 +1328,19 @@
       }
       searchDebounceTimer = setTimeout(() => runSearch(q), 200);
     });
+    // Clear button: empty the input + render the initial state +
+    // refocus so the user can immediately start typing again.
+    clearBtn.addEventListener('click', () => {
+      input.value = '';
+      anchorOverride = null;
+      clearTimeout(searchDebounceTimer);
+      updateClearBtn();
+      renderEmpty();
+      input.focus();
+    });
+    // Sync once on load in case the browser restored a value (e.g.
+    // after a reload with form-restore enabled).
+    updateClearBtn();
     // Pressing Enter flushes immediately (skips the debounce window).
     form.addEventListener('submit', (e) => {
       e.preventDefault();

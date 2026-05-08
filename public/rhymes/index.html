@@ -37,6 +37,23 @@
        the link preview when no other icon is available. -->
   <link rel="apple-touch-icon" href="https://lyricgenie.app/images/app-icon.jpg" />
 
+  <!-- ─── Theme override (applied BEFORE CSS so there's no flash) ───
+       Reads the user's saved theme from localStorage and stamps it
+       on <html> as data-theme="light"|"dark". When unset, the
+       prefers-color-scheme media queries in the stylesheet take
+       over (i.e. the page follows OS appearance). The toggle UI
+       below reads + writes the same key. -->
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('lg-theme');
+        if (t === 'light' || t === 'dark') {
+          document.documentElement.setAttribute('data-theme', t);
+        }
+      } catch (_) { /* private mode, etc. — fall back to OS pref */ }
+    })();
+  </script>
+
   <!-- ─── Google Analytics 4 (Firebase Analytics) ─────────────────
        Same measurement ID as the lyricgenie-625c4 (prod) Firebase
        project. Loaded async so it never blocks first paint. We
@@ -129,8 +146,31 @@
       --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
     }
 
+    /* Dark theme — applied either via OS preference (the @media
+       block) or explicit user override (data-theme="dark" on <html>,
+       set by the toggle button in the topbar). The override always
+       wins; data-theme="light" forces the light palette regardless
+       of OS preference. */
+    :root[data-theme="dark"] {
+      --bg: #1A1322;
+      --surface: #221729;
+      --surface-2: #2A1F32;
+      --ink: #F9F0CB;
+      --ink-muted: #C7B596;
+      --ink-faint: #8A7E76;
+      --accent: #AB8EE2;
+      --accent-soft: rgba(171, 142, 226, 0.15);
+      --accent-strong: #C2A6F0;
+      --rule: #3A2F45;
+      --rule-soft: #2D2438;
+      --green-tint: rgba(108, 200, 130, 0.18);
+      --green-fg: #8FD9A0;
+      --green-border: rgba(108, 200, 130, 0.4);
+      --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.25);
+      --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
     @media (prefers-color-scheme: dark) {
-      :root {
+      :root:not([data-theme="light"]) {
         --bg: #1A1322;
         --surface: #221729;
         --surface-2: #2A1F32;
@@ -217,15 +257,67 @@
       border-radius: 6px;
       vertical-align: middle;
     }
-    /* Right cluster: "Learn more" + Download App pill ride together
-       so the CTA pair feels like a unit. The gap is intentionally
-       smaller than a typical full nav so the two elements read as
-       paired action affordances, not separate menu items. */
+    /* Right cluster: theme toggle + "Learn more" + Download App pill
+       ride together. Gap is intentionally smaller than a typical
+       full nav so the items read as paired action affordances, not
+       separate menu items. */
     .topbar-nav {
       display: flex;
       align-items: center;
-      gap: 18px;
+      gap: 14px;
       margin-left: auto;
+    }
+    /* Light/dark mode toggle. Shows a sun (currently light) or moon
+       (currently dark) icon. JS sets a .is-dark class on <html> that
+       drives which icon is visible. Hidden on mobile per design —
+       phones almost always follow OS preference, and topbar real
+       estate there is precious. */
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--ink-muted);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .theme-toggle:hover {
+      color: var(--ink);
+      background: rgba(30, 19, 36, 0.05);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) .theme-toggle:hover {
+        background: rgba(255, 255, 255, 0.06);
+      }
+    }
+    :root[data-theme="dark"] .theme-toggle:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+    .theme-toggle svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    /* Icon visibility tracks effective theme: sun = currently light,
+       moon = currently dark. Shows what's ACTIVE so users see their
+       current state (clicking flips it). The default (no data-theme
+       override) reads OS preference via the @media block. */
+    .theme-toggle .icon-sun { display: none; }
+    .theme-toggle .icon-moon { display: inline-block; }
+    :root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+    :root[data-theme="light"] .theme-toggle .icon-sun  { display: inline-block; }
+    @media (prefers-color-scheme: light) {
+      :root:not([data-theme="dark"]) .theme-toggle .icon-moon { display: none; }
+      :root:not([data-theme="dark"]) .theme-toggle .icon-sun  { display: inline-block; }
     }
     /* Uses --ink-muted (which swaps via prefers-color-scheme) so the
        link sits one shade softer than full ink on both light and
@@ -1045,9 +1137,12 @@
         padding: 2px 6px;
         margin-left: 8px;
       }
-      /* Drop the back-link on mobile — logo doubles as the home affordance
-         and screen real estate is precious. */
+      /* Drop the back-link + theme toggle on mobile — logo doubles
+         as the home affordance and phones almost always follow OS
+         appearance, so screen real estate stays for the Download
+         App pill. */
       .topbar-nav .nav-link { display: none; }
+      .topbar-nav .theme-toggle { display: none; }
       .topbar-nav { gap: 0; }
       .get-app-btn { padding: 7px 14px; font-size: 12px; }
 
@@ -1116,6 +1211,25 @@
       <span class="meta">Rhymes</span>
     </a>
     <nav class="topbar-nav">
+      <!-- Theme toggle: defaults to OS preference; click overrides
+           and persists in localStorage. Hidden on mobile (≤720px)
+           via the @media block in the stylesheet. -->
+      <button type="button" id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle light/dark mode">
+        <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v2"></path>
+          <path d="M12 20v2"></path>
+          <path d="m4.93 4.93 1.41 1.41"></path>
+          <path d="m17.66 17.66 1.41 1.41"></path>
+          <path d="M2 12h2"></path>
+          <path d="M20 12h2"></path>
+          <path d="m6.34 17.66-1.41 1.41"></path>
+          <path d="m19.07 4.93-1.41 1.41"></path>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+        </svg>
+      </button>
       <a href="https://lyricgenie.app" class="nav-link">Learn more</a>
       <a href="https://apps.apple.com/us/app/lyric-genie/id6739787614" class="get-app-btn" id="getAppBtn">
         Download App
@@ -1300,6 +1414,36 @@
     const smartSortBtn = document.getElementById('smartSortBtn');
     const smartSortModal = document.getElementById('smartSortModal');
     const modalCloseBtn = document.getElementById('modalClose');
+    const themeToggleBtn = document.getElementById('themeToggle');
+
+    // ─── Theme toggle ────────────────────────────────────────────
+    // The inline <head> script applied any saved override to <html>
+    // before CSS resolved (no flash). Here we just wire the click:
+    // flip the EFFECTIVE current theme and persist the choice. The
+    // theme-color meta tags below are also updated so the iOS Safari
+    // address bar matches the new theme.
+    function getEffectiveTheme() {
+      const t = document.documentElement.getAttribute('data-theme');
+      if (t === 'light' || t === 'dark') return t;
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    function applyTheme(t) {
+      document.documentElement.setAttribute('data-theme', t);
+      try { localStorage.setItem('lg-theme', t); } catch (_) { /* ignore */ }
+      // Update the address-bar tint on iOS Safari to match the theme.
+      const themeColor = t === 'dark' ? '#1A1322' : '#F4EFD8';
+      document.querySelectorAll('meta[name="theme-color"]').forEach(m => {
+        // Strip the media attribute so our explicit value wins
+        // regardless of OS preference.
+        m.removeAttribute('media');
+        m.setAttribute('content', themeColor);
+      });
+    }
+    if (themeToggleBtn) {
+      themeToggleBtn.addEventListener('click', () => {
+        applyTheme(getEffectiveTheme() === 'dark' ? 'light' : 'dark');
+      });
+    }
 
     let activeColumnId = null;     // which pill is active on mobile (null = first by default)
     let lastQuery = '';            // most recent query string actually searched
@@ -1498,12 +1642,13 @@
         ? `“${word}” contains a word we don't recognize. Try replacing it with a more common word — our dictionary has 135K English words and phrases.`
         : `It might be a typo, a proper noun we haven't catalogued, or a regional/slang form. Try a different spelling, an inflected form, or one of these:`;
 
-      // "Suggest this word" CTA: explicit user-driven submission
-      // (much better signal than auto-logging every typo). Only show
-      // for the single-word path; phrase misses are usually a typo
-      // in one component word, not a missing entry as a whole.
+      // "Suggest" CTA: explicit user-driven submission. Shown for
+      // BOTH single-word and phrase misses — a phrase miss might mean
+      // the user wants to flag the unknown word inside the phrase OR
+      // the phrase itself as an idiom we should add. The submission
+      // captures the full typed input either way; we triage on review.
       const alreadyRequested = requestedWords.has(result.word);
-      const suggestBtn = isPhrase ? '' : `
+      const suggestBtn = `
         <button type="button" class="suggest-word" id="suggestWordBtn"
           data-word="${word}" data-reason="${result.reason || 'unknown'}"
           ${alreadyRequested ? 'disabled' : ''}>

@@ -330,12 +330,13 @@
     .headline-input:focus {
       border-bottom-color: var(--accent);
     }
-    /* Status hint that lives under the input — used for "looking…",
-       errors, and "all syllables" / override indicators. min-height
-       reserves space so the layout doesn't jump when status appears. */
+    /* Status hint that lives under the input — used by the anchor-
+       override indicator ("Custom stress · ↻ reset") when active.
+       Collapses to zero height when empty (the common case) so the
+       chip area below sits closer to the syllable strip — the small
+       layout jump on the rare override event is acceptable. */
     .headline-status {
       margin-top: 4px;
-      min-height: 18px;
       font-family: var(--font-body);
       font-size: 12px;
       color: var(--ink-faint);
@@ -344,6 +345,10 @@
       justify-content: center;
       gap: 8px;
       flex-wrap: wrap;
+    }
+    .headline-status:empty {
+      margin-top: 0;
+      display: none;
     }
     .headline-status .reset-anchor {
       display: inline-flex;
@@ -388,6 +393,10 @@
       width: 16px;
       height: 16px;
     }
+    /* AI Picks: outlined button (transparent fill + purple border /
+       text). Filled hover state. The previous accent-soft fill made
+       it look like a selected pill rather than an unactivated CTA —
+       the outlined treatment unambiguously reads as "click me". */
     .smart-sort-btn {
       display: inline-flex;
       align-items: center;
@@ -396,11 +405,11 @@
       font-size: 13px;
       font-weight: 600;
       color: var(--accent);
-      background: var(--accent-soft);
+      background: transparent;
       border: 1px solid var(--accent);
       border-radius: 999px;
       cursor: pointer;
-      transition: background 0.15s;
+      transition: background 0.15s, color 0.15s;
       font-family: var(--font-body);
     }
     .smart-sort-btn:hover { background: var(--accent); color: white; }
@@ -996,23 +1005,24 @@
 
       /* Headline-input shrinks but stays large enough to BLOCK iOS
          Safari's auto-zoom-on-focus behavior (≥16px is the threshold).
-         clamp's lower bound is 28px so we're safely above that. */
+         clamp lower bound is 24px — tuned so 'Type a word/phrase…'
+         (the longest placeholder) fits without truncation at 320px
+         viewport width while still feeling like a hero headline. */
       .headline-search {
-        margin: 12px auto 0;
+        margin: 10px auto 0;
         padding: 0;
       }
       .headline-input {
-        font-size: clamp(28px, 9vw, 44px);
+        font-size: clamp(24px, 7vw, 36px);
         padding: 6px 4px 8px;
       }
       .headline-status {
-        margin-top: 6px;
-        min-height: 18px;
+        margin-top: 4px;
         font-size: 12px;
       }
 
       .options-row {
-        margin: 8px auto 0;
+        margin: 12px auto 0;
         gap: 14px;
       }
       .opt-toggle { font-size: 12px; }
@@ -1075,7 +1085,7 @@
           autocapitalize="off"
           autocorrect="off"
           spellcheck="false"
-          placeholder="Type a word or phrase…"
+          placeholder="Type a word/phrase…"
           aria-label="Search for rhymes"
           autofocus
         />

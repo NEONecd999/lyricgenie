@@ -387,10 +387,21 @@
        below the input; weak syllables are clickable to promote them
        to the A-anchor and re-search. */
     .headline-search {
+      width: 100%;
       max-width: 720px;
       margin: 10px auto 0;
       padding: 0 8px;
       text-align: center;
+      /* width:100% + min-width:0 are BOTH required to prevent the
+         headline-search from being forced wider than its parent by
+         non-shrinking children (the .pron-strip spans inside
+         #anchorStrip). Without this, a multi-pronunciation word
+         like 'cooperation' or 'forever' would push the whole
+         headline-search to ~720px on a 375px-wide phone, blowing
+         past the viewport instead of letting the anchor strip
+         scroll horizontally inside its own bounds. */
+      min-width: 0;
+      box-sizing: border-box;
     }
     .headline-input {
       display: block;

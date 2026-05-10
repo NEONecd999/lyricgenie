@@ -1393,7 +1393,7 @@
   </script>
 
   <!-- Engine + dictionaries -->
-  <script src="engine.js?v=11"></script>
+  <script src="engine.js?v=12"></script>
   <script src="phrases-mined.js?v=11"></script>
   <script src="phrases-wiktionary.js?v=11"></script>
   <script src="phrases-idioms.js?v=11"></script>
@@ -1448,7 +1448,7 @@
     let activeColumnId = null;     // which pill is active on mobile (null = first by default)
     let lastQuery = '';            // most recent query string actually searched
     let lastResult = null;         // most recent successful result (used by override re-search)
-    let anchorOverride = null;     // { aIdx, bIdx } or null — user-promoted anchor pair
+    let anchorOverride = null;     // { aSyllIdx } or null — user-promoted A-anchor (syllable index from start; B is always line-ending)
     let searchDebounceTimer = null;
 
     // ─── Responsive placeholder ──────────────────────────────────
@@ -1554,7 +1554,7 @@
         slant: slantToggle.checked
       };
       if (anchorOverride) {
-        opts.overrideAnchorIndices = [anchorOverride.aIdx, anchorOverride.bIdx];
+        opts.overrideASyllableIndex = anchorOverride.aSyllIdx;
       }
       const result = window.RhymeEngine.query(query, window.DICTIONARY, INDEX, opts);
       render(result);
@@ -1928,10 +1928,14 @@
       const allSylls = (result.syllablesByPronunciation || []).filter(s => s && s.length);
       const allAnchors = result.anchorsByPronunciation || [result.anchors || []];
 
-      // Find the override-active vowel position so we can flag the
-      // promoted anchor with .is-override (visual cue that the user
-      // chose this rather than the engine).
-      const overrideAPos = anchorOverride ? anchorOverride.aIdx : null;
+      // The override is stored as a SYLLABLE INDEX (0-based, from the
+      // start of the syllable list). A given syllable index points to
+      // the same logical syllable across all pronunciations of the
+      // word, so the override marker renders consistently on every
+      // pron's strip — even when their phoneme array shapes differ
+      // (e.g. FOREVER pron 1 vs pron 2 have different array lengths
+      // but both have 3 syllables: tap "fer"/"for" → both highlight).
+      const overrideSyllIdx = anchorOverride ? anchorOverride.aSyllIdx : null;
 
       const pronStrips = allSylls.map((sylls, pronIdx) => {
         const anchors = allAnchors[pronIdx] || [];
@@ -1940,14 +1944,17 @@
 
         const inner = sylls.map((s, i) => {
           const isAnchor = anchorByPos.has(s.vowelPos);
-          const isOverride = isAnchor && overrideAPos === s.vowelPos;
+          const isOverride = isAnchor && overrideSyllIdx === i;
           const sep = i > 0 ? '<span class="syllable-divider">·</span>' : '';
           if (isAnchor) {
             const overrideCls = isOverride ? ' is-override' : '';
             return `${sep}<span class="syllable anchor${overrideCls}" title="Anchor (drives the rhyme search)">${escapeHtml(s.label)}</span>`;
           } else {
+            // data-syll-idx is the syllable's position in this
+            // pronunciation's syllable list (0-based). data-pron-idx
+            // is preserved for click → handler routing only.
             return `${sep}<button type="button" class="syllable weak" ` +
-              `data-vowel-pos="${s.vowelPos}" data-pron-idx="${pronIdx}" ` +
+              `data-syll-idx="${i}" data-pron-idx="${pronIdx}" ` +
               `title="Tap to make this the A-anchor">${escapeHtml(s.label)}</button>`;
           }
         }).join('');
@@ -1956,30 +1963,26 @@
 
       anchorStripEl.innerHTML = pronStrips.join('<span class="pron-divider">/</span>');
 
-      // Wire up tap-to-promote. Each click recomputes the override from
-      // the tapped syllable + that pronunciation's B (last) anchor and
-      // re-runs the search.
+      // Wire up tap-to-promote. The handler stores the SYLLABLE index
+      // (not a phoneme position) so it applies safely across all
+      // pronunciations regardless of their array shapes.
       anchorStripEl.querySelectorAll('.syllable.weak').forEach(el => {
         el.addEventListener('click', () => {
-          const aIdx = parseInt(el.getAttribute('data-vowel-pos'), 10);
-          const pronIdx = parseInt(el.getAttribute('data-pron-idx'), 10);
-          handleSyllableTap(aIdx, pronIdx);
+          const syllIdx = parseInt(el.getAttribute('data-syll-idx'), 10);
+          handleSyllableTap(syllIdx);
         });
       });
     }
 
-    function handleSyllableTap(aIdx, pronIdx) {
+    function handleSyllableTap(syllIdx) {
       if (!lastResult) return;
-      const allAnchors = lastResult.anchorsByPronunciation || [lastResult.anchors || []];
-      const anchorsForPron = allAnchors[pronIdx] || allAnchors[0] || [];
-      // B = the line-ending anchor for this pronunciation (always the
-      // LAST anchor in the list). Override only swaps A.
-      const bAnchor = anchorsForPron[anchorsForPron.length - 1];
-      if (!bAnchor || bAnchor.vowelPos == null) return;
-      // No-op if the user tapped an existing anchor (shouldn't happen
-      // since anchors are non-button .syllable.anchor, but defensive).
-      if (aIdx === bAnchor.vowelPos) return;
-      anchorOverride = { aIdx, bIdx: bAnchor.vowelPos };
+      // Sanity: syllable index must be valid in at least the first
+      // pronunciation, and not be the line-ending syllable (which is
+      // the B anchor — overriding that doesn't make sense in this
+      // mode; this code only swaps A).
+      const sylls = (lastResult.syllablesByPronunciation && lastResult.syllablesByPronunciation[0]) || [];
+      if (syllIdx < 0 || syllIdx >= sylls.length - 1) return;
+      anchorOverride = { aSyllIdx: syllIdx };
       runSearch(lastQuery);
     }
 

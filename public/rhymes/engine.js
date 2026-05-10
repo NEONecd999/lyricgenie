@@ -391,12 +391,35 @@ function anchorsFor(phonemes, options = {}) {
   const vIdx = vowelIndices(phonemes);
   if (vIdx.length === 0) return { anchors: [], allVowels: [] };
 
-  if (options.overrideAnchorIndices) {
-    const idxs = options.overrideAnchorIndices.slice().sort((a,b) => a-b);
-    return {
-      anchors: idxs.map(i => ({ ...rhymeAt(phonemes, i), vowelPos: i })),
-      allVowels: vIdx
-    };
+  // ─── User-promoted A anchor via syllable index ────────────────
+  // overrideASyllableIndex says "the A anchor should be the Nth
+  // syllable from the start" (0-based). We syllabify THIS
+  // pronunciation independently, look up the Nth syllable's vowel
+  // position, and use that as A. B always stays the line-ending
+  // syllable. This is per-pronunciation safe — homograph
+  // pronunciations with different phoneme array shapes (e.g.
+  // "F ER0 EH1 V ER0" vs "F AO0 R EH1 V ER0" for FOREVER) each get
+  // their own correctly-mapped anchors. The previous override API
+  // (overrideAnchorIndices = absolute phoneme positions) crashed
+  // when applied to a pronunciation with a different array length.
+  if (options.overrideASyllableIndex != null) {
+    const sylls = syllabify(phonemes);
+    const aSyllIdx = options.overrideASyllableIndex;
+    const lastSyllIdx = sylls.length - 1;
+    // If the override points outside this pronunciation's syllables,
+    // fall back to default anchor selection (skip the override pass).
+    if (aSyllIdx >= 0 && aSyllIdx < sylls.length && aSyllIdx !== lastSyllIdx) {
+      const aPos = sylls[aSyllIdx].vowelPos;
+      const bPos = sylls[lastSyllIdx].vowelPos;
+      return {
+        anchors: [
+          { ...rhymeAt(phonemes, aPos), vowelPos: aPos },
+          { ...rhymeAt(phonemes, bPos), vowelPos: bPos },
+        ],
+        allVowels: vIdx
+      };
+    }
+    // Fall through to default anchor logic if override is invalid.
   }
 
   const lastIdx = vIdx[vIdx.length - 1];

@@ -824,6 +824,8 @@ window.PROPER_NOUN_KEYS = new Set([
   "ABE", "ADA", "ANN", "CHE", "DAN", "EVA", "GUS", "HAL", "IAN", "IDA",
   "JAN", "JOE", "KAT", "MAC", "MAX", "MEG", "NED", "REX", "TED", "TIM",
   "VAL", "VIC", "ZOE",
+  // 3rd batch: rolling additions
+  "BERN", "PERTH", "KYLE",
 ]);
 
 // Display-case overrides for proper nouns whose canonical form doesn't follow

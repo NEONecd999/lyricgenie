@@ -337,10 +337,26 @@ function syllabify(phonemes) {
 
     const nucleus = stripStress(phonemes[vIdx]);
     const stress = getStress(phonemes[vIdx]);
+
+    // Special-case AO + R coda: songwriters read this combination as
+    // "or" (as in 'for', 'forth', 'born', 'horn', 'torn'), not "awr"
+    // (which is what the literal AO→'aw' + R→'r' mapping produces).
+    // Apply only when AO is the nucleus AND R is the first coda
+    // phoneme — preserves any consonants AFTER the R correctly
+    // (e.g. 'forth' → 'forth', 'born' → 'born', 'thorn' → 'thorn').
+    let nucleusLabel;
+    let codaTail;
+    if (nucleus === 'AO' && coda[0] === 'R') {
+      nucleusLabel = 'or';
+      codaTail = coda.slice(1);
+    } else {
+      nucleusLabel = (PHONEME_TO_LETTERS[nucleus] || nucleus).toLowerCase();
+      codaTail = coda;
+    }
     const labelLetters = [
       ...onset.map(p => (PHONEME_TO_LETTERS[p] || p).toLowerCase()),
-      (PHONEME_TO_LETTERS[nucleus] || nucleus).toLowerCase(),
-      ...coda.map(p => (PHONEME_TO_LETTERS[p] || p).toLowerCase())
+      nucleusLabel,
+      ...codaTail.map(p => (PHONEME_TO_LETTERS[p] || p).toLowerCase())
     ];
 
     syllables.push({

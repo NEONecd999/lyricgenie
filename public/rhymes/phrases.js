@@ -748,9 +748,10 @@ window.PROPER_NOUN_KEYS = new Set([
   "FIJI", "FIONA", "FLORIDA", "FLOYD", "FORBES", "FORDS",
   "FORREST", "FRANCE", "FRANCISCO", "FRANKLIN", "FRED", "FREDDIE",
   "FREDDY", "FRIDAY", "FRIDAYS", "GALWAY", "GANDHI", "GARFIELD",
-  "GARY", "GEMINI", "GEORGE", "GEORGIA", "GERMAN", "GHANA",
-  "GIBBS", "GIL", "GINA", "GLORIA", "GLOVER", "GRAMMY",
-  "GRANDE", "GREEK", "GREENVILLE", "GREYHOUND", "GUINNESS", "HAITI",
+  "GARY", "GEMINI", "GEOFF", "GEORGE", "GEORGIA", "GERMAN",
+  "GHANA", "GIBBS", "GIL", "GINA", "GLORIA", "GLOVER",
+  "GRAMMY", "GRANDE", "GREEK", "GREENVILLE", "GREG", "GREYHOUND",
+  "GUINNESS", "HAITI",
   "HAITIANS", "HALLOWEEN", "HAMILTON", "HAMPTON", "HAMPTONS", "HARRY",
   "HART", "HARVARD", "HARVEY", "HAVANA", "HAWAII", "HAWAIIAN",
   "HENDRIX", "HENRY", "HERCULES", "HILFIGER", "HILLARY", "HOGAN",
@@ -815,6 +816,14 @@ window.PROPER_NOUN_KEYS = new Set([
   "WASHINGTON", "WAYNE", "WEDNESDAY", "WENDY", "WESLEY", "WESTWOOD",
   "WHITNEY", "WILLIAM", "WILLIAMS", "WILLIS", "WILSON", "WOODSTOCK",
   "XANAX", "YORK", "YVES",
+
+  // ─── Manually-added proper nouns (audit-driven) ───
+  // 1st batch: from explicit user requests
+  "BEN", "BLAIR", "CHER", "CLAIRE", "GLENN", "PENN",
+  // 2nd batch: 3-letter first names found by audit (audit_3letter.py)
+  "ABE", "ADA", "ANN", "CHE", "DAN", "EVA", "GUS", "HAL", "IAN", "IDA",
+  "JAN", "JOE", "KAT", "MAC", "MAX", "MEG", "NED", "REX", "TED", "TIM",
+  "VAL", "VIC", "ZOE",
 ]);
 
 // Display-case overrides for proper nouns whose canonical form doesn't follow

@@ -1423,41 +1423,38 @@
     // The main inline script below clears the hint and runs whatever
     // pending value is in the input as soon as engine is ready.
     window.__engineReady = false;
+    window.__warmupStart = Date.now();
     (function wireEarlyBird() {
       const inputEl = document.getElementById('searchInput');
       const statusEl = document.getElementById('headlineStatus');
       if (!inputEl || !statusEl) return;
 
-      const showWarmupHint = () => {
-        if (window.__engineReady) return;
-        // Only show if not already showing — avoid flashing on every keystroke
-        if (statusEl.dataset.warmup === '1') return;
-        statusEl.dataset.warmup = '1';
-        statusEl.innerHTML =
-          '<span class="warmup-hint" style="color: var(--ink-faint); font-style: italic;">' +
-          'Loading rhyme engine…' +
-          '</span>';
-      };
+      // Show the spinner + "Loading rhyme engine…" hint IMMEDIATELY
+      // on page load. The main script clears it once INDEX is built;
+      // a minimum display window of 400ms (enforced over there) means
+      // even cached visits get a visible flash of confirmation.
+      statusEl.dataset.warmup = '1';
+      statusEl.innerHTML =
+        '<span class="warmup-hint" style="color: var(--ink-faint); display: inline-flex; align-items: center; gap: 7px;">' +
+          '<span style="width: 10px; height: 10px; border: 1.5px solid var(--rule); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.7s linear infinite; display: inline-block;"></span>' +
+          '<span>Loading rhyme engine…</span>' +
+        '</span>';
 
-      // Track typed input. The actual search runs once engine is ready.
+      // Track typed input. Search runs once engine is ready.
       inputEl.addEventListener('input', () => {
-        if (!window.__engineReady && inputEl.value.trim()) {
-          showWarmupHint();
-        }
+        // Early-bird input handler is a no-op once engine is ready
+        // (the main script's listener takes over). Until then, the
+        // value is just stashed in inputEl.value for the main script
+        // to pick up.
       });
 
-      // Delegated chip-click. The main script will rewire its own
-      // handler later; until then this lets clicks queue work too.
+      // Delegated chip-click for taps that happen during load.
       document.addEventListener('click', (e) => {
         if (window.__engineReady) return;
         const sug = e.target.closest('.es-suggestion');
         if (!sug) return;
         const q = sug.getAttribute('data-q') || sug.textContent.trim();
         inputEl.value = q;
-        // Don't dispatch — that would trigger the (not-yet-wired)
-        // search debounce. Just stash the value; main script will
-        // pick it up via inputEl.value when ready.
-        showWarmupHint();
       });
     })();
   </script>
@@ -2208,20 +2205,40 @@
     // Wire the click handlers now that the engine is ready.
     wireSuggestionClicks();
 
-    // ─── Engine ready: flush anything the user typed/clicked while loading ───
-    // The early-bird handlers (defined in the inline script above the
-    // engine tags) capture typed text + chip-clicks BEFORE this script
-    // runs and stash them in input.value. Now that INDEX is built, we
-    // can actually run the search. Also clears the "Loading rhyme
-    // engine…" hint that the early-bird showed if the user interacted.
+    // ─── Engine ready: clear warmup hint + flush pending search ───
+    // The early-bird inline script (above the heavy <script src>
+    // tags) shows a "Loading rhyme engine…" spinner immediately on
+    // page load and stashes any typed input or chip clicks into
+    // input.value. Now that INDEX is built we:
+    //   • Run the pending search immediately (if any) — never make
+    //     the user re-type just because they were quick.
+    //   • Clear the warmup hint, but enforce a 400ms minimum display
+    //     window so cached visits get a visible flash of "loaded"
+    //     confirmation rather than the spinner appearing for 5ms
+    //     and disappearing.
     window.__engineReady = true;
-    if (headlineStatusEl && headlineStatusEl.dataset.warmup === '1') {
-      headlineStatusEl.removeAttribute('data-warmup');
-      headlineStatusEl.innerHTML = '';
-    }
     const pendingQuery = (input.value || '').trim();
+    const clearWarmupHint = () => {
+      if (headlineStatusEl && headlineStatusEl.dataset.warmup === '1') {
+        headlineStatusEl.removeAttribute('data-warmup');
+        headlineStatusEl.innerHTML = '';
+      }
+    };
     if (pendingQuery) {
+      // User interacted during load — run their search immediately
+      // (search-rendering will overwrite the headlineStatus content
+      // anyway, so we don't need to wait for the min display window).
+      if (headlineStatusEl) headlineStatusEl.removeAttribute('data-warmup');
       runSearch(pendingQuery);
+    } else {
+      // No interaction yet — keep the spinner up for at least 400ms
+      // total so the user sees a visible "engine warming up → ready"
+      // beat. Most cached visits hit this branch and get a brief
+      // confirmation flash.
+      const elapsed = Date.now() - (window.__warmupStart || Date.now());
+      const minDuration = 400;
+      const remaining = Math.max(0, minDuration - elapsed);
+      setTimeout(clearWarmupHint, remaining);
     }
   </script>
 </body>

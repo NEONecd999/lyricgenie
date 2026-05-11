@@ -1401,6 +1401,65 @@
           '</div>';
       }
     })();
+
+    // ─── Early-bird interaction handlers ─────────────────────────
+    // The heavy engine + dictionary scripts below take ~2-12s to
+    // download + index on first visit. The page LOOKS ready before
+    // then (topbar + headline + chips all rendered above), so users
+    // may type or tap a chip before the engine is wired up. Without
+    // these handlers their interaction would silently fail.
+    //
+    // What we do here:
+    //   • Track the typed value (input event) so the main script can
+    //     pick it up and run the search the moment the engine is ready.
+    //   • Catch chip taps via event delegation, copy the chip's word
+    //     into the input, dispatch the input event so the same code
+    //     path covers both typing AND chip taps.
+    //   • Show a subtle "Loading rhyme engine…" hint in the status
+    //     row IF (and only if) the user has actually interacted —
+    //     no chrome on the empty state for users who don't try to
+    //     interact in the first second.
+    //
+    // The main inline script below clears the hint and runs whatever
+    // pending value is in the input as soon as engine is ready.
+    window.__engineReady = false;
+    (function wireEarlyBird() {
+      const inputEl = document.getElementById('searchInput');
+      const statusEl = document.getElementById('headlineStatus');
+      if (!inputEl || !statusEl) return;
+
+      const showWarmupHint = () => {
+        if (window.__engineReady) return;
+        // Only show if not already showing — avoid flashing on every keystroke
+        if (statusEl.dataset.warmup === '1') return;
+        statusEl.dataset.warmup = '1';
+        statusEl.innerHTML =
+          '<span class="warmup-hint" style="color: var(--ink-faint); font-style: italic;">' +
+          'Loading rhyme engine…' +
+          '</span>';
+      };
+
+      // Track typed input. The actual search runs once engine is ready.
+      inputEl.addEventListener('input', () => {
+        if (!window.__engineReady && inputEl.value.trim()) {
+          showWarmupHint();
+        }
+      });
+
+      // Delegated chip-click. The main script will rewire its own
+      // handler later; until then this lets clicks queue work too.
+      document.addEventListener('click', (e) => {
+        if (window.__engineReady) return;
+        const sug = e.target.closest('.es-suggestion');
+        if (!sug) return;
+        const q = sug.getAttribute('data-q') || sug.textContent.trim();
+        inputEl.value = q;
+        // Don't dispatch — that would trigger the (not-yet-wired)
+        // search debounce. Just stash the value; main script will
+        // pick it up via inputEl.value when ready.
+        showWarmupHint();
+      });
+    })();
   </script>
 
   <!-- Engine + dictionaries -->
@@ -2146,10 +2205,24 @@
     // The initial OR-TRY chips were already rendered into #results
     // by the small inline <script> above the engine tags (so users
     // see them in <100ms instead of after the dictionary loads).
-    // Just attach the click handlers now that the engine is ready
-    // — anyone who clicked in the first second was unlucky, but
-    // in practice nobody does.
+    // Wire the click handlers now that the engine is ready.
     wireSuggestionClicks();
+
+    // ─── Engine ready: flush anything the user typed/clicked while loading ───
+    // The early-bird handlers (defined in the inline script above the
+    // engine tags) capture typed text + chip-clicks BEFORE this script
+    // runs and stash them in input.value. Now that INDEX is built, we
+    // can actually run the search. Also clears the "Loading rhyme
+    // engine…" hint that the early-bird showed if the user interacted.
+    window.__engineReady = true;
+    if (headlineStatusEl && headlineStatusEl.dataset.warmup === '1') {
+      headlineStatusEl.removeAttribute('data-warmup');
+      headlineStatusEl.innerHTML = '';
+    }
+    const pendingQuery = (input.value || '').trim();
+    if (pendingQuery) {
+      runSearch(pendingQuery);
+    }
   </script>
 </body>
 </html>

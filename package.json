@@ -87,7 +87,10 @@
   "reactSnap": {
     "source": "dist",
     "inlineCss": false,
-    "puppeteerArgs": ["--no-sandbox", "--disable-setuid-sandbox"],
+    "puppeteerArgs": [
+      "--no-sandbox",
+      "--disable-setuid-sandbox"
+    ],
     "puppeteerExecutablePath": "/usr/bin/google-chrome-stable",
     "skipThirdPartyRequests": true,
     "include": [
@@ -103,6 +106,7 @@
       "/blog/voice-memos-to-finished-songs",
       "/blog/songwriting-tools-guide-2026",
       "/blog/ai-music-tools-2026"
-    ]
+    ],
+    "crawl": false
   }
 }

@@ -1128,6 +1128,49 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
+    /* ─── Loading splash ─────────────────────────────────────────
+       Covers everything below the topbar while the engine + 2.7MB of
+       dictionary JS load. Renders from the static HTML so it appears
+       in the very first paint — no JS required to show it. JS adds
+       `body.engine-ready` once INDEX is built, which fades the splash
+       out via CSS opacity transition. The splash is then removed from
+       the DOM after the transition completes (cleanup, not strictly
+       needed for layout). */
+    .loading-splash {
+      position: fixed;
+      top: 60px;     /* topbar height (desktop) */
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      z-index: 50;
+      transition: opacity 0.35s ease-out;
+    }
+    body.engine-ready .loading-splash {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .loading-splash-spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid var(--rule);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    .loading-splash-text {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink-muted);
+      letter-spacing: 0.02em;
+    }
+
     /* ─── Mobile tweaks ─── */
     /* The app-shell layout (100dvh body flex column) is global, not
        mobile-only. This block only adjusts the dimensions of the
@@ -1142,6 +1185,7 @@
         max-width: none;
         margin: 0;
       }
+      .loading-splash { top: 56px; }
       .wordmark svg { height: 22px; }
       .wordmark .meta {
         font-size: 9px;
@@ -1315,6 +1359,17 @@
     </div>
   </main>
 
+  <!-- Loading splash — covers everything below the topbar while the
+       2.7MB of dictionary + engine JS loads. Pure CSS / no JS needed
+       to display. The main inline script at the bottom adds the
+       `engine-ready` class to <body> once INDEX is built; CSS fades
+       this overlay out via opacity. JS removes the element from the
+       DOM after the transition for cleanup. -->
+  <div id="loadingSplash" class="loading-splash" aria-hidden="true">
+    <div class="loading-splash-spinner"></div>
+    <div class="loading-splash-text">Loading rhyme engine…</div>
+  </div>
+
   <!-- AI Picks upsell modal -->
   <div class="modal-backdrop" id="smartSortModal" aria-hidden="true" role="dialog">
     <div class="modal">
@@ -1422,33 +1477,23 @@
     //
     // The main inline script below clears the hint and runs whatever
     // pending value is in the input as soon as engine is ready.
+    // ─── Engine load tracking ──────────────────────────────────
+    // The loading splash (id="loadingSplash") is rendered as static
+    // HTML below </main> so it appears in the very first paint —
+    // no JS required. The early-bird below just captures interactions
+    // (typing or chip clicks) that happen before the engine is ready,
+    // so the main script can flush them once INDEX is built.
     window.__engineReady = false;
     window.__warmupStart = Date.now();
     (function wireEarlyBird() {
       const inputEl = document.getElementById('searchInput');
-      const statusEl = document.getElementById('headlineStatus');
-      if (!inputEl || !statusEl) return;
+      if (!inputEl) return;
 
-      // Show the spinner + "Loading rhyme engine…" hint IMMEDIATELY
-      // on page load. The main script clears it once INDEX is built;
-      // a minimum display window of 400ms (enforced over there) means
-      // even cached visits get a visible flash of confirmation.
-      statusEl.dataset.warmup = '1';
-      statusEl.innerHTML =
-        '<span class="warmup-hint" style="color: var(--ink-faint); display: inline-flex; align-items: center; gap: 7px;">' +
-          '<span style="width: 10px; height: 10px; border: 1.5px solid var(--rule); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.7s linear infinite; display: inline-block;"></span>' +
-          '<span>Loading rhyme engine…</span>' +
-        '</span>';
-
-      // Track typed input. Search runs once engine is ready.
-      inputEl.addEventListener('input', () => {
-        // Early-bird input handler is a no-op once engine is ready
-        // (the main script's listener takes over). Until then, the
-        // value is just stashed in inputEl.value for the main script
-        // to pick up.
-      });
-
-      // Delegated chip-click for taps that happen during load.
+      // Delegated chip-click for taps that land during load (note:
+      // the splash overlays main with pointer-events still active,
+      // so chip clicks under the splash actually wouldn't reach the
+      // chips. This is mostly a defensive no-op while the splash is
+      // shown, but kept for future-proofing if the splash UI changes).
       document.addEventListener('click', (e) => {
         if (window.__engineReady) return;
         const sug = e.target.closest('.es-suggestion');
@@ -2205,40 +2250,35 @@
     // Wire the click handlers now that the engine is ready.
     wireSuggestionClicks();
 
-    // ─── Engine ready: clear warmup hint + flush pending search ───
-    // The early-bird inline script (above the heavy <script src>
-    // tags) shows a "Loading rhyme engine…" spinner immediately on
-    // page load and stashes any typed input or chip clicks into
-    // input.value. Now that INDEX is built we:
-    //   • Run the pending search immediately (if any) — never make
-    //     the user re-type just because they were quick.
-    //   • Clear the warmup hint, but enforce a 400ms minimum display
-    //     window so cached visits get a visible flash of "loaded"
-    //     confirmation rather than the spinner appearing for 5ms
-    //     and disappearing.
+    // ─── Engine ready: dismiss splash + flush pending search ─────
+    // The static <div id="loadingSplash"> overlays everything below
+    // the topbar from first paint. CSS fades it out when body has
+    // .engine-ready. We enforce a 400ms minimum display window so
+    // cached visits get a visible "loaded" beat instead of a 5ms
+    // flash. After the fade transition the element is removed from
+    // the DOM (cleanup; not strictly needed for layout).
     window.__engineReady = true;
     const pendingQuery = (input.value || '').trim();
-    const clearWarmupHint = () => {
-      if (headlineStatusEl && headlineStatusEl.dataset.warmup === '1') {
-        headlineStatusEl.removeAttribute('data-warmup');
-        headlineStatusEl.innerHTML = '';
-      }
+    const dismissSplash = () => {
+      document.body.classList.add('engine-ready');
+      // Remove from DOM after the CSS transition (350ms) finishes.
+      setTimeout(() => {
+        const splash = document.getElementById('loadingSplash');
+        if (splash) splash.remove();
+      }, 400);
     };
     if (pendingQuery) {
-      // User interacted during load — run their search immediately
-      // (search-rendering will overwrite the headlineStatus content
-      // anyway, so we don't need to wait for the min display window).
-      if (headlineStatusEl) headlineStatusEl.removeAttribute('data-warmup');
+      // User interacted during load — dismiss splash immediately + run
+      // search. They've already shown they want results NOW.
+      dismissSplash();
       runSearch(pendingQuery);
     } else {
-      // No interaction yet — keep the spinner up for at least 400ms
-      // total so the user sees a visible "engine warming up → ready"
-      // beat. Most cached visits hit this branch and get a brief
-      // confirmation flash.
+      // No interaction yet — enforce min display so the spinner is
+      // visible for at least 400ms total (counted from the early-bird
+      // inline script that ran at first paint).
       const elapsed = Date.now() - (window.__warmupStart || Date.now());
       const minDuration = 400;
-      const remaining = Math.max(0, minDuration - elapsed);
-      setTimeout(clearWarmupHint, remaining);
+      setTimeout(dismissSplash, Math.max(0, minDuration - elapsed));
     }
   </script>
 </body>

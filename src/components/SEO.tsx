@@ -18,7 +18,15 @@ const SEO = ({
   publishedTime
 }: SEOProps) => {
   const fullTitle = title.includes("Lyric Genie") ? title : `${title} | Lyric Genie`;
-  const canonicalUrl = canonical || `https://lyricgenie.app${window.location.pathname}`;
+  // Always include a trailing slash on the canonical so it matches the
+  // URL that GitHub Pages actually serves (GH Pages 301-redirects any
+  // path without a trailing slash to the trailing-slash version, which
+  // Search Console then flags as 'Page with redirect'). This keeps the
+  // canonical aligned with the served URL and stops the redirect from
+  // appearing in crawl reports.
+  const path = window.location.pathname;
+  const slashed = (path === "/" || path.endsWith("/")) ? path : path + "/";
+  const canonicalUrl = canonical || `https://lyricgenie.app${slashed}`;
 
   useEffect(() => {
     // Update document title

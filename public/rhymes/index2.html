@@ -146,14 +146,15 @@
       --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 
       /* RhymeGold accent gradient stops. Light-mode (default) values
-         are deeper / more saturated so even the lightest stop has
-         enough luminance contrast against the cream paper bg to stay
-         legible. Dark-mode overrides below restore the brighter
-         "treasure" palette that pops against the dark purple bg. */
-      --rg-gold-1: #A06D14;
-      --rg-gold-2: #7E5512;
-      --rg-gold-3: #5C3D0D;
-      --rg-gold-glow: rgba(160, 109, 20, 0.35);
+         keep the warm yellow-gold hue + high saturation so it still
+         reads as "gold" (not brown) while having enough luminance
+         contrast against the cream paper bg to stay legible. Dark-
+         mode overrides below restore the brighter "treasure" palette
+         that pops against the dark purple bg. */
+      --rg-gold-1: #DCA01C;
+      --rg-gold-2: #B68018;
+      --rg-gold-3: #8A6112;
+      --rg-gold-glow: rgba(220, 160, 28, 0.40);
     }
 
     /* Dark theme — applied either via OS preference (the @media

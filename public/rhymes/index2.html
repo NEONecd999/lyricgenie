@@ -317,10 +317,10 @@
               color: transparent;
       filter: drop-shadow(0 0 4px var(--rg-gold-glow));
     }
-    /* "BY" + "LYRIC GENIE" render in brand purple — visually links
-       the attribution to the parent brand color. Both are uppercase
-       text so they read as a single attribution unit, with LYRIC GENIE
-       slightly larger + bolder than BY to give it brand-name weight. */
+    /* "BY LYRIC GENIE" attribution — single uppercase line in brand
+       purple, sitting to the right of the RhymeGold wordmark at small
+       scale so it reads as "by Lyric Genie" rather than as a co-equal
+       brand. Single span so the whole phrase shares one type spec. */
     .wordmark-by {
       margin-left: 14px;
       font-family: var(--font-display);
@@ -329,16 +329,7 @@
       letter-spacing: 0.04em;
       color: var(--accent);
       text-transform: uppercase;
-    }
-    .wordmark-lgtext {
-      margin-left: 4px;
-      font-family: var(--font-display);
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      color: var(--accent);
-      text-transform: uppercase;
-      line-height: 1;
+      white-space: nowrap;
     }
     /* Right cluster: theme toggle + "Learn more" + Download App pill
        ride together. Gap is intentionally smaller than a typical
@@ -1274,7 +1265,6 @@
       .wordmark-genie { height: 26px; filter: drop-shadow(0 0 6px var(--rg-gold-glow)); }
       .wordmark-text { font-size: 16px; }
       .wordmark-by { margin-left: 8px; font-size: 8px; letter-spacing: 0.08em; }
-      .wordmark-lgtext { margin-left: 3px; font-size: 10px; }
       .wordmark .meta {
         font-size: 9px;
         padding: 2px 6px;
@@ -1362,8 +1352,7 @@
         </g>
       </svg>
       <span class="wordmark-text">Rhyme<span class="wordmark-gold">Gold</span></span>
-      <span class="wordmark-by">BY</span>
-      <span class="wordmark-lgtext">LYRIC GENIE</span>
+      <span class="wordmark-by">BY LYRIC GENIE</span>
         <path d="M53.53,14.5h-2.53V6.43h2.53v8.07Z"/>
         <path d="M59.85,14.65c-4.68,0-5.4-2.61-5.4-4.05v-.31c0-1.46.63-3.99,5.4-3.99h.45c4.68,0,5.4,2.23,5.4,3.18v.12h-2.68c-.06-.22-.39-1.35-2.95-1.35-2.42,0-2.97,1.08-2.97,2.09v.13c0,.95.64,2.21,2.99,2.21,2.61,0,2.88-1.25,2.94-1.43h2.68v.12c0,1.02-.8,3.28-5.41,3.28h-.45Z"/>
         <path d="M74.99,14.65c-4.37,0-5.38-2.44-5.38-4.06v-.3c0-1.57.82-3.99,5.47-3.99h.47c4.51,0,5.3,1.96,5.35,3.06h0s-2.69.01-2.69.01c-.07-.18-.36-1.15-2.88-1.15s-3.07,1.06-3.07,2.18v.12c0,1.05.82,2.17,3.05,2.17,2.4,0,3.12-.92,3.12-1.15v-.02h-3.17v-1.53h5.68v4.52h-1.52c-.03-.29-.18-.92-.33-1.26-.35.4-1.39,1.4-3.88,1.4h-.23Z"/>

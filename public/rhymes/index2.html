@@ -268,15 +268,13 @@
       gap: 9px;
     }
     .wordmark-chest {
-      width: 28px;
-      height: 28px;
-      color: #C9932E;          /* gold accent */
+      width: 36px;
+      height: 32px;
       flex-shrink: 0;
+      /* Subtle glow shadow extending beyond the SVG itself, reinforcing
+         the "treasure-spilling-light" effect from the gradients inside. */
+      filter: drop-shadow(0 0 8px rgba(255, 213, 95, 0.45));
     }
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme="light"]) .wordmark-chest { color: #E5B660; }
-    }
-    :root[data-theme="dark"] .wordmark-chest { color: #E5B660; }
     .wordmark-text {
       font-family: var(--font-display);
       font-weight: 700;
@@ -285,26 +283,27 @@
       color: var(--ink);
       line-height: 1;
     }
+    /* "BY" + Lyric Genie logo render in brand purple — visually links
+       the attribution to the parent brand color. Tight letter-spacing
+       on the BY label + a small negative margin on the LG logo bring
+       the two pieces visually together as a single attribution unit. */
     .wordmark-by {
       margin-left: 14px;
       font-family: var(--font-display);
       font-size: 10px;
       font-weight: 600;
-      letter-spacing: 0.14em;
-      color: var(--ink-faint);
+      letter-spacing: 0.04em;
+      color: var(--accent);
       text-transform: uppercase;
     }
-    /* Override the generic .wordmark svg rule so the inline LG logo
-       sits at attribution scale (16px tall) instead of the wordmark
-       default of 24px. The chest icon is sized via its own class. */
     .wordmark .wordmark-lg {
       height: 16px;
       width: auto;
-      color: var(--ink-muted);
+      margin-left: -3px;
+      color: var(--accent);
       flex-shrink: 0;
     }
     .wordmark .wordmark-lg path { fill: currentColor; }
-    .wordmark .wordmark-chest path { fill: currentColor; }
     /* Right cluster: theme toggle + "Learn more" + Download App pill
        ride together. Gap is intentionally smaller than a typical
        full nav so the items read as paired action affordances, not
@@ -1236,7 +1235,7 @@
       .loading-splash { top: 56px; }
       .wordmark svg { height: 22px; }
       .wordmark.rhymegold { gap: 6px; }
-      .wordmark-chest { width: 22px; height: 22px; }
+      .wordmark-chest { width: 28px; height: 25px; filter: drop-shadow(0 0 6px rgba(255, 213, 95, 0.45)); }
       .wordmark-text { font-size: 16px; }
       .wordmark-by { margin-left: 8px; font-size: 8px; letter-spacing: 0.12em; }
       .wordmark .wordmark-lg { height: 12px; }
@@ -1300,21 +1299,60 @@
 <body>
   <header class="topbar">
     <a href="/rhymes/index2.html" class="wordmark rhymegold" aria-label="RhymeGold home">
-      <!-- Treasure chest icon — represents finding the gold (perfect rhyme)
-           buried in the heap (135K-word dictionary). currentColor = brand
-           gold, with a slightly brighter shade in dark mode for contrast. -->
-      <svg class="wordmark-chest" viewBox="0 0 32 28" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <!-- Lid (curved top half) -->
-        <path d="M4 13 Q4 4 16 4 Q28 4 28 13 Z"/>
-        <!-- Body (flat-bottomed rectangle) -->
-        <path d="M3 13 h26 v11 a1.5 1.5 0 0 1 -1.5 1.5 h-23 a1.5 1.5 0 0 1 -1.5 -1.5 z"/>
-        <!-- Lid divider line (page-bg color = appears carved) -->
-        <rect x="3" y="12.7" width="26" height="0.6" fill="var(--bg)"/>
-        <!-- Lock plate (page-bg fill — looks set into the front) -->
-        <rect x="13" y="14.5" width="6" height="6" rx="0.6" fill="var(--bg)"/>
-        <!-- Keyhole (currentColor — contrasts against the lock plate) -->
-        <circle cx="16" cy="16.5" r="0.9" fill="currentColor"/>
-        <rect x="15.4" y="16.5" width="1.2" height="2.6" fill="currentColor"/>
+      <!-- Open treasure chest, glowing — the "strike rhyme gold" metaphor
+           visualized. Lid is tilted back to show the gold pouring out;
+           a radial gradient halo behind + bright inner glow + sparkles
+           around the chest reinforce the discovery moment. Pure inline
+           SVG so it scales to any size and inherits the page bg color
+           into the carved lock plate via var(--bg). -->
+      <svg class="wordmark-chest" viewBox="0 0 36 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <radialGradient id="rgGlow" cx="50%" cy="55%" r="55%">
+            <stop offset="0%" stop-color="#FFE587" stop-opacity="0.95"/>
+            <stop offset="45%" stop-color="#FFC53D" stop-opacity="0.55"/>
+            <stop offset="100%" stop-color="#C9932E" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="rgBody" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#D4A53C"/>
+            <stop offset="100%" stop-color="#A87A21"/>
+          </linearGradient>
+          <linearGradient id="rgLid" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#E8B83C"/>
+            <stop offset="100%" stop-color="#B68B22"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Wide glow halo extending beyond the chest -->
+        <ellipse cx="18" cy="17" rx="17" ry="14" fill="url(#rgGlow)"/>
+
+        <!-- Tilted-back lid (rotated -25° around its bottom-center pivot
+             so it reads as "thrown open" rather than "still closed") -->
+        <g transform="rotate(-25 18 15)">
+          <path d="M7 15 Q7 7 18 7 Q29 7 29 15 V16 H7 Z" fill="url(#rgLid)"/>
+        </g>
+
+        <!-- Bright inner-rim glow at the chest opening — the gold
+             "spilling out" effect. Sits between the lid and the body. -->
+        <ellipse cx="18" cy="16.5" rx="11.5" ry="2.2" fill="#FFE587" opacity="0.95"/>
+        <ellipse cx="18" cy="16.5" rx="9" ry="1.4" fill="#FFFFFF" opacity="0.85"/>
+
+        <!-- Chest body (front face) -->
+        <path d="M6 16 h24 v11 a1.5 1.5 0 0 1 -1.5 1.5 h-21 a1.5 1.5 0 0 1 -1.5 -1.5 z" fill="url(#rgBody)"/>
+
+        <!-- Subtle horizontal trim line on the front -->
+        <rect x="6" y="20.5" width="24" height="0.6" fill="#8B6517" opacity="0.5"/>
+
+        <!-- Lock plate (page-bg fill — appears recessed into the wood) -->
+        <rect x="15" y="19" width="6" height="6" rx="0.5" fill="var(--bg)"/>
+        <circle cx="18" cy="21" r="1.1" fill="#8B6517"/>
+        <rect x="17.5" y="21" width="1" height="2.2" fill="#8B6517"/>
+
+        <!-- Sparkles around the chest — twinkle hints -->
+        <g fill="#FFE587">
+          <path d="M3 6 L 3.5 4.7 L 4 6 L 5.3 6.5 L 4 7 L 3.5 8.3 L 3 7 L 1.7 6.5 Z"/>
+          <path d="M32 5 L 32.4 4 L 32.8 5 L 33.8 5.4 L 32.8 5.8 L 32.4 6.8 L 32 5.8 L 31 5.4 Z"/>
+          <path d="M34 14 L 34.3 13.2 L 34.6 14 L 35.4 14.3 L 34.6 14.6 L 34.3 15.4 L 34 14.6 L 33.2 14.3 Z"/>
+        </g>
       </svg>
       <span class="wordmark-text">RhymeGold</span>
       <span class="wordmark-by">BY</span>

@@ -1,0 +1,6 @@
+# Cloudflare Pages routing rules.
+# Rhymegold.com root and /index.html serve the RhymeGold-branded shell.
+# All other paths (assets, fonts, JS) pass through to their actual locations
+# under public/ — no further rewriting needed.
+https://rhymegold.com/                   /rhymegold/index.html  200
+https://rhymegold.com/index.html         /rhymegold/index.html  200

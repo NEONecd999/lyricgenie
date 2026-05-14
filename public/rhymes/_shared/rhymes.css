@@ -1,0 +1,1166 @@
+/* ─────────────────────────────────────────────────────────
+       Lyric Genie public rhyme tool
+       Branding: cream paper + eggplant ink + brand purple, with
+       dark-mode swap via prefers-color-scheme.
+       ───────────────────────────────────────────────────────── */
+
+    /* ─── Web fonts (served from /fonts/ at the site root) ─── */
+    /* Lufga = brand sans (display + body). Three weights cover
+       400 (body), 500 (links/labels), 700 (headlines).
+       Academico-Italic = serif italic accent (used by main site;
+       registered here so call-outs / blockquotes can opt in via
+       font-family later if needed). */
+    @font-face {
+      font-family: 'Lufga';
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+      src: url('/fonts/Lufga-Regular.woff2') format('woff2'),
+           url('/fonts/Lufga-Regular.woff') format('woff');
+    }
+    @font-face {
+      font-family: 'Lufga';
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+      src: url('/fonts/Lufga-Medium.woff2') format('woff2'),
+           url('/fonts/Lufga-Medium.woff') format('woff');
+    }
+    @font-face {
+      font-family: 'Lufga';
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+      src: url('/fonts/Lufga-Bold.woff2') format('woff2'),
+           url('/fonts/Lufga-Bold.woff') format('woff');
+    }
+    @font-face {
+      font-family: 'Academico';
+      font-weight: 400;
+      font-style: italic;
+      font-display: swap;
+      src: url('/fonts/Academico-Italic.otf') format('opentype');
+    }
+
+    :root {
+      /* Light theme — cream paper aesthetic */
+      --bg: #F4EFD8;
+      --surface: #FAF5E1;
+      --surface-2: #FFFFFF;
+      --ink: #1E1324;
+      --ink-muted: #5D5065;
+      --ink-faint: #9087A0;
+      --accent: #6F50B8;
+      --accent-soft: rgba(111, 80, 184, 0.10);
+      --accent-strong: #5B3FA0;
+      --rule: #E6E2D8;
+      --rule-soft: #EFEAD8;
+      --green-tint: rgba(54, 144, 76, 0.15);
+      --green-fg: #2D7A3F;
+      --green-border: rgba(54, 144, 76, 0.4);
+      --shadow-soft: 0 1px 2px rgba(30, 19, 36, 0.04);
+      --shadow-card: 0 2px 8px rgba(30, 19, 36, 0.05);
+      --radius: 14px;
+      --radius-sm: 8px;
+      --col-radius: 16px;
+      --font-display: 'Lufga', ui-rounded, -apple-system, system-ui, 'Segoe UI', sans-serif;
+      --font-body: 'Lufga', -apple-system, system-ui, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    }
+
+    /* Dark theme — applied either via OS preference (the @media
+       block) or explicit user override (data-theme="dark" on <html>,
+       set by the toggle button in the topbar). The override always
+       wins; data-theme="light" forces the light palette regardless
+       of OS preference. */
+    :root[data-theme="dark"] {
+      --bg: #1A1322;
+      --surface: #221729;
+      --surface-2: #2A1F32;
+      --ink: #F9F0CB;
+      --ink-muted: #C7B596;
+      --ink-faint: #8A7E76;
+      --accent: #AB8EE2;
+      --accent-soft: rgba(171, 142, 226, 0.15);
+      --accent-strong: #C2A6F0;
+      --rule: #3A2F45;
+      --rule-soft: #2D2438;
+      --green-tint: rgba(108, 200, 130, 0.18);
+      --green-fg: #8FD9A0;
+      --green-border: rgba(108, 200, 130, 0.4);
+      --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.25);
+      --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #1A1322;
+        --surface: #221729;
+        --surface-2: #2A1F32;
+        --ink: #F9F0CB;
+        --ink-muted: #C7B596;
+        --ink-faint: #8A7E76;
+        --accent: #AB8EE2;
+        --accent-soft: rgba(171, 142, 226, 0.15);
+        --accent-strong: #C2A6F0;
+        --rule: #3A2F45;
+        --rule-soft: #2D2438;
+        --green-tint: rgba(108, 200, 130, 0.18);
+        --green-fg: #8FD9A0;
+        --green-border: rgba(108, 200, 130, 0.4);
+        --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.25);
+        --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.3);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+
+    /* App-shell layout: page is ALWAYS exactly the height of the
+       viewport (100dvh handles iOS Safari's collapsing chrome bar).
+       Body is a flex column so topbar / headline / options stay
+       fixed-height and the results region flexes to fill the
+       remainder. Columns inside #results are the only scrollable
+       region — the page itself never scrolls. */
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.4;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    html { height: 100%; }
+
+    /* ─── Top bar — matches lyricgenie.app Navbar ───
+       Layout: SVG wordmark logo flush left, "Learn more" + Download
+       App pill clustered together flush right. No max-width — the
+       bar spans the full viewport so the wordmark hugs the left edge
+       and the CTA cluster hugs the right, mirroring the pattern on
+       the marketing site. Compact 60px height keeps the column area
+       below as tall as possible. */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 0 24px;
+      height: 60px;
+      width: 100%;
+      margin: 0;
+    }
+    .wordmark {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+      color: var(--ink);
+    }
+    .wordmark svg {
+      height: 24px;
+      width: auto;
+      fill: currentColor;
+    }
+    .wordmark .meta {
+      display: inline-block;
+      margin-left: 12px;
+      padding: 3px 9px;
+      font-family: var(--font-display);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      background: var(--accent-soft);
+      border-radius: 6px;
+      vertical-align: middle;
+    }
+    /* Right cluster: theme toggle + "Learn more" + Download App pill
+       ride together. Gap is intentionally smaller than a typical
+       full nav so the items read as paired action affordances, not
+       separate menu items. */
+    .topbar-nav {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-left: auto;
+    }
+    /* Light/dark mode toggle. Shows a sun (currently light) or moon
+       (currently dark) icon. JS sets a .is-dark class on <html> that
+       drives which icon is visible. Hidden on mobile per design —
+       phones almost always follow OS preference, and topbar real
+       estate there is precious. */
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--ink-muted);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .theme-toggle:hover {
+      color: var(--ink);
+      background: rgba(30, 19, 36, 0.05);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) .theme-toggle:hover {
+        background: rgba(255, 255, 255, 0.06);
+      }
+    }
+    :root[data-theme="dark"] .theme-toggle:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+    .theme-toggle svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    /* Icon visibility tracks effective theme: sun = currently light,
+       moon = currently dark. Shows what's ACTIVE so users see their
+       current state (clicking flips it). The default (no data-theme
+       override) reads OS preference via the @media block. */
+    .theme-toggle .icon-sun { display: none; }
+    .theme-toggle .icon-moon { display: inline-block; }
+    :root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+    :root[data-theme="light"] .theme-toggle .icon-sun  { display: inline-block; }
+    @media (prefers-color-scheme: light) {
+      :root:not([data-theme="dark"]) .theme-toggle .icon-moon { display: none; }
+      :root:not([data-theme="dark"]) .theme-toggle .icon-sun  { display: inline-block; }
+    }
+    /* Uses --ink-muted (which swaps via prefers-color-scheme) so the
+       link sits one shade softer than full ink on both light and
+       dark backgrounds. Hover bumps it to full --ink for emphasis. */
+    .topbar-nav a.nav-link {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--ink-muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .topbar-nav a.nav-link:hover { color: var(--ink); }
+    .get-app-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      background: var(--accent);
+      color: white;
+      text-decoration: none;
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 14px;
+      border-radius: 999px;
+      box-shadow: 0 4px 20px -4px rgba(30, 19, 36, 0.08);
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+    .get-app-btn:hover { background: var(--accent-strong); }
+
+    /* ─── Main app-shell content area ─── */
+    /* Flex column: headline-search + options-row are fixed height,
+       #results flexes to fill the remaining viewport. No max-width —
+       columns use the entire viewport width on ultra-wide displays
+       so users can see more chips per column at once. The headline-
+       search and options-row have their own narrower max-widths so
+       they stay centered + readable while the columns stretch. */
+    main {
+      flex: 1;
+      min-height: 0;
+      width: 100%;
+      margin: 0;
+      padding: 0 24px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .topbar { flex-shrink: 0; }
+    .headline-search { flex-shrink: 0; }
+    .options-row { flex-shrink: 0; }
+    #results {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      padding-top: 10px;
+    }
+
+    /* ─── Headline search ───
+       The search input IS the headline word. No separate H1, no
+       redundant displayed word above the columns. Editable headline
+       → debounced live search on every keystroke (200ms after last
+       input). Enter still works (form submit flushes immediately).
+       The anchor strip (syllables with stress markers) sits directly
+       below the input; weak syllables are clickable to promote them
+       to the A-anchor and re-search. */
+    .headline-search {
+      width: 100%;
+      max-width: 720px;
+      margin: 10px auto 0;
+      padding: 0 8px;
+      text-align: center;
+      /* width:100% + min-width:0 are BOTH required to prevent the
+         headline-search from being forced wider than its parent by
+         non-shrinking children (the .pron-strip spans inside
+         #anchorStrip). Without this, a multi-pronunciation word
+         like 'cooperation' or 'forever' would push the whole
+         headline-search to ~720px on a 375px-wide phone, blowing
+         past the viewport instead of letting the anchor strip
+         scroll horizontally inside its own bounds. */
+      min-width: 0;
+      box-sizing: border-box;
+    }
+    .headline-input {
+      display: block;
+      width: 100%;
+      margin: 0;
+      /* Symmetric horizontal padding reserves clearance for the
+         absolute-positioned clear (×) button on the right while
+         keeping the centered text optically centered inside the
+         input wrapper. With text-align:center, asymmetric padding
+         would shift the text off-center by half the difference. */
+      padding: 2px 44px 6px 44px;
+      background: transparent;
+      color: var(--ink);
+      font-family: var(--font-display);
+      font-size: clamp(30px, 4.5vw, 44px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      text-align: center;
+      border: none;
+      border-bottom: 2px solid var(--rule);
+      border-radius: 0;
+      outline: none;
+      caret-color: var(--accent);
+      transition: border-color 0.18s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .headline-input::placeholder {
+      color: var(--ink-faint);
+      font-weight: 500;
+      letter-spacing: -0.01em;
+    }
+    .headline-input:focus {
+      border-bottom-color: var(--accent);
+    }
+    /* Clear (×) button — sits at the right edge of the input,
+       absolute-positioned inside the form. Only visible when the
+       input has text (.is-visible toggled by JS on input event).
+       Subtle faded look so it doesn't compete with the giant
+       headline; bumps to full opacity on hover. */
+    #searchForm { position: relative; }
+    .headline-clear {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      border: none;
+      background: transparent;
+      color: var(--ink-faint);
+      border-radius: 50%;
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      font-weight: 400;
+      line-height: 1;
+      font-family: var(--font-display);
+      transition: opacity 0.15s, background 0.15s, color 0.15s;
+    }
+    .headline-clear.is-visible {
+      opacity: 0.5;
+      pointer-events: auto;
+    }
+    .headline-clear.is-visible:hover {
+      opacity: 1;
+      background: rgba(30, 19, 36, 0.06);
+      color: var(--ink);
+    }
+    .headline-clear:active { transform: translateY(-50%) scale(0.92); }
+    /* Status hint that lives under the input — used by the anchor-
+       override indicator ("Custom stress · ↻ reset") when active.
+       Collapses to zero height when empty (the common case) so the
+       chip area below sits closer to the syllable strip — the small
+       layout jump on the rare override event is acceptable. */
+    .headline-status {
+      margin-top: 4px;
+      font-family: var(--font-body);
+      font-size: 12px;
+      color: var(--ink-faint);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .headline-status:empty {
+      margin-top: 0;
+      display: none;
+    }
+    .headline-status .reset-anchor {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 9px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      background: var(--accent-soft);
+      border: 1px solid transparent;
+      border-radius: 999px;
+      cursor: pointer;
+      font-family: var(--font-body);
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .headline-status .reset-anchor:hover {
+      background: var(--accent);
+      color: white;
+    }
+
+    .options-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      /* Margin matches the mobile breakpoint (12px) so the breathing
+         room between the syllable strip above and the slant + AI
+         Picks row reads consistently across viewport sizes. */
+      margin: 12px auto 0;
+      max-width: 720px;
+    }
+    .opt-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      cursor: pointer;
+      user-select: none;
+    }
+    .opt-toggle input[type="checkbox"] {
+      accent-color: var(--accent);
+      width: 16px;
+      height: 16px;
+    }
+    /* AI Picks: outlined button (transparent fill + purple border /
+       text). Filled hover state. The previous accent-soft fill made
+       it look like a selected pill rather than an unactivated CTA —
+       the outlined treatment unambiguously reads as "click me". */
+    .smart-sort-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      background: transparent;
+      border: 1px solid var(--accent);
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      font-family: var(--font-body);
+    }
+    .smart-sort-btn:hover { background: var(--accent); color: white; }
+    .smart-sort-btn .star {
+      width: 13px;
+      height: 13px;
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+
+    /* ─── Empty state ─── */
+    /* Used both for the initial "type to begin" hint AND the
+       not-found state when a word isn't in the dictionary. The two
+       share the same flex-centered shell but render very different
+       payloads (see .empty-state.initial vs .empty-state.not-found):
+         - initial: minimal — just suggestion chips with a tiny
+           "Try:" label, so the giant headline-input above wins the
+           visual hierarchy battle
+         - not-found: elaborate — closed-book illustration, headline,
+           body copy, and recovery suggestions, because this is an
+           error state where the user needs help getting unstuck */
+    .empty-state {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 32px 24px;
+      text-align: center;
+      color: var(--ink-muted);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+    /* Initial state: dial the visuals all the way down so the input
+       above is unambiguously THE thing to look at. No big icon, no
+       big headline, just a quiet label + chips. */
+    .empty-state.initial {
+      gap: 10px;
+      justify-content: flex-start;
+      padding-top: 48px;
+    }
+    .empty-state.initial .es-icon,
+    .empty-state.initial .es-headline,
+    .empty-state.initial .es-body {
+      display: none;
+    }
+    .empty-state.initial .es-label {
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--ink-faint);
+      text-transform: uppercase;
+      margin: 0;
+    }
+    .empty-state code {
+      font-family: var(--font-mono);
+      background: var(--surface);
+      padding: 2px 7px;
+      border-radius: 4px;
+      color: var(--ink-muted);
+    }
+    .empty-state .es-icon {
+      width: 56px;
+      height: 56px;
+      color: var(--accent);
+      opacity: 0.85;
+      flex-shrink: 0;
+    }
+    .empty-state .es-icon svg {
+      width: 100%;
+      height: 100%;
+      fill: currentColor;
+    }
+    .empty-state .es-headline {
+      font-family: var(--font-display);
+      font-size: clamp(22px, 3vw, 28px);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin: 0;
+      line-height: 1.2;
+    }
+    .empty-state .es-headline .word {
+      color: var(--accent);
+      font-style: italic;
+    }
+    .empty-state .es-body {
+      max-width: 460px;
+      margin: 0;
+      color: var(--ink-muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .empty-state .es-suggestions {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 4px;
+    }
+    .empty-state .es-suggestion {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 12px;
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+    .empty-state .es-suggestion:hover {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    /* "Suggest this word for our dictionary" CTA — only appears in
+       the not-found state. Visually subordinate to the primary
+       suggestion chips above it (smaller, link-styled, no border)
+       so the user's first action is "try one of these" not "wait,
+       maybe submit a request". After click, swaps to a confirmation
+       state that's locked + tinted green via :disabled. */
+    .empty-state .suggest-word {
+      margin-top: 8px;
+      padding: 8px 14px;
+      background: transparent;
+      border: 1px dashed var(--rule);
+      border-radius: 999px;
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--ink-faint);
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+    .empty-state .suggest-word .suggest-word-name {
+      color: var(--ink-muted);
+      font-style: italic;
+      margin: 0 2px;
+    }
+    .empty-state .suggest-word:hover:not(:disabled) {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+    .empty-state .suggest-word:hover:not(:disabled) .suggest-word-name {
+      color: var(--accent);
+    }
+    .empty-state .suggest-word:disabled {
+      cursor: default;
+      border-style: solid;
+      border-color: var(--green-border);
+      background: var(--green-tint);
+      color: var(--green-fg);
+    }
+
+    /* ─── Anchor strip (syllable pills under the headline-input) ─── */
+    /* Renders the syllable structure of the queried word, with the
+       stressed anchors highlighted in brand purple and the weak
+       syllables grayed out. Weak syllables are CLICKABLE — tapping one
+       promotes it to the A-anchor and re-runs the search. The strip
+       lives inside .headline-search (below the input), not inside
+       #results, so it stays anchored to the word the user is typing. */
+    #anchorStrip {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scrollbar-width: none;
+      max-width: 100%;
+      padding: 6px 4px 2px;
+      min-height: 26px;
+    }
+    #anchorStrip::-webkit-scrollbar { display: none; }
+    #anchorStrip:empty { padding: 0; min-height: 0; }
+    .syllable {
+      display: inline-block;
+      padding: 5px 10px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      border-radius: 6px;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--ink-muted);
+      cursor: default;
+      transition: background 0.12s, color 0.12s, border-color 0.12s;
+      flex-shrink: 0;
+    }
+    .syllable.weak {
+      color: var(--ink-faint);
+      padding: 5px 7px;
+      cursor: pointer;  /* signals tap-to-promote affordance */
+    }
+    .syllable.weak:hover {
+      color: var(--accent);
+      border-color: var(--accent-soft);
+      background: var(--accent-soft);
+    }
+    .syllable.weak:active { transform: scale(0.94); }
+    .syllable.anchor {
+      color: var(--accent);
+      background: var(--accent-soft);
+      font-weight: 600;
+    }
+    .syllable.anchor.is-override {
+      /* User-promoted A-anchor — solid border + slight outline shadow
+         so people see "this is mine, not the engine's default". */
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(111, 80, 184, 0.12);
+    }
+    .syllable-divider {
+      color: var(--ink-faint);
+      font-size: 11px;
+      margin: 0 1px;
+      flex-shrink: 0;
+    }
+    /* Pronunciation strip (one per pronunciation; multiple for
+       homographs joined with a / divider). Stays inline so multiple
+       pronunciations sit side-by-side instead of stacking. */
+    .pron-strip {
+      display: inline-flex;
+      align-items: center;
+      gap: 1px;
+      flex-shrink: 0;
+    }
+    .pron-divider {
+      color: var(--ink-faint);
+      font-size: 14px;
+      margin: 0 8px;
+      font-weight: 300;
+      flex-shrink: 0;
+    }
+
+    /* ─── Pill row ─── */
+    /* Pills are visible whenever the viewport is too narrow to fit
+       all 5 columns side-by-side. Tapping a pill selects which column
+       is shown — the selected one (or two, for the synthetic A | B
+       combined pill) takes the full available height. Above 980px
+       there's room for everything, so the pill row hides itself and
+       all columns render in a single 5-up grid. */
+    .pill-row {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+      overflow-x: auto;
+      padding: 4px 0 10px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .pill-row::-webkit-scrollbar { display: none; }
+    .pill-row .pill { flex-shrink: 0; }
+    @media (min-width: 980px) {
+      .pill-row { display: none; }
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 7px 14px;
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+      flex-shrink: 0;
+      font-family: var(--font-body);
+    }
+    .pill:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .pill.active {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .pill .count {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--ink-faint);
+    }
+    .pill.active .count { color: var(--accent); }
+
+    /* ─── Column row ─── */
+    /* The column-row is a flex child that takes ALL remaining vertical
+       space inside #results. Its CHILDREN (.column) stretch to fill
+       that height — each column's body scrolls independently.
+
+       Below 980px the pill row is visible and the user picks ONE
+       column at a time (or the synthesized A | B combined view, which
+       renders both side-by-side via the .dual modifier). Above 980px
+       all 5 columns render in a single row — pills hide themselves.
+
+       The single-grid + display:none approach means a selected column
+       always gets the full available width because it's the only
+       grid item participating in layout. */
+    .column-row {
+      flex: 1;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 10px;
+      padding-bottom: 14px;
+    }
+    /* The synthetic "A | B" combined pill puts both A and B columns
+       side-by-side. Forced 50/50 because letting auto-fit do its
+       thing would still allow either column to wrap on really narrow
+       widths. Active at all viewport sizes below 980px. */
+    .column-row.dual { grid-template-columns: 1fr 1fr; gap: 6px; }
+    /* When a pill is selected, the unselected columns are hidden so
+       the selected one (or two) gets the full vertical AND horizontal
+       space. Class is set by JS based on activeColumnId. */
+    .column.is-mobile-hidden { display: none; }
+    /* Above 980px there's room for all 5 columns. The 5-up grid is
+       locked, the pill-driven hide is overridden, and dual collapses
+       back to the same 5-up. Result: pills become decorative (and
+       hidden) and the user just sees everything. */
+    @media (min-width: 980px) {
+      .column-row,
+      .column-row.dual { grid-template-columns: repeat(5, 1fr); gap: 10px; }
+      .column.is-mobile-hidden { display: flex; }
+    }
+    /* Mobile-specific tightening only (the pill-row + column-hiding
+       behavior above already applies because we're below 980px). */
+    @media (max-width: 720px) {
+      .column-row { padding-bottom: 12px; gap: 6px; }
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+      background: var(--surface);
+      border-radius: var(--col-radius);
+      overflow: hidden;
+      height: 100%;
+      min-height: 0;
+      box-shadow: var(--shadow-card);
+    }
+    .column-header {
+      padding: 10px 12px 8px;
+      border-bottom: 1px solid var(--rule-soft);
+    }
+    .column-header .title {
+      font-family: var(--font-display);
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--ink);
+      margin: 0;
+    }
+    .column-header .subtitle {
+      font-size: 12px;
+      color: var(--ink-faint);
+      margin: 2px 0 0;
+    }
+    .column-header .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+    }
+    .column-header .count {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--ink-faint);
+    }
+    .column-header .count .perfect {
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .column-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 6px 8px 16px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--rule) transparent;
+    }
+    .column-body::-webkit-scrollbar { width: 6px; }
+    .column-body::-webkit-scrollbar-thumb {
+      background: var(--rule);
+      border-radius: 3px;
+    }
+    .column-body::-webkit-scrollbar-track { background: transparent; }
+
+    .chip {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      padding: 8px 12px;
+      margin: 2px 0;
+      font-size: 14px;
+      color: var(--ink);
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+      transition: background 0.1s, color 0.1s;
+      word-wrap: break-word;
+      line-height: 1.3;
+    }
+    .chip:hover {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+    /* Phrase chips render identically to single-word chips — only
+       the tier classes drive color. (Earlier we muted .chip.phrase
+       to mark them as a distinct category, but that incorrectly
+       dimmed STRICT-tier phrases like "all heart" or "bad start"
+       so they looked like loose rhymes when they're actually
+       perfect.) The .phrase class is preserved as a hook for any
+       future per-phrase styling without affecting color. */
+    .chip.tier-loose { color: var(--ink-muted); }
+    .chip.tier-slant {
+      color: var(--ink-faint);
+    }
+    /* Full-rhyme badge — lowercase "all" pill, right-aligned after the
+       word. Mirrors the iOS app exactly. Reads as a quiet tag rather
+       than a leading attention-grabber. */
+    .chip .full-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 1px 5px;
+      border-radius: 3px;
+      background: var(--green-tint);
+      color: var(--green-fg);
+      border: 1px solid var(--green-border);
+      flex-shrink: 0;
+      margin-left: auto;
+      align-self: center;
+    }
+
+    .empty-col-note {
+      padding: 12px;
+      font-size: 13px;
+      color: var(--ink-faint);
+      font-style: italic;
+      text-align: center;
+    }
+
+    /* ─── Smart Sort modal ─── */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 13, 30, 0.55);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .modal-backdrop[aria-hidden="false"] {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal {
+      background: var(--surface);
+      color: var(--ink);
+      max-width: 460px;
+      width: 100%;
+      border-radius: 24px;
+      padding: 32px 28px 24px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      text-align: center;
+    }
+    .modal .modal-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 18px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+    }
+    .modal .modal-icon svg {
+      width: 32px;
+      height: 32px;
+      fill: currentColor;
+    }
+    .modal h2 {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin: 0 0 8px;
+    }
+    .modal p {
+      color: var(--ink-muted);
+      font-size: 15px;
+      line-height: 1.45;
+      margin: 0 0 22px;
+    }
+    .modal .modal-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .modal .btn-primary {
+      padding: 14px 22px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 999px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: var(--font-body);
+      text-decoration: none;
+      display: inline-block;
+    }
+    .modal .btn-primary:hover { background: var(--accent-strong); }
+    .modal .btn-secondary {
+      padding: 12px 22px;
+      background: transparent;
+      color: var(--ink-muted);
+      border: none;
+      font-size: 14px;
+      cursor: pointer;
+      font-family: var(--font-body);
+    }
+    .modal .btn-secondary:hover { color: var(--ink); }
+
+    /* ─── Footer ─── */
+    /* Hidden in the app-shell layout — attribution moves into the
+       empty-state hint and the AI Picks modal so the entire viewport
+       can be reserved for results. */
+    footer { display: none; }
+
+    /* ─── Loading state ─── */
+    .loading {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--ink-muted);
+      font-size: 14px;
+    }
+    .spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--rule);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ─── Loading splash ─────────────────────────────────────────
+       Covers everything below the topbar while the engine + 2.7MB of
+       dictionary JS load. Renders from the static HTML so it appears
+       in the very first paint — no JS required to show it. JS adds
+       `body.engine-ready` once INDEX is built, which fades the splash
+       out via CSS opacity transition. The splash is then removed from
+       the DOM after the transition completes (cleanup, not strictly
+       needed for layout). */
+    .loading-splash {
+      position: fixed;
+      top: 60px;     /* topbar height (desktop) */
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      z-index: 50;
+      transition: opacity 0.35s ease-out;
+    }
+    body.engine-ready .loading-splash {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .loading-splash-spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid var(--rule);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    .loading-splash-text {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink-muted);
+      letter-spacing: 0.02em;
+    }
+
+    /* ─── Mobile tweaks ─── */
+    /* The app-shell layout (100dvh body flex column) is global, not
+       mobile-only. This block only adjusts the dimensions of the
+       individual controls for touch / small-screen ergonomics. */
+    @media (max-width: 720px) {
+      main {
+        padding: 0 12px;
+      }
+      .topbar {
+        padding: 0 12px;
+        height: 56px;
+        max-width: none;
+        margin: 0;
+      }
+      .loading-splash { top: 56px; }
+      .wordmark svg { height: 22px; }
+      .wordmark .meta {
+        font-size: 9px;
+        padding: 2px 6px;
+        margin-left: 8px;
+      }
+      /* Drop the back-link + theme toggle on mobile — logo doubles
+         as the home affordance and phones almost always follow OS
+         appearance, so screen real estate stays for the Download
+         App pill. */
+      .topbar-nav .nav-link { display: none; }
+      .topbar-nav .theme-toggle { display: none; }
+      .topbar-nav { gap: 0; }
+      .get-app-btn { padding: 7px 14px; font-size: 12px; }
+
+      /* Headline-input shrinks but stays large enough to BLOCK iOS
+         Safari's auto-zoom-on-focus behavior (≥16px is the threshold).
+         clamp lower bound is 24px — tuned so 'Type a word/phrase…'
+         (the longest placeholder) fits without truncation at 320px
+         viewport width while still feeling like a hero headline. */
+      .headline-search {
+        margin: 10px auto 0;
+        padding: 0;
+      }
+      .headline-input {
+        font-size: clamp(24px, 7vw, 36px);
+        /* Slightly less side padding on mobile (36px instead of 44px)
+           so the placeholder still has comfortable room at narrow
+           viewports while still clearing the (slightly smaller) ×
+           button. */
+        padding: 6px 36px 8px 36px;
+      }
+      .headline-clear {
+        width: 36px;
+        height: 36px;
+        font-size: 26px;
+      }
+      .headline-status {
+        margin-top: 4px;
+        font-size: 12px;
+      }
+
+      .options-row {
+        margin: 12px auto 0;
+        gap: 14px;
+      }
+      .opt-toggle { font-size: 12px; }
+      .smart-sort-btn { padding: 5px 11px; font-size: 12px; }
+
+      /* #results: pill row + column row. Word header is no longer a
+         separate region (anchor strip moved up under the headline-input).
+         Pill row already has the correct base styles in the global
+         scope; only tighten its padding here for the smaller viewport. */
+      #results { padding-top: 10px; }
+      .pill-row { padding: 4px 0 8px; }
+    }

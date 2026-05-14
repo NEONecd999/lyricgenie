@@ -146,13 +146,14 @@
       --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 
       /* RhymeGold accent gradient stops. Light-mode (default) values
-         are deeper / more saturated so the gold reads against the
-         cream paper bg. Dark-mode overrides below restore the brighter
+         are deeper / more saturated so even the lightest stop has
+         enough luminance contrast against the cream paper bg to stay
+         legible. Dark-mode overrides below restore the brighter
          "treasure" palette that pops against the dark purple bg. */
-      --rg-gold-1: #C99326;
-      --rg-gold-2: #A37416;
-      --rg-gold-3: #7A5613;
-      --rg-gold-glow: rgba(201, 147, 38, 0.35);
+      --rg-gold-1: #A06D14;
+      --rg-gold-2: #7E5512;
+      --rg-gold-3: #5C3D0D;
+      --rg-gold-glow: rgba(160, 109, 20, 0.35);
     }
 
     /* Dark theme — applied either via OS preference (the @media
@@ -322,7 +323,7 @@
        scale so it reads as "by Lyric Genie" rather than as a co-equal
        brand. Single span so the whole phrase shares one type spec. */
     .wordmark-by {
-      margin-left: 14px;
+      margin-left: 8px;
       font-family: var(--font-display);
       font-size: 10px;
       font-weight: 600;
@@ -1264,7 +1265,7 @@
       .wordmark.rhymegold { gap: 6px; }
       .wordmark-genie { height: 26px; filter: drop-shadow(0 0 6px var(--rg-gold-glow)); }
       .wordmark-text { font-size: 16px; }
-      .wordmark-by { margin-left: 8px; font-size: 8px; letter-spacing: 0.08em; }
+      .wordmark-by { margin-left: 5px; font-size: 8px; letter-spacing: 0.08em; }
       .wordmark .meta {
         font-size: 9px;
         padding: 2px 6px;

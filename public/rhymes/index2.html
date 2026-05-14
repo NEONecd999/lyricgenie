@@ -259,20 +259,22 @@
     }
 
     /* ─── RhymeGold wordmark (replaces Lyric Genie wordmark on this page) ───
-       Layout:  [chest icon]  RhymeGold      BY  [LG logo]
-       The chest is the brand-gold accent, the wordmark is in ink
-       (matches the page text color), and the Lyric Genie attribution
-       sits to the right at smaller scale + muted color so it reads
-       as "by Lyric Genie" rather than as a co-equal brand. */
+       Layout:  [genie icon]  RhymeGold      BY  LYRIC GENIE
+       The genie icon and the "Gold" half of the wordmark share the
+       same warm gold gradient (RhymeGold is the brand-gold accent).
+       "Rhyme" stays in ink (matches the page text color). The
+       "BY LYRIC GENIE" attribution sits to the right at smaller
+       scale + brand-purple so it reads as "by Lyric Genie" rather
+       than as a co-equal brand. */
     .wordmark.rhymegold {
       gap: 9px;
     }
-    .wordmark-chest {
-      width: 36px;
+    .wordmark-genie {
       height: 32px;
+      width: auto;
       flex-shrink: 0;
-      /* Subtle glow shadow extending beyond the SVG itself, reinforcing
-         the "treasure-spilling-light" effect from the gradients inside. */
+      /* Subtle warm-gold glow extending beyond the SVG itself, tying
+         the icon's gradient fill to the "Gold" wordmark text glow. */
       filter: drop-shadow(0 0 8px rgba(255, 213, 95, 0.45));
     }
     .wordmark-text {
@@ -284,9 +286,9 @@
       line-height: 1;
     }
     /* "Gold" rendered in a warm gold gradient — same palette as the
-       chest SVG (light gold → mid → deep). background-clip: text masks
-       the gradient to the glyph shapes. A subtle drop-shadow gives it
-       the same glow vibe as the chest icon. */
+       genie icon's gradient fill (light gold → mid → deep). The
+       background-clip: text trick masks the gradient to the glyph
+       shapes; a subtle drop-shadow gives it the same glow as the icon. */
     .wordmark-gold {
       background: linear-gradient(180deg, #FFD75A 0%, #E8B83C 45%, #B68B22 100%);
       -webkit-background-clip: text;
@@ -295,10 +297,10 @@
               color: transparent;
       filter: drop-shadow(0 0 4px rgba(255, 213, 95, 0.35));
     }
-    /* "BY" + Lyric Genie logo render in brand purple — visually links
-       the attribution to the parent brand color. Tight letter-spacing
-       on the BY label + a small negative margin on the LG logo bring
-       the two pieces visually together as a single attribution unit. */
+    /* "BY" + "LYRIC GENIE" render in brand purple — visually links
+       the attribution to the parent brand color. Both are uppercase
+       text so they read as a single attribution unit, with LYRIC GENIE
+       slightly larger + bolder than BY to give it brand-name weight. */
     .wordmark-by {
       margin-left: 14px;
       font-family: var(--font-display);
@@ -308,14 +310,16 @@
       color: var(--accent);
       text-transform: uppercase;
     }
-    .wordmark .wordmark-lg {
-      height: 16px;
-      width: auto;
-      margin-left: -3px;
+    .wordmark-lgtext {
+      margin-left: 4px;
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
       color: var(--accent);
-      flex-shrink: 0;
+      text-transform: uppercase;
+      line-height: 1;
     }
-    .wordmark .wordmark-lg path { fill: currentColor; }
     /* Right cluster: theme toggle + "Learn more" + Download App pill
        ride together. Gap is intentionally smaller than a typical
        full nav so the items read as paired action affordances, not
@@ -1247,10 +1251,10 @@
       .loading-splash { top: 56px; }
       .wordmark svg { height: 22px; }
       .wordmark.rhymegold { gap: 6px; }
-      .wordmark-chest { width: 28px; height: 25px; filter: drop-shadow(0 0 6px rgba(255, 213, 95, 0.45)); }
+      .wordmark-genie { height: 26px; filter: drop-shadow(0 0 6px rgba(255, 213, 95, 0.45)); }
       .wordmark-text { font-size: 16px; }
-      .wordmark-by { margin-left: 8px; font-size: 8px; letter-spacing: 0.12em; }
-      .wordmark .wordmark-lg { height: 12px; }
+      .wordmark-by { margin-left: 8px; font-size: 8px; letter-spacing: 0.08em; }
+      .wordmark-lgtext { margin-left: 3px; font-size: 10px; }
       .wordmark .meta {
         font-size: 9px;
         padding: 2px 6px;
@@ -1311,81 +1315,31 @@
 <body>
   <header class="topbar">
     <a href="/rhymes/index2.html" class="wordmark rhymegold" aria-label="RhymeGold home">
-      <!-- Open treasure chest, glowing, opening TOWARD the viewer.
-           The lid is positioned ABOVE the chest body with its underside
-           visible (showing the inside curve in a darker shade), as if
-           hinged at the back and flipped open straight up. The top of
-           the chest body is rendered as a horizontal ellipse — the user
-           is looking DOWN into the open interior, where the gold glows.
-           Halo + inner glow + sparkles around the chest reinforce the
-           "treasure discovery" moment. -->
-      <svg class="wordmark-chest" viewBox="0 0 36 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- Genie icon (musical note + smoke wisps) — Lyric Genie's
+           parent-brand mark, repurposed here as the RhymeGold brand
+           accent and filled with the same warm-gold gradient as the
+           "Gold" wordmark text. The drop-shadow on .wordmark-genie
+           extends a subtle gold halo beyond the silhouette. -->
+      <svg class="wordmark-genie" viewBox="0 0 546.83 607.52" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <defs>
-          <radialGradient id="rgGlow" cx="50%" cy="55%" r="55%">
-            <stop offset="0%" stop-color="#FFE587" stop-opacity="0.95"/>
-            <stop offset="45%" stop-color="#FFC53D" stop-opacity="0.55"/>
-            <stop offset="100%" stop-color="#C9932E" stop-opacity="0"/>
-          </radialGradient>
-          <linearGradient id="rgBody" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#D4A53C"/>
-            <stop offset="100%" stop-color="#A87A21"/>
-          </linearGradient>
-          <linearGradient id="rgLidTop" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#E8B83C"/>
+          <linearGradient id="rgGenieGold" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#FFD75A"/>
+            <stop offset="45%" stop-color="#E8B83C"/>
             <stop offset="100%" stop-color="#B68B22"/>
           </linearGradient>
-          <linearGradient id="rgLidInside" x1="0" y1="1" x2="0" y2="0">
-            <stop offset="0%" stop-color="#7A5915"/>
-            <stop offset="100%" stop-color="#A87A21"/>
-          </linearGradient>
         </defs>
-
-        <!-- Wide glow halo extending beyond the chest -->
-        <ellipse cx="18" cy="18" rx="17" ry="14" fill="url(#rgGlow)"/>
-
-        <!-- Lid — drawn ABOVE the chest body. Two layers:
-               • Top surface (rgLidTop, lighter): the outside of the lid
-               • Underside (rgLidInside, darker): the inside curve, visible
-                 because the lid is tilted back toward the viewer
-             This reads as "clamshell open, hinged at the back." -->
-        <!-- Lid top surface (the visible outside of the lid) -->
-        <path d="M7 8 Q18 1 29 8 Q29 9 29 10 Q18 4 7 10 Q7 9 7 8 Z" fill="url(#rgLidTop)"/>
-        <!-- Lid underside (the inside, darker — what we see because it's flipped open) -->
-        <path d="M7 10 Q18 4 29 10 Q29 12 29 13 Q18 8 7 13 Q7 12 7 10 Z" fill="url(#rgLidInside)"/>
-
-        <!-- Top rim of the chest body — looking DOWN into the opening -->
-        <ellipse cx="18" cy="15" rx="12" ry="2.6" fill="#7A5915"/>
-
-        <!-- Glowing gold inside the open chest -->
-        <ellipse cx="18" cy="14.8" rx="11" ry="2.1" fill="#FFE587"/>
-        <ellipse cx="18" cy="14.6" rx="9" ry="1.5" fill="#FFFFFF" opacity="0.9"/>
-
-        <!-- Chest body (front face) -->
-        <path d="M6 15.5 h24 v11.5 a1.5 1.5 0 0 1 -1.5 1.5 h-21 a1.5 1.5 0 0 1 -1.5 -1.5 z" fill="url(#rgBody)"/>
-
-        <!-- Subtle horizontal trim line on the front -->
-        <rect x="6" y="20" width="24" height="0.6" fill="#8B6517" opacity="0.5"/>
-
-        <!-- Lock plate (page-bg fill — appears recessed into the wood) -->
-        <rect x="15" y="18.5" width="6" height="6" rx="0.5" fill="var(--bg)"/>
-        <circle cx="18" cy="20.5" r="1.1" fill="#8B6517"/>
-        <rect x="17.5" y="20.5" width="1" height="2.2" fill="#8B6517"/>
-
-        <!-- Sparkles around the chest — twinkle hints -->
-        <g fill="#FFE587">
-          <path d="M3 6 L 3.5 4.7 L 4 6 L 5.3 6.5 L 4 7 L 3.5 8.3 L 3 7 L 1.7 6.5 Z"/>
-          <path d="M32 5 L 32.4 4 L 32.8 5 L 33.8 5.4 L 32.8 5.8 L 32.4 6.8 L 32 5.8 L 31 5.4 Z"/>
-          <path d="M34 14 L 34.3 13.2 L 34.6 14 L 35.4 14.3 L 34.6 14.6 L 34.3 15.4 L 34 14.6 L 33.2 14.3 Z"/>
+        <g fill="url(#rgGenieGold)">
+          <path d="M197.04,440.62c-.02-.07-.04-.14-.06-.22-2.8-.11-2.13.02.06.22Z"/>
+          <path d="M211.33,440.41c-.06.31-.08.62-.08.93.11,0,.21,0,.31,0-.08-.31-.16-.61-.23-.92Z"/>
+          <path d="M243.7,0c-41.61,0-75.34,24.54-75.34,43.95,0,11.2,3.89,21.17,19.41,27.6,5.11-6.07,25.01-27.11,55.93-27.11,30.94,0,50.83,21.06,55.92,27.11,15.53-6.44,19.42-16.41,19.42-27.61,0-19.41-33.73-43.95-75.34-43.95ZM243.7,60.95c-26.96,0-44.29,22.42-44.29,22.42-3.17,5.33-4.82,11.17-4.84,17.08,0,21.94,22,39.73,49.14,39.73,27.14,0,49.14-17.79,49.13-39.73-.03-5.92-1.69-11.76-4.87-17.1,0,0-17.3-22.4-44.26-22.4ZM243.7,152.33c-108.32,0-196.14,39.05-196.14,87.23,0,28.44,30.72,39.86,78.09,44.47,69.5,4.49,97.38-25.5,151.2-53.18,0,0-16.01-4.4-55.93-4.4s-55.93,4.4-55.93,4.4c0,0,24.84-16.5,83.15-16.5s83.15,16.47,83.15,16.47c-14.76,1.28-29.31,6.08-43.04,12.61-9.92,4.72-19.49,10.36-29.05,16.3,30.9,19.62,73.44,25.9,102.55,24.3,47.38-4.61,78.09-16.03,78.09-44.47,0-48.17-87.81-87.23-196.14-87.23ZM242.1,270.8c-36.98,19.74-74.89,34.35-116.28,29.84,2.38,13.99,6.42,27.7,12.02,40.74,10.81,25.15,27.31,47.41,47.49,65.85,19.45,3.07,48.18,3.39,87.45-7.13,40.57-10.87,65.65-26.15,80.82-38.78-2.59-6.33-4.48-12.91-5.4-19.71-1.27-9.32-.69-18.94,2.19-27.89,1.48-4.61,3.59-9.03,6.27-13.07-42.67,3.87-80.79-6.3-114.56-29.84h0ZM370.76,389.86c-19.01,14.87-47.65,30.91-89.43,42.11-17.29,4.63-33.03,7.4-47.25,8.84,11.9,6.03,24.34,11,37.08,14.79,20.79,6.18,42.44,9.51,62.71,17.24,10.13,3.87,19.91,8.85,28.45,15.55,8.53,6.69,15.8,15.16,20.32,25.02,6.1,13.32,6.87,29,2.09,42.86-4.78,13.85-15.04,25.73-28.06,32.46-13.02,6.73-28.64,8.24-42.71,4.13-3.44-1.01-6.78-2.36-9.96-4-1.32-.63-2.11.16-.69,1.15,9.61,6.89,20.49,12.01,31.98,14.85,22.24,5.48,46.49,2.41,66.66-8.45,20.17-10.86,36.07-29.41,43.74-51,7.67-21.59,7.02-46.02-1.79-67.16-7.23-17.37-19.52-32.13-32.59-45.66-13.07-13.52-27.15-26.14-39-40.74-.53-.65-1.02-1.33-1.54-1.99Z"/>
+          <path d="M24.08,352.73l-.44,48.25c-15.51-3.25-28.66,12.03-21.76,26.79,7.72,16.52,32.82,12.82,35.75-5.13l.58-58.85,42.58-11.02-.36,39.26c-15.85-3.27-29,12.53-21.42,27.39,7.98,15.65,31.63,12.1,35.28-4.91l.84-80.06h-.47s-70.58,18.28-70.58,18.28Z"/>
+          <path d="M476.04,75.85v-1.17l-4.96-15.77-31.89,8.74v48.02c-21.38-4.64-38.17,19.63-24.23,37.43,13.09,16.7,39.3,8.66,41.77-11.96l-.02-59.63,19.33-5.66Z"/>
+          <path d="M546.83,160.84l-5.12-20.79-42.24,10.56v62.69c-31.23-8.23-52.04,32.52-26.01,52.85,18.99,14.84,46.46,2.22,48.64-21.52l-.02-76.16,24.76-7.64Z"/>
         </g>
       </svg>
       <span class="wordmark-text">Rhyme<span class="wordmark-gold">Gold</span></span>
       <span class="wordmark-by">BY</span>
-      <!-- Lyric Genie logo at attribution scale — visually subordinate
-           to RhymeGold but still clickable as a brand attribution. -->
-      <svg class="wordmark-lg" viewBox="0 0 115.87 20.94" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-        <path d="M25.29,6.43v6.06h5.61v2.01h-8.14V6.43h2.53Z"/>
-        <path d="M32.84,11.38l-4.32-4.95h3.14l2.51,2.97,2.55-2.97h2.85l-4.2,4.95v3.12h-2.53v-3.12Z"/>
-        <path d="M42.48,14.5h-2.53V6.43h6.51c2.69,0,3.5.93,3.5,2.09v.13c0,1.16-.97,1.59-1.5,1.77.82.24,1.53.81,1.53,1.85v1.18c0,.65.08.86.15.99v.05h-2.57c-.08-.1-.12-.22-.12-.51v-.93c0-.99-.43-1.42-1.68-1.42h-3.3v2.86ZM42.48,9.85h3.83c.73,0,1.02-.35,1.02-.79h0c0-.43-.28-.79-1.02-.79h-3.83v1.58Z"/>
+      <span class="wordmark-lgtext">LYRIC GENIE</span>
         <path d="M53.53,14.5h-2.53V6.43h2.53v8.07Z"/>
         <path d="M59.85,14.65c-4.68,0-5.4-2.61-5.4-4.05v-.31c0-1.46.63-3.99,5.4-3.99h.45c4.68,0,5.4,2.23,5.4,3.18v.12h-2.68c-.06-.22-.39-1.35-2.95-1.35-2.42,0-2.97,1.08-2.97,2.09v.13c0,.95.64,2.21,2.99,2.21,2.61,0,2.88-1.25,2.94-1.43h2.68v.12c0,1.02-.8,3.28-5.41,3.28h-.45Z"/>
         <path d="M74.99,14.65c-4.37,0-5.38-2.44-5.38-4.06v-.3c0-1.57.82-3.99,5.47-3.99h.47c4.51,0,5.3,1.96,5.35,3.06h0s-2.69.01-2.69.01c-.07-.18-.36-1.15-2.88-1.15s-3.07,1.06-3.07,2.18v.12c0,1.05.82,2.17,3.05,2.17,2.4,0,3.12-.92,3.12-1.15v-.02h-3.17v-1.53h5.68v4.52h-1.52c-.03-.29-.18-.92-.33-1.26-.35.4-1.39,1.4-3.88,1.4h-.23Z"/>

@@ -144,6 +144,15 @@
       --font-display: 'Lufga', ui-rounded, -apple-system, system-ui, 'Segoe UI', sans-serif;
       --font-body: 'Lufga', -apple-system, system-ui, 'Segoe UI', Roboto, sans-serif;
       --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+      /* RhymeGold accent gradient stops. Light-mode (default) values
+         are deeper / more saturated so the gold reads against the
+         cream paper bg. Dark-mode overrides below restore the brighter
+         "treasure" palette that pops against the dark purple bg. */
+      --rg-gold-1: #C99326;
+      --rg-gold-2: #A37416;
+      --rg-gold-3: #7A5613;
+      --rg-gold-glow: rgba(201, 147, 38, 0.35);
     }
 
     /* Dark theme — applied either via OS preference (the @media
@@ -168,6 +177,11 @@
       --green-border: rgba(108, 200, 130, 0.4);
       --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.25);
       --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.3);
+      /* Brighter "treasure" gold pops against the dark purple bg. */
+      --rg-gold-1: #FFD75A;
+      --rg-gold-2: #E8B83C;
+      --rg-gold-3: #B68B22;
+      --rg-gold-glow: rgba(255, 213, 95, 0.45);
     }
     @media (prefers-color-scheme: dark) {
       :root:not([data-theme="light"]) {
@@ -187,6 +201,10 @@
         --green-border: rgba(108, 200, 130, 0.4);
         --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.25);
         --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.3);
+        --rg-gold-1: #FFD75A;
+        --rg-gold-2: #E8B83C;
+        --rg-gold-3: #B68B22;
+        --rg-gold-glow: rgba(255, 213, 95, 0.45);
       }
     }
 
@@ -274,8 +292,10 @@
       width: auto;
       flex-shrink: 0;
       /* Subtle warm-gold glow extending beyond the SVG itself, tying
-         the icon's gradient fill to the "Gold" wordmark text glow. */
-      filter: drop-shadow(0 0 8px rgba(255, 213, 95, 0.45));
+         the icon's gradient fill to the "Gold" wordmark text glow.
+         The glow color is theme-aware (dimmer in light mode, brighter
+         in dark) via the --rg-gold-glow variable. */
+      filter: drop-shadow(0 0 8px var(--rg-gold-glow));
     }
     .wordmark-text {
       font-family: var(--font-display);
@@ -290,12 +310,12 @@
        background-clip: text trick masks the gradient to the glyph
        shapes; a subtle drop-shadow gives it the same glow as the icon. */
     .wordmark-gold {
-      background: linear-gradient(180deg, #FFD75A 0%, #E8B83C 45%, #B68B22 100%);
+      background: linear-gradient(180deg, var(--rg-gold-1) 0%, var(--rg-gold-2) 45%, var(--rg-gold-3) 100%);
       -webkit-background-clip: text;
               background-clip: text;
       -webkit-text-fill-color: transparent;
               color: transparent;
-      filter: drop-shadow(0 0 4px rgba(255, 213, 95, 0.35));
+      filter: drop-shadow(0 0 4px var(--rg-gold-glow));
     }
     /* "BY" + "LYRIC GENIE" render in brand purple — visually links
        the attribution to the parent brand color. Both are uppercase
@@ -1251,7 +1271,7 @@
       .loading-splash { top: 56px; }
       .wordmark svg { height: 22px; }
       .wordmark.rhymegold { gap: 6px; }
-      .wordmark-genie { height: 26px; filter: drop-shadow(0 0 6px rgba(255, 213, 95, 0.45)); }
+      .wordmark-genie { height: 26px; filter: drop-shadow(0 0 6px var(--rg-gold-glow)); }
       .wordmark-text { font-size: 16px; }
       .wordmark-by { margin-left: 8px; font-size: 8px; letter-spacing: 0.08em; }
       .wordmark-lgtext { margin-left: 3px; font-size: 10px; }
@@ -1322,10 +1342,14 @@
            extends a subtle gold halo beyond the silhouette. -->
       <svg class="wordmark-genie" viewBox="0 0 546.83 607.52" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <defs>
+          <!-- Stop colors come from CSS custom properties so the
+               gradient automatically darkens in light mode for better
+               contrast against the cream paper bg, and brightens in
+               dark mode for the "treasure glow" effect. -->
           <linearGradient id="rgGenieGold" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#FFD75A"/>
-            <stop offset="45%" stop-color="#E8B83C"/>
-            <stop offset="100%" stop-color="#B68B22"/>
+            <stop offset="0%"   style="stop-color: var(--rg-gold-1)"/>
+            <stop offset="45%"  style="stop-color: var(--rg-gold-2)"/>
+            <stop offset="100%" style="stop-color: var(--rg-gold-3)"/>
           </linearGradient>
         </defs>
         <g fill="url(#rgGenieGold)">

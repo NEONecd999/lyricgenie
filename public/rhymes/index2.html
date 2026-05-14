@@ -1299,12 +1299,14 @@
 <body>
   <header class="topbar">
     <a href="/rhymes/index2.html" class="wordmark rhymegold" aria-label="RhymeGold home">
-      <!-- Open treasure chest, glowing — the "strike rhyme gold" metaphor
-           visualized. Lid is tilted back to show the gold pouring out;
-           a radial gradient halo behind + bright inner glow + sparkles
-           around the chest reinforce the discovery moment. Pure inline
-           SVG so it scales to any size and inherits the page bg color
-           into the carved lock plate via var(--bg). -->
+      <!-- Open treasure chest, glowing, opening TOWARD the viewer.
+           The lid is positioned ABOVE the chest body with its underside
+           visible (showing the inside curve in a darker shade), as if
+           hinged at the back and flipped open straight up. The top of
+           the chest body is rendered as a horizontal ellipse — the user
+           is looking DOWN into the open interior, where the gold glows.
+           Halo + inner glow + sparkles around the chest reinforce the
+           "treasure discovery" moment. -->
       <svg class="wordmark-chest" viewBox="0 0 36 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <defs>
           <radialGradient id="rgGlow" cx="50%" cy="55%" r="55%">
@@ -1316,36 +1318,46 @@
             <stop offset="0%" stop-color="#D4A53C"/>
             <stop offset="100%" stop-color="#A87A21"/>
           </linearGradient>
-          <linearGradient id="rgLid" x1="0" y1="0" x2="0" y2="1">
+          <linearGradient id="rgLidTop" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stop-color="#E8B83C"/>
             <stop offset="100%" stop-color="#B68B22"/>
+          </linearGradient>
+          <linearGradient id="rgLidInside" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0%" stop-color="#7A5915"/>
+            <stop offset="100%" stop-color="#A87A21"/>
           </linearGradient>
         </defs>
 
         <!-- Wide glow halo extending beyond the chest -->
-        <ellipse cx="18" cy="17" rx="17" ry="14" fill="url(#rgGlow)"/>
+        <ellipse cx="18" cy="18" rx="17" ry="14" fill="url(#rgGlow)"/>
 
-        <!-- Tilted-back lid (rotated -25° around its bottom-center pivot
-             so it reads as "thrown open" rather than "still closed") -->
-        <g transform="rotate(-25 18 15)">
-          <path d="M7 15 Q7 7 18 7 Q29 7 29 15 V16 H7 Z" fill="url(#rgLid)"/>
-        </g>
+        <!-- Lid — drawn ABOVE the chest body. Two layers:
+               • Top surface (rgLidTop, lighter): the outside of the lid
+               • Underside (rgLidInside, darker): the inside curve, visible
+                 because the lid is tilted back toward the viewer
+             This reads as "clamshell open, hinged at the back." -->
+        <!-- Lid top surface (the visible outside of the lid) -->
+        <path d="M7 8 Q18 1 29 8 Q29 9 29 10 Q18 4 7 10 Q7 9 7 8 Z" fill="url(#rgLidTop)"/>
+        <!-- Lid underside (the inside, darker — what we see because it's flipped open) -->
+        <path d="M7 10 Q18 4 29 10 Q29 12 29 13 Q18 8 7 13 Q7 12 7 10 Z" fill="url(#rgLidInside)"/>
 
-        <!-- Bright inner-rim glow at the chest opening — the gold
-             "spilling out" effect. Sits between the lid and the body. -->
-        <ellipse cx="18" cy="16.5" rx="11.5" ry="2.2" fill="#FFE587" opacity="0.95"/>
-        <ellipse cx="18" cy="16.5" rx="9" ry="1.4" fill="#FFFFFF" opacity="0.85"/>
+        <!-- Top rim of the chest body — looking DOWN into the opening -->
+        <ellipse cx="18" cy="15" rx="12" ry="2.6" fill="#7A5915"/>
+
+        <!-- Glowing gold inside the open chest -->
+        <ellipse cx="18" cy="14.8" rx="11" ry="2.1" fill="#FFE587"/>
+        <ellipse cx="18" cy="14.6" rx="9" ry="1.5" fill="#FFFFFF" opacity="0.9"/>
 
         <!-- Chest body (front face) -->
-        <path d="M6 16 h24 v11 a1.5 1.5 0 0 1 -1.5 1.5 h-21 a1.5 1.5 0 0 1 -1.5 -1.5 z" fill="url(#rgBody)"/>
+        <path d="M6 15.5 h24 v11.5 a1.5 1.5 0 0 1 -1.5 1.5 h-21 a1.5 1.5 0 0 1 -1.5 -1.5 z" fill="url(#rgBody)"/>
 
         <!-- Subtle horizontal trim line on the front -->
-        <rect x="6" y="20.5" width="24" height="0.6" fill="#8B6517" opacity="0.5"/>
+        <rect x="6" y="20" width="24" height="0.6" fill="#8B6517" opacity="0.5"/>
 
         <!-- Lock plate (page-bg fill — appears recessed into the wood) -->
-        <rect x="15" y="19" width="6" height="6" rx="0.5" fill="var(--bg)"/>
-        <circle cx="18" cy="21" r="1.1" fill="#8B6517"/>
-        <rect x="17.5" y="21" width="1" height="2.2" fill="#8B6517"/>
+        <rect x="15" y="18.5" width="6" height="6" rx="0.5" fill="var(--bg)"/>
+        <circle cx="18" cy="20.5" r="1.1" fill="#8B6517"/>
+        <rect x="17.5" y="20.5" width="1" height="2.2" fill="#8B6517"/>
 
         <!-- Sparkles around the chest — twinkle hints -->
         <g fill="#FFE587">

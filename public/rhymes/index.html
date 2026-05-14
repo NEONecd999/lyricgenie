@@ -1489,6 +1489,17 @@
       const inputEl = document.getElementById('searchInput');
       if (!inputEl) return;
 
+      // Hydrate from URL ?q=… so refreshes / shared links / the
+      // browser's back-forward cache reach the search engine even
+      // before the heavy 2.7MB of dictionary JS is parsed. The main
+      // script's pendingQuery flush at engine-ready picks up whatever
+      // input.value holds and runs the search automatically.
+      try {
+        const params = new URLSearchParams(location.search);
+        const initialQ = (params.get('q') || '').trim();
+        if (initialQ) inputEl.value = initialQ;
+      } catch (_) { /* ignore */ }
+
       // Delegated chip-click for taps that land during load (note:
       // the splash overlays main with pointer-events still active,
       // so chip clicks under the splash actually wouldn't reach the
@@ -1563,6 +1574,59 @@
     let anchorOverride = null;     // { aSyllIdx } or null — user-promoted A-anchor (syllable index from start; B is always line-ending)
     let searchDebounceTimer = null;
 
+    // ─── Browser history (back/forward to cycle through queries) ─
+    // We push a fresh history entry only after the user has "settled"
+    // on a query (~600ms with no new typing). Each entry encodes the
+    // query as ?q=… in the URL. Back/forward then re-runs the search
+    // for the URL's query without pushing a new entry — the
+    // suppressHistoryPush flag guards against the recursive push that
+    // would otherwise fire from runSearch().
+    let historyPushTimer = null;
+    let lastPushedQuery = (() => {
+      try { return (new URLSearchParams(location.search).get('q') || '').trim(); }
+      catch (_) { return ''; }
+    })();
+    let suppressHistoryPush = false;
+    function scheduleHistoryPush(q) {
+      if (suppressHistoryPush) return;
+      clearTimeout(historyPushTimer);
+      historyPushTimer = setTimeout(() => {
+        if (q === lastPushedQuery) return;
+        const url = q
+          ? `${location.pathname}?q=${encodeURIComponent(q)}`
+          : location.pathname;
+        try { history.pushState({ q }, '', url); }
+        catch (_) { return; }
+        lastPushedQuery = q;
+      }, 600);
+    }
+    // Stamp {q} state onto the initial entry so popstate can later
+    // detect "back to the original page state" cleanly.
+    try { history.replaceState({ q: lastPushedQuery }, '', location.href); }
+    catch (_) { /* ignore */ }
+    // Back/forward → re-hydrate input + re-run search WITHOUT pushing.
+    window.addEventListener('popstate', () => {
+      let q = '';
+      try { q = (new URLSearchParams(location.search).get('q') || '').trim(); }
+      catch (_) {}
+      lastPushedQuery = q;
+      clearTimeout(historyPushTimer);
+      clearTimeout(searchDebounceTimer);
+      anchorOverride = null;
+      suppressHistoryPush = true;
+      try {
+        if (input.value !== q) input.value = q;
+        updateClearBtn();
+        if (q) {
+          runSearch(q);
+        } else {
+          renderEmpty();
+        }
+      } finally {
+        suppressHistoryPush = false;
+      }
+    });
+
     // ─── Responsive placeholder ──────────────────────────────────
     // Desktop has room for "Type a word or phrase…" (the canonical
     // copy + default in the HTML). Below 720px we swap to the
@@ -1594,6 +1658,9 @@
       const q = input.value.trim();
       if (!q) {
         renderEmpty();
+        // Backspaced to empty — schedule an empty history entry so
+        // the URL stays in sync with the visible state.
+        scheduleHistoryPush('');
         return;
       }
       searchDebounceTimer = setTimeout(() => runSearch(q), 200);
@@ -1606,6 +1673,9 @@
       clearTimeout(searchDebounceTimer);
       updateClearBtn();
       renderEmpty();
+      // Also push an "empty" state so back/forward includes the
+      // cleared moment in the navigation history.
+      scheduleHistoryPush('');
       input.focus();
     });
     // Sync once on load in case the browser restored a value (e.g.
@@ -1654,6 +1724,10 @@
     // ─── Search + render ───
     function runSearch(query) {
       lastQuery = query;
+      // Sync this query into browser history (debounced — only after
+      // the user has stopped typing for ~600ms). Skipped when called
+      // from the popstate handler (it sets suppressHistoryPush).
+      scheduleHistoryPush(query);
       // NOTE: activeColumnId is intentionally NOT reset here.
       // Songwriters tend to dwell on a particular shape (e.g. the
       // 'A·B' / one-weak-between column) while iterating across many

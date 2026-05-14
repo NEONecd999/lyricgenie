@@ -1,6 +1,12 @@
 # Cloudflare Pages routing rules.
-# Rhymegold.com root and /index.html serve the RhymeGold-branded shell.
-# All other paths (assets, fonts, JS) pass through to their actual locations
-# under public/ — no further rewriting needed.
-https://rhymegold.com/                   /rhymegold/index.html  200
-https://rhymegold.com/index.html         /rhymegold/index.html  200
+#
+# This Pages project serves only the rhymegold.com domain (lyricgenie.app
+# is on a separate GitHub Pages deploy), so we can safely rewrite the
+# deployment root to the RhymeGold-branded shell at /rhymegold/index.html
+# without affecting any other site. Status 200 = rewrite (URL bar stays
+# as rhymegold.com), not a redirect.
+#
+# All other paths (assets, fonts, JS) have no rule and pass through to
+# their actual locations under public/ — no further rewriting needed.
+/                /rhymegold/index.html  200
+/index.html      /rhymegold/index.html  200

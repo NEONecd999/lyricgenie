@@ -1,0 +1,2357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#F4EFD8" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#1A1322" media="(prefers-color-scheme: dark)" />
+  <meta name="description" content="RhymeGold — strike rhyme gold. Find the perfect rhyme buried in 135K words and phrases. Free, fast, no signup. By Lyric Genie." />
+  <title>RhymeGold — Free Rhyme Tool for Songwriters | by Lyric Genie</title>
+  <link rel="canonical" href="https://rhymegold.com/" />
+
+  <!-- ─── Social previews (iMessage, Slack, Twitter, Facebook, etc.) ───
+       iMessage on iOS reads Open Graph tags + falls back to Twitter
+       Card tags. The image is the existing 1024×1024 app icon — a
+       dedicated 1200×630 rhymes-specific social card would render
+       slightly better as a wide hero, but the square icon works
+       cleanly across every preview surface and matches the homepage's
+       brand for cross-app consistency. -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://rhymegold.com/" />
+  <meta property="og:title" content="RhymeGold — Free Rhyme Tool for Songwriters" />
+  <meta property="og:description" content="Strike rhyme gold. Find the perfect rhyme buried in 135K words and phrases. Free, fast, no signup. By Lyric Genie." />
+  <meta property="og:image" content="https://lyricgenie.app/images/app-icon.jpg" />
+  <meta property="og:image:width" content="1024" />
+  <meta property="og:image:height" content="1024" />
+  <meta property="og:image:alt" content="RhymeGold — free rhyme tool for songwriters, by Lyric Genie" />
+  <meta property="og:site_name" content="RhymeGold" />
+  <meta property="og:locale" content="en_US" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@LyricGenie" />
+  <meta name="twitter:title" content="RhymeGold — Free Rhyme Tool for Songwriters" />
+  <meta name="twitter:description" content="Strike rhyme gold. Find the perfect rhyme buried in 135K words and phrases. Free, fast, no signup. By Lyric Genie." />
+  <meta name="twitter:image" content="https://lyricgenie.app/images/app-icon.jpg" />
+
+  <!-- iMessage uses apple-touch-icon for the small page icon next to
+       the link preview when no other icon is available. -->
+  <link rel="apple-touch-icon" href="https://lyricgenie.app/images/app-icon.jpg" />
+
+  <!-- ─── Theme override (applied BEFORE CSS so there's no flash) ───
+       Reads the user's saved theme from localStorage and stamps it
+       on <html> as data-theme="light"|"dark". When unset, the
+       prefers-color-scheme media queries in the stylesheet take
+       over (i.e. the page follows OS appearance). The toggle UI
+       below reads + writes the same key. -->
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('lg-theme');
+        if (t === 'light' || t === 'dark') {
+          document.documentElement.setAttribute('data-theme', t);
+        }
+      } catch (_) { /* private mode, etc. — fall back to OS pref */ }
+    })();
+  </script>
+
+  <!-- ─── Google Analytics 4 (Firebase Analytics) ─────────────────
+       Same measurement ID as the lyricgenie-625c4 (prod) Firebase
+       project. Loaded async so it never blocks first paint. We
+       only emit one custom event from this page right now —
+       'dictionary_miss' — fired when a typed query isn't in the
+       dictionary, so we can see which words to add over time.
+       Standard GA4 page_view + session events fire automatically. -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XK9NRLWK3K"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-XK9NRLWK3K', {
+      // Anonymize IP at collection time (GA4 already does this by
+      // default but explicit is good).
+      anonymize_ip: true,
+      // Tag the page so we can filter rhymes-page events distinctly
+      // from anything else served on lyricgenie.app.
+      page_title: 'Lyric Genie — Rhymes'
+    });
+  </script>
+  <style>
+    /* ─────────────────────────────────────────────────────────
+       Lyric Genie public rhyme tool
+       Branding: cream paper + eggplant ink + brand purple, with
+       dark-mode swap via prefers-color-scheme.
+       ───────────────────────────────────────────────────────── */
+
+    /* ─── Web fonts (served from /fonts/ at the site root) ─── */
+    /* Lufga = brand sans (display + body). Three weights cover
+       400 (body), 500 (links/labels), 700 (headlines).
+       Academico-Italic = serif italic accent (used by main site;
+       registered here so call-outs / blockquotes can opt in via
+       font-family later if needed). */
+    @font-face {
+      font-family: 'Lufga';
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+      src: url('/fonts/Lufga-Regular.woff2') format('woff2'),
+           url('/fonts/Lufga-Regular.woff') format('woff');
+    }
+    @font-face {
+      font-family: 'Lufga';
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+      src: url('/fonts/Lufga-Medium.woff2') format('woff2'),
+           url('/fonts/Lufga-Medium.woff') format('woff');
+    }
+    @font-face {
+      font-family: 'Lufga';
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+      src: url('/fonts/Lufga-Bold.woff2') format('woff2'),
+           url('/fonts/Lufga-Bold.woff') format('woff');
+    }
+    @font-face {
+      font-family: 'Academico';
+      font-weight: 400;
+      font-style: italic;
+      font-display: swap;
+      src: url('/fonts/Academico-Italic.otf') format('opentype');
+    }
+
+    :root {
+      /* Light theme — cream paper aesthetic */
+      --bg: #F4EFD8;
+      --surface: #FAF5E1;
+      --surface-2: #FFFFFF;
+      --ink: #1E1324;
+      --ink-muted: #5D5065;
+      --ink-faint: #9087A0;
+      --accent: #6F50B8;
+      --accent-soft: rgba(111, 80, 184, 0.10);
+      --accent-strong: #5B3FA0;
+      --rule: #E6E2D8;
+      --rule-soft: #EFEAD8;
+      --green-tint: rgba(54, 144, 76, 0.15);
+      --green-fg: #2D7A3F;
+      --green-border: rgba(54, 144, 76, 0.4);
+      --shadow-soft: 0 1px 2px rgba(30, 19, 36, 0.04);
+      --shadow-card: 0 2px 8px rgba(30, 19, 36, 0.05);
+      --radius: 14px;
+      --radius-sm: 8px;
+      --col-radius: 16px;
+      --font-display: 'Lufga', ui-rounded, -apple-system, system-ui, 'Segoe UI', sans-serif;
+      --font-body: 'Lufga', -apple-system, system-ui, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+    }
+
+    /* Dark theme — applied either via OS preference (the @media
+       block) or explicit user override (data-theme="dark" on <html>,
+       set by the toggle button in the topbar). The override always
+       wins; data-theme="light" forces the light palette regardless
+       of OS preference. */
+    :root[data-theme="dark"] {
+      --bg: #1A1322;
+      --surface: #221729;
+      --surface-2: #2A1F32;
+      --ink: #F9F0CB;
+      --ink-muted: #C7B596;
+      --ink-faint: #8A7E76;
+      --accent: #AB8EE2;
+      --accent-soft: rgba(171, 142, 226, 0.15);
+      --accent-strong: #C2A6F0;
+      --rule: #3A2F45;
+      --rule-soft: #2D2438;
+      --green-tint: rgba(108, 200, 130, 0.18);
+      --green-fg: #8FD9A0;
+      --green-border: rgba(108, 200, 130, 0.4);
+      --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.25);
+      --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #1A1322;
+        --surface: #221729;
+        --surface-2: #2A1F32;
+        --ink: #F9F0CB;
+        --ink-muted: #C7B596;
+        --ink-faint: #8A7E76;
+        --accent: #AB8EE2;
+        --accent-soft: rgba(171, 142, 226, 0.15);
+        --accent-strong: #C2A6F0;
+        --rule: #3A2F45;
+        --rule-soft: #2D2438;
+        --green-tint: rgba(108, 200, 130, 0.18);
+        --green-fg: #8FD9A0;
+        --green-border: rgba(108, 200, 130, 0.4);
+        --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.25);
+        --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.3);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+
+    /* App-shell layout: page is ALWAYS exactly the height of the
+       viewport (100dvh handles iOS Safari's collapsing chrome bar).
+       Body is a flex column so topbar / headline / options stay
+       fixed-height and the results region flexes to fill the
+       remainder. Columns inside #results are the only scrollable
+       region — the page itself never scrolls. */
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.4;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    html { height: 100%; }
+
+    /* ─── Top bar — matches lyricgenie.app Navbar ───
+       Layout: SVG wordmark logo flush left, "Learn more" + Download
+       App pill clustered together flush right. No max-width — the
+       bar spans the full viewport so the wordmark hugs the left edge
+       and the CTA cluster hugs the right, mirroring the pattern on
+       the marketing site. Compact 60px height keeps the column area
+       below as tall as possible. */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 0 24px;
+      height: 60px;
+      width: 100%;
+      margin: 0;
+    }
+    .wordmark {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+      color: var(--ink);
+    }
+    .wordmark svg {
+      height: 24px;
+      width: auto;
+      fill: currentColor;
+    }
+    .wordmark .meta {
+      display: inline-block;
+      margin-left: 12px;
+      padding: 3px 9px;
+      font-family: var(--font-display);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      background: var(--accent-soft);
+      border-radius: 6px;
+      vertical-align: middle;
+    }
+
+    /* ─── RhymeGold wordmark (replaces Lyric Genie wordmark on this page) ───
+       Layout:  [chest icon]  RhymeGold      BY  [LG logo]
+       The chest is the brand-gold accent, the wordmark is in ink
+       (matches the page text color), and the Lyric Genie attribution
+       sits to the right at smaller scale + muted color so it reads
+       as "by Lyric Genie" rather than as a co-equal brand. */
+    .wordmark.rhymegold {
+      gap: 9px;
+    }
+    .wordmark-chest {
+      width: 28px;
+      height: 28px;
+      color: #C9932E;          /* gold accent */
+      flex-shrink: 0;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) .wordmark-chest { color: #E5B660; }
+    }
+    :root[data-theme="dark"] .wordmark-chest { color: #E5B660; }
+    .wordmark-text {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 22px;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      line-height: 1;
+    }
+    .wordmark-by {
+      margin-left: 14px;
+      font-family: var(--font-display);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      color: var(--ink-faint);
+      text-transform: uppercase;
+    }
+    /* Override the generic .wordmark svg rule so the inline LG logo
+       sits at attribution scale (16px tall) instead of the wordmark
+       default of 24px. The chest icon is sized via its own class. */
+    .wordmark .wordmark-lg {
+      height: 16px;
+      width: auto;
+      color: var(--ink-muted);
+      flex-shrink: 0;
+    }
+    .wordmark .wordmark-lg path { fill: currentColor; }
+    .wordmark .wordmark-chest path { fill: currentColor; }
+    /* Right cluster: theme toggle + "Learn more" + Download App pill
+       ride together. Gap is intentionally smaller than a typical
+       full nav so the items read as paired action affordances, not
+       separate menu items. */
+    .topbar-nav {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-left: auto;
+    }
+    /* Light/dark mode toggle. Shows a sun (currently light) or moon
+       (currently dark) icon. JS sets a .is-dark class on <html> that
+       drives which icon is visible. Hidden on mobile per design —
+       phones almost always follow OS preference, and topbar real
+       estate there is precious. */
+    .theme-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      padding: 0;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--ink-muted);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .theme-toggle:hover {
+      color: var(--ink);
+      background: rgba(30, 19, 36, 0.05);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) .theme-toggle:hover {
+        background: rgba(255, 255, 255, 0.06);
+      }
+    }
+    :root[data-theme="dark"] .theme-toggle:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+    .theme-toggle svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    /* Icon visibility tracks effective theme: sun = currently light,
+       moon = currently dark. Shows what's ACTIVE so users see their
+       current state (clicking flips it). The default (no data-theme
+       override) reads OS preference via the @media block. */
+    .theme-toggle .icon-sun { display: none; }
+    .theme-toggle .icon-moon { display: inline-block; }
+    :root[data-theme="light"] .theme-toggle .icon-moon { display: none; }
+    :root[data-theme="light"] .theme-toggle .icon-sun  { display: inline-block; }
+    @media (prefers-color-scheme: light) {
+      :root:not([data-theme="dark"]) .theme-toggle .icon-moon { display: none; }
+      :root:not([data-theme="dark"]) .theme-toggle .icon-sun  { display: inline-block; }
+    }
+    /* Uses --ink-muted (which swaps via prefers-color-scheme) so the
+       link sits one shade softer than full ink on both light and
+       dark backgrounds. Hover bumps it to full --ink for emphasis. */
+    .topbar-nav a.nav-link {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--ink-muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .topbar-nav a.nav-link:hover { color: var(--ink); }
+    .get-app-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      background: var(--accent);
+      color: white;
+      text-decoration: none;
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 14px;
+      border-radius: 999px;
+      box-shadow: 0 4px 20px -4px rgba(30, 19, 36, 0.08);
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+    .get-app-btn:hover { background: var(--accent-strong); }
+
+    /* ─── Main app-shell content area ─── */
+    /* Flex column: headline-search + options-row are fixed height,
+       #results flexes to fill the remaining viewport. No max-width —
+       columns use the entire viewport width on ultra-wide displays
+       so users can see more chips per column at once. The headline-
+       search and options-row have their own narrower max-widths so
+       they stay centered + readable while the columns stretch. */
+    main {
+      flex: 1;
+      min-height: 0;
+      width: 100%;
+      margin: 0;
+      padding: 0 24px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .topbar { flex-shrink: 0; }
+    .headline-search { flex-shrink: 0; }
+    .options-row { flex-shrink: 0; }
+    #results {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      padding-top: 10px;
+    }
+
+    /* ─── Headline search ───
+       The search input IS the headline word. No separate H1, no
+       redundant displayed word above the columns. Editable headline
+       → debounced live search on every keystroke (200ms after last
+       input). Enter still works (form submit flushes immediately).
+       The anchor strip (syllables with stress markers) sits directly
+       below the input; weak syllables are clickable to promote them
+       to the A-anchor and re-search. */
+    .headline-search {
+      width: 100%;
+      max-width: 720px;
+      margin: 10px auto 0;
+      padding: 0 8px;
+      text-align: center;
+      /* width:100% + min-width:0 are BOTH required to prevent the
+         headline-search from being forced wider than its parent by
+         non-shrinking children (the .pron-strip spans inside
+         #anchorStrip). Without this, a multi-pronunciation word
+         like 'cooperation' or 'forever' would push the whole
+         headline-search to ~720px on a 375px-wide phone, blowing
+         past the viewport instead of letting the anchor strip
+         scroll horizontally inside its own bounds. */
+      min-width: 0;
+      box-sizing: border-box;
+    }
+    .headline-input {
+      display: block;
+      width: 100%;
+      margin: 0;
+      /* Symmetric horizontal padding reserves clearance for the
+         absolute-positioned clear (×) button on the right while
+         keeping the centered text optically centered inside the
+         input wrapper. With text-align:center, asymmetric padding
+         would shift the text off-center by half the difference. */
+      padding: 2px 44px 6px 44px;
+      background: transparent;
+      color: var(--ink);
+      font-family: var(--font-display);
+      font-size: clamp(30px, 4.5vw, 44px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      text-align: center;
+      border: none;
+      border-bottom: 2px solid var(--rule);
+      border-radius: 0;
+      outline: none;
+      caret-color: var(--accent);
+      transition: border-color 0.18s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .headline-input::placeholder {
+      color: var(--ink-faint);
+      font-weight: 500;
+      letter-spacing: -0.01em;
+    }
+    .headline-input:focus {
+      border-bottom-color: var(--accent);
+    }
+    /* Clear (×) button — sits at the right edge of the input,
+       absolute-positioned inside the form. Only visible when the
+       input has text (.is-visible toggled by JS on input event).
+       Subtle faded look so it doesn't compete with the giant
+       headline; bumps to full opacity on hover. */
+    #searchForm { position: relative; }
+    .headline-clear {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      border: none;
+      background: transparent;
+      color: var(--ink-faint);
+      border-radius: 50%;
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      font-weight: 400;
+      line-height: 1;
+      font-family: var(--font-display);
+      transition: opacity 0.15s, background 0.15s, color 0.15s;
+    }
+    .headline-clear.is-visible {
+      opacity: 0.5;
+      pointer-events: auto;
+    }
+    .headline-clear.is-visible:hover {
+      opacity: 1;
+      background: rgba(30, 19, 36, 0.06);
+      color: var(--ink);
+    }
+    .headline-clear:active { transform: translateY(-50%) scale(0.92); }
+    /* Status hint that lives under the input — used by the anchor-
+       override indicator ("Custom stress · ↻ reset") when active.
+       Collapses to zero height when empty (the common case) so the
+       chip area below sits closer to the syllable strip — the small
+       layout jump on the rare override event is acceptable. */
+    .headline-status {
+      margin-top: 4px;
+      font-family: var(--font-body);
+      font-size: 12px;
+      color: var(--ink-faint);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .headline-status:empty {
+      margin-top: 0;
+      display: none;
+    }
+    .headline-status .reset-anchor {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 9px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--accent);
+      background: var(--accent-soft);
+      border: 1px solid transparent;
+      border-radius: 999px;
+      cursor: pointer;
+      font-family: var(--font-body);
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .headline-status .reset-anchor:hover {
+      background: var(--accent);
+      color: white;
+    }
+
+    .options-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      /* Margin matches the mobile breakpoint (12px) so the breathing
+         room between the syllable strip above and the slant + AI
+         Picks row reads consistently across viewport sizes. */
+      margin: 12px auto 0;
+      max-width: 720px;
+    }
+    .opt-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--ink-muted);
+      cursor: pointer;
+      user-select: none;
+    }
+    .opt-toggle input[type="checkbox"] {
+      accent-color: var(--accent);
+      width: 16px;
+      height: 16px;
+    }
+    /* AI Picks: outlined button (transparent fill + purple border /
+       text). Filled hover state. The previous accent-soft fill made
+       it look like a selected pill rather than an unactivated CTA —
+       the outlined treatment unambiguously reads as "click me". */
+    .smart-sort-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      background: transparent;
+      border: 1px solid var(--accent);
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      font-family: var(--font-body);
+    }
+    .smart-sort-btn:hover { background: var(--accent); color: white; }
+    .smart-sort-btn .star {
+      width: 13px;
+      height: 13px;
+      fill: currentColor;
+      flex-shrink: 0;
+    }
+
+    /* ─── Empty state ─── */
+    /* Used both for the initial "type to begin" hint AND the
+       not-found state when a word isn't in the dictionary. The two
+       share the same flex-centered shell but render very different
+       payloads (see .empty-state.initial vs .empty-state.not-found):
+         - initial: minimal — just suggestion chips with a tiny
+           "Try:" label, so the giant headline-input above wins the
+           visual hierarchy battle
+         - not-found: elaborate — closed-book illustration, headline,
+           body copy, and recovery suggestions, because this is an
+           error state where the user needs help getting unstuck */
+    .empty-state {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 32px 24px;
+      text-align: center;
+      color: var(--ink-muted);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+    /* Initial state: dial the visuals all the way down so the input
+       above is unambiguously THE thing to look at. No big icon, no
+       big headline, just a quiet label + chips. */
+    .empty-state.initial {
+      gap: 10px;
+      justify-content: flex-start;
+      padding-top: 48px;
+    }
+    .empty-state.initial .es-icon,
+    .empty-state.initial .es-headline,
+    .empty-state.initial .es-body {
+      display: none;
+    }
+    .empty-state.initial .es-label {
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--ink-faint);
+      text-transform: uppercase;
+      margin: 0;
+    }
+    .empty-state code {
+      font-family: var(--font-mono);
+      background: var(--surface);
+      padding: 2px 7px;
+      border-radius: 4px;
+      color: var(--ink-muted);
+    }
+    .empty-state .es-icon {
+      width: 56px;
+      height: 56px;
+      color: var(--accent);
+      opacity: 0.85;
+      flex-shrink: 0;
+    }
+    .empty-state .es-icon svg {
+      width: 100%;
+      height: 100%;
+      fill: currentColor;
+    }
+    .empty-state .es-headline {
+      font-family: var(--font-display);
+      font-size: clamp(22px, 3vw, 28px);
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      margin: 0;
+      line-height: 1.2;
+    }
+    .empty-state .es-headline .word {
+      color: var(--accent);
+      font-style: italic;
+    }
+    .empty-state .es-body {
+      max-width: 460px;
+      margin: 0;
+      color: var(--ink-muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .empty-state .es-suggestions {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 4px;
+    }
+    .empty-state .es-suggestion {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 12px;
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+    .empty-state .es-suggestion:hover {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    /* "Suggest this word for our dictionary" CTA — only appears in
+       the not-found state. Visually subordinate to the primary
+       suggestion chips above it (smaller, link-styled, no border)
+       so the user's first action is "try one of these" not "wait,
+       maybe submit a request". After click, swaps to a confirmation
+       state that's locked + tinted green via :disabled. */
+    .empty-state .suggest-word {
+      margin-top: 8px;
+      padding: 8px 14px;
+      background: transparent;
+      border: 1px dashed var(--rule);
+      border-radius: 999px;
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--ink-faint);
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+    }
+    .empty-state .suggest-word .suggest-word-name {
+      color: var(--ink-muted);
+      font-style: italic;
+      margin: 0 2px;
+    }
+    .empty-state .suggest-word:hover:not(:disabled) {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+    .empty-state .suggest-word:hover:not(:disabled) .suggest-word-name {
+      color: var(--accent);
+    }
+    .empty-state .suggest-word:disabled {
+      cursor: default;
+      border-style: solid;
+      border-color: var(--green-border);
+      background: var(--green-tint);
+      color: var(--green-fg);
+    }
+
+    /* ─── Anchor strip (syllable pills under the headline-input) ─── */
+    /* Renders the syllable structure of the queried word, with the
+       stressed anchors highlighted in brand purple and the weak
+       syllables grayed out. Weak syllables are CLICKABLE — tapping one
+       promotes it to the A-anchor and re-runs the search. The strip
+       lives inside .headline-search (below the input), not inside
+       #results, so it stays anchored to the word the user is typing. */
+    #anchorStrip {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scrollbar-width: none;
+      max-width: 100%;
+      padding: 6px 4px 2px;
+      min-height: 26px;
+    }
+    #anchorStrip::-webkit-scrollbar { display: none; }
+    #anchorStrip:empty { padding: 0; min-height: 0; }
+    .syllable {
+      display: inline-block;
+      padding: 5px 10px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      border-radius: 6px;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--ink-muted);
+      cursor: default;
+      transition: background 0.12s, color 0.12s, border-color 0.12s;
+      flex-shrink: 0;
+    }
+    .syllable.weak {
+      color: var(--ink-faint);
+      padding: 5px 7px;
+      cursor: pointer;  /* signals tap-to-promote affordance */
+    }
+    .syllable.weak:hover {
+      color: var(--accent);
+      border-color: var(--accent-soft);
+      background: var(--accent-soft);
+    }
+    .syllable.weak:active { transform: scale(0.94); }
+    .syllable.anchor {
+      color: var(--accent);
+      background: var(--accent-soft);
+      font-weight: 600;
+    }
+    .syllable.anchor.is-override {
+      /* User-promoted A-anchor — solid border + slight outline shadow
+         so people see "this is mine, not the engine's default". */
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(111, 80, 184, 0.12);
+    }
+    .syllable-divider {
+      color: var(--ink-faint);
+      font-size: 11px;
+      margin: 0 1px;
+      flex-shrink: 0;
+    }
+    /* Pronunciation strip (one per pronunciation; multiple for
+       homographs joined with a / divider). Stays inline so multiple
+       pronunciations sit side-by-side instead of stacking. */
+    .pron-strip {
+      display: inline-flex;
+      align-items: center;
+      gap: 1px;
+      flex-shrink: 0;
+    }
+    .pron-divider {
+      color: var(--ink-faint);
+      font-size: 14px;
+      margin: 0 8px;
+      font-weight: 300;
+      flex-shrink: 0;
+    }
+
+    /* ─── Pill row ─── */
+    /* Pills are visible whenever the viewport is too narrow to fit
+       all 5 columns side-by-side. Tapping a pill selects which column
+       is shown — the selected one (or two, for the synthetic A | B
+       combined pill) takes the full available height. Above 980px
+       there's room for everything, so the pill row hides itself and
+       all columns render in a single 5-up grid. */
+    .pill-row {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+      overflow-x: auto;
+      padding: 4px 0 10px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .pill-row::-webkit-scrollbar { display: none; }
+    .pill-row .pill { flex-shrink: 0; }
+    @media (min-width: 980px) {
+      .pill-row { display: none; }
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 7px 14px;
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+      flex-shrink: 0;
+      font-family: var(--font-body);
+    }
+    .pill:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .pill.active {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .pill .count {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--ink-faint);
+    }
+    .pill.active .count { color: var(--accent); }
+
+    /* ─── Column row ─── */
+    /* The column-row is a flex child that takes ALL remaining vertical
+       space inside #results. Its CHILDREN (.column) stretch to fill
+       that height — each column's body scrolls independently.
+
+       Below 980px the pill row is visible and the user picks ONE
+       column at a time (or the synthesized A | B combined view, which
+       renders both side-by-side via the .dual modifier). Above 980px
+       all 5 columns render in a single row — pills hide themselves.
+
+       The single-grid + display:none approach means a selected column
+       always gets the full available width because it's the only
+       grid item participating in layout. */
+    .column-row {
+      flex: 1;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 10px;
+      padding-bottom: 14px;
+    }
+    /* The synthetic "A | B" combined pill puts both A and B columns
+       side-by-side. Forced 50/50 because letting auto-fit do its
+       thing would still allow either column to wrap on really narrow
+       widths. Active at all viewport sizes below 980px. */
+    .column-row.dual { grid-template-columns: 1fr 1fr; gap: 6px; }
+    /* When a pill is selected, the unselected columns are hidden so
+       the selected one (or two) gets the full vertical AND horizontal
+       space. Class is set by JS based on activeColumnId. */
+    .column.is-mobile-hidden { display: none; }
+    /* Above 980px there's room for all 5 columns. The 5-up grid is
+       locked, the pill-driven hide is overridden, and dual collapses
+       back to the same 5-up. Result: pills become decorative (and
+       hidden) and the user just sees everything. */
+    @media (min-width: 980px) {
+      .column-row,
+      .column-row.dual { grid-template-columns: repeat(5, 1fr); gap: 10px; }
+      .column.is-mobile-hidden { display: flex; }
+    }
+    /* Mobile-specific tightening only (the pill-row + column-hiding
+       behavior above already applies because we're below 980px). */
+    @media (max-width: 720px) {
+      .column-row { padding-bottom: 12px; gap: 6px; }
+    }
+
+    .column {
+      display: flex;
+      flex-direction: column;
+      background: var(--surface);
+      border-radius: var(--col-radius);
+      overflow: hidden;
+      height: 100%;
+      min-height: 0;
+      box-shadow: var(--shadow-card);
+    }
+    .column-header {
+      padding: 10px 12px 8px;
+      border-bottom: 1px solid var(--rule-soft);
+    }
+    .column-header .title {
+      font-family: var(--font-display);
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--ink);
+      margin: 0;
+    }
+    .column-header .subtitle {
+      font-size: 12px;
+      color: var(--ink-faint);
+      margin: 2px 0 0;
+    }
+    .column-header .row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+    }
+    .column-header .count {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--ink-faint);
+    }
+    .column-header .count .perfect {
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .column-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 6px 8px 16px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--rule) transparent;
+    }
+    .column-body::-webkit-scrollbar { width: 6px; }
+    .column-body::-webkit-scrollbar-thumb {
+      background: var(--rule);
+      border-radius: 3px;
+    }
+    .column-body::-webkit-scrollbar-track { background: transparent; }
+
+    .chip {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      padding: 8px 12px;
+      margin: 2px 0;
+      font-size: 14px;
+      color: var(--ink);
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+      transition: background 0.1s, color 0.1s;
+      word-wrap: break-word;
+      line-height: 1.3;
+    }
+    .chip:hover {
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+    /* Phrase chips render identically to single-word chips — only
+       the tier classes drive color. (Earlier we muted .chip.phrase
+       to mark them as a distinct category, but that incorrectly
+       dimmed STRICT-tier phrases like "all heart" or "bad start"
+       so they looked like loose rhymes when they're actually
+       perfect.) The .phrase class is preserved as a hook for any
+       future per-phrase styling without affecting color. */
+    .chip.tier-loose { color: var(--ink-muted); }
+    .chip.tier-slant {
+      color: var(--ink-faint);
+    }
+    /* Full-rhyme badge — lowercase "all" pill, right-aligned after the
+       word. Mirrors the iOS app exactly. Reads as a quiet tag rather
+       than a leading attention-grabber. */
+    .chip .full-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 1px 5px;
+      border-radius: 3px;
+      background: var(--green-tint);
+      color: var(--green-fg);
+      border: 1px solid var(--green-border);
+      flex-shrink: 0;
+      margin-left: auto;
+      align-self: center;
+    }
+
+    .empty-col-note {
+      padding: 12px;
+      font-size: 13px;
+      color: var(--ink-faint);
+      font-style: italic;
+      text-align: center;
+    }
+
+    /* ─── Smart Sort modal ─── */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 13, 30, 0.55);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .modal-backdrop[aria-hidden="false"] {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal {
+      background: var(--surface);
+      color: var(--ink);
+      max-width: 460px;
+      width: 100%;
+      border-radius: 24px;
+      padding: 32px 28px 24px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      text-align: center;
+    }
+    .modal .modal-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 18px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+    }
+    .modal .modal-icon svg {
+      width: 32px;
+      height: 32px;
+      fill: currentColor;
+    }
+    .modal h2 {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin: 0 0 8px;
+    }
+    .modal p {
+      color: var(--ink-muted);
+      font-size: 15px;
+      line-height: 1.45;
+      margin: 0 0 22px;
+    }
+    .modal .modal-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .modal .btn-primary {
+      padding: 14px 22px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 999px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: var(--font-body);
+      text-decoration: none;
+      display: inline-block;
+    }
+    .modal .btn-primary:hover { background: var(--accent-strong); }
+    .modal .btn-secondary {
+      padding: 12px 22px;
+      background: transparent;
+      color: var(--ink-muted);
+      border: none;
+      font-size: 14px;
+      cursor: pointer;
+      font-family: var(--font-body);
+    }
+    .modal .btn-secondary:hover { color: var(--ink); }
+
+    /* ─── Footer ─── */
+    /* Hidden in the app-shell layout — attribution moves into the
+       empty-state hint and the AI Picks modal so the entire viewport
+       can be reserved for results. */
+    footer { display: none; }
+
+    /* ─── Loading state ─── */
+    .loading {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--ink-muted);
+      font-size: 14px;
+    }
+    .spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--rule);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ─── Loading splash ─────────────────────────────────────────
+       Covers everything below the topbar while the engine + 2.7MB of
+       dictionary JS load. Renders from the static HTML so it appears
+       in the very first paint — no JS required to show it. JS adds
+       `body.engine-ready` once INDEX is built, which fades the splash
+       out via CSS opacity transition. The splash is then removed from
+       the DOM after the transition completes (cleanup, not strictly
+       needed for layout). */
+    .loading-splash {
+      position: fixed;
+      top: 60px;     /* topbar height (desktop) */
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      z-index: 50;
+      transition: opacity 0.35s ease-out;
+    }
+    body.engine-ready .loading-splash {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .loading-splash-spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid var(--rule);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    .loading-splash-text {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink-muted);
+      letter-spacing: 0.02em;
+    }
+
+    /* ─── Mobile tweaks ─── */
+    /* The app-shell layout (100dvh body flex column) is global, not
+       mobile-only. This block only adjusts the dimensions of the
+       individual controls for touch / small-screen ergonomics. */
+    @media (max-width: 720px) {
+      main {
+        padding: 0 12px;
+      }
+      .topbar {
+        padding: 0 12px;
+        height: 56px;
+        max-width: none;
+        margin: 0;
+      }
+      .loading-splash { top: 56px; }
+      .wordmark svg { height: 22px; }
+      .wordmark.rhymegold { gap: 6px; }
+      .wordmark-chest { width: 22px; height: 22px; }
+      .wordmark-text { font-size: 16px; }
+      .wordmark-by { margin-left: 8px; font-size: 8px; letter-spacing: 0.12em; }
+      .wordmark .wordmark-lg { height: 12px; }
+      .wordmark .meta {
+        font-size: 9px;
+        padding: 2px 6px;
+        margin-left: 8px;
+      }
+      /* Drop the back-link + theme toggle on mobile — logo doubles
+         as the home affordance and phones almost always follow OS
+         appearance, so screen real estate stays for the Download
+         App pill. */
+      .topbar-nav .nav-link { display: none; }
+      .topbar-nav .theme-toggle { display: none; }
+      .topbar-nav { gap: 0; }
+      .get-app-btn { padding: 7px 14px; font-size: 12px; }
+
+      /* Headline-input shrinks but stays large enough to BLOCK iOS
+         Safari's auto-zoom-on-focus behavior (≥16px is the threshold).
+         clamp lower bound is 24px — tuned so 'Type a word/phrase…'
+         (the longest placeholder) fits without truncation at 320px
+         viewport width while still feeling like a hero headline. */
+      .headline-search {
+        margin: 10px auto 0;
+        padding: 0;
+      }
+      .headline-input {
+        font-size: clamp(24px, 7vw, 36px);
+        /* Slightly less side padding on mobile (36px instead of 44px)
+           so the placeholder still has comfortable room at narrow
+           viewports while still clearing the (slightly smaller) ×
+           button. */
+        padding: 6px 36px 8px 36px;
+      }
+      .headline-clear {
+        width: 36px;
+        height: 36px;
+        font-size: 26px;
+      }
+      .headline-status {
+        margin-top: 4px;
+        font-size: 12px;
+      }
+
+      .options-row {
+        margin: 12px auto 0;
+        gap: 14px;
+      }
+      .opt-toggle { font-size: 12px; }
+      .smart-sort-btn { padding: 5px 11px; font-size: 12px; }
+
+      /* #results: pill row + column row. Word header is no longer a
+         separate region (anchor strip moved up under the headline-input).
+         Pill row already has the correct base styles in the global
+         scope; only tighten its padding here for the smaller viewport. */
+      #results { padding-top: 10px; }
+      .pill-row { padding: 4px 0 8px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a href="/rhymes/index2.html" class="wordmark rhymegold" aria-label="RhymeGold home">
+      <!-- Treasure chest icon — represents finding the gold (perfect rhyme)
+           buried in the heap (135K-word dictionary). currentColor = brand
+           gold, with a slightly brighter shade in dark mode for contrast. -->
+      <svg class="wordmark-chest" viewBox="0 0 32 28" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <!-- Lid (curved top half) -->
+        <path d="M4 13 Q4 4 16 4 Q28 4 28 13 Z"/>
+        <!-- Body (flat-bottomed rectangle) -->
+        <path d="M3 13 h26 v11 a1.5 1.5 0 0 1 -1.5 1.5 h-23 a1.5 1.5 0 0 1 -1.5 -1.5 z"/>
+        <!-- Lid divider line (page-bg color = appears carved) -->
+        <rect x="3" y="12.7" width="26" height="0.6" fill="var(--bg)"/>
+        <!-- Lock plate (page-bg fill — looks set into the front) -->
+        <rect x="13" y="14.5" width="6" height="6" rx="0.6" fill="var(--bg)"/>
+        <!-- Keyhole (currentColor — contrasts against the lock plate) -->
+        <circle cx="16" cy="16.5" r="0.9" fill="currentColor"/>
+        <rect x="15.4" y="16.5" width="1.2" height="2.6" fill="currentColor"/>
+      </svg>
+      <span class="wordmark-text">RhymeGold</span>
+      <span class="wordmark-by">BY</span>
+      <!-- Lyric Genie logo at attribution scale — visually subordinate
+           to RhymeGold but still clickable as a brand attribution. -->
+      <svg class="wordmark-lg" viewBox="0 0 115.87 20.94" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M25.29,6.43v6.06h5.61v2.01h-8.14V6.43h2.53Z"/>
+        <path d="M32.84,11.38l-4.32-4.95h3.14l2.51,2.97,2.55-2.97h2.85l-4.2,4.95v3.12h-2.53v-3.12Z"/>
+        <path d="M42.48,14.5h-2.53V6.43h6.51c2.69,0,3.5.93,3.5,2.09v.13c0,1.16-.97,1.59-1.5,1.77.82.24,1.53.81,1.53,1.85v1.18c0,.65.08.86.15.99v.05h-2.57c-.08-.1-.12-.22-.12-.51v-.93c0-.99-.43-1.42-1.68-1.42h-3.3v2.86ZM42.48,9.85h3.83c.73,0,1.02-.35,1.02-.79h0c0-.43-.28-.79-1.02-.79h-3.83v1.58Z"/>
+        <path d="M53.53,14.5h-2.53V6.43h2.53v8.07Z"/>
+        <path d="M59.85,14.65c-4.68,0-5.4-2.61-5.4-4.05v-.31c0-1.46.63-3.99,5.4-3.99h.45c4.68,0,5.4,2.23,5.4,3.18v.12h-2.68c-.06-.22-.39-1.35-2.95-1.35-2.42,0-2.97,1.08-2.97,2.09v.13c0,.95.64,2.21,2.99,2.21,2.61,0,2.88-1.25,2.94-1.43h2.68v.12c0,1.02-.8,3.28-5.41,3.28h-.45Z"/>
+        <path d="M74.99,14.65c-4.37,0-5.38-2.44-5.38-4.06v-.3c0-1.57.82-3.99,5.47-3.99h.47c4.51,0,5.3,1.96,5.35,3.06h0s-2.69.01-2.69.01c-.07-.18-.36-1.15-2.88-1.15s-3.07,1.06-3.07,2.18v.12c0,1.05.82,2.17,3.05,2.17,2.4,0,3.12-.92,3.12-1.15v-.02h-3.17v-1.53h5.68v4.52h-1.52c-.03-.29-.18-.92-.33-1.26-.35.4-1.39,1.4-3.88,1.4h-.23Z"/>
+        <path d="M90.61,6.43v1.83h-6.01v1.19h5.87v1.84h-5.87v1.32h6.12v1.88h-8.61V6.43h8.51Z"/>
+        <path d="M94.6,6.43l5.15,5.08v-5.08h2.5v8.07h-2.5l-5.48-5.35v5.35h-2.5V6.43h2.82Z"/>
+        <path d="M106.02,14.5h-2.53V6.43h2.53v8.07Z"/>
+        <path d="M115.76,6.43v1.83h-6.01v1.19h5.87v1.84h-5.87v1.32h6.12v1.88h-8.61V6.43h8.51Z"/>
+        <path d="M8.4,0c-1.43,0-2.6.85-2.6,1.51,0,.39.13.73.67.95.18-.21.86-.93,1.93-.93,1.07,0,1.75.73,1.93.93.54-.22.67-.57.67-.95,0-.67-1.16-1.51-2.6-1.51ZM8.4,2.1c-.93,0-1.53.77-1.53.77-.11.18-.17.38-.17.59,0,.76.76,1.37,1.69,1.37.94,0,1.69-.61,1.69-1.37,0-.2-.06-.41-.17-.59,0,0-.6-.77-1.53-.77ZM8.4,5.25c-3.73,0-6.76,1.35-6.76,3.01,0,.98,1.06,1.37,2.69,1.53,2.4.15,3.36-.88,5.21-1.83,0,0-.55-.15-1.93-.15s-1.93.15-1.93.15c0,0,.86-.57,2.87-.57s2.87.57,2.87.57c-.51.04-1.01.21-1.48.43-.34.16-.67.36-1,.56,1.06.68,2.53.89,3.53.84,1.63-.16,2.69-.55,2.69-1.53,0-1.66-3.03-3.01-6.76-3.01ZM8.34,9.33c-1.27.68-2.58,1.18-4.01,1.03.08.48.22.95.41,1.4.37.87.94,1.63,1.64,2.27.67.11,1.66.12,3.01-.25,1.4-.37,2.26-.9,2.79-1.34-.09-.22-.15-.44-.19-.68-.04-.32-.02-.65.08-.96.05-.16.12-.31.22-.45-1.47.13-2.78-.22-3.95-1.03h0ZM12.78,13.44c-.66.51-1.64,1.07-3.08,1.45-.6.16-1.14.26-1.63.3.41.21.84.38,1.28.51.72.21,1.46.33,2.16.59.35.13.69.31.98.54.29.23.54.52.7.86.21.46.24,1,.07,1.48-.16.48-.52.89-.97,1.12-.45.23-.99.28-1.47.14-.12-.03-.23-.08-.34-.14-.05-.02-.07,0-.02.04.33.24.71.41,1.1.51.77.19,1.6.08,2.3-.29.7-.37,1.24-1.01,1.51-1.76.26-.74.24-1.59-.06-2.31-.25-.6-.67-1.11-1.12-1.57-.45-.47-.94-.9-1.34-1.4-.02-.02-.04-.05-.05-.07Z"/>
+        <path d="M.83,12.16l-.02,1.66c-.53-.11-.99.41-.75.92.27.57,1.13.44,1.23-.18l.02-2.03,1.47-.38v1.35c-.56-.11-1.01.43-.75.94.28.54,1.09.42,1.22-.17l.03-2.76h-.02s-2.43.63-2.43.63Z"/>
+        <path d="M16.41,2.61v-.04l-.17-.54-1.1.3v1.65c-.74-.16-1.32.68-.83,1.29.45.58,1.35.3,1.44-.41v-2.06s.67-.19.67-.19Z"/>
+        <path d="M18.85,5.54l-.18-.72-1.46.36v2.16c-1.08-.28-1.79,1.12-.9,1.82.65.51,1.6.08,1.68-.74v-2.62s.85-.26.85-.26Z"/>
+      </svg>
+    </a>
+    <nav class="topbar-nav">
+      <!-- Theme toggle: defaults to OS preference; click overrides
+           and persists in localStorage. Hidden on mobile (≤720px)
+           via the @media block in the stylesheet. -->
+      <button type="button" id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle light/dark mode">
+        <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v2"></path>
+          <path d="M12 20v2"></path>
+          <path d="m4.93 4.93 1.41 1.41"></path>
+          <path d="m17.66 17.66 1.41 1.41"></path>
+          <path d="M2 12h2"></path>
+          <path d="M20 12h2"></path>
+          <path d="m6.34 17.66-1.41 1.41"></path>
+          <path d="m19.07 4.93-1.41 1.41"></path>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+        </svg>
+      </button>
+      <a href="https://lyricgenie.app" class="nav-link">Learn more</a>
+      <a href="https://apps.apple.com/us/app/lyric-genie/id6739787614" class="get-app-btn" id="getAppBtn">
+        Download App
+      </a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ─── Headline search ───
+         The input IS the displayed word. No separate H1 / no
+         duplicate `.word` block above the columns. Live debounced
+         search fires as the user types (200ms after last keystroke);
+         pressing Enter flushes immediately. The anchor strip below
+         shows the syllable structure of the queried word — weak
+         syllables are clickable to promote them to the A-anchor. -->
+    <section class="headline-search">
+      <form id="searchForm" autocomplete="off" onsubmit="return false;">
+        <input
+          id="searchInput"
+          class="headline-input"
+          type="text"
+          inputmode="search"
+          autocomplete="off"
+          autocapitalize="off"
+          autocorrect="off"
+          spellcheck="false"
+          placeholder="Type a word or phrase…"
+          aria-label="Search for rhymes"
+          autofocus
+        />
+        <!-- Clear button: subtle "×" at the right edge. Hidden by
+             default (opacity:0 + pointer-events:none); JS toggles
+             .is-visible whenever the input has text. -->
+        <button
+          type="button"
+          id="searchClear"
+          class="headline-clear"
+          aria-label="Clear search"
+          tabindex="-1"
+        >×</button>
+      </form>
+      <!-- Anchor strip + override-status sit RIGHT under the input so
+           they read as live feedback on whatever the user typed —
+           "this is the word and this is how the engine parses it".
+           Tap-to-promote on a weak syllable feels grounded to the
+           input above. The toolbar (Slant + AI Picks) sits below this
+           cluster as occasional refinements. -->
+      <div id="anchorStrip" aria-live="polite"></div>
+      <div id="headlineStatus" class="headline-status" aria-live="polite"></div>
+    </section>
+
+    <!-- Slant + AI Picks: standalone toolbar centered under the
+         headline + syllable cluster. -->
+    <div class="options-row">
+      <label class="opt-toggle">
+        <input type="checkbox" id="slantMode" />
+        <span>Include Slant Rhymes</span>
+      </label>
+      <button class="smart-sort-btn" id="smartSortBtn" type="button" title="AI Picks: rhymes that fit your song's mood + lyrics">
+        <!-- SF Symbol "sparkles" inlined; fills with currentColor so
+             brand-purple inherits cleanly in both light + dark modes. -->
+        <svg class="star" viewBox="0 0 463 620" aria-hidden="true">
+          <path d="M217.4 121.5c3.1 0 4.7-2 5.3-4.9 6.8-40 6.2-43.4 50.7-50.8 2.9-.4 4.7-2.2 4.7-5.1s-1.8-4.9-4.7-5.3c-44.5-7.4-44-10.7-50.7-50.7C222 1.8 220.5 0 217.4 0c-3.1 0-4.7 1.8-5.3 4.7-6.8 40-6.2 43.4-50.8 50.8-2.9.4-4.7 2.2-4.7 5.3s1.8 4.9 4.7 5.3c44.5 7.4 44 10.7 50.8 50.7.6 2.9 2.2 4.9 5.3 4.9zM94.5 293.6c3.9 0 6.8-2.7 7.4-6.6 9.4-67.6 11-67 80.5-80.3 3.7-.8 6.6-3.3 6.6-7.4s-3-6.8-6.6-7.4c-69.5-10.5-71.3-11.9-80.5-80.1-.6-4.1-3.5-6.8-7.4-6.8s-6.8 2.7-7.4 7c-8.8 67.4-11.3 66.6-80.5 79.9-3.7.8-6.6 3.3-6.6 7.4 0 4.3 2.9 6.6 7.4 7.4 68.8 11.5 71 12.5 79.7 79.9.6 4.3 3.5 7 7.4 7zM265.4 573.6c6.1 0 10.5-4.1 11.4-10.4 17.2-142 35.5-160.7 175.2-175.4 6.4-.6 10.7-5.1 10.7-11.1s-4.3-10.7-10.7-11.3c-139.6-14.6-158-33.4-175.2-175.4-.8-6-5.3-10.3-11.4-10.3s-10.3 4.3-11.3 10.3c-17.2 142-35.5 160.7-175.2 175.4-6.4.6-10.7 5.1-10.7 11.1s4.3 10.5 10.7 11.1c139.3 18 156.9 33.6 175.2 175.4 1 6.3 4.4 10.6 10.5 10.6z"/>
+        </svg><span class="btn-label"> AI Picks</span>
+      </button>
+    </div>
+
+    <div id="results">
+      <!-- Initial empty-state is populated by renderEmpty() on JS load
+           so all three states (initial / not-found / results) share the
+           same .empty-state markup + flex-centered layout. -->
+    </div>
+  </main>
+
+  <!-- Loading splash — covers everything below the topbar while the
+       2.7MB of dictionary + engine JS loads. Pure CSS / no JS needed
+       to display. The main inline script at the bottom adds the
+       `engine-ready` class to <body> once INDEX is built; CSS fades
+       this overlay out via opacity. JS removes the element from the
+       DOM after the transition for cleanup. -->
+  <div id="loadingSplash" class="loading-splash" aria-hidden="true">
+    <div class="loading-splash-spinner"></div>
+    <div class="loading-splash-text">Loading rhyme engine…</div>
+  </div>
+
+  <!-- AI Picks upsell modal -->
+  <div class="modal-backdrop" id="smartSortModal" aria-hidden="true" role="dialog">
+    <div class="modal">
+      <!-- SF Symbol "sparkle" (single 4-pointed star) — inlined so
+           the icon ships with the page and inherits brand-accent
+           color via fill:currentColor. Pairs with the multi-sparkle
+           on the AI Picks button without duplicating the same shape. -->
+      <div class="modal-icon">
+        <svg viewBox="0 0 490.82 490.82" aria-hidden="true">
+          <path d="M245.508 490.43C254.492 490.43 261.328 484.18 262.695 474.805C283.594 301.758 305.078 279.883 474.609 262.5C483.984 261.523 490.82 254.297 490.82 245.312C490.82 236.133 483.984 228.906 474.609 228.125C305.078 210.547 283.594 188.867 262.695 15.8203C261.328 6.25 254.492 0 245.508 0C236.719 0 229.688 6.25 228.125 15.8203C207.422 188.867 185.742 210.547 16.4062 228.125C6.83594 228.906 0 236.133 0 245.312C0 254.297 6.83594 261.328 16.4062 262.5C185.352 284.18 205.859 301.562 228.125 474.805C229.688 484.18 236.719 490.43 245.508 490.43Z"/>
+        </svg>
+      </div>
+      <h2>AI Picks is in the app</h2>
+      <p>AI Picks highlights the rhymes that fit YOUR song's mood, theme, and lyrics so far. It's free in the Lyric Genie iOS app.</p>
+      <div class="modal-btns">
+        <a href="https://apps.apple.com/us/app/lyric-genie/id6739787614" class="btn-primary" id="modalGetApp">Get Lyric Genie — Free</a>
+        <button class="btn-secondary" id="modalClose">Maybe later</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <strong>Lyric Genie</strong> · Real craft, not AI slop.<br>
+    Phonetic data from the
+    <a href="https://github.com/cmusphinx/cmudict" target="_blank" rel="noopener">CMU Pronouncing Dictionary</a>.
+    Phrase corpus mined from a 5,646-song Genius lyric set (statistics only — no lyrics persisted).
+    Idioms via <a href="https://en.wiktionary.org/wiki/Category:English_idioms" target="_blank" rel="noopener">Wiktionary</a>.
+    <br>
+    <a href="https://lyricgenie.app">lyricgenie.app</a>
+  </footer>
+
+  <!-- ─── Instant initial-state render ─────────────────────────────
+       Runs synchronously BEFORE the ~2.7MB of engine + dictionary
+       scripts below. Renders the "OR TRY:" suggestion chips into
+       #results immediately so the page never appears blank waiting
+       for the dictionary to download + RhymeEngine.buildIndex() to
+       run (which together can take 1-2s on a typical connection).
+       The main inline script below reuses window.__STARTER_SUGGESTIONS
+       so the 80-entry pool isn't duplicated. Click handlers attach
+       once the engine is ready (any clicks before then are just
+       ignored, but in practice no user clicks within the first
+       second of page load). -->
+  <script>
+    window.__STARTER_SUGGESTIONS = [
+      'remember','midnight','shadow','forever','horizon',
+      'hurricane','tomorrow','silhouette','promises','photograph',
+      'lonely','broken','whisper','summer','mystery','yesterday',
+      'electric','wildfire','memory','everlasting','melancholy',
+      'paradise','neon','velvet','porcelain','satellite',
+      'replay','getaway','heartbreak','goodbye','sunshine','airplane',
+      'downtown','skyline','rhapsody','reverie','wanderer','sympathy',
+      'heartache','wonderland','passenger','prisoner','midsummer',
+      'heaven','aftermath','rainfall','heartbeat',
+      'night light','city lights','moonlight','broken heart','old soul',
+      'last call','dead end','highway','ocean blue','silver screen',
+      'fading fast','new wave','burning bridges','raining diamonds',
+      'stolen moments','summer rain','midnight train','honey moon',
+      'chasing dreams',
+      'in plain sight','under the sun','end of the road','fire in the sky',
+      'the long way home','nothing to lose','back to you','forever young',
+      'out of time','kiss me slowly','tale as old as time','love of my life',
+      'house of cards','ghost of you','edge of seventeen'
+    ];
+    (function renderInitialChipsInstantly() {
+      const arr = window.__STARTER_SUGGESTIONS.slice();
+      // Partial Fisher-Yates shuffle, last 3 = our random picks
+      for (let i = arr.length - 1; i > arr.length - 4; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      const picks = arr.slice(arr.length - 3);
+      const esc = s => String(s)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+      const chips = picks.map(s =>
+        `<button type="button" class="es-suggestion" data-q="${esc(s)}">${esc(s)}</button>`
+      ).join('');
+      const resultsEl = document.getElementById('results');
+      if (resultsEl) {
+        resultsEl.innerHTML =
+          '<div class="empty-state initial">' +
+            '<p class="es-label">Or try:</p>' +
+            '<div class="es-suggestions" id="esSuggestions">' + chips + '</div>' +
+          '</div>';
+      }
+    })();
+
+    // ─── Early-bird interaction handlers ─────────────────────────
+    // The heavy engine + dictionary scripts below take ~2-12s to
+    // download + index on first visit. The page LOOKS ready before
+    // then (topbar + headline + chips all rendered above), so users
+    // may type or tap a chip before the engine is wired up. Without
+    // these handlers their interaction would silently fail.
+    //
+    // What we do here:
+    //   • Track the typed value (input event) so the main script can
+    //     pick it up and run the search the moment the engine is ready.
+    //   • Catch chip taps via event delegation, copy the chip's word
+    //     into the input, dispatch the input event so the same code
+    //     path covers both typing AND chip taps.
+    //   • Show a subtle "Loading rhyme engine…" hint in the status
+    //     row IF (and only if) the user has actually interacted —
+    //     no chrome on the empty state for users who don't try to
+    //     interact in the first second.
+    //
+    // The main inline script below clears the hint and runs whatever
+    // pending value is in the input as soon as engine is ready.
+    // ─── Engine load tracking ──────────────────────────────────
+    // The loading splash (id="loadingSplash") is rendered as static
+    // HTML below </main> so it appears in the very first paint —
+    // no JS required. The early-bird below just captures interactions
+    // (typing or chip clicks) that happen before the engine is ready,
+    // so the main script can flush them once INDEX is built.
+    window.__engineReady = false;
+    window.__warmupStart = Date.now();
+    (function wireEarlyBird() {
+      const inputEl = document.getElementById('searchInput');
+      if (!inputEl) return;
+
+      // Delegated chip-click for taps that land during load (note:
+      // the splash overlays main with pointer-events still active,
+      // so chip clicks under the splash actually wouldn't reach the
+      // chips. This is mostly a defensive no-op while the splash is
+      // shown, but kept for future-proofing if the splash UI changes).
+      document.addEventListener('click', (e) => {
+        if (window.__engineReady) return;
+        const sug = e.target.closest('.es-suggestion');
+        if (!sug) return;
+        const q = sug.getAttribute('data-q') || sug.textContent.trim();
+        inputEl.value = q;
+      });
+    })();
+  </script>
+
+  <!-- Engine + dictionaries -->
+  <script src="engine.js?v=12"></script>
+  <script src="phrases-mined.js?v=11"></script>
+  <script src="phrases-wiktionary.js?v=11"></script>
+  <script src="phrases-idioms.js?v=11"></script>
+  <script src="phrases.js?v=13"></script>
+  <script src="dictionary.js?v=12"></script>
+
+  <script>
+    // ─── Engine setup ───
+    const INDEX = window.RhymeEngine.buildIndex(window.DICTIONARY);
+
+    const form = document.getElementById('searchForm');
+    const input = document.getElementById('searchInput');
+    const clearBtn = document.getElementById('searchClear');
+    const resultsEl = document.getElementById('results');
+    const anchorStripEl = document.getElementById('anchorStrip');
+    const headlineStatusEl = document.getElementById('headlineStatus');
+    const slantToggle = document.getElementById('slantMode');
+    const smartSortBtn = document.getElementById('smartSortBtn');
+    const smartSortModal = document.getElementById('smartSortModal');
+    const modalCloseBtn = document.getElementById('modalClose');
+    const themeToggleBtn = document.getElementById('themeToggle');
+
+    // ─── Theme toggle ────────────────────────────────────────────
+    // The inline <head> script applied any saved override to <html>
+    // before CSS resolved (no flash). Here we just wire the click:
+    // flip the EFFECTIVE current theme and persist the choice. The
+    // theme-color meta tags below are also updated so the iOS Safari
+    // address bar matches the new theme.
+    function getEffectiveTheme() {
+      const t = document.documentElement.getAttribute('data-theme');
+      if (t === 'light' || t === 'dark') return t;
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    function applyTheme(t) {
+      document.documentElement.setAttribute('data-theme', t);
+      try { localStorage.setItem('lg-theme', t); } catch (_) { /* ignore */ }
+      // Update the address-bar tint on iOS Safari to match the theme.
+      const themeColor = t === 'dark' ? '#1A1322' : '#F4EFD8';
+      document.querySelectorAll('meta[name="theme-color"]').forEach(m => {
+        // Strip the media attribute so our explicit value wins
+        // regardless of OS preference.
+        m.removeAttribute('media');
+        m.setAttribute('content', themeColor);
+      });
+    }
+    if (themeToggleBtn) {
+      themeToggleBtn.addEventListener('click', () => {
+        applyTheme(getEffectiveTheme() === 'dark' ? 'light' : 'dark');
+      });
+    }
+
+    let activeColumnId = null;     // which pill is active on mobile (null = first by default)
+    let lastQuery = '';            // most recent query string actually searched
+    let lastResult = null;         // most recent successful result (used by override re-search)
+    let anchorOverride = null;     // { aSyllIdx } or null — user-promoted A-anchor (syllable index from start; B is always line-ending)
+    let searchDebounceTimer = null;
+
+    // ─── Responsive placeholder ──────────────────────────────────
+    // Desktop has room for "Type a word or phrase…" (the canonical
+    // copy + default in the HTML). Below 720px we swap to the
+    // shorter "Type a word/phrase…" so the placeholder fits the
+    // smaller headline-input width without truncation. Listening to
+    // the media query handles orientation changes + window resizing.
+    const PLACEHOLDER_DESKTOP = 'Type a word or phrase…';
+    const PLACEHOLDER_MOBILE = 'Type a word/phrase…';
+    const mobilePlaceholderMQ = window.matchMedia('(max-width: 720px)');
+    const syncPlaceholder = () => {
+      input.placeholder = mobilePlaceholderMQ.matches ? PLACEHOLDER_MOBILE : PLACEHOLDER_DESKTOP;
+    };
+    syncPlaceholder();
+    mobilePlaceholderMQ.addEventListener('change', syncPlaceholder);
+
+    // ─── Event wiring ───
+    // Live debounced search on every keystroke. Switching the search
+    // word ALWAYS clears any anchor override (the override only makes
+    // sense for the word the user picked it on). The clear (×) button
+    // visibility tracks input.value.length — visible only when there's
+    // something to clear.
+    const updateClearBtn = () => {
+      clearBtn.classList.toggle('is-visible', input.value.length > 0);
+    };
+    input.addEventListener('input', () => {
+      clearTimeout(searchDebounceTimer);
+      anchorOverride = null;
+      updateClearBtn();
+      const q = input.value.trim();
+      if (!q) {
+        renderEmpty();
+        return;
+      }
+      searchDebounceTimer = setTimeout(() => runSearch(q), 200);
+    });
+    // Clear button: empty the input + render the initial state +
+    // refocus so the user can immediately start typing again.
+    clearBtn.addEventListener('click', () => {
+      input.value = '';
+      anchorOverride = null;
+      clearTimeout(searchDebounceTimer);
+      updateClearBtn();
+      renderEmpty();
+      input.focus();
+    });
+    // Sync once on load in case the browser restored a value (e.g.
+    // after a reload with form-restore enabled).
+    updateClearBtn();
+    // Pressing Enter flushes immediately (skips the debounce window).
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      clearTimeout(searchDebounceTimer);
+      anchorOverride = null;
+      const q = input.value.trim();
+      if (q) runSearch(q);
+      input.blur();  // dismiss the iOS keyboard so results are visible
+    });
+    // Slant toggle re-runs the search with the current option state.
+    // Read the input directly (not lastQuery) so toggling with an
+    // empty input is a no-op and toggling with a typed word doesn't
+    // resurrect a stale search from earlier in the session. Anchor
+    // override is preserved — slant is orthogonal to anchor choice.
+    slantToggle.addEventListener('change', () => {
+      const q = input.value.trim();
+      if (!q) return;
+      runSearch(q);
+    });
+    smartSortBtn.addEventListener('click', openSmartSortModal);
+    modalCloseBtn.addEventListener('click', closeSmartSortModal);
+    smartSortModal.addEventListener('click', (e) => {
+      if (e.target === smartSortModal) closeSmartSortModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && smartSortModal.getAttribute('aria-hidden') === 'false') {
+        closeSmartSortModal();
+      }
+    });
+
+    function openSmartSortModal() {
+      smartSortModal.setAttribute('aria-hidden', 'false');
+      // Don't clobber body overflow on open — body is already overflow:hidden
+      // for the app-shell layout. The original toggle was harmless on the
+      // old (scrollable) layout but unnecessary now.
+    }
+    function closeSmartSortModal() {
+      smartSortModal.setAttribute('aria-hidden', 'true');
+    }
+
+    // ─── Search + render ───
+    function runSearch(query) {
+      lastQuery = query;
+      // NOTE: activeColumnId is intentionally NOT reset here.
+      // Songwriters tend to dwell on a particular shape (e.g. the
+      // 'A·B' / one-weak-between column) while iterating across many
+      // query words — clearing the pill on every search makes them
+      // re-tap the same pill repeatedly. render() validates that the
+      // remembered pill still exists in the new result and falls
+      // back to a default only if it doesn't.
+      const opts = {
+        mustEndWithB: true,
+        slant: slantToggle.checked
+      };
+      if (anchorOverride) {
+        opts.overrideASyllableIndex = anchorOverride.aSyllIdx;
+      }
+      const result = window.RhymeEngine.query(query, window.DICTIONARY, INDEX, opts);
+      render(result);
+    }
+
+    // Closed-book SF Symbol (character.book.closed.fill) — inlined so
+    // the empty-state illustrations require no external asset fetch.
+    // Pairs naturally with "we don't have that in our dictionary".
+    const BOOK_ICON_SVG = `<svg viewBox="0 0 419.336 538.477" aria-hidden="true">
+      <path d="M74.0234 538.477L402.148 538.477C411.719 538.477 419.336 530.859 419.336 521.094C419.336 513.867 414.258 507.227 407.617 504.688C374.414 489.453 367.188 447.656 399.023 414.648C408.789 404.688 419.336 391.406 419.336 366.992L419.336 76.3672C419.336 25.9766 394.141 0.390625 344.141 0.390625L75.1953 0.390625C25.1953 0.390625 0 25.7812 0 76.3672L0 464.648C0 513.281 25.3906 538.477 74.0234 538.477ZM75.7812 503.906C49.2188 503.906 34.5703 489.453 34.5703 464.258C34.5703 440.43 51.1719 425.391 77.5391 425.391L339.844 425.391C344.727 425.391 348.828 424.805 352.734 423.828C338.867 451.953 341.797 481.641 358.984 503.906ZM67.5781 389.648C60.7422 389.648 54.8828 383.984 54.8828 376.953L54.8828 49.8047C54.8828 42.5781 60.7422 36.9141 67.5781 36.9141C74.6094 36.9141 80.4688 42.5781 80.4688 49.8047L80.4688 376.953C80.4688 383.984 74.6094 389.648 67.5781 389.648ZM165.039 311.719C155.859 311.719 150 306.25 150 298.047C150 294.922 150.391 292.188 152.148 287.891L218.555 110.156C222.461 99.8047 229.688 94.5312 240.43 94.5312C251.367 94.5312 258.789 99.8047 262.695 110.156L329.102 287.891C330.859 292.188 331.25 294.922 331.25 298.242C331.25 306.25 325.391 311.719 316.406 311.719C308.984 311.719 304.102 308.398 300.781 299.023L282.617 247.266L198.633 247.266L180.273 299.023C177.148 308.594 172.266 311.719 165.039 311.719ZM206.836 222.656L274.414 222.656L241.602 129.883L239.648 129.883Z"/>
+    </svg>`;
+
+    // Sparkles SF Symbol (decorative for the initial empty state).
+    const SPARKLES_ICON_SVG = `<svg viewBox="0 0 463 620" aria-hidden="true">
+      <path d="M217.4 121.5c3.1 0 4.7-2 5.3-4.9 6.8-40 6.2-43.4 50.7-50.8 2.9-.4 4.7-2.2 4.7-5.1s-1.8-4.9-4.7-5.3c-44.5-7.4-44-10.7-50.7-50.7C222 1.8 220.5 0 217.4 0c-3.1 0-4.7 1.8-5.3 4.7-6.8 40-6.2 43.4-50.8 50.8-2.9.4-4.7 2.2-4.7 5.3s1.8 4.9 4.7 5.3c44.5 7.4 44 10.7 50.8 50.7.6 2.9 2.2 4.9 5.3 4.9zM94.5 293.6c3.9 0 6.8-2.7 7.4-6.6 9.4-67.6 11-67 80.5-80.3 3.7-.8 6.6-3.3 6.6-7.4s-3-6.8-6.6-7.4c-69.5-10.5-71.3-11.9-80.5-80.1-.6-4.1-3.5-6.8-7.4-6.8s-6.8 2.7-7.4 7c-8.8 67.4-11.3 66.6-80.5 79.9-3.7.8-6.6 3.3-6.6 7.4 0 4.3 2.9 6.6 7.4 7.4 68.8 11.5 71 12.5 79.7 79.9.6 4.3 3.5 7 7.4 7zM265.4 573.6c6.1 0 10.5-4.1 11.4-10.4 17.2-142 35.5-160.7 175.2-175.4 6.4-.6 10.7-5.1 10.7-11.1s-4.3-10.7-10.7-11.3c-139.6-14.6-158-33.4-175.2-175.4-.8-6-5.3-10.3-11.4-10.3s-10.3 4.3-11.3 10.3c-17.2 142-35.5 160.7-175.2 175.4-6.4.6-10.7 5.1-10.7 11.1s4.3 10.5 10.7 11.1c139.3 18 156.9 33.6 175.2 175.4 1 6.3 4.4 10.6 10.5 10.6z"/>
+    </svg>`;
+
+    // ─── Curated suggestion pool ──────────────────────────────────
+    // Hand-picked for breadth + songwriter resonance. Mix of single
+    // multi-syllable words, 2-word phrases, and longer phrases.
+    // Every entry has been validated against the dictionary so users
+    // never get a not-found from a suggestion.
+    //
+    // The pool itself is defined in the small inline <script> ABOVE
+    // the engine/dictionary <script> tags (window.__STARTER_SUGGESTIONS),
+    // so the initial chips render INSTANTLY before the heavy 2.7MB
+    // of dictionary JS loads. We just alias it here for the rest of
+    // the app. Subsequent renderEmpty() calls (when the user clears
+    // the input) re-pick from the same pool.
+    const STARTER_SUGGESTIONS = window.__STARTER_SUGGESTIONS;
+
+    function pickRandomSuggestions(n) {
+      // Fisher-Yates partial shuffle: O(n) and produces n distinct
+      // picks even when STARTER_SUGGESTIONS is much larger than n.
+      const arr = STARTER_SUGGESTIONS.slice();
+      for (let i = arr.length - 1; i > arr.length - 1 - n; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr.slice(arr.length - n);
+    }
+
+    function renderEmpty() {
+      lastResult = null;
+      anchorStripEl.innerHTML = '';
+      headlineStatusEl.innerHTML = '';
+      // Minimal initial state: just a "Try:" label + 3 random
+      // suggestion chips. The giant headline-input above already
+      // says "Type a word or phrase…" — repeating that here would
+      // just compete for visual attention. Repeat visitors see a
+      // different set of suggestions on each load.
+      const picks = pickRandomSuggestions(3);
+      const chips = picks.map(s =>
+        `<button type="button" class="es-suggestion" data-q="${escapeHtml(s)}">${escapeHtml(s)}</button>`
+      ).join('');
+      resultsEl.innerHTML = `
+        <div class="empty-state initial">
+          <p class="es-label">Or try:</p>
+          <div class="es-suggestions" id="esSuggestions">
+            ${chips}
+          </div>
+        </div>
+      `;
+      wireSuggestionClicks();
+    }
+
+    // Track which words have already been requested so the user
+    // can't double-submit the same word from the same session.
+    const requestedWords = new Set();
+
+    function renderNotFound(result) {
+      // Clear the anchor strip — it would still show the LAST successful
+      // word's syllables, which is misleading next to a "not found"
+      // message about a different word.
+      anchorStripEl.innerHTML = '';
+      headlineStatusEl.innerHTML = '';
+      lastResult = null;
+
+      const word = escapeHtml(result.word);
+      const isPhrase = result.reason === 'unknown_word_in_phrase';
+      const headline = isPhrase
+        ? `Hmm, one of those words is missing`
+        : `Hmm, no rhymes for <span class="word">${word}</span> yet`;
+      const body = isPhrase
+        ? `“${word}” contains a word we don't recognize. Try replacing it with a more common word — our dictionary has 135K English words and phrases.`
+        : `It might be a typo, a proper noun we haven't catalogued, or a regional/slang form. Try a different spelling, an inflected form, or one of these:`;
+
+      // "Suggest" CTA: explicit user-driven submission. Shown for
+      // BOTH single-word and phrase misses — a phrase miss might mean
+      // the user wants to flag the unknown word inside the phrase OR
+      // the phrase itself as an idiom we should add. The submission
+      // captures the full typed input either way; we triage on review.
+      const alreadyRequested = requestedWords.has(result.word);
+      const suggestBtn = `
+        <button type="button" class="suggest-word" id="suggestWordBtn"
+          data-word="${word}" data-reason="${result.reason || 'unknown'}"
+          ${alreadyRequested ? 'disabled' : ''}>
+          ${alreadyRequested ? '✓ Thanks — we’ll review it' : `Suggest <span class="suggest-word-name">${word}</span> for our dictionary`}
+        </button>
+      `;
+
+      resultsEl.innerHTML = `
+        <div class="empty-state not-found">
+          <div class="es-icon">${BOOK_ICON_SVG}</div>
+          <h2 class="es-headline">${headline}</h2>
+          <p class="es-body">${body}</p>
+          ${isPhrase ? '' : `
+            <div class="es-suggestions" id="esSuggestions">
+              <button type="button" class="es-suggestion" data-q="remember">remember</button>
+              <button type="button" class="es-suggestion" data-q="midnight">midnight</button>
+              <button type="button" class="es-suggestion" data-q="forever young">forever young</button>
+            </div>
+          `}
+          ${suggestBtn}
+        </div>
+      `;
+      wireSuggestionClicks();
+      wireSuggestWordButton();
+    }
+
+    // ─── "Suggest this word" submission ─────────────────────────
+    // Single explicit click → one GA4 event. We use GA4 rather than
+    // a Firestore write so there's no Firestore rules / spam-filter
+    // overhead; aggregated reports in Firebase Console (or BigQuery
+    // export) tell us which words users want most. The button locks
+    // after one click per session-per-word so a user can't spam the
+    // same submission.
+    function wireSuggestWordButton() {
+      const btn = document.getElementById('suggestWordBtn');
+      if (!btn) return;
+      btn.addEventListener('click', () => {
+        const word = btn.getAttribute('data-word') || '';
+        const reason = btn.getAttribute('data-reason') || 'unknown';
+        if (!word || requestedWords.has(word)) return;
+        try {
+          if (typeof gtag === 'function') {
+            gtag('event', 'dictionary_request', {
+              word: word.slice(0, 100),
+              reason,
+              word_length: word.length
+            });
+          }
+        } catch (_) { /* never break UX over telemetry */ }
+        requestedWords.add(word);
+        btn.disabled = true;
+        btn.innerHTML = '✓ Thanks — we’ll review it';
+      });
+    }
+
+    // Wire the suggestion chips inside the empty / not-found states
+    // so clicking one fills the input + triggers a fresh search.
+    function wireSuggestionClicks() {
+      const container = document.getElementById('esSuggestions');
+      if (!container) return;
+      container.querySelectorAll('.es-suggestion').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const q = btn.getAttribute('data-q') || btn.textContent.trim();
+          anchorOverride = null;
+          input.value = q;
+          runSearch(q);
+        });
+      });
+    }
+
+    function render(result) {
+      if (!result.found) {
+        renderNotFound(result);
+        return;
+      }
+
+      lastResult = result;
+      const cols = buildColumns(result);
+
+      // Validate the persisted pill against the new query's columns.
+      // The synthetic 'A_B' pill needs BOTH A and B columns to exist;
+      // every other pill just needs its own ID present. If the
+      // remembered pill is invalid for this query (e.g. user had
+      // 'A·B' selected — a two-anchor column — then searched a
+      // single-anchor word like "light"), fall through to the
+      // default-picker so they land somewhere productive.
+      if (activeColumnId !== null) {
+        const validIds = new Set(cols.map(c => c.id));
+        const stillValid = activeColumnId === 'A_B'
+          ? (validIds.has('A') && validIds.has('B'))
+          : validIds.has(activeColumnId);
+        if (!stillValid) activeColumnId = null;
+      }
+      if (activeColumnId === null) {
+        activeColumnId = pickDefaultMobileColumn(result, cols);
+      }
+
+      renderAnchorStrip(result);
+      renderStatus(result);
+      resultsEl.innerHTML = `
+        ${renderPillRow(cols)}
+        ${renderColumnRow(cols)}
+      `;
+      wireUpInteractions();
+    }
+
+    function renderStatus(result) {
+      // When the user has an active anchor override, show the "↻ reset"
+      // chip so they can easily return to the engine's default stress
+      // pattern. Otherwise the status row is empty (claims no space —
+      // min-height keeps the input from jumping when text appears).
+      if (anchorOverride) {
+        headlineStatusEl.innerHTML = `
+          <span>Custom stress · </span>
+          <button type="button" class="reset-anchor" id="resetAnchorBtn" title="Restore the engine's default stress pattern">
+            ↻ reset
+          </button>
+        `;
+        const btn = document.getElementById('resetAnchorBtn');
+        if (btn) {
+          btn.addEventListener('click', () => {
+            anchorOverride = null;
+            if (lastQuery) runSearch(lastQuery);
+          });
+        }
+      } else {
+        headlineStatusEl.innerHTML = '';
+      }
+    }
+
+    function pickDefaultMobileColumn(result, cols) {
+      // Two-anchor queries: default to the synthesized "A & B" combined
+      // tab so users land on the most useful pair view (single-syllable
+      // rhymes for both anchors side-by-side).
+      if (result.anchors.length >= 2 && cols.find(c => c.id === 'A') && cols.find(c => c.id === 'B')) {
+        return 'A_B';
+      }
+      // Single-anchor queries: Multi column is the default landing.
+      return cols.find(c => c.id === 'Multi')?.id || cols[0]?.id;
+    }
+
+    /// Returns the set of column IDs that should be VISIBLE for the
+    /// current activeColumnId. The synthetic 'A_B' tab maps to BOTH the
+    /// A and B columns rendering side-by-side; every other tab maps to
+    /// just itself.
+    function activeColumnSet() {
+      if (activeColumnId === 'A_B') return new Set(['A', 'B']);
+      if (activeColumnId) return new Set([activeColumnId]);
+      return new Set();
+    }
+
+    // ─── Column construction ───
+    function buildColumns(result) {
+      const cols = [];
+      const hasTwoAnchors = result.anchors.length >= 2;
+      const a = result.anchors[0];
+
+      // Full-rhyme set: words where every syllable rhymes (3+ syl queries)
+      const fullSet = new Set([
+        ...((result.fullRhyme && result.fullRhyme.strict) || []),
+        ...((result.fullRhyme && result.fullRhyme.near) || []),
+        ...((result.fullRhyme && result.fullRhyme.slant) || [])
+      ]);
+
+      if (a && result.singleAnchorA) {
+        cols.push({
+          id: 'A', label: 'A',
+          title: a.label,
+          subtitle: hasTwoAnchors ? 'first anchor' : 'rhymes',
+          words: flattenSingleAnchor(result.singleAnchorA, a.label, fullSet)
+        });
+      }
+
+      if (hasTwoAnchors) {
+        const b = result.anchors[1];
+        if (b && result.singleAnchorB) {
+          cols.push({
+            id: 'B', label: 'B',
+            title: b.label,
+            subtitle: 'second anchor',
+            words: flattenSingleAnchor(result.singleAnchorB, b.label, fullSet)
+          });
+        }
+        if (result.multiSyllable) {
+          const m = result.multiSyllable;
+          const aL = a.label, bL = result.anchors[1].label;
+          cols.push({
+            id: 'AB', label: 'A B',
+            title: `${aL} ${bL}`,
+            subtitle: 'adjacent',
+            words: tieredWords(m.adjacent, m.adjacentLoose, m.adjacentSlant, fullSet)
+          });
+          cols.push({
+            id: 'A.B', label: 'A · B',
+            title: `${aL} · ${bL}`,
+            subtitle: 'one weak between',
+            words: tieredWords(m.gap1, m.gap1Loose, m.gap1Slant, fullSet)
+          });
+          cols.push({
+            id: 'A..B', label: 'A · · B',
+            title: `${aL} · · ${bL}`,
+            subtitle: 'two+ weak between',
+            words: tieredWords(m.gap2plus, m.gap2plusLoose, m.gap2plusSlant, fullSet)
+          });
+        }
+      } else if (result.multiSyllableEndings) {
+        const me = result.multiSyllableEndings;
+        cols.push({
+          id: 'Multi', label: 'Multi',
+          title: a ? `… ${a.label}` : 'multi-syllable',
+          subtitle: a ? `phrases ending in ${a.label}` : 'multi-syllable',
+          words: tieredWords(me.strict, me.loose, me.slant, fullSet)
+        });
+      }
+
+      return cols.filter(c => c.words.length > 0);
+    }
+
+    function flattenSingleAnchor(anchor, exact, fullSet) {
+      if (!anchor || !anchor.byCategory) return [];
+      const cats = Object.keys(anchor.byCategory).sort((x, y) => {
+        if (x === exact) return -1;
+        if (y === exact) return 1;
+        if (x.length !== y.length) return x.length - y.length;
+        return x.localeCompare(y);
+      });
+      const out = [];
+      for (const cat of cats) {
+        const tier = (cat === exact) ? 'strict' : 'loose';
+        for (const w of anchor.byCategory[cat]) {
+          out.push({ word: w, tier, isFullRhyme: fullSet && fullSet.has(w) });
+        }
+      }
+      return out;
+    }
+
+    function tieredWords(strict, loose, slant, fullSet) {
+      const fs = fullSet || new Set();
+      const partition = (arr) => {
+        const fulls = [], rest = [];
+        for (const w of (arr || [])) (fs.has(w) ? fulls : rest).push(w);
+        return [fulls.slice().sort(), rest.slice().sort()];
+      };
+      const [sF, sR] = partition(strict);
+      const [lF, lR] = partition(loose);
+      const [slF, slR] = partition(slant);
+      const out = [], seen = new Set();
+      const push = (w, tier, isFull) => {
+        if (seen.has(w)) return;
+        seen.add(w);
+        out.push({ word: w, tier, isFullRhyme: isFull });
+      };
+      for (const w of sF) push(w, 'strict', true);
+      for (const w of sR) push(w, 'strict', false);
+      for (const w of lF) push(w, 'loose', true);
+      for (const w of lR) push(w, 'loose', false);
+      for (const w of slF) push(w, 'slant', true);
+      for (const w of slR) push(w, 'slant', false);
+      return out;
+    }
+
+    // ─── Anchor strip ───
+    // Renders the syllable structure of the queried word into the
+    // standalone #anchorStrip element (which lives under the headline
+    // input, not inside #results). Stressed anchors are highlighted in
+    // brand purple; weak syllables are GRAY and CLICKABLE — tapping a
+    // weak syllable promotes it to the A-anchor and re-runs the search
+    // via `overrideAnchorIndices`. Homographs render as multiple
+    // pronunciation strips joined by " / ".
+    //
+    // Each tappable weak syllable carries:
+    //   data-vowel-pos  — the syllable's vowel index in phonemes[]
+    //   data-pron-idx   — which pronunciation strip it belongs to
+    // Tap → handleSyllableTap looks up the B anchor for that
+    // pronunciation and rebuilds the override.
+    function renderAnchorStrip(result) {
+      const allSylls = (result.syllablesByPronunciation || []).filter(s => s && s.length);
+      const allAnchors = result.anchorsByPronunciation || [result.anchors || []];
+
+      // The override is stored as a SYLLABLE INDEX (0-based, from the
+      // start of the syllable list). A given syllable index points to
+      // the same logical syllable across all pronunciations of the
+      // word, so the override marker renders consistently on every
+      // pron's strip — even when their phoneme array shapes differ
+      // (e.g. FOREVER pron 1 vs pron 2 have different array lengths
+      // but both have 3 syllables: tap "fer"/"for" → both highlight).
+      const overrideSyllIdx = anchorOverride ? anchorOverride.aSyllIdx : null;
+
+      const pronStrips = allSylls.map((sylls, pronIdx) => {
+        const anchors = allAnchors[pronIdx] || [];
+        const anchorByPos = new Map();
+        anchors.forEach((a, i) => { if (a.vowelPos != null) anchorByPos.set(a.vowelPos, i); });
+
+        const inner = sylls.map((s, i) => {
+          const isAnchor = anchorByPos.has(s.vowelPos);
+          const isOverride = isAnchor && overrideSyllIdx === i;
+          const sep = i > 0 ? '<span class="syllable-divider">·</span>' : '';
+          if (isAnchor) {
+            const overrideCls = isOverride ? ' is-override' : '';
+            return `${sep}<span class="syllable anchor${overrideCls}" title="Anchor (drives the rhyme search)">${escapeHtml(s.label)}</span>`;
+          } else {
+            // data-syll-idx is the syllable's position in this
+            // pronunciation's syllable list (0-based). data-pron-idx
+            // is preserved for click → handler routing only.
+            return `${sep}<button type="button" class="syllable weak" ` +
+              `data-syll-idx="${i}" data-pron-idx="${pronIdx}" ` +
+              `title="Tap to make this the A-anchor">${escapeHtml(s.label)}</button>`;
+          }
+        }).join('');
+        return `<span class="pron-strip">${inner}</span>`;
+      });
+
+      anchorStripEl.innerHTML = pronStrips.join('<span class="pron-divider">/</span>');
+
+      // Wire up tap-to-promote. The handler stores the SYLLABLE index
+      // (not a phoneme position) so it applies safely across all
+      // pronunciations regardless of their array shapes.
+      anchorStripEl.querySelectorAll('.syllable.weak').forEach(el => {
+        el.addEventListener('click', () => {
+          const syllIdx = parseInt(el.getAttribute('data-syll-idx'), 10);
+          handleSyllableTap(syllIdx);
+        });
+      });
+    }
+
+    function handleSyllableTap(syllIdx) {
+      if (!lastResult) return;
+      // Sanity: syllable index must be valid in at least the first
+      // pronunciation, and not be the line-ending syllable (which is
+      // the B anchor — overriding that doesn't make sense in this
+      // mode; this code only swaps A).
+      const sylls = (lastResult.syllablesByPronunciation && lastResult.syllablesByPronunciation[0]) || [];
+      if (syllIdx < 0 || syllIdx >= sylls.length - 1) return;
+      anchorOverride = { aSyllIdx: syllIdx };
+      runSearch(lastQuery);
+    }
+
+    // ─── Pill row ───
+    // On mobile the pills are also tab switchers. The A and B columns
+    // are merged into a single synthetic "A & B" pill so the user lands
+    // on the dual-column pair view by default — replacing two pills
+    // (each opening a single column) with one (opening both side-by-side).
+    function renderPillRow(cols) {
+      const aCol = cols.find(c => c.id === 'A');
+      const bCol = cols.find(c => c.id === 'B');
+      // Synthetic combined pill goes first; then every column EXCEPT
+      // the original A and B (which are subsumed by the combined pill).
+      const pills = [];
+      if (aCol && bCol) {
+        pills.push({
+          id: 'A_B',
+          label: 'A | B',
+          count: aCol.words.length + bCol.words.length
+        });
+        for (const c of cols) {
+          if (c.id !== 'A' && c.id !== 'B') {
+            pills.push({ id: c.id, label: c.label, count: c.words.length });
+          }
+        }
+      } else {
+        // Single-anchor query — no merging needed.
+        for (const c of cols) {
+          pills.push({ id: c.id, label: c.label, count: c.words.length });
+        }
+      }
+      return `
+        <div class="pill-row">
+          ${pills.map(p => `
+            <button class="pill ${p.id === activeColumnId ? 'active' : ''}" data-col="${escapeHtml(p.id)}">
+              ${escapeHtml(p.label)}
+              <span class="count">${p.count}</span>
+            </button>
+          `).join('')}
+        </div>
+      `;
+    }
+
+    // ─── Column row ───
+    // On mobile: when activeColumnId is "A_B" (synthetic combined tab),
+    // both A and B columns render in a 2-up grid — handled via the
+    // .dual modifier class on .column-row. Other tabs render a single
+    // full-width column (default mobile single-col layout).
+    function renderColumnRow(cols) {
+      const isDual = activeColumnId === 'A_B';
+      return `
+        <div class="column-row ${isDual ? 'dual' : ''}">
+          ${cols.map(c => renderColumn(c)).join('')}
+        </div>
+      `;
+    }
+
+    function renderColumn(col) {
+      const visible = activeColumnSet();
+      const isMobileHidden = activeColumnId && !visible.has(col.id);
+      const perfectCount = col.words.filter(w => w.tier === 'strict').length;
+      const totalCount = col.words.length;
+      const chips = col.words.map(item => renderChip(item)).join('') ||
+        '<div class="empty-col-note">— no matches —</div>';
+      return `
+        <div class="column ${isMobileHidden ? 'is-mobile-hidden' : ''}" data-col-id="${escapeHtml(col.id)}">
+          <div class="column-header">
+            <div class="row">
+              <div class="title">${escapeHtml(col.title)}</div>
+              <div class="count"><span class="perfect">${perfectCount}</span> / ${totalCount}</div>
+            </div>
+            <div class="subtitle">${escapeHtml(col.subtitle)}</div>
+          </div>
+          <div class="column-body">${chips}</div>
+        </div>
+      `;
+    }
+
+    function renderChip(item) {
+      const classes = ['chip'];
+      if (item.word.includes(' ')) classes.push('phrase');
+      if (item.tier === 'loose') classes.push('tier-loose');
+      else if (item.tier === 'slant') classes.push('tier-slant');
+      const badge = item.isFullRhyme
+        ? `<span class="full-badge" title="Every syllable rhymes">all</span>`
+        : '';
+      // Badge AFTER the word — right-aligned via margin-left:auto in CSS.
+      return `<div class="${classes.join(' ')}" data-q="${escapeHtml(item.word)}">` +
+        `<span class="chip-text">${escapeHtml(displayName(item.word))}</span>${badge}` +
+      `</div>`;
+    }
+
+    // ─── Interactions: chip click → re-search; pill click → switch mobile column ───
+    function wireUpInteractions() {
+      resultsEl.querySelectorAll('.chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          const q = chip.getAttribute('data-q') || chip.textContent.trim();
+          // Tapping a chip = a fresh query on a different word, so the
+          // anchor override (which was scoped to the previous word)
+          // must be cleared. Otherwise the engine would try to apply
+          // the old vowelPos to a totally different phoneme array.
+          anchorOverride = null;
+          input.value = displayName(q);
+          runSearch(q);
+        });
+      });
+      resultsEl.querySelectorAll('.pill').forEach(pill => {
+        pill.addEventListener('click', () => {
+          activeColumnId = pill.getAttribute('data-col');
+          // Update active state on pills
+          resultsEl.querySelectorAll('.pill').forEach(p => p.classList.toggle('active', p === pill));
+          // Toggle column visibility on mobile based on the active set
+          // (handles the synthetic "A | B" tab where two columns are visible).
+          const visible = activeColumnSet();
+          resultsEl.querySelectorAll('.column').forEach(c => {
+            c.classList.toggle('is-mobile-hidden', !visible.has(c.getAttribute('data-col-id')));
+          });
+          // Toggle the .dual modifier on column-row so the grid switches
+          // between 1-column and 2-column layouts. Without this, the
+          // grid stays 1fr 1fr after switching FROM A|B and the single
+          // visible column ends up at half-width.
+          const colRow = resultsEl.querySelector('.column-row');
+          if (colRow) colRow.classList.toggle('dual', activeColumnId === 'A_B');
+        });
+      });
+    }
+
+    // ─── Display-name helper (proper-noun casing) ───
+    function displayName(word) {
+      if (!word) return word;
+      const upperKey = word.toUpperCase();
+      if (window.PROPER_NOUN_DISPLAY && window.PROPER_NOUN_DISPLAY[upperKey]) {
+        return window.PROPER_NOUN_DISPLAY[upperKey];
+      }
+      if (window.PROPER_NOUN_KEYS && window.PROPER_NOUN_KEYS.has(upperKey)) {
+        return word.toLowerCase().replace(/(^|[\s\-])([a-z])/g, (_, sep, ch) => sep + ch.toUpperCase());
+      }
+      return word;
+    }
+
+    function escapeHtml(s) {
+      return String(s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    // The initial OR-TRY chips were already rendered into #results
+    // by the small inline <script> above the engine tags (so users
+    // see them in <100ms instead of after the dictionary loads).
+    // Wire the click handlers now that the engine is ready.
+    wireSuggestionClicks();
+
+    // ─── Engine ready: dismiss splash + flush pending search ─────
+    // The static <div id="loadingSplash"> overlays everything below
+    // the topbar from first paint. CSS fades it out when body has
+    // .engine-ready. We enforce a 400ms minimum display window so
+    // cached visits get a visible "loaded" beat instead of a 5ms
+    // flash. After the fade transition the element is removed from
+    // the DOM (cleanup; not strictly needed for layout).
+    window.__engineReady = true;
+    const pendingQuery = (input.value || '').trim();
+    const dismissSplash = () => {
+      document.body.classList.add('engine-ready');
+      // Remove from DOM after the CSS transition (350ms) finishes.
+      setTimeout(() => {
+        const splash = document.getElementById('loadingSplash');
+        if (splash) splash.remove();
+      }, 400);
+    };
+    if (pendingQuery) {
+      // User interacted during load — dismiss splash immediately + run
+      // search. They've already shown they want results NOW.
+      dismissSplash();
+      runSearch(pendingQuery);
+    } else {
+      // No interaction yet — enforce min display so the spinner is
+      // visible for at least 400ms total (counted from the early-bird
+      // inline script that ran at first paint).
+      const elapsed = Date.now() - (window.__warmupStart || Date.now());
+      const minDuration = 400;
+      setTimeout(dismissSplash, Math.max(0, minDuration - elapsed));
+    }
+  </script>
+</body>
+</html>

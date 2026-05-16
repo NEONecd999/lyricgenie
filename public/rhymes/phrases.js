@@ -246,6 +246,16 @@ window.PHRASES = {
   // "moonlight", "daylight", etc.).
   "NIGHTLIGHT":            "N AY1 T L AY2 T",
 
+  // ─── -INKLE family gap-fills ───
+  // CMU has WRINKLE / TWINKLE / SPRINKLE / TINKLE but is missing the
+  // CRINKLE family entirely + the TINKLES inflection. Pronunciations
+  // follow the established -INKLE pattern (R/T/TW/SPR/KR + IH1 NG K AH0 L).
+  "CRINKLE":               "K R IH1 NG K AH0 L",
+  "CRINKLED":              "K R IH1 NG K AH0 L D",
+  "CRINKLES":              "K R IH1 NG K AH0 L Z",
+  "CRINKLING":             "K R IH1 NG K AH0 L IH0 NG",
+  "TINKLES":               "T IH1 NG K AH0 L Z",
+
   // ─── CMU pronunciation overrides ───
   // CMU lists "mic" as M IH1 K (rhymes with "Mick"), but in songwriter
   // / pop usage "mic" is short for "microphone" and pronounced M AY1 K

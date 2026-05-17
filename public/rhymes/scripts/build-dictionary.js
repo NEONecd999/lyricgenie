@@ -105,7 +105,75 @@ const ALWAYS_KEEP = new Set([
   "marigold","ninefold","scaffold","sevenfold","sixfold","tenfold",
   "threefold","twofold",
   "chokehold","foothold","freehold","handhold","leasehold",
-  "stranglehold","stronghold","toehold","uphold","withhold"
+  "stranglehold","stronghold","toehold","uphold","withhold",
+
+  // ─── Major rhyme-family fill-ins ───────────────────────────────
+  // Auditing common rhyme suffixes (-IGHT, -OWN, -AY, -OW, etc) against
+  // CMU revealed ~240 useful words missing from the top-20K cut. Filtered
+  // against /usr/share/dict/words to keep only real English (rejects most
+  // surnames + foreign names that pad CMU). Grouped by family. Inflection
+  // expansion below auto-handles plurals/past-tense for these.
+
+  // -IGHT (alight, blight, contrite, ignite, plight, sleight, sprite, trite, ...)
+  "alight","benight","bight","blight","contrite","electrolyte","forthright",
+  "fright","ignite","indict","mite","plight","reignite","sleight","sprite","trite",
+  // -OWN (drown, frown, atone, condone, drone, groan, hone, moan, sown, ...)
+  "drown","frown",
+  "atone","bemoan","condone","crone","drone","groan","hipbone","hone","moan",
+  "roan","scone","sewn","shone","sown","trombone","unbeknown",
+  // -ART (tart)
+  "tart",
+  // -AY (allay, attache, betray, cliche, croquet, defray, faraway, parfait, ...)
+  "allay","attache","betray","cabriolet","cliche","croquet","defray","dossier",
+  "faraway","filet","fillet","flay","fray","naivete","neigh","parfait","parquet",
+  "passe","puree","purvey","risque","sachet","saute","shay","slay","sleigh",
+  "soiree","souffle","spay","sway","toupee","trey",
+  // -OWER (devour, dour, scour)
+  "devour","dour","scour",
+  // -INE (affine, brine, consign, entwine, intertwine, malign, opine, recline, ...)
+  "affine","brine","consign","entwine","intertwine","malign","opine","recline",
+  "sine","supine","swine","thine","twine","whine",
+  // -EAR (auctioneer, austere, belvedere, brigadier, chevalier, commandeer, ...)
+  "auctioneer","austere","belvedere","bombardier","brigadier","budgeteer",
+  "chevalier","commandeer","domineer","electioneer","financier","gondolier",
+  "jeer","marketeer","mutineer","pamphleteer","persevere","profiteer","racketeer",
+  "revere","sere","smear","sneer","veneer",
+  "buccaneer","musketeer","puppeteer",
+  // -OOK (chinook, crook, gobbledygook, nook, rook, snook)
+  "chinook","crook","gobbledygook","nook","rook","snook",
+  // -OW (aglow, apropos, beaux, bestow, chateaux, floe, forego, forgo, sloe, ...)
+  "aglow","apropos","beaux","bestow","chateaux","floe","forego","forgo","kayo",
+  "rondeau","rouleau","sloe","stow","tableau","tableaux","tallyho","turbot",
+  // -IFE (rife, strife)
+  "rife","strife",
+  // -IVE (connive, contrive, hive, revive)
+  "connive","contrive","hive","revive",
+  // -AR (abattoir, afar, ajar, sitar, spar)
+  "abattoir","afar","ajar","sitar","spar",
+  // -OR/-OAR (abhor, adore, ashore, boar, chore, deplore, guarantor, heretofore,
+  //           implore, oar, pore, rapport, roar, snore, spore, swore, tore,
+  //           wherefore, yore)
+  "abhor","adore","ashore","boar","chore","deplore","guarantor","heretofore",
+  "hoar","implore","oar","pore","rapport","roar","snore","spore","swore","tore",
+  "wherefore","yore",
+  // -END (apprehend, ascend, befriend, commend, comprehend, condescend, descend,
+  //       expend, fend, impend, offend, portend, reoffend)
+  "apprehend","ascend","befriend","commend","comprehend","condescend","descend",
+  "expend","fend","impend","offend","portend","reoffend",
+  // -AND (firsthand, meadowland, offhand, remand)
+  "firsthand","meadowland","offhand","remand",
+  // -EEN/-EAN (aquamarine, baleen, brigantine, canteen, careen, citrine, convene,
+  //           glean, latrine, nineteen, preen, ravine, sardine, serene, sheen,
+  //           spleen, tambourine, tangerine, trampoline, tween, umpteen, wean,
+  //           wolverine, ...)
+  "achene","amine","aquamarine","baleen","benzene","brigantine","canteen","careen",
+  "casein","citrine","convene","glean","latrine","nineteen","preen","propylene",
+  "ravine","reconvene","sardine","serene","sheen","spleen","tambourine","tangerine",
+  "trampoline","tween","umpteen","unforeseen","wean","wolverine",
+  // -AKE (flake, hake, partake)
+  "flake","hake","partake",
+  // -ACK (flak, knack, quack)
+  "flak","knack","quack"
 ]);
 ALWAYS_KEEP.forEach(w => COMMON.add(w));
 

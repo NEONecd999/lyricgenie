@@ -296,6 +296,68 @@
       font-family: var(--font-mono);
     }
 
+    /* Bottom CTA — twin-card layout offering two paths forward:
+       (a) keep searching in the live web tool (free, instant),
+       (b) get the full Lyric Genie songwriting app (iOS, has the
+       rhyme tool baked in plus tons more). Side-by-side on desktop,
+       stacked on mobile. */
+    .bottom-cta {
+      margin: 64px 0 0;
+      padding: 32px 0 0;
+      border-top: 1px solid var(--rule);
+    }
+    .bottom-cta h2 {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      margin: 0 0 18px;
+      color: var(--ink);
+      text-align: center;
+    }
+    .bottom-cta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .bottom-cta-card {
+      display: flex;
+      flex-direction: column;
+      padding: 22px;
+      background: var(--surface);
+      border: 1px solid var(--rule);
+      border-radius: var(--radius);
+      text-decoration: none;
+      color: var(--ink);
+      transition: border-color 120ms ease, transform 120ms ease;
+    }
+    .bottom-cta-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+    .bottom-cta-card .label {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      margin: 0 0 6px;
+      color: var(--ink);
+    }
+    .bottom-cta-card .desc {
+      font-size: 14px;
+      color: var(--ink-muted);
+      margin: 0 0 14px;
+      line-height: 1.45;
+    }
+    .bottom-cta-card .arrow {
+      margin-top: auto;
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+    @media (max-width: 640px) {
+      .bottom-cta-grid { grid-template-columns: 1fr; }
+    }
+
     /* Footer — minimal attribution + link to interactive tool */
     .page-footer {
       max-width: 980px;
@@ -349,10 +411,10 @@
       <h1>gold</h1>
       <p class="phonetic">/goʊld/ &nbsp;·&nbsp; 1 syllable &nbsp;·&nbsp; G OW L D</p>
       <p class="summary">
-        <strong>14 perfect rhymes</strong>, <strong>93 phrase rhymes</strong>,
-        and a wider net of near rhymes below.
+        <strong>14 perfect rhymes</strong>, plus compound rhymes, phrase
+        rhymes, and a wider net of near rhymes below.
       </p>
-      <a href="/?q=gold" class="cta">Search this in the interactive tool →</a>
+      <a href="/?q=gold" class="cta">Open "gold" in the live rhyme tool →</a>
     </section>
 
     <!-- ─── Perfect rhymes — the canonical -OHLD ending ─────────── -->
@@ -360,49 +422,57 @@
       <h2>Perfect rhymes for "gold"</h2>
       <p class="section-intro">Single words that share the exact <code>-old</code> sound (OW + L + D).</p>
       <div class="rhyme-grid">
-        <a href="/r/bold/" class="rhyme-link">bold</a>
-        <a href="/r/bowled/" class="rhyme-link">bowled</a>
-        <a href="/r/cold/" class="rhyme-link">cold</a>
-        <a href="/r/fold/" class="rhyme-link">fold</a>
-        <a href="/r/hold/" class="rhyme-link">hold</a>
-        <a href="/r/holed/" class="rhyme-link">holed</a>
-        <a href="/r/mold/" class="rhyme-link">mold</a>
-        <a href="/r/old/" class="rhyme-link">old</a>
-        <a href="/r/polled/" class="rhyme-link">polled</a>
-        <a href="/r/rolled/" class="rhyme-link">rolled</a>
-        <a href="/r/sold/" class="rhyme-link">sold</a>
-        <a href="/r/strolled/" class="rhyme-link">strolled</a>
-        <a href="/r/told/" class="rhyme-link">told</a>
-        <a href="/r/tolled/" class="rhyme-link">tolled</a>
+        <a href="/?q=bold" class="rhyme-link">bold</a>
+        <a href="/?q=bowled" class="rhyme-link">bowled</a>
+        <a href="/?q=cold" class="rhyme-link">cold</a>
+        <a href="/?q=fold" class="rhyme-link">fold</a>
+        <a href="/?q=hold" class="rhyme-link">hold</a>
+        <a href="/?q=holed" class="rhyme-link">holed</a>
+        <a href="/?q=mold" class="rhyme-link">mold</a>
+        <a href="/?q=old" class="rhyme-link">old</a>
+        <a href="/?q=polled" class="rhyme-link">polled</a>
+        <a href="/?q=rolled" class="rhyme-link">rolled</a>
+        <a href="/?q=sold" class="rhyme-link">sold</a>
+        <a href="/?q=strolled" class="rhyme-link">strolled</a>
+        <a href="/?q=told" class="rhyme-link">told</a>
+        <a href="/?q=tolled" class="rhyme-link">tolled</a>
       </div>
     </section>
 
-    <!-- ─── Multi-syllable + phrase rhymes ──────────────────────── -->
+    <!-- ─── Compound rhymes — single multi-syllable words ───────── -->
+    <section class="rhymes-section">
+      <h2>Compound rhymes for "gold"</h2>
+      <p class="section-intro">Multi-syllable single words ending in <code>-old</code>. Great for longer line endings.</p>
+      <div class="rhyme-grid">
+        <a href="/?q=behold" class="rhyme-link">behold</a>
+        <a href="/?q=consoled" class="rhyme-link">consoled</a>
+        <a href="/?q=controlled" class="rhyme-link">controlled</a>
+        <a href="/?q=enfold" class="rhyme-link">enfold</a>
+        <a href="/?q=enrolled" class="rhyme-link">enrolled</a>
+        <a href="/?q=extolled" class="rhyme-link">extolled</a>
+        <a href="/?q=foretold" class="rhyme-link">foretold</a>
+        <a href="/?q=household" class="rhyme-link">household</a>
+        <a href="/?q=outsold" class="rhyme-link">outsold</a>
+        <a href="/?q=paroled" class="rhyme-link">paroled</a>
+        <a href="/?q=patrolled" class="rhyme-link">patrolled</a>
+        <a href="/?q=remold" class="rhyme-link">remold</a>
+        <a href="/?q=resold" class="rhyme-link">resold</a>
+        <a href="/?q=threshold" class="rhyme-link">threshold</a>
+        <a href="/?q=unfold" class="rhyme-link">unfold</a>
+        <a href="/?q=unrolled" class="rhyme-link">unrolled</a>
+        <a href="/?q=unsold" class="rhyme-link">unsold</a>
+        <a href="/?q=untold" class="rhyme-link">untold</a>
+      </div>
+    </section>
+
+    <!-- ─── Phrase rhymes — actual multi-word endings ───────────── -->
     <section class="rhymes-section">
       <h2>Phrase rhymes for "gold"</h2>
-      <p class="section-intro">Multi-word endings that complete the same rhyme — useful as full line endings.</p>
+      <p class="section-intro">Multi-word endings — useful as full line endings or "set-up" rhymes.</p>
       <div class="rhyme-grid">
         <a href="/?q=all+told" class="rhyme-link phrase">all told</a>
-        <a href="/?q=behold" class="rhyme-link phrase">behold</a>
-        <a href="/?q=black+gold" class="rhyme-link phrase">black gold</a>
-        <a href="/?q=consoled" class="rhyme-link phrase">consoled</a>
-        <a href="/?q=controlled" class="rhyme-link phrase">controlled</a>
-        <a href="/?q=enrolled" class="rhyme-link phrase">enrolled</a>
-        <a href="/?q=foretold" class="rhyme-link phrase">foretold</a>
-        <a href="/?q=household" class="rhyme-link phrase">household</a>
-        <a href="/?q=ice+cold" class="rhyme-link phrase">ice cold</a>
-        <a href="/?q=on+hold" class="rhyme-link phrase">on hold</a>
-        <a href="/?q=out+cold" class="rhyme-link phrase">out cold</a>
-        <a href="/?q=paroled" class="rhyme-link phrase">paroled</a>
-        <a href="/?q=patrolled" class="rhyme-link phrase">patrolled</a>
-        <a href="/?q=rose+gold" class="rhyme-link phrase">rose gold</a>
-        <a href="/?q=same+old" class="rhyme-link phrase">same old</a>
-        <a href="/?q=so+cold" class="rhyme-link phrase">so cold</a>
-        <a href="/?q=stone+cold" class="rhyme-link phrase">stone cold</a>
-        <a href="/?q=threshold" class="rhyme-link phrase">threshold</a>
-        <a href="/?q=unfold" class="rhyme-link phrase">unfold</a>
-        <a href="/?q=untold" class="rhyme-link phrase">untold</a>
         <a href="/?q=any+old" class="rhyme-link phrase">any old</a>
+        <a href="/?q=black+gold" class="rhyme-link phrase">black gold</a>
         <a href="/?q=break+the+mold" class="rhyme-link phrase">break the mold</a>
         <a href="/?q=buy+and+hold" class="rhyme-link phrase">buy and hold</a>
         <a href="/?q=catch+a+cold" class="rhyme-link phrase">catch a cold</a>
@@ -410,9 +480,16 @@
         <a href="/?q=fields+of+gold" class="rhyme-link phrase">fields of gold</a>
         <a href="/?q=good+as+gold" class="rhyme-link phrase">good as gold</a>
         <a href="/?q=heart+of+gold" class="rhyme-link phrase">heart of gold</a>
+        <a href="/?q=ice+cold" class="rhyme-link phrase">ice cold</a>
         <a href="/?q=in+the+cold" class="rhyme-link phrase">in the cold</a>
+        <a href="/?q=on+hold" class="rhyme-link phrase">on hold</a>
+        <a href="/?q=out+cold" class="rhyme-link phrase">out cold</a>
         <a href="/?q=out+in+the+cold" class="rhyme-link phrase">out in the cold</a>
         <a href="/?q=pot+of+gold" class="rhyme-link phrase">pot of gold</a>
+        <a href="/?q=rose+gold" class="rhyme-link phrase">rose gold</a>
+        <a href="/?q=same+old" class="rhyme-link phrase">same old</a>
+        <a href="/?q=so+cold" class="rhyme-link phrase">so cold</a>
+        <a href="/?q=stone+cold" class="rhyme-link phrase">stone cold</a>
         <a href="/?q=worth+its+weight+in+gold" class="rhyme-link phrase">worth its weight in gold</a>
       </div>
     </section>
@@ -422,22 +499,22 @@
       <h2>Near rhymes — drops the D</h2>
       <p class="section-intro">Same vowel + L but ends open (<code>-ole</code>). Common slant rhyme for "gold".</p>
       <div class="rhyme-grid">
-        <a href="/r/bowl/" class="rhyme-link">bowl</a>
-        <a href="/r/coal/" class="rhyme-link">coal</a>
-        <a href="/r/goal/" class="rhyme-link">goal</a>
-        <a href="/r/hole/" class="rhyme-link">hole</a>
-        <a href="/r/mole/" class="rhyme-link">mole</a>
-        <a href="/r/pole/" class="rhyme-link">pole</a>
-        <a href="/r/role/" class="rhyme-link">role</a>
-        <a href="/r/roll/" class="rhyme-link">roll</a>
-        <a href="/r/scroll/" class="rhyme-link">scroll</a>
-        <a href="/r/sole/" class="rhyme-link">sole</a>
-        <a href="/r/soul/" class="rhyme-link">soul</a>
-        <a href="/r/stole/" class="rhyme-link">stole</a>
-        <a href="/r/stroll/" class="rhyme-link">stroll</a>
-        <a href="/r/toll/" class="rhyme-link">toll</a>
-        <a href="/r/troll/" class="rhyme-link">troll</a>
-        <a href="/r/whole/" class="rhyme-link">whole</a>
+        <a href="/?q=bowl" class="rhyme-link">bowl</a>
+        <a href="/?q=coal" class="rhyme-link">coal</a>
+        <a href="/?q=goal" class="rhyme-link">goal</a>
+        <a href="/?q=hole" class="rhyme-link">hole</a>
+        <a href="/?q=mole" class="rhyme-link">mole</a>
+        <a href="/?q=pole" class="rhyme-link">pole</a>
+        <a href="/?q=role" class="rhyme-link">role</a>
+        <a href="/?q=roll" class="rhyme-link">roll</a>
+        <a href="/?q=scroll" class="rhyme-link">scroll</a>
+        <a href="/?q=sole" class="rhyme-link">sole</a>
+        <a href="/?q=soul" class="rhyme-link">soul</a>
+        <a href="/?q=stole" class="rhyme-link">stole</a>
+        <a href="/?q=stroll" class="rhyme-link">stroll</a>
+        <a href="/?q=toll" class="rhyme-link">toll</a>
+        <a href="/?q=troll" class="rhyme-link">troll</a>
+        <a href="/?q=whole" class="rhyme-link">whole</a>
       </div>
     </section>
 
@@ -446,20 +523,20 @@
       <h2>Near rhymes — ends in <code>-one</code></h2>
       <p class="section-intro">Same long-O vowel but the consonant cluster swaps from L+D to N. Looser slant rhyme.</p>
       <div class="rhyme-grid">
-        <a href="/r/alone/" class="rhyme-link">alone</a>
-        <a href="/r/bone/" class="rhyme-link">bone</a>
-        <a href="/r/clone/" class="rhyme-link">clone</a>
-        <a href="/r/cone/" class="rhyme-link">cone</a>
-        <a href="/r/grown/" class="rhyme-link">grown</a>
-        <a href="/r/known/" class="rhyme-link">known</a>
-        <a href="/r/lone/" class="rhyme-link">lone</a>
-        <a href="/r/own/" class="rhyme-link">own</a>
-        <a href="/r/phone/" class="rhyme-link">phone</a>
-        <a href="/r/prone/" class="rhyme-link">prone</a>
-        <a href="/r/stone/" class="rhyme-link">stone</a>
-        <a href="/r/thrown/" class="rhyme-link">thrown</a>
-        <a href="/r/tone/" class="rhyme-link">tone</a>
-        <a href="/r/zone/" class="rhyme-link">zone</a>
+        <a href="/?q=alone" class="rhyme-link">alone</a>
+        <a href="/?q=bone" class="rhyme-link">bone</a>
+        <a href="/?q=clone" class="rhyme-link">clone</a>
+        <a href="/?q=cone" class="rhyme-link">cone</a>
+        <a href="/?q=grown" class="rhyme-link">grown</a>
+        <a href="/?q=known" class="rhyme-link">known</a>
+        <a href="/?q=lone" class="rhyme-link">lone</a>
+        <a href="/?q=own" class="rhyme-link">own</a>
+        <a href="/?q=phone" class="rhyme-link">phone</a>
+        <a href="/?q=prone" class="rhyme-link">prone</a>
+        <a href="/?q=stone" class="rhyme-link">stone</a>
+        <a href="/?q=thrown" class="rhyme-link">thrown</a>
+        <a href="/?q=tone" class="rhyme-link">tone</a>
+        <a href="/?q=zone" class="rhyme-link">zone</a>
       </div>
     </section>
 
@@ -492,6 +569,23 @@
         <dt>Rhyme key</dt>
         <dd>-OHLD (long O + L + D)</dd>
       </dl>
+    </section>
+
+    <!-- ─── Bottom CTA — two paths forward ──────────────────────── -->
+    <section class="bottom-cta">
+      <h2>Keep going</h2>
+      <div class="bottom-cta-grid">
+        <a href="/?q=gold" class="bottom-cta-card">
+          <p class="label">Try the live rhyme tool</p>
+          <p class="desc">Search any word or phrase, tap syllables to focus rhymes on a specific stress, toggle slant matching. Free, no signup.</p>
+          <span class="arrow">Open the tool →</span>
+        </a>
+        <a href="https://apps.apple.com/us/app/lyric-genie/id6739787614" class="bottom-cta-card">
+          <p class="label">Get Lyric Genie for iOS</p>
+          <p class="desc">The full songwriting app — rhymes, lyric editor, collaboration, sing mode, lyric sheets. RhymeGold is just one piece.</p>
+          <span class="arrow">Download free →</span>
+        </a>
+      </div>
     </section>
 
   </main>

@@ -1,4 +1,5 @@
+# RhymeGold — Free rhyme tool for songwriters.
 User-agent: *
 Allow: /
 
-Sitemap: https://lyricgenie.app/sitemap.xml
+Sitemap: https://rhymegold.com/sitemap.xml

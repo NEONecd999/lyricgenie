@@ -96,7 +96,16 @@ const ALWAYS_KEEP = new Set([
   "twinkle","twinkled","twinkles","twinkling",
   "sprinkle","sprinkled","sprinkles","sprinkling","sprinkler","sprinklers",
   "crinkle","crinkled","crinkles","crinkling",
-  "tinkle","tinkled","tinkles","tinkling"
+  "tinkle","tinkled","tinkles","tinkling",
+  // -OLD / -FOLD / -HOLD family — common compounds CMU has but the
+  // top-20K cutoff dropped. Filling in so "gold" queries return the
+  // full set of useful rhymes (was returning only 14, RhymeZone has 365).
+  "scold","wold","mould","ahold",
+  "billfold","blindfold","centerfold","eightfold","fivefold","fourfold",
+  "marigold","ninefold","scaffold","sevenfold","sixfold","tenfold",
+  "threefold","twofold",
+  "chokehold","foothold","freehold","handhold","leasehold",
+  "stranglehold","stronghold","toehold","uphold","withhold"
 ]);
 ALWAYS_KEEP.forEach(w => COMMON.add(w));
 

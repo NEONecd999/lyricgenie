@@ -41,6 +41,14 @@ function slantVowelsFor(vowel) {
   return VOWEL_SLANT[vowel] || [vowel];
 }
 
+// Unstressed final vowels reduce toward schwa and rhyme freely in sung English
+// — "demon" (AH), "even" (IH), "bleedin'" (IH) all share the same reduced
+// ending. We treat these as interchangeable, but ONLY on an UNSTRESSED
+// line-ending anchor (see the feminine-ending pass in
+// computeResultsForPronunciation). Tunable: start tight with AH/IH; ER is an
+// easy add if "-er" feminine endings are wanted.
+const REDUCED_VOWELS = ['AH', 'IH'];
+
 // Per-consonant slant groups for line-ending coda matching. Songwriters
 // routinely substitute consonants with similar place/manner: P↔B↔T↔D
 // (stops), F↔V↔TH (fricatives), M↔N↔NG (nasals). These groups let
@@ -464,6 +472,22 @@ function anchorsFor(phonemes, options = {}) {
   };
 }
 
+// Generate "sung" pronunciation variants for MATCHING only. Singers routinely
+// drop the g in the "-ing" suffix ("bleeding" → "bleedin'"), turning the final
+// unstressed IH0 NG into IH0 N — which lets it rhyme with -in/-en endings.
+// Restricted to UNSTRESSED IH0 NG so monosyllables like "king"/"thing" (IH1 NG)
+// aren't mangled into "kin"/"thin". Returns extra phoneme arrays only (never the
+// original), and these never enter byWord/pronInfos — so the UI never shows a
+// synthetic pronunciation.
+function expandSungVariants(phonemes) {
+  const variants = [];
+  const n = phonemes.length;
+  if (n >= 2 && phonemes[n - 1] === 'NG' && phonemes[n - 2] === 'IH0') {
+    variants.push([...phonemes.slice(0, n - 1), 'N']);
+  }
+  return variants;
+}
+
 // Count how many vowels separate two vowel indices (for A-to-B spacing).
 function vowelGapBetween(phonemes, idxA, idxB) {
   let gap = 0;
@@ -485,6 +509,55 @@ function buildIndex(dictionary) {
   const pairsAny = new Map();   // B can be any vowel (internal-rhyme mode)
   const byWord = new Map();
 
+  // Index one (word, pronunciation) into the inverted indices. Called once per
+  // real pronunciation AND once per synthetic "sung" variant (see
+  // expandSungVariants). Each pair entry carries `bStress` — the stress of the
+  // word's final vowel — so the feminine-ending pass can require the candidate's
+  // ending to be unstressed.
+  function indexPronunciation(word, phonemes) {
+    const { anchors, allVowels } = anchorsFor(phonemes);
+    if (anchors.length === 0) return;
+
+    // Single-anchor index: bucket by the LAST anchor (rhyme-bearing tail).
+    const last = anchors[anchors.length - 1];
+    pushBucket(single, last.key, { word, phonemes });
+
+    // Pair index: only (a, b) pairs where B is the FINAL vowel of this word.
+    // For a line-ending rhyme to work, the B anchor must land at the end of
+    // the candidate — otherwise trailing syllables (like the -ate in
+    // "accelerate") break the rhyme. Earlier mid-word vowels can serve as A,
+    // since A is the upstream multi-syllabic anchor.
+    //
+    // A keys on vowel-only (so EH+M matches EH+N etc.); B keys on full
+    // vowel+coda so line-ending consonants must match too — otherwise
+    // "interference" rhymes with "antarctica" because both end in AH.
+    // We push TWO bucket entries per (a, b) pair: one keyed by B's full
+    // vowel+coda (tight rhymes) and one by B's vowel only (rhymewave-style
+    // breadth — "out of mind" matches "outline" because both end in AY-sound).
+    // Query picks which bucket to look in based on options.strictCoda.
+    if (allVowels.length >= 2) {
+      const lastVIdx = allVowels[allVowels.length - 1];
+      const b = rhymeAt(phonemes, lastVIdx);
+      const bStress = getStress(phonemes[lastVIdx]);
+      for (let i = 0; i < allVowels.length - 1; i++) {
+        const a = rhymeAt(phonemes, allVowels[i]);
+        const gap = vowelGapBetween(phonemes, allVowels[i], lastVIdx);
+        pushBucket(pairs, `${a.vowelKey}||${b.key}||${gap}`, { word, phonemes, bStress });
+        pushBucket(pairs, `${a.vowelKey}||${b.vowelKey}||${gap}`, { word, phonemes, bStress });
+      }
+    }
+    for (let i = 0; i < allVowels.length; i++) {
+      for (let j = i + 1; j < allVowels.length; j++) {
+        const a = rhymeAt(phonemes, allVowels[i]);
+        const b = rhymeAt(phonemes, allVowels[j]);
+        const gap = vowelGapBetween(phonemes, allVowels[i], allVowels[j]);
+        const bStress = getStress(phonemes[allVowels[j]]);
+        pushBucket(pairsAny, `${a.vowelKey}||${b.key}||${gap}`, { word, phonemes, bStress });
+        pushBucket(pairsAny, `${a.vowelKey}||${b.vowelKey}||${gap}`, { word, phonemes, bStress });
+      }
+    }
+  }
+
   for (const [rawWord, entry] of Object.entries(dictionary)) {
     const word = rawWord.toLowerCase();
     const allProns = pronunciationsFor(entry);
@@ -496,47 +569,17 @@ function buildIndex(dictionary) {
     // Index EVERY pronunciation. So a homograph like "read" appears in both
     // the -eed bucket (R IY1 D) AND the -ed bucket (R EH1 D). When someone
     // queries "head" (EH+D), they'll now find "read" as a rhyme thanks to its
-    // alt pronunciation.
+    // alt pronunciation. We also index "sung" variants (g-dropped "-ing" →
+    // "-in'") for MATCHING — those are NOT added to pronInfos/byWord, so the UI
+    // still shows only the real CMU pronunciations.
     for (const phonemes of allProns) {
       const { anchors, allVowels } = anchorsFor(phonemes);
       if (anchors.length === 0) continue;
       pronInfos.push({ phonemes, anchors, allVowels });
 
-      // Single-anchor index: bucket by the LAST anchor (rhyme-bearing tail).
-      const last = anchors[anchors.length - 1];
-      pushBucket(single, last.key, { word, phonemes });
-
-      // Pair index: only (a, b) pairs where B is the FINAL vowel of this word.
-      // For a line-ending rhyme to work, the B anchor must land at the end of
-      // the candidate — otherwise trailing syllables (like the -ate in
-      // "accelerate") break the rhyme. Earlier mid-word vowels can serve as A,
-      // since A is the upstream multi-syllabic anchor.
-      //
-      // A keys on vowel-only (so EH+M matches EH+N etc.); B keys on full
-      // vowel+coda so line-ending consonants must match too — otherwise
-      // "interference" rhymes with "antarctica" because both end in AH.
-      // We push TWO bucket entries per (a, b) pair: one keyed by B's full
-      // vowel+coda (tight rhymes) and one by B's vowel only (rhymewave-style
-      // breadth — "out of mind" matches "outline" because both end in AY-sound).
-      // Query picks which bucket to look in based on options.strictCoda.
-      if (allVowels.length >= 2) {
-        const lastVIdx = allVowels[allVowels.length - 1];
-        const b = rhymeAt(phonemes, lastVIdx);
-        for (let i = 0; i < allVowels.length - 1; i++) {
-          const a = rhymeAt(phonemes, allVowels[i]);
-          const gap = vowelGapBetween(phonemes, allVowels[i], lastVIdx);
-          pushBucket(pairs, `${a.vowelKey}||${b.key}||${gap}`, { word, phonemes });
-          pushBucket(pairs, `${a.vowelKey}||${b.vowelKey}||${gap}`, { word, phonemes });
-        }
-      }
-      for (let i = 0; i < allVowels.length; i++) {
-        for (let j = i + 1; j < allVowels.length; j++) {
-          const a = rhymeAt(phonemes, allVowels[i]);
-          const b = rhymeAt(phonemes, allVowels[j]);
-          const gap = vowelGapBetween(phonemes, allVowels[i], allVowels[j]);
-          pushBucket(pairsAny, `${a.vowelKey}||${b.key}||${gap}`, { word, phonemes });
-          pushBucket(pairsAny, `${a.vowelKey}||${b.vowelKey}||${gap}`, { word, phonemes });
-        }
+      indexPronunciation(word, phonemes);
+      for (const variant of expandSungVariants(phonemes)) {
+        indexPronunciation(word, variant);
       }
     }
 
@@ -902,6 +945,31 @@ function computeResultsForPronunciation(phonemes, index, options, lookup, seen, 
           if (gap === 0) result.multiSyllable.adjacentLoose.push(m.word);
           else if (gap === 1) result.multiSyllable.gap1Loose.push(m.word);
           else result.multiSyllable.gap2plusLoose.push(m.word);
+        }
+      }
+    }
+
+    // Feminine-ending pass (ALWAYS on, not gated by options.slant): when the
+    // line-ending (B) anchor is UNSTRESSED, its vowel reduces toward schwa in
+    // sung English, so it rhymes freely with the other reduced vowels —
+    // "demon" (AH) ↔ "bleedin'" (IH) ↔ "even" (IH). We only fuzz B HERE, where
+    // it's unstressed; fuzzing a STRESSED ending is the noise the "never fuzz
+    // B" rule guards against. We also require the CANDIDATE's ending to be
+    // unstressed (m.bStress === 0). Matches land in the loose/near buckets so
+    // they show by default. The stressed A anchor still carries the rhyme.
+    if (!options.strictCoda && getStress(phonemes[b.vowelPos]) === 0) {
+      for (const rv of REDUCED_VOWELS) {
+        if (rv === b.vowelKey) continue;  // exact-B already handled by the loose pass
+        for (let gap = 0; gap <= 4; gap++) {
+          const key = `${a.vowelKey}||${rv}||${gap}`;
+          for (const m of useIndex.get(key) || []) {
+            if (m.bStress !== 0) continue;  // candidate's ending must also be unstressed
+            if (seen.has(m.word)) continue;
+            seen.add(m.word);
+            if (gap === 0) result.multiSyllable.adjacentLoose.push(m.word);
+            else if (gap === 1) result.multiSyllable.gap1Loose.push(m.word);
+            else result.multiSyllable.gap2plusLoose.push(m.word);
+          }
         }
       }
     }

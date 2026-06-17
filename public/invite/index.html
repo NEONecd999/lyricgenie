@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lyric Genie - Song Invitation</title>
+  <title>Lyric Genie</title>
   <style>
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -33,8 +33,8 @@
 </head>
 <body>
   <div class="container">
-    <h1>You've been invited to collaborate!</h1>
-    <p>Opening Lyric Genie...</p>
+    <h1 id="title">Open Lyric Genie</h1>
+    <p id="subtitle">Opening the app&hellip;</p>
     <a href="https://apps.apple.com/app/id6739787614">Get Lyric Genie</a>
     <p class="status" id="status"></p>
   </div>
@@ -42,15 +42,20 @@
     (function() {
       var params = new URLSearchParams(window.location.search);
       var code = params.get('code');
+      var appStoreUrl = 'https://apps.apple.com/app/id6739787614';
+
       if (code) {
-        var appUrl = 'lyricgenie://invite?code=' + encodeURIComponent(code);
-        var appStoreUrl = 'https://apps.apple.com/app/id6739787614';
-        window.location.href = appUrl;
-        setTimeout(function() {
-          document.getElementById('status').textContent = 'App not found. Redirecting to App Store...';
-          window.location.href = appStoreUrl;
-        }, 1500);
+        document.getElementById('title').textContent = "You've been invited to collaborate!";
+        document.getElementById('subtitle').textContent = 'Opening Lyric Genie\u2026';
+        window.location.href = 'lyricgenie://invite?code=' + encodeURIComponent(code);
+      } else {
+        window.location.href = 'lyricgenie://';
       }
+
+      setTimeout(function() {
+        document.getElementById('status').textContent = 'App not found. Redirecting to App Store\u2026';
+        window.location.href = appStoreUrl;
+      }, 1500);
     })();
   </script>
 </body>

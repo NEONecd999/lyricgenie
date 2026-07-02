@@ -264,6 +264,13 @@ window.PHRASES = {
   "MIC":                   "M AY1 K",
   "MICS":                  "M AY1 K S",
 
+  // CMU stresses "midsummer" on the 2nd + last syllables (M IH2 D S AH1 M
+  // ER0 → sum + mer). For songwriting we want the compound stressed on the
+  // 1st + last syllables — MID-sum-MER — so the upstream rhyme anchor lands
+  // on "mid", not "sum". Primary on the first syllable, unstressed middle,
+  // secondary on the final.
+  "MIDSUMMER":             "M IH1 D S AH0 M ER2",
+
   // ─── Standalone modern slang single-words missing from CMU ───
   // (CMU was last updated ~2014, so post-2015 coinages need manual entries.)
   "RIZZ":                  "R IH1 Z",

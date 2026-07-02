@@ -2784,8 +2784,6 @@ window.DICTIONARY = Object.assign({}, window.MINED_PHRASES || {}, window.WIKTION
   "BLOWIER": "B L OW1 IY0 ER0",
   "BLOWIEST": "B L OW1 IY0 AH0 S T",
   "BLOWING": "B L OW1 IH0 NG",
-  "BLOWJOB": "B L OW1 JH AA2 B",
-  "BLOWJOBS": "B L OW1 JH AA2 B Z",
   "BLOWN": "B L OW1 N",
   "BLOWOUT": "B L OW1 AW2 T",
   "BLOWOUTS": "B L OW1 AW2 T S",

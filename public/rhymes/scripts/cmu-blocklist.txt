@@ -1,0 +1,5 @@
+# CMU keys to always exclude from the built dictionary (one lowercase key per
+# line). Sourced from words flagged for removal. Applied to both the base CMU
+# pass and the prefix-expansion pass in build-dictionary.js.
+blowjob
+blowjobs

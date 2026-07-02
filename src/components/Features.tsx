@@ -1441,6 +1441,87 @@ const CompactImport = () => {
 };
 
 // ══════════════════════════════════════════════════════════
+// Compact preview · Projects
+// A "folder" that bundles songs — with a second project peeking
+// behind it to imply a whole organized catalog.
+// ══════════════════════════════════════════════════════════
+const CompactProjects = () => {
+  const songs = [
+    { t: "Night Ride", c: LG_GREEN },
+    { t: "Golden Hour", c: LG_AMBER },
+    { t: "Ghost Mode", c: LG_PURPLE },
+  ];
+  return (
+    <div className="absolute inset-0" style={{ padding: "16px 22px" }}>
+      {/* Project peeking behind — hints at a full catalog */}
+      <div
+        className="absolute"
+        style={{
+          inset: "24px 34px 18px 30px",
+          background: "#fff",
+          borderRadius: 12,
+          transform: "rotate(-3.5deg)",
+          boxShadow: "0 2px 10px rgba(30,19,36,.07)",
+          border: "1px solid rgba(30,19,36,.05)",
+        }}
+      />
+      {/* Front project — a folder full of songs */}
+      <div
+        className="relative flex h-full flex-col"
+        style={{
+          background: "#fff",
+          borderRadius: 12,
+          padding: "11px 13px",
+          boxShadow: "0 8px 20px -6px rgba(30,19,36,.16), 0 0 0 1px rgba(30,19,36,.05)",
+        }}
+      >
+        <div className="flex items-center gap-2" style={{ marginBottom: 9 }}>
+          <div
+            className="flex flex-shrink-0 items-center justify-center"
+            style={{ width: 24, height: 24, borderRadius: 6, background: LG_PINK }}
+          >
+            <SfIcon name="folder" size={13} color="#fff" />
+          </div>
+          <div style={{ fontSize: 12, fontWeight: 700, color: LG_INK, lineHeight: 1 }}>Midnight EP</div>
+          <div className="flex-1" />
+          <div
+            style={{
+              fontSize: 9,
+              fontWeight: 700,
+              color: LG_PINK,
+              background: `${LG_PINK}18`,
+              padding: "3px 7px",
+              borderRadius: 9999,
+              letterSpacing: ".02em",
+            }}
+          >
+            5 SONGS
+          </div>
+        </div>
+        <div className="flex flex-1 flex-col justify-center gap-[5px]">
+          {songs.map((s) => (
+            <div
+              key={s.t}
+              className="flex items-center gap-2"
+              style={{
+                background: "#FAF8F0",
+                borderRadius: 6,
+                padding: "6px 9px",
+              }}
+            >
+              <span style={{ width: 6, height: 6, borderRadius: 9999, background: s.c, flexShrink: 0 }} />
+              <span style={{ fontSize: 10.5, fontWeight: 600, color: LG_INK }}>{s.t}</span>
+              <div className="flex-1" />
+              <SfIcon name="music.note.list" size={11} color={LG_INK_MUTED} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ══════════════════════════════════════════════════════════
 // Row wrapper
 // ══════════════════════════════════════════════════════════
 const SpotlightRow = ({
@@ -1586,6 +1667,13 @@ const Features = () => {
       body: "Attach song demos, voice memos, or recordings from any app and keep them side-by-side with your lyrics.",
       preview: <CompactImport />,
       tint: LG_BLUE,
+    },
+    {
+      eyebrow: "PROJECTS",
+      title: "Bundle songs into Projects.",
+      body: "Group related songs into Projects — an album, an EP, a client, or a co-writing session — so your whole catalog stays organized instead of scattered.",
+      preview: <CompactProjects />,
+      tint: LG_PINK,
     },
   ];
 

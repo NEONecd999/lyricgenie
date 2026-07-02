@@ -925,6 +925,314 @@ const AiContextSpotlight = ({ active }: { active: boolean }) => {
 };
 
 // ══════════════════════════════════════════════════════════
+// Spotlight 6 · Freestyle Mode — mumbled gibberish → real lyrics
+// Sing placeholder syllables that just sound good on the melody;
+// with the song's mood / theme / reference artists as context,
+// the AI rewrites them into real lyrics that keep the same flow.
+// ══════════════════════════════════════════════════════════
+const FREESTYLE_SETS: {
+  mood: string;
+  similar: string;
+  gibberish: string;
+  lyrics: string[];
+}[] = [
+  {
+    mood: "cinematic, late-night, yearning",
+    similar: "Bon Iver · Frank Ocean",
+    gibberish: "hmm na na… ooh dee la… da dum dee day…",
+    lyrics: ["Headlights bleed into the rain", "Chasing your ghost down Fifth again"],
+  },
+  {
+    mood: "euphoric, neon, wide-open summer",
+    similar: "HAIM · The Weeknd",
+    gibberish: "la la la… ba da ba… ooh na na nah…",
+    lyrics: ["We caught the sunset turning gold", "Your hand in mine, the night unfolds"],
+  },
+  {
+    mood: "nostalgic, dusty porch, slow-burn",
+    similar: "Zach Bryan · Kacey Musgraves",
+    gibberish: "mmm hey oh… deh dum da… ooh lah dee doo…",
+    lyrics: ["The porch light still knows my name", "But this old town don't feel the same"],
+  },
+];
+
+const FreestyleWave = ({ active }: { active: boolean }) => {
+  const bars = Array.from({ length: 34 }, (_, i) => 5 + Math.abs(Math.sin(i * 0.7)) * 20);
+  return (
+    <div className="flex items-center justify-center gap-[3px]" style={{ height: 34 }}>
+      {bars.map((h, i) => (
+        <div
+          key={i}
+          style={{
+            width: 3,
+            height: h,
+            background: LG_PINK,
+            borderRadius: 2,
+            opacity: active ? 0.8 : 0.25,
+            animation: active ? `lgWavePulse 1.1s ease-in-out ${i * 45}ms infinite` : "none",
+            transition: "opacity .4s",
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
+const FreestyleSpotlight = ({ active }: { active: boolean }) => {
+  const [setIdx, setSetIdx] = useState(0);
+  const [phase, setPhase] = useState<"listening" | "thinking" | "result">("listening");
+  const [typed, setTyped] = useState("");
+  const [linesShown, setLinesShown] = useState(0);
+
+  useEffect(() => {
+    if (!active) {
+      setSetIdx(0);
+      setPhase("listening");
+      setTyped("");
+      setLinesShown(0);
+      return;
+    }
+    let cancel = false;
+    const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
+    const run = async () => {
+      for (let s = 0; s < FREESTYLE_SETS.length && !cancel; s++) {
+        const cur = FREESTYLE_SETS[s];
+        setSetIdx(s);
+        // 1 · listening — the mumbled gibberish streams in
+        setPhase("listening");
+        setLinesShown(0);
+        setTyped("");
+        for (let c = 0; c <= cur.gibberish.length && !cancel; c++) {
+          setTyped(cur.gibberish.slice(0, c));
+          await wait(34);
+        }
+        await wait(650);
+        if (cancel) return;
+        // 2 · thinking — Genie turns the mumble into lyrics
+        setPhase("thinking");
+        await wait(1100);
+        if (cancel) return;
+        // 3 · result — real lyric lines fade up, keeping the flow
+        setPhase("result");
+        for (let l = 1; l <= cur.lyrics.length && !cancel; l++) {
+          setLinesShown(l);
+          await wait(700);
+        }
+        await wait(2400);
+      }
+      if (!cancel) run();
+    };
+    run();
+    return () => {
+      cancel = true;
+    };
+  }, [active]);
+
+  const cur = FREESTYLE_SETS[setIdx];
+
+  return (
+    <UIFrame tone="paper" mobileAspect="xl">
+      {/* Header */}
+      <div className="flex items-center gap-3" style={{ padding: "22px 26px 12px" }}>
+        <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: ".12em", color: LG_PINK }}>
+          FREESTYLE MODE
+        </div>
+        <div className="flex-1" />
+        <div
+          className="inline-flex items-center gap-1.5"
+          style={{
+            padding: "4px 9px",
+            borderRadius: 9999,
+            background: phase === "listening" ? `${LG_PINK}18` : "rgba(30,19,36,0.05)",
+            color: phase === "listening" ? LG_PINK : LG_INK_MUTED,
+            fontSize: 10,
+            fontWeight: 700,
+            letterSpacing: ".08em",
+            transition: "all .3s",
+          }}
+        >
+          <span
+            style={{
+              width: 6,
+              height: 6,
+              borderRadius: 9999,
+              background: phase === "listening" ? LG_PINK : LG_INK_MUTED,
+              animation: phase === "listening" ? "lgCaret 1s steps(2) infinite" : "none",
+            }}
+          />
+          {phase === "listening" ? "REC" : "IDLE"}
+        </div>
+      </div>
+
+      {/* Context strip — the mood / reference artists the AI writes toward */}
+      <div style={{ padding: "0 26px 6px" }}>
+        <div
+          style={{
+            fontSize: 9.5,
+            fontWeight: 600,
+            letterSpacing: ".14em",
+            textTransform: "uppercase",
+            color: LG_INK_SOFT,
+            marginBottom: 7,
+          }}
+        >
+          Using your context
+        </div>
+        <div key={setIdx} className="flex flex-wrap gap-1.5">
+          {[cur.mood, cur.similar].map((c, i) => (
+            <span
+              key={c}
+              style={{
+                background: `${LG_PURPLE}12`,
+                color: LG_INK,
+                borderRadius: 8,
+                padding: "5px 10px",
+                fontSize: 12,
+                fontWeight: 500,
+                lineHeight: 1.2,
+                animation: `lgFadeUp .3s ${i * 70}ms cubic-bezier(.4,.0,.2,1) both`,
+                opacity: 0,
+              }}
+            >
+              {c}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* Mic + live gibberish caption */}
+      <div
+        className="mx-auto flex flex-col items-center"
+        style={{ padding: "14px 26px 0", width: "100%" }}
+      >
+        <div className="relative flex items-center justify-center" style={{ height: 74 }}>
+          {phase === "listening" && (
+            <>
+              <span
+                className="absolute rounded-full"
+                style={{
+                  width: 74,
+                  height: 74,
+                  border: `2px solid ${LG_PINK}`,
+                  opacity: 0.4,
+                  animation: "lgPing 1.8s ease-out infinite",
+                }}
+              />
+              <span
+                className="absolute rounded-full"
+                style={{
+                  width: 74,
+                  height: 74,
+                  border: `2px solid ${LG_PINK}`,
+                  opacity: 0.6,
+                  animation: "lgPing 1.8s ease-out .5s infinite",
+                }}
+              />
+            </>
+          )}
+          <div
+            className="flex items-center justify-center rounded-full"
+            style={{
+              width: 52,
+              height: 52,
+              background: phase === "listening" ? LG_PINK : "#fff",
+              border: phase === "listening" ? "none" : `1.5px solid ${LG_PINK}55`,
+              boxShadow: phase === "listening" ? `0 8px 20px ${LG_PINK}55` : "none",
+              transition: "all .35s",
+            }}
+          >
+            <SfIcon name="music.microphone" size={26} color={phase === "listening" ? "#fff" : LG_PINK} />
+          </div>
+        </div>
+
+        <div style={{ marginTop: 14, width: "100%" }}>
+          <FreestyleWave active={phase === "listening"} />
+        </div>
+
+        <div
+          className="text-center"
+          style={{
+            marginTop: 12,
+            minHeight: 22,
+            fontSize: 15,
+            fontStyle: "italic",
+            color: LG_INK_MUTED,
+            letterSpacing: "-0.01em",
+          }}
+        >
+          {typed}
+          {phase === "listening" && (
+            <span
+              style={{
+                display: "inline-block",
+                width: 2,
+                height: 15,
+                marginLeft: 2,
+                background: LG_PINK,
+                verticalAlign: "-2px",
+                animation: "lgCaret 0.9s steps(2) infinite",
+              }}
+            />
+          )}
+        </div>
+      </div>
+
+      {/* Transform indicator */}
+      <div className="flex items-center justify-center gap-2" style={{ padding: "14px 26px 0" }}>
+        <span style={{ flex: 1, height: 1, background: "rgba(30,19,36,.1)" }} />
+        <span
+          className="inline-flex items-center gap-1.5"
+          style={{
+            padding: "5px 12px",
+            borderRadius: 9999,
+            background: phase === "thinking" ? LG_PURPLE : `${LG_PURPLE}14`,
+            color: phase === "thinking" ? "#fff" : LG_PURPLE,
+            fontSize: 11,
+            fontWeight: 700,
+            letterSpacing: ".02em",
+            boxShadow: phase === "thinking" ? `0 4px 14px ${LG_PURPLE}55` : "none",
+            transition: "all .3s",
+          }}
+        >
+          <SfIcon name="sparkles" size={12} color={phase === "thinking" ? "#fff" : LG_PURPLE} />
+          {phase === "thinking" ? "Writing lyrics…" : "Turn into lyrics"}
+        </span>
+        <span style={{ flex: 1, height: 1, background: "rgba(30,19,36,.1)" }} />
+      </div>
+
+      {/* Result — the real lyrics the gibberish became */}
+      <div style={{ padding: "16px 30px 0" }}>
+        <div className="mb-2 flex items-center gap-2">
+          <span style={{ width: 4, height: 16, background: LG_PINK, borderRadius: 2, display: "inline-block" }} />
+          <span style={{ color: LG_PINK, fontWeight: 700, fontSize: 12, letterSpacing: ".06em" }}>VERSE 1</span>
+        </div>
+        <div style={{ borderLeft: `2px solid ${LG_PINK}55`, paddingLeft: 15, minHeight: 62 }}>
+          {cur.lyrics.map((line, i) => {
+            const shown = phase === "result" && i < linesShown;
+            return (
+              <div
+                key={line}
+                style={{
+                  fontSize: 17,
+                  lineHeight: 1.55,
+                  fontWeight: 500,
+                  color: LG_INK,
+                  opacity: shown ? 1 : 0,
+                  transform: shown ? "translateY(0)" : "translateY(8px)",
+                  transition: "opacity .45s cubic-bezier(.4,.0,.2,1), transform .45s cubic-bezier(.4,.0,.2,1)",
+                }}
+              >
+                {line}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </UIFrame>
+  );
+};
+
+// ══════════════════════════════════════════════════════════
 // Compact row (below main spotlights)
 // ══════════════════════════════════════════════════════════
 const CompactVoice = () => {
@@ -1019,68 +1327,6 @@ const CompactSheet = () => (
       No way that I could be forgiven
       <br />
       Oh what have I done
-    </div>
-  </div>
-);
-
-// ══════════════════════════════════════════════════════════
-// Compact preview · Freestyle Mode
-// Pulsing live-mic with a streaming transcription caption
-// ══════════════════════════════════════════════════════════
-const CompactFreestyle = () => (
-  <div className="absolute inset-0">
-    <div className="absolute" style={{ top: "38%", left: "50%", transform: "translate(-50%,-50%)" }}>
-      <div className="relative flex items-center justify-center">
-        <span
-          className="absolute rounded-full"
-          style={{
-            width: 86,
-            height: 86,
-            border: `2px solid ${LG_PINK}`,
-            opacity: 0.45,
-            animation: "lgPing 1.8s ease-out infinite",
-          }}
-        />
-        <span
-          className="absolute rounded-full"
-          style={{
-            width: 62,
-            height: 62,
-            border: `2px solid ${LG_PINK}`,
-            opacity: 0.7,
-            animation: "lgPing 1.8s ease-out .45s infinite",
-          }}
-        />
-        <div
-          className="flex items-center justify-center rounded-full"
-          style={{
-            width: 42,
-            height: 42,
-            background: LG_PINK,
-            boxShadow: `0 8px 18px ${LG_PINK}60`,
-          }}
-        >
-          <SfIcon name="music.microphone" size={22} color="#fff" />
-        </div>
-      </div>
-    </div>
-    <div
-      className="absolute flex items-center gap-2"
-      style={{ left: 18, right: 18, bottom: 16 }}
-    >
-      <span
-        style={{
-          width: 6,
-          height: 6,
-          borderRadius: 9999,
-          background: LG_PINK,
-          flexShrink: 0,
-          animation: "lgCaret 1s steps(2) infinite",
-        }}
-      />
-      <span style={{ fontSize: 11, color: LG_INK_SOFT, fontStyle: "italic" }}>
-        "I fell deep into the madness…"
-      </span>
     </div>
   </div>
 );
@@ -1328,13 +1574,6 @@ const Features = () => {
       tint: LG_AMBER,
     },
     {
-      eyebrow: "FREESTYLE",
-      title: "Sing it. We'll catch the words.",
-      body: "Capture the magic by singing a melody idea off the cuff. Watch your lyrics appear as you sing, stored and linked to your song.",
-      preview: <CompactFreestyle />,
-      tint: LG_PINK,
-    },
-    {
       eyebrow: "PERFORM",
       title: "Stage-ready lyrics.",
       body: "Big, bold white text on a pure-black screen so your lyrics stay readable from behind the mic. Change the font size to your liking.",
@@ -1456,6 +1695,14 @@ const Features = () => {
           tint="rgba(58,123,208,.22)"
           child={(a) => <RhymeSpotlight active={a} />}
           cta={{ label: "Try the rhyme engine free", href: "/rhymes/" }}
+        />
+        <SpotlightRow
+          reverse
+          eyebrow="FREESTYLE MODE"
+          title="Mumble the melody. Get real lyrics."
+          body="Sing gibberish — placeholder syllables that just sound right on the melody in your head. Lyric Genie captures the flow, then uses your song's mood, theme, and reference artists to turn that mumble into real lyrics that keep the exact same phrasing."
+          tint="rgba(228,92,122,.22)"
+          child={(a) => <FreestyleSpotlight active={a} />}
         />
 
         {/* Compact cards — AND MORE */}

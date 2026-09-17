@@ -1,0 +1,298 @@
+/* =========================================================
+   LYRIC GENIE — Colors & Type tokens
+   All values derived from src/index.css (tailwind.config.ts)
+   of NEONecd999/lyricgenie. HSL in the source → hex here
+   for portability; both are noted where useful.
+   ========================================================= */
+
+/* ---------- FONTS ---------- */
+/* Lufga — the Lyric Genie brand sans.
+   The design system declares the full family (100 to 900, roman and
+   italic) against .ttf files. Those rules are removed here on purpose:
+   this site ships four faces as woff2, and leaving the .ttf rules in
+   meant the browser requested files that are not here, which showed up
+   as 404s on every page. docs.css owns every Lufga face now. */
+
+/* Serif italic foil — the editorial counterpoint to Lufga's geometric sans.
+   Academico Italic (commercial license provided). Warm book-humanist italic
+   with rounded terminals and a literary feel; pairs Lufga's geometric clarity
+   without competing. Chosen over Source Serif 4 Italic after side-by-side review.
+   Reserve for pull quotes, lyric excerpts, and "handwritten-note" moments —
+   never UI chrome, labels, or body copy. */
+@font-face {
+  font-family: "Academico";
+  src: url("fonts/Academico-Italic.otf") format("opentype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+/* Kept as fallback in case Academico fails to load */
+/* Source Serif 4 was imported from Google Fonts here. Removed: Academico
+   ships with the site and is first in --font-serif, so the import only
+   added an external request and sent every reader's address to Google.
+   The name stays in the stack below as a fallback for anyone who has it
+   installed locally. */
+
+:root {
+  /* ---------- BRAND COLOR TOKENS (raw) ----------
+     Primary rich purple is the single most important color in the system.
+     It appears as a solid, as a gradient origin, inside the logomark, and
+     as the default "hero" background on scroll. */
+  --lg-purple-50:  #F4F0FB;
+  --lg-purple-100: #E7DFF7;
+  --lg-purple-200: #D0C2EE;
+  --lg-purple-300: #B6A1E3;
+  --lg-purple-400: #9C82D6;
+  --lg-purple-500: #7F62C4;  /* rgb(127, 98, 196) — brand purple: logo / wordmark ONLY */
+  --lg-purple-600: #6F50B8;  /* hsl(258 45% 53%) — THE UI purple: buttons, links, nav scrolled, focus, borders */
+  --lg-purple-700: #6F50B8;  /* LEGACY ALIAS — was #7558BA (nav scrolled); collapsed into purple-600. Use purple-600 in new code. */
+  --lg-purple-800: #513687;
+  --lg-purple-900: #2D1D4A;
+  --lg-purple-950: #1B0F31;  /* dark-mode base bg */
+
+  --lg-lavender-400: #C48AE3; /* tailwind --accent warm-purple-glow */
+  --lg-lavender-500: #B167D1;
+
+  /* Cream — the "paper" in the app (screens have cream backgrounds).
+     Two tints: a richer one for hero bands, a lighter one for page bg. */
+  --lg-cream:       #F6ECC9;   /* hsl(47 68% 88%)  — headline cream / callout */
+  --lg-cream-light: #FAF4DD;   /* hsl(47 60% 94%) — Philosophy section bg */
+  --lg-cream-paper: #F5EFD9;   /* observed in app screens as editor bg */
+
+  /* Accent hues seen in in-app data chips */
+  --lg-green:  #6FA83C;   /* verse label / speaker name "Edan" */
+  --lg-coral:  #E8663C;   /* right-column rhymes column */
+  --lg-amber:  #D9A23A;   /* "Master" tab */
+  --lg-blue:   #3A7BD0;   /* "Highway Ghost" mood card */
+  --lg-pink:   #E45C7A;   /* "Red Light Runner" mood card */
+
+  /* Neutrals */
+  --lg-white:     #FFFFFF;
+  --lg-ink:       #1E1324;   /* hsl(270 30% 15%) foreground */
+  --lg-ink-soft:  #5D5065;   /* hsl(270 15% 40%) muted-foreground */
+  --lg-border:    #E5E4E8;   /* hsl(240 6% 90%) */
+  --lg-muted-bg:  #F3F3F5;   /* hsl(240 5% 96%) */
+
+  /* ---------- SEMANTIC COLOR TOKENS (light) ---------- */
+  --fg-1: var(--lg-ink);         /* primary text */
+  --fg-2: var(--lg-ink-soft);    /* secondary/muted */
+  --fg-brand: var(--lg-purple-600);
+  --fg-on-brand: var(--lg-white);
+  --fg-on-cream: var(--lg-purple-600);
+
+  --bg-1: var(--lg-white);        /* page */
+  --bg-2: #FBFAFD;                /* sub-bg (secondary/20) */
+  --bg-cream: var(--lg-cream-light);
+  --bg-card: var(--lg-white);
+  --bg-muted: var(--lg-muted-bg);
+  --bg-brand: var(--lg-purple-600);
+  --bg-brand-scrolled: var(--lg-purple-600);
+  --bg-inverse: var(--lg-purple-950);
+
+  --border-1: var(--lg-border);
+  --border-brand: color-mix(in srgb, var(--lg-purple-600) 20%, transparent);
+  --ring: var(--lg-purple-600);
+
+  /* Signature gradient — richer and deeper than `primary→accent`. Mined from the
+     Facebook cover + App Store screenshots: deep violet → brand purple → lavender.
+     Use this for hero headlines and hero CTAs. */
+  --gradient-primary: linear-gradient(135deg, #3F2680 0%, #6F50B8 45%, #B167D1 100%);
+  --gradient-hero:    linear-gradient(180deg, #FFFFFF 0%, #F3EFFA 100%);
+  --gradient-card:    linear-gradient(135deg, #FFFFFF 0%, #FAF7FD 100%);
+  --gradient-cta:     linear-gradient(135deg, #3F2680 0%, #6F50B8 55%, #B167D1 100%);
+
+  /* Shadows — the "glow" shadow is distinctive (purple, soft, large) */
+  --shadow-sm:         0 1px 2px rgba(30, 19, 36, 0.06);
+  --shadow-card:       0 4px 20px -4px rgba(30, 19, 36, 0.08);
+  --shadow-card-hover: 0 8px 30px -4px rgba(127, 98, 196, 0.20);
+  --shadow-glow:       0 0 60px -15px rgba(127, 98, 196, 0.40);
+  --shadow-xl:         0 24px 60px -20px rgba(127, 98, 196, 0.35);
+
+  /* Radii — rounded-3xl (24px) and rounded-full are the signatures */
+  --radius-sm:  6px;
+  --radius:    16px;    /* --radius in source = 1rem */
+  --radius-lg: 20px;    /* for cards */
+  --radius-xl: 28px;    /* for hero/feature cards (rounded-3xl) */
+  --radius-2xl: 40px;   /* for phone mockup frames (rounded-[3rem]) */
+  --radius-pill: 9999px;
+
+  /* Spacing — Tailwind-aligned */
+  --space-0: 0;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+
+  /* ---------- TYPE TOKENS ---------- */
+  --font-sans: "Lufga", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Lufga", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-serif: "Academico", "Source Serif 4", "Source Serif Pro", Georgia, "Times New Roman", serif;
+
+  /* Type scale — mobile-first numbers; hero headings grow via clamp */
+  --text-xs:   12px;
+  --text-sm:   14px;
+  --text-base: 16px;
+  --text-lg:   18px;
+  --text-xl:   20px;
+  --text-2xl:  24px;
+  --text-3xl:  30px;
+  --text-4xl:  36px;
+  --text-5xl:  48px;
+  --text-6xl:  64px;
+  --text-7xl:  80px;
+  --text-8xl:  96px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-quick: 180ms;
+  --dur-base:  300ms;
+  --dur-slow:  600ms;
+}
+
+/* ---------- DARK MODE ---------- */
+/* Matches .dark block in src/index.css — deep violet bg, cream text. */
+.dark, [data-theme="dark"] {
+  --fg-1: #F9F0CB;        /* cream foreground */
+  --fg-2: #C7B596;        /* muted cream */
+  --fg-brand: #AB8EE2;
+  --fg-on-cream: var(--lg-purple-600);
+
+  --bg-1: #19101F;        /* hsl(270 30% 8%)  */
+  --bg-2: #221728;        /* hsl(270 25% 12%) */
+  --bg-cream: var(--lg-purple-900);
+  --bg-card: #221728;
+  --bg-muted: #2A1F32;
+  --bg-brand: #AB8EE2;
+
+  --border-1: #2A1F32;
+  --ring: #AB8EE2;
+
+  --gradient-primary: linear-gradient(135deg, #8668C9 0%, #A375CF 100%);
+  --gradient-hero: linear-gradient(180deg, #19101F 0%, #221728 100%);
+
+  --shadow-card:       0 4px 20px -4px rgba(0, 0, 0, 0.6);
+  --shadow-card-hover: 0 8px 30px -4px rgba(171, 142, 226, 0.25);
+  --shadow-glow:       0 0 60px -15px rgba(171, 142, 226, 0.5);
+}
+
+/* ---------- SEMANTIC TYPE STYLES ---------- */
+
+html { font-family: var(--font-sans); color: var(--fg-1); background: var(--bg-1); }
+
+/* Display headings — big, tight, bold. The hero headline is the identity. */
+.lg-display-1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(48px, 7vw, 96px);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  color: var(--fg-1);
+}
+.lg-display-2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(36px, 5vw, 60px);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+}
+
+/* Section heads — paired with small purple eyebrow label */
+h1, .lg-h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(36px, 4.5vw, 56px);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+h2, .lg-h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(30px, 3.5vw, 44px);
+  line-height: 1.12;
+  letter-spacing: -0.015em;
+}
+h3, .lg-h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+h4, .lg-h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1.3;
+}
+
+/* Body */
+p, .lg-body {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--fg-1);
+}
+.lg-body-lg {
+  font-size: 18px;
+  line-height: 1.65;
+  color: var(--fg-2);
+}
+.lg-body-sm  { font-size: 14px; line-height: 1.55; color: var(--fg-2); }
+.lg-caption  { font-size: 12px; line-height: 1.4;  color: var(--fg-2); letter-spacing: 0.01em; }
+
+/* Eyebrow — that tiny uppercase purple label above every section head */
+.lg-eyebrow {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-brand);
+}
+
+/* Serif italic foil — for pull quotes, "lyric" excerpts, love-notes.
+   NOT for UI chrome; reserve for moments that feel handwritten. */
+.lg-quote, .lg-serif-italic {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(24px, 2.8vw, 38px);
+  line-height: 1.3;
+  letter-spacing: -0.005em;
+  color: var(--fg-1);
+}
+.lg-lyric {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.55;
+  color: var(--fg-1);
+}
+
+/* Gradient text — used on every hero "highlight" word */
+.lg-gradient-text {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+          color: transparent;
+}
+
+/* Code / mono — for IPI numbers, request counts, very rare */
+code, .lg-mono {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.92em;
+  background: var(--bg-muted);
+  padding: 0.1em 0.4em;
+  border-radius: var(--radius-sm);
+}

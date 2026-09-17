@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wish Workshop · Lyric Genie Docs</title>
+<meta name="description" content="The AI writing tool in the song editor. What it does to a line you selected, and what it does when you select nothing.">
+<link rel="canonical" href="https://lyricgenie.app/docs/editor/wish-workshop/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Wish Workshop · Lyric Genie Docs">
+<meta property="og:description" content="The AI writing tool in the song editor. What it does to a line you selected, and what it does when you select nothing.">
+<meta property="og:url" content="https://lyricgenie.app/docs/editor/wish-workshop/">
+<meta property="og:site_name" content="Lyric Genie Docs">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"TechArticle","headline":"Wish Workshop","description":"The AI writing tool in the song editor. What it does to a line you selected, and what it does when you select nothing.","url":"https://lyricgenie.app/docs/editor/wish-workshop/","inLanguage":"en","isPartOf":{"@type":"WebSite","name":"Lyric Genie Docs","url":"https://lyricgenie.app"},"about":{"@type":"SoftwareApplication","name":"Lyric Genie","applicationCategory":"MultimediaApplication","operatingSystem":"iOS, iPadOS, macOS"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Docs","item":"https://lyricgenie.app/docs/"},{"@type":"ListItem","position":2,"name":"The song editor"},{"@type":"ListItem","position":3,"name":"Wish Workshop","item":"https://lyricgenie.app/docs/editor/wish-workshop/"}]}]}</script>
+<link rel="icon" href="/docs/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/docs/favicon.ico" sizes="32x32">
+<!-- Preload the three weights actually used. Without this the first paint of
+     every page is in the fallback face and then swaps, which is most of what
+     reads as "jittery" when clicking through the sidebar. -->
+<link rel="preload" href="/docs/fonts/Lufga-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/docs/fonts/Lufga-Medium.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/docs/fonts/Lufga-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/docs/tokens.css">
+<link rel="stylesheet" href="/docs/docs.css">
+<script>
+/* Set the theme before first paint so a dark-mode reader never sees a white
+   flash. tokens.css keys dark mode off [data-theme="dark"], matching the
+   marketing site's .dark block, so the two stay in sync. */
+(function(){try{var t=localStorage.getItem('lg-docs-theme');
+if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="/docs/" aria-label="Lyric Genie Docs home">
+      <svg class="wordmark" fill="currentColor" role="img" aria-label="Lyric Genie" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 115.87 20.94"><defs><style>.cls-1{fill:currentColor}</style></defs><path class="cls-1" d="M25.29,6.43v6.06h5.61v2.01h-8.14V6.43h2.53Z"></path><path class="cls-1" d="M32.84,11.38l-4.32-4.95h3.14l2.51,2.97,2.55-2.97h2.85l-4.2,4.95v3.12h-2.53v-3.12Z"></path><path class="cls-1" d="M42.48,14.5h-2.53V6.43h6.51c2.69,0,3.5.93,3.5,2.09v.13c0,1.16-.97,1.59-1.5,1.77.82.24,1.53.81,1.53,1.85v1.18c0,.65.08.86.15.99v.05h-2.57c-.08-.1-.12-.22-.12-.51v-.93c0-.99-.43-1.42-1.68-1.42h-3.3v2.86ZM42.48,9.85h3.83c.73,0,1.02-.35,1.02-.79h0c0-.43-.28-.79-1.02-.79h-3.83v1.58Z"></path><path class="cls-1" d="M53.53,14.5h-2.53V6.43h2.53v8.07Z"></path><path class="cls-1" d="M59.85,14.65c-4.68,0-5.4-2.61-5.4-4.05v-.31c0-1.46.63-3.99,5.4-3.99h.45c4.68,0,5.4,2.23,5.4,3.18v.12h-2.68c-.06-.22-.39-1.35-2.95-1.35-2.42,0-2.97,1.08-2.97,2.09v.13c0,.95.64,2.21,2.99,2.21,2.61,0,2.88-1.25,2.94-1.43h2.68v.12c0,1.02-.8,3.28-5.41,3.28h-.45Z"></path><path class="cls-1" d="M74.99,14.65c-4.37,0-5.38-2.44-5.38-4.06v-.3c0-1.57.82-3.99,5.47-3.99h.47c4.51,0,5.3,1.96,5.35,3.06h0s-2.69.01-2.69.01c-.07-.18-.36-1.15-2.88-1.15s-3.07,1.06-3.07,2.18v.12c0,1.05.82,2.17,3.05,2.17,2.4,0,3.12-.92,3.12-1.15v-.02h-3.17v-1.53h5.68v4.52h-1.52c-.03-.29-.18-.92-.33-1.26-.35.4-1.39,1.4-3.88,1.4h-.23Z"></path><path class="cls-1" d="M90.61,6.43v1.83h-6.01v1.19h5.87v1.84h-5.87v1.32h6.12v1.88h-8.61V6.43h8.51Z"></path><path class="cls-1" d="M94.6,6.43l5.15,5.08v-5.08h2.5v8.07h-2.5l-5.48-5.35v5.35h-2.5V6.43h2.82Z"></path><path class="cls-1" d="M106.02,14.5h-2.53V6.43h2.53v8.07Z"></path><path class="cls-1" d="M115.76,6.43v1.83h-6.01v1.19h5.87v1.84h-5.87v1.32h6.12v1.88h-8.61V6.43h8.51Z"></path><path class="cls-1" d="M8.4,0c-1.43,0-2.6.85-2.6,1.51,0,.39.13.73.67.95.18-.21.86-.93,1.93-.93,1.07,0,1.75.73,1.93.93.54-.22.67-.57.67-.95,0-.67-1.16-1.51-2.6-1.51ZM8.4,2.1c-.93,0-1.53.77-1.53.77-.11.18-.17.38-.17.59,0,.76.76,1.37,1.69,1.37.94,0,1.69-.61,1.69-1.37,0-.2-.06-.41-.17-.59,0,0-.6-.77-1.53-.77ZM8.4,5.25c-3.73,0-6.76,1.35-6.76,3.01,0,.98,1.06,1.37,2.69,1.53,2.4.15,3.36-.88,5.21-1.83,0,0-.55-.15-1.93-.15s-1.93.15-1.93.15c0,0,.86-.57,2.87-.57s2.87.57,2.87.57c-.51.04-1.01.21-1.48.43-.34.16-.67.36-1,.56,1.06.68,2.53.89,3.53.84,1.63-.16,2.69-.55,2.69-1.53,0-1.66-3.03-3.01-6.76-3.01ZM8.34,9.33c-1.27.68-2.58,1.18-4.01,1.03.08.48.22.95.41,1.4.37.87.94,1.63,1.64,2.27.67.11,1.66.12,3.01-.25,1.4-.37,2.26-.9,2.79-1.34-.09-.22-.15-.44-.19-.68-.04-.32-.02-.65.08-.96.05-.16.12-.31.22-.45-1.47.13-2.78-.22-3.95-1.03h0ZM12.78,13.44c-.66.51-1.64,1.07-3.08,1.45-.6.16-1.14.26-1.63.3.41.21.84.38,1.28.51.72.21,1.46.33,2.16.59.35.13.69.31.98.54.29.23.54.52.7.86.21.46.24,1,.07,1.48-.16.48-.52.89-.97,1.12-.45.23-.99.28-1.47.14-.12-.03-.23-.08-.34-.14-.05-.02-.07,0-.02.04.33.24.71.41,1.1.51.77.19,1.6.08,2.3-.29.7-.37,1.24-1.01,1.51-1.76.26-.74.24-1.59-.06-2.31-.25-.6-.67-1.11-1.12-1.57-.45-.47-.94-.9-1.34-1.4-.02-.02-.04-.05-.05-.07Z"></path><path class="cls-1" d="M.83,12.16l-.02,1.66c-.53-.11-.99.41-.75.92.27.57,1.13.44,1.23-.18l.02-2.03,1.47-.38v1.35c-.56-.11-1.01.43-.75.94.28.54,1.09.42,1.22-.17l.03-2.76h-.02s-2.43.63-2.43.63Z"></path><path class="cls-1" d="M16.41,2.61v-.04l-.17-.54-1.1.3v1.65c-.74-.16-1.32.68-.83,1.29.45.58,1.35.3,1.44-.41v-2.06s.67-.19.67-.19Z"></path><path class="cls-1" d="M18.85,5.54l-.18-.72-1.46.36v2.16c-1.08-.28-1.79,1.12-.9,1.82.65.51,1.6.08,1.68-.74v-2.62s.85-.26.85-.26Z"></path></svg>
+      <span class="brand-tag">Docs</span>
+    </a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="sidebar"><span class="icon-menu" style="--icon:url('/docs/sf-symbols/line.3.horizontal.png')" aria-hidden="true"></span><span>Menu</span></button>
+    <div class="search">
+      <input id="search-input" type="search" placeholder="Search the docs" autocomplete="off"
+             aria-label="Search the docs" aria-controls="search-results">
+      <div id="search-results" class="search-results" hidden></div>
+    </div>
+    <button class="theme-toggle" type="button" aria-label="Switch between light and dark">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+    </button>
+    <nav class="topbar-links">
+      <a href="https://lyricgenie.app">Lyric Genie</a>
+      <a href="https://lyricgenie.app/support">Support</a>
+    </nav>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar"><button class="sidebar-close" type="button" aria-label="Close the menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button><div class="nav-group">
+      <p class="nav-group-title">Start here</p>
+      <ul><li><a href="/docs/"><span>Overview</span></a></li><li><a href="/docs/first-launch/"><span>First launch</span></a></li><li><a href="/docs/first-song/"><span>Your first song</span></a></li><li><a href="/docs/how-it-fits-together/"><span>How it fits together</span></a></li></ul>
+    </div><div class="nav-group">
+      <p class="nav-group-title">The five tabs</p>
+      <ul><li><a href="/docs/tabs/start/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/flame.png')"></span><span>Start tab</span></a></li><li><a href="/docs/tabs/songs/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/music.note.list.svg')"></span><span>Songs tab</span></a></li><li><a href="/docs/tabs/concepts/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/lightbulb.png')"></span><span>Concepts tab</span></a></li><li><a href="/docs/tabs/recordings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/recordingtape.svg')"></span><span>Recordings tab</span></a></li><li><a href="/docs/tabs/settings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/gearshape.png')"></span><span>Settings tab</span></a></li></ul>
+    </div><div class="nav-group">
+      <p class="nav-group-title">What you make</p>
+      <ul><li><a href="/docs/objects/songs/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/music.note.list.svg')"></span><span>Songs</span></a></li><li><a href="/docs/objects/recordings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/recordingtape.svg')"></span><span>Recordings</span></a></li><li><a href="/docs/objects/concepts/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/lightbulb.png')"></span><span>Concepts</span></a></li><li><a href="/docs/objects/projects/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/folder.svg')"></span><span>Projects</span></a></li></ul>
+    </div><div class="nav-group">
+      <p class="nav-group-title">Starting a song</p>
+      <ul><li><a href="/docs/guides/song-wizard/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/wand.and.sparkles.svg')"></span><span>The song wizard</span></a></li><li><a href="/docs/guides/freestyle/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/music.microphone.svg')"></span><span>Freestyle</span></a></li><li><a href="/docs/guides/importing/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.arrow.down.png')"></span><span>Importing files</span></a></li></ul>
+    </div><div class="nav-group">
+      <p class="nav-group-title">The song editor</p>
+      <ul><li><a href="/docs/editor/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.pencil.png')"></span><span>The song editor</span></a></li><li><a href="/docs/editor/sections/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/list.bullet.png')"></span><span>Sections and song structure</span></a></li><li><a href="/docs/editor/wish-workshop/" class="active"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/lamp.svg')"></span><span>Wish Workshop</span></a></li><li><a href="/docs/editor/selecting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/text.cursor.png')"></span><span>Selecting and editing lines</span></a></li><li><a href="/docs/editor/arrange-mode/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.grid.2x2.svg')"></span><span>Arrange mode</span></a></li><li><a href="/docs/editor/perform/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.and.background.dotted.svg')"></span><span>Perform</span></a></li><li><a href="/docs/editor/recordings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/recordingtape.svg')"></span><span>Recordings in a song</span></a></li><li><a href="/docs/editor/rhymes/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/character.book.closed.fill.svg')"></span><span>Rhymes</span></a></li><li><a href="/docs/editor/syllables/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/textformat.123.png')"></span><span>Syllables</span></a></li><li><a href="/docs/editor/ai-style/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/sparkles.svg')"></span><span>AI Style</span></a></li><li><a href="/docs/editor/inline-suggestions/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/sparkle.svg')"></span><span>In-line suggestions</span></a></li><li><a href="/docs/editor/lyric-sheets/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.arrow.up.svg')"></span><span>Lyric sheets</span></a></li></ul>
+    </div><div class="nav-group">
+      <p class="nav-group-title">Collaboration</p>
+      <ul><li><a href="/docs/collaboration/inviting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.badge.plus.png')"></span><span>Inviting a co-writer</span></a></li><li><a href="/docs/collaboration/tabs/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.2.fill.svg')"></span><span>Collaborator tabs</span></a></li><li><a href="/docs/collaboration/sending/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/tray.png')"></span><span>Sending lines to a co-writer</span></a></li><li><a href="/docs/collaboration/master/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/doc.text.fill.png')"></span><span>The Master</span></a></li><li><a href="/docs/collaboration/notifications/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/bell.svg')"></span><span>Notifications</span></a></li></ul>
+    </div><div class="nav-group">
+      <p class="nav-group-title">Your account</p>
+      <ul><li><a href="/docs/account/signing-in/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/rectangle.portrait.and.arrow.right.png')"></span><span>Signing in</span></a></li><li><a href="/docs/account/profile/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.png')"></span><span>Your profile</span></a></li><li><a href="/docs/account/plans/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/wand.and.sparkles.svg')"></span><span>Plans and Pro</span></a></li><li><a href="/docs/account/preferences/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/slider.horizontal.3.png')"></span><span>Preferences</span></a></li><li><a href="/docs/account/deleting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/trash.png')"></span><span>Deleting your account</span></a></li></ul>
+    </div><div class="nav-group">
+      <p class="nav-group-title">Reference</p>
+      <ul><li><a href="/docs/reference/limits/"><span>Plan limits</span></a></li><li><a href="/docs/reference/formats/"><span>Supported formats</span></a></li><li><a href="/docs/reference/glossary/"><span>Glossary</span></a></li></ul>
+    </div><div class="nav-group">
+      <p class="nav-group-title">Help</p>
+      <ul><li><a href="/docs/faq/"><span>FAQ</span></a></li><li><a href="/docs/troubleshooting/"><span>Troubleshooting</span></a></li></ul>
+    </div></aside>
+  <main id="main" class="content">
+    <article class="prose">
+      <p class="eyebrow">The song editor</p>
+      <h1><span class="title-icon" style="--icon:url('/docs/sf-symbols/lamp.svg')" aria-hidden="true"></span>Wish Workshop</h1>
+      <p class="lede">The AI writing tool in the song editor. What it does to a line you selected, and what it does when you select nothing.</p>
+      <p>Wish Workshop is the main AI writing tool. You open it with the genie lamp
+button at the bottom right of <a href="/docs/editor/">the song editor</a>.</p>
+<p>It does two quite different jobs, and which one you get depends entirely on
+whether you selected any text before you tapped the lamp. That is the single
+thing to understand about it.</p>
+<h2 id="two-ways-in">Two ways in<a class="hanchor" href="#two-ways-in" aria-label="Link to this section">#</a></h2>
+<p><strong>Select a line first</strong> and Wish Workshop works on that line. Your selection
+appears as a purple bubble at the top, the action button reads <strong>Replace</strong>, and
+a row of one-tap wishes lights up along the bottom.</p>
+<figure class="fig" style="max-width:min(23rem, 330px)">
+  <div class="fig-shot">
+    <img src="/docs/img/wish-workshop-selection.png" alt="Wish Workshop with a lyric line selected, showing the line as a purple bubble and the wish chips enabled" width="330" height="717" loading="lazy" decoding="async">
+    <span class="fig-mark" style="left:19%;top:45%;width:30%;height:5%;aspect-ratio:auto" aria-label="The line you selected"><span class="fig-badge">1</span></span><span class="fig-mark" style="left:50%;top:82%;width:92%;height:5%;aspect-ratio:auto" aria-label="Constraints. Both are on until you turn them off"><span class="fig-badge">2</span></span><span class="fig-mark" style="left:50%;top:88%;width:92%;height:4%;aspect-ratio:auto" aria-label="One-tap wishes. Swipe for many more"><span class="fig-badge">3</span></span>
+  </div>
+  <ol class="fig-legend"><li><span class="fig-key">1</span>The line you selected</li><li><span class="fig-key">2</span>Constraints. Both are on until you turn them off</li><li><span class="fig-key">3</span>One-tap wishes. Swipe for many more</li></ol>
+  <figcaption>Selection mode. The workshop rewrites the line you gave it.</figcaption>
+</figure>
+<p><strong>Select nothing</strong> and you get Creative Spark instead, which generates new
+material rather than changing anything you wrote. The action button reads
+<strong>Insert</strong>, and the one-tap wishes are greyed out, because there is nothing for
+them to act on.</p>
+<figure class="fig" style="max-width:min(23rem, 330px)">
+  <div class="fig-shot">
+    <img src="/docs/img/wish-creative-spark.png" alt="Wish Workshop with nothing selected, showing the four Creative Spark options" width="330" height="717" loading="lazy" decoding="async">
+  </div>
+  <figcaption>Spark mode. The same sheet, a different job.</figcaption>
+</figure>
+<h2 id="it-asks-for-context-first">It asks for context first<a class="hanchor" href="#it-asks-for-context-first" aria-label="Link to this section">#</a></h2>
+<p>The first time you open it on a song with no <a href="/docs/editor/">AI Context</a>, Wish
+Workshop stops and asks for some before it will do anything.</p>
+<figure class="fig" style="max-width:min(23rem, 330px)">
+  <div class="fig-shot">
+    <img src="/docs/img/wish-context-prompt.png" alt="The Better AI Suggestions screen asking for mood, theme and similar artists" width="330" height="717" loading="lazy" decoding="async">
+  </div>
+  <figcaption>Mood, theme and similar artists, asked for at the door.</figcaption>
+</figure>
+<p>You can tap <strong>Continue Anyway</strong> and skip it. It is worth a minute of your time
+instead. These three fields are what the AI reads to work out what your song is
+supposed to sound like, and the difference between a filled-in song and an
+empty one is not subtle.</p>
+<p><strong>Theme</strong> does the most work of the three, and it rewards being specific. The
+app's own example is a good model: &quot;she leaves the town that made her small&quot;
+will get you further than &quot;leaving home&quot;.</p>
+<p>Whatever you enter here is saved to the song, so you are asked once, not every
+time.</p>
+<h2 id="rewriting-a-line">Rewriting a line<a class="hanchor" href="#rewriting-a-line" aria-label="Link to this section">#</a></h2>
+<p>With a line selected, you have three ways to ask for a change.</p>
+<p><strong>Tap a wish.</strong> The row along the bottom starts with <strong>Rewrite</strong>, <strong>Tweak</strong>,
+<strong>Happier</strong> and <strong>Darker</strong>, and scrolls sideways to around thirty more. They
+range from tonal (More Vulnerable, More Sarcastic, More Nostalgic) to technical
+(Make It Rhyme, Easier to Sing, More Alliteration).</p>
+<p><strong>Describe what you want.</strong> The field at the bottom reads <em>or describe your
+wish...</em> and takes plain English. Use it when none of the chips is quite the
+thing.</p>
+<p><strong>Set the constraints first.</strong> Two toggles sit above the chips, and both are
+<strong>on</strong> by default.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Toggle</th>
+<th>What it protects</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Keep end rhyme</strong></td>
+<td>The rhyme at the end of the line survives the rewrite. On a multi-line selection this becomes <strong>Keep rhyme scheme</strong>.</td>
+</tr>
+<tr>
+<td><strong>Keep meter/syllables</strong></td>
+<td>The new line is singable to the same melody as the old one.</td>
+</tr>
+</tbody>
+</table></div>
+<p>Those defaults are the right ones most of the time. Turn them off when you want
+a genuinely free rewrite and you are willing to re-fit the melody.</p>
+<aside class="callout callout-tip">
+<p class="callout-title"><span class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg></span>Tip</p>
+<div class="callout-body">
+<p>A selection can be up to six lines and 500 characters. Ask for more than that
+and the app tells you so rather than sending it. If you need a whole verse
+rewritten, do it a few lines at a time.</p>
+</div>
+</aside>
+<h2 id="reading-a-result">Reading a result<a class="hanchor" href="#reading-a-result" aria-label="Link to this section">#</a></h2>
+<p>A wish comes back as a stack of options, not one answer.</p>
+<figure class="fig" style="max-width:min(23rem, 330px)">
+  <div class="fig-shot">
+    <img src="/docs/img/wish-result.png" alt="Spark Lines results, seven lines with one selected, a Load More button, a page indicator and an eye button" width="330" height="717" loading="lazy" decoding="async">
+    <span class="fig-mark" style="left:90%;top:16.6%;width:12%" aria-label="Preview a line in place"><span class="fig-badge">1</span></span><span class="fig-mark" style="left:50%;top:22.7%;width:88%;height:6%;aspect-ratio:auto" aria-label="Tap one to choose it"><span class="fig-badge">2</span></span><span class="fig-mark" style="left:50%;top:60.2%;width:40%;height:5%;aspect-ratio:auto" aria-label="Another batch, same wish"><span class="fig-badge">3</span></span><span class="fig-mark" style="left:50%;top:83.2%;width:16%;height:2.5%;aspect-ratio:auto" aria-label="More than one page"><span class="fig-badge">4</span></span>
+  </div>
+  <ol class="fig-legend"><li><span class="fig-key">1</span>Preview a line in place</li><li><span class="fig-key">2</span>Tap one to choose it</li><li><span class="fig-key">3</span>Another batch, same wish</li><li><span class="fig-key">4</span>More than one page</li></ol>
+  <figcaption>One wish, seven lines, and two pages of them.</figcaption>
+</figure>
+<p>Three things on this screen are easy to miss.</p>
+<ul>
+<li><strong>Load More</strong> asks for another batch without spending a new wish on a
+reworded prompt.</li>
+<li><strong>The dots at the bottom</strong> mean there is more than one page of results.
+Swipe sideways, or use the chevrons at the edges, to move between them.</li>
+<li><strong>The eye button</strong> previews the selected line in place, in your lyrics, so
+you can see it in context before you commit to it.</li>
+</ul>
+<figure class="fig" style="max-width:min(23rem, 330px)">
+  <div class="fig-shot">
+    <img src="/docs/img/wish-preview-in-place.png" alt="A generated line shown greyed in the lyrics with an alternative below it, an X, and the words Swipe for more" width="330" height="717" loading="lazy" decoding="async">
+    <span class="fig-mark" style="left:50%;top:45%;width:88%;height:4%;aspect-ratio:auto" aria-label="The line you picked, shown in place"><span class="fig-badge">1</span></span><span class="fig-mark" style="left:50%;top:49%;width:88%;height:4%;aspect-ratio:auto" aria-label="Swipe sideways for the next one"><span class="fig-badge">2</span></span>
+  </div>
+  <ol class="fig-legend"><li><span class="fig-key">1</span>The line you picked, shown in place</li><li><span class="fig-key">2</span>Swipe sideways for the next one</li></ol>
+  <figcaption>The preview sits in the song without being part of it yet.</figcaption>
+</figure>
+<p>The greyed line is the one you chose and the coloured line under it is the next
+option. Swipe sideways to walk through them in place, which is a better way to
+judge a line than reading it on the results screen.</p>
+<h2 id="taking-the-result">Taking the result<a class="hanchor" href="#taking-the-result" aria-label="Link to this section">#</a></h2>
+<p>Nothing changes in your song until you say so. The button at the top right
+applies the result, and the chevron beside it opens the other options.</p>
+<ul>
+<li><strong>Replace Selection</strong> puts the new line where the old one was.</li>
+<li><strong>Insert at Top</strong> and <strong>Insert at Bottom</strong> add it without removing anything.</li>
+<li><strong>Replace Title</strong> swaps the song title instead, for a title wish.</li>
+<li><strong>Add to Scratchpad</strong> parks it in <a href="/docs/editor/">the Scratchpad</a> to decide later.</li>
+<li><strong>Copy to Clipboard</strong> takes it out of the app.</li>
+</ul>
+<p>If a result is close but not right, ask again from the same screen. The workshop
+keeps iterating on the same thread rather than starting over.</p>
+<h2 id="creative-spark">Creative Spark<a class="hanchor" href="#creative-spark" aria-label="Link to this section">#</a></h2>
+<p>With nothing selected, you get four options.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Option</th>
+<th>What you get</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Spark Sections</strong></td>
+<td>A complete verse, chorus, bridge or pre-chorus.</td>
+</tr>
+<tr>
+<td><strong>Spark Titles</strong></td>
+<td>Song title ideas.</td>
+</tr>
+<tr>
+<td><strong>Spark Phrases</strong></td>
+<td>Phrases and hooks, not finished lines.</td>
+</tr>
+<tr>
+<td><strong>Spark Lines</strong></td>
+<td>Complete lyrical lines.</td>
+</tr>
+</tbody>
+</table></div>
+<p>Spark Phrases is the one people underuse. A hook you can build a chorus around
+is often more useful than a finished chorus you did not write.</p>
+<h2 id="history">History<a class="hanchor" href="#history" aria-label="Link to this section">#</a></h2>
+<p><strong>History</strong>, at the bottom right of the sheet, keeps every wish session for
+this song. Tap one to reload it, including the results you did not take.</p>
+<p>It is per song, so a session you are looking for is in the song it belongs to,
+not in one long global list. Each entry says how many iterations it holds, and
+<strong>Load More</strong> pages further back.</p>
+<p>Sessions accumulate. Swipe one away to delete just that thread, which asks
+first, or use <strong>Clear All</strong> to empty the song's history. A song with no history
+yet says <strong>Nothing to revisit yet</strong>.</p>
+<h2 id="when-it-will-not-run">When it will not run<a class="hanchor" href="#when-it-will-not-run" aria-label="Link to this section">#</a></h2>
+<p>Two different things can stop it, and they look different.</p>
+<p><strong>It asks for more to work with.</strong> If the song has neither context nor a title,
+the workshop says so instead of guessing. Fill in a couple of the context
+fields and try again.</p>
+<p><strong>It asks you to upgrade.</strong> Wish Workshop needs AI access. Free accounts get a
+small number of AI calls to try it with, and the upgrade screen appears when
+those run out.</p>
+<aside class="callout callout-pro">
+<p class="callout-title"><span class="callout-icon"><span class="pro-chip">Pro</span></span>Pro plan</p>
+<div class="callout-body">
+<p>Wish Workshop is a Pro feature. The free plan includes a handful of AI calls
+so you can see what it does, and Pro raises that to
+5,000 a month. The exact numbers are on
+<a href="/docs/reference/limits/">Plan limits</a>.</p>
+</div>
+</aside>
+
+    </article>
+    <nav class="pager">
+      <a class="pager-prev" href="/docs/editor/sections/"><span>Previous</span>Sections and song structure</a>
+      <a class="pager-next" href="/docs/editor/selecting/"><span>Next</span>Selecting and editing lines</a>
+    </nav>
+    <footer class="page-footer">
+      <p>Something missing or wrong on this page? Email
+        <a href="mailto:support@lyricgenie.app">support@lyricgenie.app</a>.</p>
+      <p class="footer-version">Written for Lyric Genie <strong>v2.19</strong>. Your version is under the logo in <a href="/docs/tabs/settings/">Settings</a>.</p>
+    </footer>
+  </main>
+  <nav class="toc" aria-label="On this page">
+         <p class="toc-title">On this page</p>
+         <ul><li><a href="#two-ways-in">Two ways in</a></li><li><a href="#it-asks-for-context-first">It asks for context first</a></li><li><a href="#rewriting-a-line">Rewriting a line</a></li><li><a href="#reading-a-result">Reading a result</a></li><li><a href="#taking-the-result">Taking the result</a></li><li><a href="#creative-spark">Creative Spark</a></li><li><a href="#history">History</a></li><li><a href="#when-it-will-not-run">When it will not run</a></li></ul>
+       </nav>
+</div>
+
+<script>window.LG_DOCS_BASE = "/docs/";</script>
+<script src="/docs/docs.js" defer></script>
+</body>
+</html>

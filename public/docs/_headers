@@ -1,0 +1,21 @@
+# Cloudflare Pages response headers.
+#
+# Screenshots are the bulk of this site's weight and they change rarely,
+# so they get a long cache with revalidation. HTML stays short-lived so a
+# content fix is visible right away.
+
+/img/*
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/docs.css
+  Cache-Control: public, max-age=3600
+/docs.js
+  Cache-Control: public, max-age=3600
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN

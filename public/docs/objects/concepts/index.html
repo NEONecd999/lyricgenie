@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Concepts · Lyric Genie Docs</title>
+<meta name="description" content="Ideas you have not turned into songs yet, and the one AI feature that makes them for you.">
+<link rel="canonical" href="https://lyricgenie.app/docs/objects/concepts/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Concepts · Lyric Genie Docs">
+<meta property="og:description" content="Ideas you have not turned into songs yet, and the one AI feature that makes them for you.">
+<meta property="og:url" content="https://lyricgenie.app/docs/objects/concepts/">
+<meta property="og:site_name" content="Lyric Genie Docs">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"TechArticle","headline":"Concepts","description":"Ideas you have not turned into songs yet, and the one AI feature that makes them for you.","url":"https://lyricgenie.app/docs/objects/concepts/","inLanguage":"en","isPartOf":{"@type":"WebSite","name":"Lyric Genie Docs","url":"https://lyricgenie.app"},"about":{"@type":"SoftwareApplication","name":"Lyric Genie","applicationCategory":"MultimediaApplication","operatingSystem":"iOS, iPadOS, macOS"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Docs","item":"https://lyricgenie.app/docs/"},{"@type":"ListItem","position":2,"name":"What you make"},{"@type":"ListItem","position":3,"name":"Concepts","item":"https://lyricgenie.app/docs/objects/concepts/"}]}]}</script>
+<link rel="icon" href="/docs/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/docs/favicon.ico" sizes="32x32">
+<!-- Preload the three weights actually used. Without this the first paint of
+     every page is in the fallback face and then swaps, which is most of what
+     reads as "jittery" when clicking through the sidebar. -->
+<link rel="preload" href="/docs/fonts/Lufga-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/docs/fonts/Lufga-Medium.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/docs/fonts/Lufga-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/docs/tokens.css">
+<link rel="stylesheet" href="/docs/docs.css">
+<script>
+/* Set the theme before first paint so a dark-mode reader never sees a white
+   flash. tokens.css keys dark mode off [data-theme="dark"], matching the
+   marketing site's .dark block, so the two stay in sync. */
+(function(){try{var t=localStorage.getItem('lg-docs-theme');
+if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="/docs/" aria-label="Lyric Genie Docs home">
+      <svg class="wordmark" fill="currentColor" role="img" aria-label="Lyric Genie" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 115.87 20.94"><defs><style>.cls-1{fill:currentColor}</style></defs><path class="cls-1" d="M25.29,6.43v6.06h5.61v2.01h-8.14V6.43h2.53Z"></path><path class="cls-1" d="M32.84,11.38l-4.32-4.95h3.14l2.51,2.97,2.55-2.97h2.85l-4.2,4.95v3.12h-2.53v-3.12Z"></path><path class="cls-1" d="M42.48,14.5h-2.53V6.43h6.51c2.69,0,3.5.93,3.5,2.09v.13c0,1.16-.97,1.59-1.5,1.77.82.24,1.53.81,1.53,1.85v1.18c0,.65.08.86.15.99v.05h-2.57c-.08-.1-.12-.22-.12-.51v-.93c0-.99-.43-1.42-1.68-1.42h-3.3v2.86ZM42.48,9.85h3.83c.73,0,1.02-.35,1.02-.79h0c0-.43-.28-.79-1.02-.79h-3.83v1.58Z"></path><path class="cls-1" d="M53.53,14.5h-2.53V6.43h2.53v8.07Z"></path><path class="cls-1" d="M59.85,14.65c-4.68,0-5.4-2.61-5.4-4.05v-.31c0-1.46.63-3.99,5.4-3.99h.45c4.68,0,5.4,2.23,5.4,3.18v.12h-2.68c-.06-.22-.39-1.35-2.95-1.35-2.42,0-2.97,1.08-2.97,2.09v.13c0,.95.64,2.21,2.99,2.21,2.61,0,2.88-1.25,2.94-1.43h2.68v.12c0,1.02-.8,3.28-5.41,3.28h-.45Z"></path><path class="cls-1" d="M74.99,14.65c-4.37,0-5.38-2.44-5.38-4.06v-.3c0-1.57.82-3.99,5.47-3.99h.47c4.51,0,5.3,1.96,5.35,3.06h0s-2.69.01-2.69.01c-.07-.18-.36-1.15-2.88-1.15s-3.07,1.06-3.07,2.18v.12c0,1.05.82,2.17,3.05,2.17,2.4,0,3.12-.92,3.12-1.15v-.02h-3.17v-1.53h5.68v4.52h-1.52c-.03-.29-.18-.92-.33-1.26-.35.4-1.39,1.4-3.88,1.4h-.23Z"></path><path class="cls-1" d="M90.61,6.43v1.83h-6.01v1.19h5.87v1.84h-5.87v1.32h6.12v1.88h-8.61V6.43h8.51Z"></path><path class="cls-1" d="M94.6,6.43l5.15,5.08v-5.08h2.5v8.07h-2.5l-5.48-5.35v5.35h-2.5V6.43h2.82Z"></path><path class="cls-1" d="M106.02,14.5h-2.53V6.43h2.53v8.07Z"></path><path class="cls-1" d="M115.76,6.43v1.83h-6.01v1.19h5.87v1.84h-5.87v1.32h6.12v1.88h-8.61V6.43h8.51Z"></path><path class="cls-1" d="M8.4,0c-1.43,0-2.6.85-2.6,1.51,0,.39.13.73.67.95.18-.21.86-.93,1.93-.93,1.07,0,1.75.73,1.93.93.54-.22.67-.57.67-.95,0-.67-1.16-1.51-2.6-1.51ZM8.4,2.1c-.93,0-1.53.77-1.53.77-.11.18-.17.38-.17.59,0,.76.76,1.37,1.69,1.37.94,0,1.69-.61,1.69-1.37,0-.2-.06-.41-.17-.59,0,0-.6-.77-1.53-.77ZM8.4,5.25c-3.73,0-6.76,1.35-6.76,3.01,0,.98,1.06,1.37,2.69,1.53,2.4.15,3.36-.88,5.21-1.83,0,0-.55-.15-1.93-.15s-1.93.15-1.93.15c0,0,.86-.57,2.87-.57s2.87.57,2.87.57c-.51.04-1.01.21-1.48.43-.34.16-.67.36-1,.56,1.06.68,2.53.89,3.53.84,1.63-.16,2.69-.55,2.69-1.53,0-1.66-3.03-3.01-6.76-3.01ZM8.34,9.33c-1.27.68-2.58,1.18-4.01,1.03.08.48.22.95.41,1.4.37.87.94,1.63,1.64,2.27.67.11,1.66.12,3.01-.25,1.4-.37,2.26-.9,2.79-1.34-.09-.22-.15-.44-.19-.68-.04-.32-.02-.65.08-.96.05-.16.12-.31.22-.45-1.47.13-2.78-.22-3.95-1.03h0ZM12.78,13.44c-.66.51-1.64,1.07-3.08,1.45-.6.16-1.14.26-1.63.3.41.21.84.38,1.28.51.72.21,1.46.33,2.16.59.35.13.69.31.98.54.29.23.54.52.7.86.21.46.24,1,.07,1.48-.16.48-.52.89-.97,1.12-.45.23-.99.28-1.47.14-.12-.03-.23-.08-.34-.14-.05-.02-.07,0-.02.04.33.24.71.41,1.1.51.77.19,1.6.08,2.3-.29.7-.37,1.24-1.01,1.51-1.76.26-.74.24-1.59-.06-2.31-.25-.6-.67-1.11-1.12-1.57-.45-.47-.94-.9-1.34-1.4-.02-.02-.04-.05-.05-.07Z"></path><path class="cls-1" d="M.83,12.16l-.02,1.66c-.53-.11-.99.41-.75.92.27.57,1.13.44,1.23-.18l.02-2.03,1.47-.38v1.35c-.56-.11-1.01.43-.75.94.28.54,1.09.42,1.22-.17l.03-2.76h-.02s-2.43.63-2.43.63Z"></path><path class="cls-1" d="M16.41,2.61v-.04l-.17-.54-1.1.3v1.65c-.74-.16-1.32.68-.83,1.29.45.58,1.35.3,1.44-.41v-2.06s.67-.19.67-.19Z"></path><path class="cls-1" d="M18.85,5.54l-.18-.72-1.46.36v2.16c-1.08-.28-1.79,1.12-.9,1.82.65.51,1.6.08,1.68-.74v-2.62s.85-.26.85-.26Z"></path></svg>
+      <span class="brand-tag">Docs</span>
+    </a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="sidebar"><span class="icon-menu" style="--icon:url('/docs/sf-symbols/line.3.horizontal.png')" aria-hidden="true"></span><span>Menu</span></button>
+    <div class="search">
+      <input id="search-input" type="search" placeholder="Search the docs" autocomplete="off"
+             aria-label="Search the docs" aria-controls="search-results">
+      <div id="search-results" class="search-results" hidden></div>
+    </div>
+    <button class="theme-toggle" type="button" aria-label="Switch between light and dark">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+    </button>
+    <nav class="topbar-links">
+      <a href="https://lyricgenie.app">Lyric Genie</a>
+      <a href="https://lyricgenie.app/support">Support</a>
+    </nav>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar"><button class="sidebar-close" type="button" aria-label="Close the menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button><div class="nav-group">
+      <p class="nav-group-title">Start here</p>
+      <ul><li><a href="/docs/"><span>Overview</span></a></li><li><a href="/docs/first-launch/"><span>First launch</span></a></li><li><a href="/docs/first-song/"><span>Your first song</span></a></li><li><a href="/docs/how-it-fits-together/"><span>How it fits together</span></a></li></ul>
+    </div><div class="nav-group">
+      <p class="nav-group-title">The five tabs</p>
+      <ul><li><a href="/docs/tabs/start/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/flame.png')"></span><span>Start tab</span></a></li><li><a href="/docs/tabs/songs/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/music.note.list.svg')"></span><span>Songs tab</span></a></li><li><a href="/docs/tabs/concepts/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/lightbulb.png')"></span><span>Concepts tab</span></a></li><li><a href="/docs/tabs/recordings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/recordingtape.svg')"></span><span>Recordings tab</span></a></li><li><a href="/docs/tabs/settings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/gearshape.png')"></span><span>Settings tab</span></a></li></ul>
+    </div><div class="nav-group">
+      <p class="nav-group-title">What you make</p>
+      <ul><li><a href="/docs/objects/songs/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/music.note.list.svg')"></span><span>Songs</span></a></li><li><a href="/docs/objects/recordings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/recordingtape.svg')"></span><span>Recordings</span></a></li><li><a href="/docs/objects/concepts/" class="active"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/lightbulb.png')"></span><span>Concepts</span></a></li><li><a href="/docs/objects/projects/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/folder.svg')"></span><span>Projects</span></a></li></ul>
+    </div><div class="nav-group">
+      <p class="nav-group-title">Starting a song</p>
+      <ul><li><a href="/docs/guides/song-wizard/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/wand.and.sparkles.svg')"></span><span>The song wizard</span></a></li><li><a href="/docs/guides/freestyle/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/music.microphone.svg')"></span><span>Freestyle</span></a></li><li><a href="/docs/guides/importing/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.arrow.down.png')"></span><span>Importing files</span></a></li></ul>
+    </div><div class="nav-group">
+      <p class="nav-group-title">The song editor</p>
+      <ul><li><a href="/docs/editor/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.pencil.png')"></span><span>The song editor</span></a></li><li><a href="/docs/editor/sections/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/list.bullet.png')"></span><span>Sections and song structure</span></a></li><li><a href="/docs/editor/wish-workshop/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/lamp.svg')"></span><span>Wish Workshop</span></a></li><li><a href="/docs/editor/selecting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/text.cursor.png')"></span><span>Selecting and editing lines</span></a></li><li><a href="/docs/editor/arrange-mode/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.grid.2x2.svg')"></span><span>Arrange mode</span></a></li><li><a href="/docs/editor/perform/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.and.background.dotted.svg')"></span><span>Perform</span></a></li><li><a href="/docs/editor/recordings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/recordingtape.svg')"></span><span>Recordings in a song</span></a></li><li><a href="/docs/editor/rhymes/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/character.book.closed.fill.svg')"></span><span>Rhymes</span></a></li><li><a href="/docs/editor/syllables/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/textformat.123.png')"></span><span>Syllables</span></a></li><li><a href="/docs/editor/ai-style/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/sparkles.svg')"></span><span>AI Style</span></a></li><li><a href="/docs/editor/inline-suggestions/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/sparkle.svg')"></span><span>In-line suggestions</span></a></li><li><a href="/docs/editor/lyric-sheets/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.arrow.up.svg')"></span><span>Lyric sheets</span></a></li></ul>
+    </div><div class="nav-group">
+      <p class="nav-group-title">Collaboration</p>
+      <ul><li><a href="/docs/collaboration/inviting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.badge.plus.png')"></span><span>Inviting a co-writer</span></a></li><li><a href="/docs/collaboration/tabs/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.2.fill.svg')"></span><span>Collaborator tabs</span></a></li><li><a href="/docs/collaboration/sending/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/tray.png')"></span><span>Sending lines to a co-writer</span></a></li><li><a href="/docs/collaboration/master/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/doc.text.fill.png')"></span><span>The Master</span></a></li><li><a href="/docs/collaboration/notifications/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/bell.svg')"></span><span>Notifications</span></a></li></ul>
+    </div><div class="nav-group">
+      <p class="nav-group-title">Your account</p>
+      <ul><li><a href="/docs/account/signing-in/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/rectangle.portrait.and.arrow.right.png')"></span><span>Signing in</span></a></li><li><a href="/docs/account/profile/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.png')"></span><span>Your profile</span></a></li><li><a href="/docs/account/plans/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/wand.and.sparkles.svg')"></span><span>Plans and Pro</span></a></li><li><a href="/docs/account/preferences/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/slider.horizontal.3.png')"></span><span>Preferences</span></a></li><li><a href="/docs/account/deleting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/trash.png')"></span><span>Deleting your account</span></a></li></ul>
+    </div><div class="nav-group">
+      <p class="nav-group-title">Reference</p>
+      <ul><li><a href="/docs/reference/limits/"><span>Plan limits</span></a></li><li><a href="/docs/reference/formats/"><span>Supported formats</span></a></li><li><a href="/docs/reference/glossary/"><span>Glossary</span></a></li></ul>
+    </div><div class="nav-group">
+      <p class="nav-group-title">Help</p>
+      <ul><li><a href="/docs/faq/"><span>FAQ</span></a></li><li><a href="/docs/troubleshooting/"><span>Troubleshooting</span></a></li></ul>
+    </div></aside>
+  <main id="main" class="content">
+    <article class="prose">
+      <p class="eyebrow">What you make</p>
+      <h1><span class="title-icon" style="--icon:url('/docs/sf-symbols/lightbulb.png')" aria-hidden="true"></span>Concepts</h1>
+      <p class="lede">Ideas you have not turned into songs yet, and the one AI feature that makes them for you.</p>
+      <p>A concept is a song idea before it is a song. It holds a title, a mood, a theme
+and some similar artists. It does not hold lyrics, because an idea with lyrics
+is a song.</p>
+<p>The app's own description is the clearest one: concepts are creative starting
+points that shape a song before you write a single word.</p>
+<p>Concepts live in their own tab so a half-formed idea does not clutter your list
+of real work in progress.</p>
+<p>They are laid out as a grid of cards. See
+<a href="/docs/tabs/concepts/">The Concepts tab</a>.</p>
+<h2 id="writing-one">Writing one<a class="hanchor" href="#writing-one" aria-label="Link to this section">#</a></h2>
+<p>Tap <strong>+</strong> on the Concepts tab and a blank card appears in place, with the four
+fields on it.</p>
+<figure class="fig" style="max-width:min(23rem, 330px)">
+  <div class="fig-shot">
+    <img src="/docs/img/concept-new.png" alt="A new blank concept card with Title, Mood, Theme and Similar Artists fields, an X to cancel and a tick to save" width="330" height="717" loading="lazy" decoding="async">
+    <span class="fig-mark" style="left:73%;top:56.5%;width:47%;height:5%;aspect-ratio:auto" aria-label="Only the title is required"><span class="fig-badge">1</span></span>
+  </div>
+  <ol class="fig-legend"><li><span class="fig-key">1</span>Only the title is required</li></ol>
+  <figcaption>The placeholders are worth reading. They set the length these fields want.</figcaption>
+</figure>
+<p>Only the title is required. Whatever you fill in carries across when the concept
+becomes a song, and lands in that song's AI Context.</p>
+<h2 id="letting-the-app-write-them">Letting the app write them<a class="hanchor" href="#letting-the-app-write-them" aria-label="Link to this section">#</a></h2>
+<p>The sparkle button in the top right generates concepts from what you have
+already written.</p>
+<figure class="fig" style="max-width:min(23rem, 330px)">
+  <div class="fig-shot">
+    <img src="/docs/img/generate-concepts.png" alt="The generate concepts sheet with an optional description field, switches for learning from existing songs and concepts, and a stepper for how many to generate" width="330" height="717" loading="lazy" decoding="async">
+    <span class="fig-mark" style="left:50%;top:60%;width:90%;height:10%;aspect-ratio:auto" aria-label="Say what you are after, or leave it blank"><span class="fig-badge">1</span></span><span class="fig-mark" style="left:50%;top:73%;width:90%;height:9%;aspect-ratio:auto" aria-label="What it reads to learn your taste"><span class="fig-badge">2</span></span><span class="fig-mark" style="left:50%;top:82%;width:90%;height:5%;aspect-ratio:auto" aria-label="Four by default"><span class="fig-badge">3</span></span>
+  </div>
+  <ol class="fig-legend"><li><span class="fig-key">1</span>Say what you are after, or leave it blank</li><li><span class="fig-key">2</span>What it reads to learn your taste</li><li><span class="fig-key">3</span>Four by default</li></ol>
+  <figcaption>Leaving the description empty is fine. The switches do most of the work.</figcaption>
+</figure>
+<p><strong>Learn what I like from my existing songs</strong> is on by default, and it is what
+makes the results sound like you rather than like nobody. Turn it off and you
+get generic ideas.</p>
+<figure class="fig" style="max-width:min(23rem, 330px)">
+  <div class="fig-shot">
+    <img src="/docs/img/concepts-generated.png" alt="The Concepts tab after generating, showing four new cards each with a mood and a theme" width="330" height="717" loading="lazy" decoding="async">
+  </div>
+  <figcaption>Four concepts generated from one song. Each arrives with a mood and a theme already filled in.</figcaption>
+</figure>
+<h2 id="reading-and-using-one">Reading and using one<a class="hanchor" href="#reading-and-using-one" aria-label="Link to this section">#</a></h2>
+<p>Tap a card and it expands to show the whole thing, with the actions underneath.</p>
+<figure class="fig" style="max-width:min(23rem, 330px)">
+  <div class="fig-shot">
+    <img src="/docs/img/concept-expanded.png" alt="An expanded concept card showing mood, theme and similar artists, with a pencil button and a New Song button below it" width="330" height="717" loading="lazy" decoding="async">
+    <span class="fig-mark" style="left:91%;top:22%;width:13%" aria-label="Edit the fields"><span class="fig-badge">1</span></span><span class="fig-mark" style="left:66%;top:57.3%;width:30%;height:5%;aspect-ratio:auto" aria-label="Turn it into a song"><span class="fig-badge">2</span></span><span class="fig-mark" style="left:86%;top:57.3%;width:8%" aria-label="Colour tag"><span class="fig-badge">3</span></span>
+  </div>
+  <ol class="fig-legend"><li><span class="fig-key">1</span>Edit the fields</li><li><span class="fig-key">2</span>Turn it into a song</li><li><span class="fig-key">3</span>Colour tag</li></ol>
+  <figcaption>New Song carries the title, mood, theme and artists across.</figcaption>
+</figure>
+<p><strong>New Song</strong> is the point of the whole tab. The new song opens with its AI
+Context already filled in, so the writing tools have something to work with from
+the first line you type.</p>
+<p>The circle beside it colour-tags the card, which is only for sorting the grid
+visually.</p>
+<h2 id="where-else-concepts-come-from">Where else concepts come from<a class="hanchor" href="#where-else-concepts-come-from" aria-label="Link to this section">#</a></h2>
+<p>Press and hold any song in the Songs tab and you get two more routes.</p>
+<ul>
+<li><strong>Add to Concepts</strong> turns that song back into an idea. Useful when a song
+turns out to be something you are not ready for.</li>
+<li><strong>Generate 3 Similar Concepts</strong> reads the song in front of you and proposes
+three adjacent ideas.</li>
+</ul>
+<h2 id="deleting-one">Deleting one<a class="hanchor" href="#deleting-one" aria-label="Link to this section">#</a></h2>
+<p>The <strong>X</strong> on a card asks before it deletes, and the deletion is permanent. There
+is no archive for concepts the way there is for songs.</p>
+
+    </article>
+    <nav class="pager">
+      <a class="pager-prev" href="/docs/objects/recordings/"><span>Previous</span>Recordings</a>
+      <a class="pager-next" href="/docs/objects/projects/"><span>Next</span>Projects</a>
+    </nav>
+    <footer class="page-footer">
+      <p>Something missing or wrong on this page? Email
+        <a href="mailto:support@lyricgenie.app">support@lyricgenie.app</a>.</p>
+      <p class="footer-version">Written for Lyric Genie <strong>v2.19</strong>. Your version is under the logo in <a href="/docs/tabs/settings/">Settings</a>.</p>
+    </footer>
+  </main>
+  <nav class="toc" aria-label="On this page">
+         <p class="toc-title">On this page</p>
+         <ul><li><a href="#writing-one">Writing one</a></li><li><a href="#letting-the-app-write-them">Letting the app write them</a></li><li><a href="#reading-and-using-one">Reading and using one</a></li><li><a href="#where-else-concepts-come-from">Where else concepts come from</a></li><li><a href="#deleting-one">Deleting one</a></li></ul>
+       </nav>
+</div>
+
+<script>window.LG_DOCS_BASE = "/docs/";</script>
+<script src="/docs/docs.js" defer></script>
+</body>
+</html>

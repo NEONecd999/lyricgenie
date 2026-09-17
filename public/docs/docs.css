@@ -1,0 +1,570 @@
+/* ────────────────────────────────────────────────────────────────
+   Lyric Genie docs — layout and docs-only components.
+
+   Colour, type and motion tokens come from tokens.css, which is a
+   verbatim copy of the design system's colors_and_type.css and is
+   loaded FIRST. Nothing in this file should redefine a --lg-* or
+   semantic token; if a value is missing from the system, it belongs
+   in the system, not here.
+
+   tokens.css also sets global h1–h4 at marketing scale (h2 clamps up
+   to 44px). That is right for a landing page and far too loud for a
+   reference page, so .prose re-states the heading scale below. The
+   extra specificity is deliberate.
+   ──────────────────────────────────────────────────────────────── */
+
+/* ─────────────────────────── fonts ───────────────────────────
+
+   tokens.css declares the full Lufga family (100 to 900, roman and italic)
+   against .ttf files, because the design system ships TTFs. Those are 1.8 MB
+   and are not in this project; shipping them would be the wrong trade for a
+   docs site that uses three weights.
+
+   So the three weights this site actually uses are re-declared here as woff2
+   (96 KB total). These rules come after tokens.css, and a later @font-face
+   with the same family and descriptors wins, so no .ttf is ever requested.
+
+   That means: DO NOT use a weight other than 400, 500 or 700 anywhere in this
+   file. Any other weight falls through to a tokens.css .ttf rule and requests
+   a file that is not here. A missing face is invisible on a Mac with Lufga
+   installed locally and broken for everyone else.
+
+   Paths are relative to this stylesheet so a /docs/ subfolder build resolves
+   them correctly without a rewrite step.
+   ──────────────────────────────────────────────────────────── */
+
+@font-face { font-family: 'Lufga'; src: url('fonts/Lufga-Regular.woff2') format('woff2'), url('fonts/Lufga-Regular.woff') format('woff'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Lufga'; src: url('fonts/Lufga-Medium.woff2')  format('woff2'), url('fonts/Lufga-Medium.woff')  format('woff'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Lufga'; src: url('fonts/Lufga-Bold.woff2')    format('woff2'), url('fonts/Lufga-Bold.woff')    format('woff'); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Lufga'; src: url('fonts/Lufga-Italic.ttf') format('truetype'); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Academico'; src: url('fonts/Academico-Italic.otf') format('opentype'); font-weight: 400; font-style: italic; font-display: swap; }
+
+:root {
+  --sidebar-w: 16.5rem;
+  --toc-w:     14rem;
+  --topbar-h:  4rem;
+  --mark-red:  #E5484D;   /* screenshot callout ring — signal colour, not brand */
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--topbar-h) + 1rem);
+  background: var(--bg-1);
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  margin: 0;
+  background: var(--bg-1);
+  color: var(--fg-1);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--fg-brand); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; border-radius: var(--radius-sm); }
+
+.skip { position: absolute; left: -9999px; background: var(--bg-brand); color: var(--fg-on-brand); padding: .6rem 1rem; border-radius: var(--radius-pill); z-index: 100; }
+.skip:focus { left: 1rem; top: .5rem; }
+
+/* ─────────────────────────── top bar ─────────────────────────── */
+
+.topbar { position: sticky; top: 0; z-index: 50; background: var(--lg-purple-600); }
+.topbar-inner {
+  display: flex; align-items: center; gap: var(--space-5);
+  height: var(--topbar-h); max-width: 96rem; margin: 0 auto; padding: 0 var(--space-5);
+}
+
+.brand { display: flex; align-items: center; gap: var(--space-3); color: var(--lg-cream); flex: none; }
+.brand:hover { text-decoration: none; }
+.wordmark { height: 1.3rem; width: auto; display: block; }
+.brand-tag {
+  font-size: var(--text-xs); font-weight: 500; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--lg-cream); opacity: .8;
+  border: 1px solid rgb(246 236 201 / .4); border-radius: var(--radius-pill); padding: .1rem .55rem;
+}
+
+/* Buttons are pills. No rectangular buttons anywhere on this site. */
+.nav-toggle, .theme-toggle {
+  display: grid; place-items: center;
+  background: transparent; color: var(--lg-cream);
+  border: 1px solid rgb(246 236 201 / .4); border-radius: var(--radius-pill);
+  font: inherit; font-size: var(--text-sm); cursor: pointer;
+  transition: background var(--dur-quick) var(--ease-out);
+}
+.nav-toggle { display: none; padding: .3rem .8rem; gap: .45rem; }
+.nav-toggle .icon-menu {
+  width: 1rem; height: 1rem; flex: none;
+  background-color: currentColor;
+  -webkit-mask: var(--icon) no-repeat center / contain;
+          mask: var(--icon) no-repeat center / contain;
+}
+.theme-toggle { width: 2rem; height: 2rem; flex: none; padding: 0; }
+.nav-toggle:hover, .theme-toggle:hover { background: rgb(255 255 255 / .14); }
+.theme-toggle svg { width: 1rem; height: 1rem; }
+.theme-toggle .icon-moon { display: none; }
+[data-theme="dark"] .theme-toggle .icon-sun { display: none; }
+[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
+
+.topbar-links { display: flex; gap: var(--space-5); margin-left: auto; flex: none; }
+.topbar-links a { color: rgb(246 236 201 / .85); font-size: var(--text-sm); font-weight: 500; }
+.topbar-links a:hover { color: var(--lg-cream); text-decoration: none; }
+
+.search { position: relative; flex: 1 1 auto; max-width: 26rem; }
+#search-input {
+  width: 100%; font: inherit; font-size: var(--text-sm);
+  padding: .45rem var(--space-4);
+  border-radius: var(--radius-pill);
+  border: 1px solid rgb(246 236 201 / .35);
+  background: rgb(255 255 255 / .12); color: var(--lg-cream);
+}
+#search-input::placeholder { color: rgb(246 236 201 / .6); }
+#search-input:focus { outline: 2px solid var(--lg-cream); outline-offset: 1px; background: rgb(255 255 255 / .2); }
+
+.search-results {
+  position: absolute; top: calc(100% + .5rem); left: 0; right: 0;
+  background: var(--bg-card); border: 1px solid var(--border-1);
+  border-radius: var(--radius); box-shadow: var(--shadow-card);
+  max-height: 60vh; overflow-y: auto; padding: var(--space-1);
+}
+.search-results a { display: block; padding: .5rem .65rem; border-radius: var(--radius-sm); color: var(--fg-1); }
+.search-results a:hover, .search-results a.sel { background: var(--bg-2); text-decoration: none; }
+.sr-title { font-weight: 500; display: block; font-size: var(--text-sm); }
+.sr-section { font-size: var(--text-xs); color: var(--fg-2); }
+.sr-title mark { background: color-mix(in srgb, var(--lg-lavender-400) 40%, transparent); color: inherit; border-radius: 3px; }
+.search-empty { padding: .75rem .65rem; color: var(--fg-2); font-size: var(--text-sm); }
+
+/* ─────────────────────────── shell ─────────────────────────── */
+
+.shell {
+  display: grid; grid-template-columns: var(--sidebar-w) minmax(0, 1fr) var(--toc-w);
+  gap: var(--space-10); max-width: 96rem; margin: 0 auto; padding: 0 var(--space-5);
+  align-items: start;
+}
+
+.sidebar {
+  position: sticky; top: var(--topbar-h);
+  max-height: calc(100vh - var(--topbar-h)); overflow-y: auto;
+  padding: var(--space-8) var(--space-2) var(--space-12) var(--space-1);
+  border-right: 1px solid var(--border-1);
+}
+.sidebar-close { display: none; }
+
+.nav-group + .nav-group { margin-top: var(--space-6); }
+.nav-group-title {
+  margin: 0 0 var(--space-2); padding-left: .7rem;
+  font-size: var(--text-xs); font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--fg-2);
+}
+.sidebar ul { list-style: none; margin: 0; padding: 0; }
+.sidebar li a {
+  display: flex; align-items: center; gap: .6rem;
+  padding: .3rem .7rem;
+  border-radius: var(--radius-sm); color: var(--fg-2); font-size: var(--text-sm); line-height: 1.5;
+}
+.sidebar li a:hover { color: var(--fg-1); background: var(--bg-2); text-decoration: none; }
+.sidebar li a.active { color: var(--fg-brand); background: var(--border-brand); font-weight: 500; }
+
+/* SF Symbols are exported white-filled, so they are drawn as a mask over
+   currentColor. That is the house recipe, and it means the icon inherits the
+   hover and active colours instead of needing its own variants.
+
+   An icon means "this is the symbol you will see in the app". Pages that are
+   not an app surface simply have none, and their label sits where the icon
+   would be rather than holding an empty column open. */
+.nav-icon {
+  flex: none; width: 1.05rem; height: 1.05rem;
+  background-color: currentColor;
+  -webkit-mask: var(--icon) no-repeat center / contain;
+          mask: var(--icon) no-repeat center / contain;
+}
+
+/* The same symbol as the sidebar entry, next to the page title. */
+.title-icon {
+  display: inline-block; vertical-align: -0.06em;
+  width: .85em; height: .85em; margin-right: .38em;
+  background-color: var(--fg-brand);
+  -webkit-mask: var(--icon) no-repeat center / contain;
+          mask: var(--icon) no-repeat center / contain;
+}
+
+/* `:icon[name]` in running text and tables. Sized and coloured from the text
+   around it, so it works in a table cell, a heading or a sentence. */
+.inline-icon {
+  display: inline-block; vertical-align: -0.12em;
+  width: 1.05em; height: 1.05em; margin-right: .3em;
+  background-color: currentColor;
+  -webkit-mask: var(--icon) no-repeat center / contain;
+          mask: var(--icon) no-repeat center / contain;
+}
+.prose td .inline-icon, .prose th .inline-icon { margin-right: .4em; }
+
+.content { padding: var(--space-8) 0 var(--space-16); min-width: 0; }
+
+.toc {
+  position: sticky; top: calc(var(--topbar-h) + var(--space-8));
+  padding: var(--space-8) 0 var(--space-12); font-size: var(--text-sm);
+  max-height: calc(100vh - var(--topbar-h) - var(--space-8)); overflow-y: auto;
+}
+.toc-title { margin: 0 0 var(--space-2); font-size: var(--text-xs); font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--fg-2); }
+.toc ul { list-style: none; margin: 0; padding: 0; border-left: 1px solid var(--border-1); }
+.toc li a { display: block; padding: .25rem 0 .25rem var(--space-3); margin-left: -1px; color: var(--fg-2); border-left: 2px solid transparent; }
+.toc li a:hover { color: var(--fg-1); text-decoration: none; }
+.toc li a.active { color: var(--fg-brand); border-left-color: var(--fg-brand); }
+
+/* ─────────────────────────── prose ─────────────────────────── */
+
+.prose { max-width: 46rem; }
+
+/* The eyebrow: 13px uppercase purple above every heading. House pattern. */
+.eyebrow {
+  margin: 0 0 var(--space-2); font-size: 13px; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--fg-brand);
+}
+.eyebrow:empty { display: none; }
+
+.prose h1 { font-size: var(--text-4xl); line-height: 1.12; letter-spacing: -.02em; margin: 0 0 var(--space-3); font-weight: 700; }
+.prose .lede { font-size: var(--text-lg); color: var(--fg-2); margin: 0 0 var(--space-8); line-height: 1.6; }
+.prose h2 { font-size: var(--text-2xl); font-weight: 700; letter-spacing: -.015em; line-height: 1.25; margin: var(--space-12) 0 var(--space-3); }
+.prose h3 { font-size: var(--text-lg); font-weight: 700; letter-spacing: -.005em; line-height: 1.35; margin: var(--space-8) 0 var(--space-2); }
+.prose p  { margin: 0 0 var(--space-4); color: var(--fg-1); }
+.prose ul, .prose ol { margin: 0 0 var(--space-4); padding-left: var(--space-5); }
+.prose li { margin: .3rem 0; }
+.prose li > ul, .prose li > ol { margin: .3rem 0; }
+.prose hr { border: 0; border-top: 1px solid var(--border-1); margin: var(--space-10) 0; }
+
+/* Academico italic is reserved for pull-quote moments. Not UI chrome. */
+.prose blockquote {
+  margin: var(--space-6) 0; padding: .25rem 0 .25rem var(--space-5);
+  border-left: 3px solid var(--lg-lavender-400);
+  font-family: var(--font-serif); font-style: italic; font-size: var(--text-lg);
+  color: var(--fg-2);
+}
+.prose blockquote p { color: inherit; font-size: inherit; line-height: 1.55; }
+
+.hanchor { margin-left: .4rem; color: var(--fg-2); opacity: 0; font-weight: 400; text-decoration: none; transition: opacity var(--dur-quick) var(--ease-out); }
+h2:hover .hanchor, h3:hover .hanchor, .hanchor:focus { opacity: .6; }
+
+.prose code {
+  font-family: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace; font-size: .875em;
+  background: var(--bg-muted); border: 1px solid var(--border-1);
+  border-radius: var(--radius-sm); padding: .1em .4em;
+}
+.prose pre {
+  background: var(--bg-muted); border: 1px solid var(--border-1);
+  border-radius: var(--radius); padding: var(--space-4) var(--space-5); overflow-x: auto;
+  font-size: var(--text-sm); line-height: 1.6; margin: 0 0 var(--space-5);
+}
+.prose pre code { background: none; border: 0; padding: 0; font-size: inherit; }
+
+.table-wrap { overflow-x: auto; margin: 0 0 var(--space-5); }
+.prose table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
+.prose th, .prose td { text-align: left; padding: .6rem .8rem; border-bottom: 1px solid var(--border-1); vertical-align: top; }
+.prose th { font-weight: 700; font-size: var(--text-xs); letter-spacing: .08em; text-transform: uppercase; color: var(--fg-2); }
+.prose tr:last-child td { border-bottom: 0; }
+
+/* ─────────────────────────── callouts ─────────────────────────── */
+
+/* Icons are Lucide at 2px stroke — the marketing-surface icon set.
+   No emoji, and no `sparkles` here: that mark belongs to Wish Workshop. */
+.callout {
+  margin: var(--space-6) 0; padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--border-1); border-left-width: 3px;
+  border-radius: var(--radius-lg); background: var(--bg-2);
+}
+.callout-title { display: flex; align-items: center; gap: .55rem; margin: 0 0 .35rem; font-weight: 700; font-size: var(--text-sm); color: var(--fg-1); }
+.callout-icon { display: inline-grid; place-items: center; flex: none; width: 1.1rem; height: 1.1rem; }
+.callout-icon svg { width: 100%; height: 100%; stroke-width: 2; }
+.callout-body { font-size: var(--text-sm); line-height: 1.65; }
+.callout-body > :last-child { margin-bottom: 0; }
+.callout-body p { font-size: inherit; }
+
+.callout-note { border-left-color: var(--lg-purple-600); }
+.callout-note .callout-icon { color: var(--lg-purple-600); }
+.callout-tip  { border-left-color: var(--lg-lavender-400); }
+.callout-tip  .callout-icon { color: var(--lg-lavender-500); }
+.callout-warn { border-left-color: var(--lg-coral); }
+.callout-warn .callout-icon { color: var(--lg-coral); }
+
+/* Pro is flagged with a text chip rather than an icon — there is no brand
+   mark for "paid tier", and inventing one would just add noise. */
+.callout-pro { border-left-color: var(--lg-amber); }
+.callout-pro .callout-icon { width: auto; height: auto; }
+.pro-chip {
+  display: inline-block; background: var(--lg-amber); color: var(--lg-ink);
+  border-radius: var(--radius-pill); padding: .05rem .5rem;
+  font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; line-height: 1.5;
+}
+
+/* ─────────────────────── annotated screenshots ─────────────────────── */
+
+/* The red rings are CSS positioned as percentages of the image box, not
+   pixels burned into the PNG. Re-shooting a screen does not mean redrawing
+   every circle, they stay sharp at any zoom, and each can carry a label. */
+.fig { margin: var(--space-6) 0; max-width: 23rem; }
+.fig-shot {
+  position: relative; display: block; line-height: 0;
+  border-radius: var(--radius-xl); overflow: hidden;
+  border: 1px solid var(--border-1); box-shadow: var(--shadow-card); background: var(--bg-muted);
+}
+.fig-shot img { width: 100%; height: auto; display: block; }
+
+/* A ring around a small control is a circle; a ring around a whole row used to
+   be a pill, which read as a shape rather than a highlight. Capping the radius
+   keeps the circles circular — the browser clamps a radius larger than half the
+   box — while a long ring becomes a rounded rectangle that follows the card it
+   is pointing at. */
+.fig-mark {
+  position: absolute; translate: -50% -50%; aspect-ratio: 1;
+  border: 3px solid var(--mark-red); border-radius: 25px;
+  box-shadow: 0 0 0 2px rgb(255 255 255 / .55); pointer-events: none;
+}
+.fig-badge {
+  position: absolute; top: -.5rem; right: -.5rem;
+  display: grid; place-items: center; min-width: 1.2rem; height: 1.2rem; padding: 0 .3rem;
+  background: var(--mark-red); color: #fff; border-radius: var(--radius-pill);
+  font-size: 11px; font-weight: 700; line-height: 1;
+}
+
+/* The app version these docs describe. Quiet, on every page, and directly
+   comparable to the number the app prints under its own logo. */
+.footer-version { margin-top: var(--space-2); font-size: var(--text-xs); color: var(--fg-3, var(--fg-2)); }
+.footer-version strong { color: var(--fg-2); font-weight: 600; }
+
+.fig-legend { list-style: none; margin: var(--space-3) 0 0; padding: 0; font-size: var(--text-sm); color: var(--fg-2); }
+.fig-legend li { display: flex; gap: .55rem; align-items: baseline; margin: .3rem 0; }
+.fig-key {
+  display: grid; place-items: center; flex: none; min-width: 1.1rem; height: 1.1rem; padding: 0 .28rem;
+  background: var(--mark-red); color: #fff; border-radius: var(--radius-pill);
+  font-size: 11px; font-weight: 700; line-height: 1;
+}
+.fig figcaption { margin-top: var(--space-3); font-size: var(--text-sm); color: var(--fg-2); line-height: 1.55; }
+.fig--wide { max-width: 46rem; }
+
+/* A phone screenshot is tall and narrow, so a numbered legend underneath
+   pushes the next paragraph a long way down and leaves a dead column beside
+   the image. When there is room, the legend sits to the right of the shot
+   instead, level with the marks it explains.
+
+   This is flex-wrap rather than a breakpoint on purpose: the legend drops
+   back underneath by itself whenever the column is too narrow to hold both,
+   which is the same answer at any sidebar width, any zoom level, and in
+   print. A figure with no legend is untouched and stays phone width. */
+.fig:has(.fig-legend) {
+  max-width: 46rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-3) var(--space-6);
+}
+.fig:has(.fig-legend) .fig-shot { flex: 0 1 23rem; }
+.fig:has(.fig-legend) .fig-legend { flex: 1 1 16rem; margin-top: 0; }
+.fig:has(.fig-legend) figcaption { flex: 1 0 100%; margin-top: 0; }
+
+/* ─────────────────────── pager + footer ─────────────────────── */
+
+/* Card pattern from the system: 28px radius, 1px border, hover lifts 1px
+   into a purple-tinted glow. */
+.pager { display: flex; justify-content: space-between; gap: var(--space-4); max-width: 46rem; margin: var(--space-12) 0 0; padding-top: var(--space-6); border-top: 1px solid var(--border-1); }
+.pager a {
+  display: block; flex: 0 1 48%;
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--border-1); border-radius: var(--radius-xl);
+  background: var(--bg-card); color: var(--fg-1); font-weight: 500; line-height: 1.4;
+  transition: border-color var(--dur-quick) var(--ease-out), box-shadow var(--dur-quick) var(--ease-out), translate var(--dur-quick) var(--ease-out);
+}
+.pager a:hover { text-decoration: none; border-color: var(--border-brand); box-shadow: var(--shadow-card-hover); translate: 0 -1px; }
+.pager a span { display: block; font-size: var(--text-xs); font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--fg-2); margin-bottom: .15rem; }
+.pager-next { text-align: right; margin-left: auto; }
+
+.page-footer { max-width: 46rem; margin-top: var(--space-10); font-size: var(--text-sm); color: var(--fg-2); }
+.page-footer p { font-size: inherit; color: inherit; }
+
+/* ─────────────────────────── home page ─────────────────────────── */
+
+/* Cream is foil, not surface — it appears once on this site, here. */
+.home-hero {
+  background: var(--bg-cream); border-radius: var(--radius-xl);
+  padding: var(--space-10) var(--space-8); margin: 0 0 var(--space-10);
+}
+.home-hero h1 { margin-bottom: var(--space-3); }
+.home-hero p { font-size: var(--text-lg); color: var(--fg-2); margin: 0; max-width: 34rem; }
+
+.card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: var(--space-4); margin: var(--space-6) 0; }
+.card-grid a {
+  display: block; padding: var(--space-5);
+  border: 1px solid var(--border-1); border-radius: var(--radius-xl);
+  background: var(--bg-card); color: var(--fg-1);
+  transition: border-color var(--dur-quick) var(--ease-out), box-shadow var(--dur-quick) var(--ease-out), translate var(--dur-quick) var(--ease-out);
+}
+.card-grid a:hover { text-decoration: none; border-color: var(--border-brand); box-shadow: var(--shadow-card-hover); translate: 0 -1px; }
+.card-grid strong { display: block; font-weight: 700; margin-bottom: .2rem; }
+.card-grid span { font-size: var(--text-sm); color: var(--fg-2); line-height: 1.5; }
+
+/* ─────────────────────────── responsive ─────────────────────────── */
+
+@media (max-width: 1180px) {
+  .shell { grid-template-columns: var(--sidebar-w) minmax(0, 1fr); }
+  .toc { display: none; }
+}
+
+@media (max-width: 860px) {
+  :root { --topbar-h: 7.5rem; }
+  .shell { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  /* Fixed rather than in the flow. As a static block the menu pushed the
+     whole page down and scrolled away with it, so a reader who opened it
+     part way down a page had to scroll back up to use it. Fixed, it hangs
+     under the topbar and stays put. */
+  .sidebar {
+    position: fixed; inset: var(--topbar-h) 0 0; z-index: 40;
+    max-height: none; overflow-y: auto; overscroll-behavior: contain;
+    background: var(--bg-1); border-right: 0;
+    border-bottom: 1px solid var(--border-1);
+    padding: var(--space-5) var(--space-4) var(--space-12);
+    display: none;
+  }
+  .sidebar.open { display: block; }
+  /* Stop the page behind scrolling while the menu is over it. */
+  body:has(.sidebar.open) { overflow: hidden; }
+  .nav-toggle { display: inline-flex; align-items: center; order: 4; }
+  .topbar-links { display: none; }
+  .search {
+    order: 5; flex-basis: 100%; max-width: none;
+    /* Collapses when the page is scrolled down and returns on the way up, the
+       way a phone app hides its chrome to give the content the screen. The
+       row is animated rather than hidden outright so the bar does not jump. */
+    max-height: 3rem; opacity: 1; overflow: hidden;
+    transition: max-height var(--dur-quick) var(--ease-out),
+                opacity   var(--dur-quick) var(--ease-out),
+                flex-basis var(--dur-quick) var(--ease-out),
+                flex-grow  var(--dur-quick) var(--ease-out),
+                margin     var(--dur-quick) var(--ease-out);
+  }
+  /* flex-basis: 100% is what puts the field on its own line. Collapsing it to
+     zero takes it off that line rather than leaving an empty row behind, which
+     was costing a row gap and a strip of purple under the collapsed bar. */
+  /* flex-grow matters as much as the basis. `.search` is `flex: 1 1 auto`, so a
+     basis of zero alone still let it swell to fill the row and hold ~50px at
+     the right edge, pushing the theme and menu buttons in off the gutter. */
+  :root.chrome-compact .search {
+    max-height: 0; opacity: 0; flex: 0 0 0; min-width: 0;
+    /* Even at zero width it is still a flex item, so the row gap before it
+       remains and holds the menu button that far off the gutter. The negative
+       start margin cancels exactly that one gap. */
+    margin-block: 0; margin-inline-start: calc(var(--space-3) * -1);
+    pointer-events: none;
+  }
+  :root.chrome-compact { --topbar-h: 3.25rem; }
+
+  /* Losing the search row is most of it, but the bar should also draw itself
+     in: less padding, a smaller mark, and the DOCS tag folded away. Every one
+     of these is a transition rather than a jump, so the bar shrinks and grows
+     rather than snapping between two states. */
+  .topbar-inner,
+  .brand, .wordmark, .brand-tag,
+  .nav-toggle, .nav-toggle .icon-menu, .theme-toggle {
+    transition: all var(--dur-quick) var(--ease-out);
+  }
+  :root.chrome-compact .topbar-inner {
+    padding-block: var(--space-2); gap: var(--space-3);
+  }
+  :root.chrome-compact .wordmark { height: 1.05rem; }
+  :root.chrome-compact .brand { gap: var(--space-2); }
+  /* The DOCS tag stays. It is what says which Lyric Genie surface you are on,
+     and the collapsed bar is exactly when a reader deep in a page needs that.
+     It draws smaller rather than folding away. */
+  :root.chrome-compact .brand-tag {
+    font-size: .625rem; padding: .05rem .4rem; letter-spacing: .1em;
+  }
+  :root.chrome-compact .nav-toggle {
+    padding: .2rem .6rem; gap: .35rem; font-size: var(--text-xs);
+  }
+  :root.chrome-compact .nav-toggle .icon-menu { width: .85rem; height: .85rem; }
+  :root.chrome-compact .theme-toggle { width: 1.7rem; height: 1.7rem; }
+  :root.chrome-compact .theme-toggle svg { width: .85rem; height: .85rem; }
+
+  /* A way out of the menu from inside it, rather than only from the button
+     that opened it. */
+  .sidebar-close {
+    display: grid; place-items: center;
+    position: absolute; top: var(--space-4); right: var(--space-4);
+    width: 2.25rem; height: 2.25rem; padding: 0;
+    background: var(--bg-2); color: var(--fg-1);
+    border: 1px solid var(--border-1); border-radius: var(--radius-pill);
+    cursor: pointer;
+  }
+  .sidebar-close svg { width: 1.1rem; height: 1.1rem; }
+  .sidebar-close:hover { background: var(--border-1); }
+  .sidebar { padding-top: var(--space-12); }
+  .theme-toggle { order: 3; margin-left: auto; }
+  .topbar-inner { flex-wrap: wrap; height: auto; padding-block: var(--space-3); gap: var(--space-3); }
+  .prose h1 { font-size: var(--text-3xl); }
+  .pager { flex-direction: column; }
+  .pager a { flex: 1 1 auto; }
+  /* margin-left: auto is what pushes Next to the right of the row on a wide
+     screen. Stacked, it shrank the card to its own text while Previous stayed
+     full width, so the two did not match. */
+  .pager-next { text-align: left; margin-left: 0; }
+  .home-hero { padding: var(--space-6); }
+}
+
+/* ──────────────────── navigating between pages ────────────────────
+
+   These are separate documents, so every click is a real page load. Without
+   help that reads as a white flash and a jump: chrome repaints, the sidebar
+   blinks, the scroll position snaps.
+
+   A cross-document view transition fixes it at the browser level. The topbar
+   and sidebar are given stable names so they are treated as the SAME element
+   across the two documents and simply stay put, while only the article
+   crossfades and rises slightly. Browsers without support ignore all of this
+   and navigate the way they do today, so there is nothing to fall back to.
+   ──────────────────────────────────────────────────────────────── */
+
+@view-transition { navigation: auto; }
+
+.topbar  { view-transition-name: topbar; }
+.sidebar { view-transition-name: sidebar; }
+.content { view-transition-name: content; }
+
+/* Persistent chrome. Zeroing the group duration alone still leaves the default
+   crossfade between the old and new snapshots running, which is exactly the
+   blink we are trying to remove, so the image pair has to be opted out too. */
+::view-transition-group(topbar),
+::view-transition-group(sidebar) { animation: none; }
+
+::view-transition-image-pair(topbar),
+::view-transition-image-pair(sidebar) { isolation: auto; }
+
+::view-transition-old(topbar),
+::view-transition-old(sidebar) { display: none; }
+
+::view-transition-new(topbar),
+::view-transition-new(sidebar) { animation: none; mix-blend-mode: normal; }
+
+::view-transition-old(content) {
+  animation: vt-out 120ms var(--ease-out) both;
+}
+::view-transition-new(content) {
+  animation: vt-in 260ms var(--ease-out) both;
+}
+
+@keyframes vt-out { to { opacity: 0; } }
+@keyframes vt-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Same easing for the in-page anchor jumps the table of contents makes. */
+.prose h2, .prose h3 { scroll-margin-top: calc(var(--topbar-h) + 1.5rem); }
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(content),
+  ::view-transition-new(content) { animation-duration: 1ms; }
+}

@@ -128,8 +128,16 @@ reason to pause between ideas rather than running one long recording.</p>
 <p>If nothing is picked up at all, so the take is silent, it is thrown away rather
 than saved as a recording of nothing.</p>
 <h2 id="when-you-stop">When you stop<a class="hanchor" href="#when-you-stop" aria-label="Link to this section">#</a></h2>
-<p>Pause and the take settles into an editable page of lyrics, with four buttons
-under it.</p>
+<p>Pause and the take settles into an editable page of lyrics, with the waveform
+and the four buttons under it.</p>
+<figure class="fig" style="max-width:min(23rem, 375px)">
+  <div class="fig-shot">
+    <img src="/docs/img/freestyle-transcribed.webp" alt="A finished Freestyle take, the transcribed lyrics above a waveform, with the Refine and Insert buttons now lit" width="375" height="815" loading="lazy" decoding="async">
+    <span class="fig-mark" style="left:76%;top:90%;width:15%" aria-label="Refine hands the rough words to the AI"><span class="fig-badge">1</span></span><span class="fig-mark" style="left:91%;top:90%;width:15%" aria-label="Insert puts them in the song"><span class="fig-badge">2</span></span>
+  </div>
+  <ol class="fig-legend"><li><span class="fig-key">1</span>Refine hands the rough words to the AI</li><li><span class="fig-key">2</span>Insert puts them in the song</li></ol>
+  <figcaption>Refine and Insert stay greyed out until there is something to work on.</figcaption>
+</figure>
 <p><strong>The words are yours to fix.</strong> Tap anywhere and type. Transcription hears a
 mumbled line the way a stranger would, and the fastest fix is usually to correct
 it now while you still remember what you sang.</p>
@@ -154,7 +162,7 @@ bar: the purple is what has not been looked at yet.</p>
 </tr>
 <tr>
 <td><span class="inline-icon" style="--icon:url('/docs/sf-symbols/sparkles.svg')" aria-hidden="true"></span> <strong>Refine</strong></td>
-<td>Hands the raw transcription to the AI to turn into lyrics.</td>
+<td>Hands the raw transcription to the AI to tidy up.</td>
 </tr>
 <tr>
 <td><span class="inline-icon" style="--icon:url('/docs/sf-symbols/checkmark.png')" aria-hidden="true"></span> <strong>Insert</strong></td>
@@ -162,9 +170,61 @@ bar: the purple is what has not been looked at yet.</p>
 </tr>
 </tbody>
 </table></div>
-<p><strong>Refine</strong> asks for the song's mood, theme and similar artists first, every
-time, so you can adjust the brief before each run rather than being stuck with
-what you answered once. It needs AI access.</p>
+<h2 id="what-refine-does">What Refine does<a class="hanchor" href="#what-refine-does" aria-label="Link to this section">#</a></h2>
+<p>Refine is a tidy-up, not a rewrite. It goes through the transcription and
+swaps only the words that do not work, keeping the same number of lines and
+the same number of syllables in each one, so the take still fits the melody you
+sang it to. Placeholder sounds get the most attention: a line you filled with
+<em>la la la</em> comes back as real words of the same length.</p>
+<p>That is the whole job. Refine will not add a verse, cut a line, or reorder
+anything. For writing that goes further, Insert the take and use
+<a href="/docs/editor/wish-workshop/">Wish Workshop</a> on it in the editor.</p>
+<h3 id="it-asks-for-context-first-every-time">It asks for context first, every time<a class="hanchor" href="#it-asks-for-context-first-every-time" aria-label="Link to this section">#</a></h3>
+<p>Tapping Refine always opens the context sheet before anything is sent, so you
+can steer each run rather than being stuck with what you answered once.</p>
+<figure class="fig" style="max-width:min(23rem, 375px)">
+  <div class="fig-shot">
+    <img src="/docs/img/freestyle-refine-context.webp" alt="The Better AI Suggestions sheet, with the song title, Mood, Theme and Similar Artists fields and a Continue with Context button" width="375" height="815" loading="lazy" decoding="async">
+    <span class="fig-mark" style="left:50%;top:52%;width:96%;height:27%;aspect-ratio:auto" aria-label="The same three questions Wish Workshop asks"><span class="fig-badge">1</span></span><span class="fig-mark" style="left:50%;top:75%;width:96%;height:12%;aspect-ratio:auto" aria-label="One saves your answers to the song, one does not"><span class="fig-badge">2</span></span>
+  </div>
+  <ol class="fig-legend"><li><span class="fig-key">1</span>The same three questions Wish Workshop asks</li><li><span class="fig-key">2</span>One saves your answers to the song, one does not</li></ol>
+  <figcaption>Mood and theme do most of the work here. A specific theme beats a vague one.</figcaption>
+</figure>
+<p>These are the song's <a href="/docs/editor/wish-workshop/">AI Context</a> fields, not
+Freestyle-only settings. Whatever the song already has is filled in, and what
+you type is what the rest of the song's AI tools will use afterwards.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Button</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Continue with Context</strong></td>
+<td>Saves your answers to the song, then refines.</td>
+</tr>
+<tr>
+<td><strong>Continue Anyway</strong></td>
+<td>Refines with what is on screen without saving it.</td>
+</tr>
+</tbody>
+</table></div>
+<p>A specific theme is worth more than a mood. <em>Driving north to leave someone
+behind</em> gives the AI something to aim at; <em>sad</em> does not.</p>
+<h3 id="after-it-runs">After it runs<a class="hanchor" href="#after-it-runs" aria-label="Link to this section">#</a></h3>
+<p>The refined lines come back in the normal text colour rather than purple, and
+the whole take is one step on the undo stack. If you preferred the raw version,
+tap <strong>Undo</strong> once and it comes straight back.</p>
+<aside class="callout callout-pro">
+<p class="callout-title"><span class="callout-icon"><span class="pro-chip">Pro</span></span>Pro plan</p>
+<div class="callout-body">
+<p>Refine is a Pro feature. The free plan includes a handful of AI calls so you
+can see what it does, and Pro raises that to 5,000 a month.
+The exact numbers are on <a href="/docs/reference/limits/">Plan limits</a>.</p>
+</div>
+</aside>
 <h2 id="what-insert-actually-does">What Insert actually does<a class="hanchor" href="#what-insert-actually-does" aria-label="Link to this section">#</a></h2>
 <p>Three things at once, which is the part worth knowing.</p>
 <ol>
@@ -190,15 +250,6 @@ it, even if the words need work.</p>
 <p>Transcription needs a network connection. The audio does not. If transcription
 fails, you get a message saying so, and the recording keeps going. Your audio is
 still captured and still saved.</p>
-<h2 id="if-it-asks-for-context">If it asks for context<a class="hanchor" href="#if-it-asks-for-context" aria-label="Link to this section">#</a></h2>
-<p>Using the AI on a Freestyle take with no context behind it brings up the same
-three questions Wish Workshop asks: mood, theme and similar artists. See
-<a href="/docs/editor/wish-workshop/">Wish Workshop</a>.</p>
-<p>Freestyle adds one switch that Wish Workshop's version of this screen does not
-have. If the song already has a title, a <strong>Consider Title</strong> switch appears above the three fields, marked with
-a <strong>TITLE</strong> badge and on by default. Leave it on and the title steers what comes
-back alongside your answers. Turn it off when the title is a placeholder you do
-not want the AI taking seriously.</p>
 <h2 id="length-limits">Length limits<a class="hanchor" href="#length-limits" aria-label="Link to this section">#</a></h2>
 <p>A single Freestyle take is capped at 5 minutes on the free
 plan and 60 minutes on Pro. When you reach the cap, recording
@@ -218,7 +269,7 @@ stops and tells you why rather than cutting out silently.</p>
   </main>
   <nav class="toc" aria-label="On this page">
          <p class="toc-title">On this page</p>
-         <ul><li><a href="#starting-a-freestyle">Starting a Freestyle</a></li><li><a href="#while-you-are-recording">While you are recording</a></li><li><a href="#when-you-stop">When you stop</a></li><li><a href="#what-insert-actually-does">What Insert actually does</a></li><li><a href="#when-transcription-has-a-problem">When transcription has a problem</a></li><li><a href="#if-it-asks-for-context">If it asks for context</a></li><li><a href="#length-limits">Length limits</a></li></ul>
+         <ul><li><a href="#starting-a-freestyle">Starting a Freestyle</a></li><li><a href="#while-you-are-recording">While you are recording</a></li><li><a href="#when-you-stop">When you stop</a></li><li><a href="#what-refine-does">What Refine does</a></li><li><a href="#what-insert-actually-does">What Insert actually does</a></li><li><a href="#when-transcription-has-a-problem">When transcription has a problem</a></li><li><a href="#length-limits">Length limits</a></li></ul>
        </nav>
 </div>
 

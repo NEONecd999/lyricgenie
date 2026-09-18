@@ -44,6 +44,9 @@ const Navbar = () => {
     // the end of the nav as a distinct "tool" link rather than mixed
     // into the marketing page anchors above it.
     { label: "Rhymes", href: "/rhymes/", external: true },
+    // Same deal as /rhymes/ — public/docs/ is the built static docs site,
+    // not a React route, so it needs a real <a>.
+    { label: "Docs", href: "/docs/", external: true },
   ];
   const desktopLinks = allLinks.filter((l) => !l.mobileOnly);
   const mobileLinks = allLinks;

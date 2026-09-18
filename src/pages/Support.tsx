@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowLeft, Mail, MessageCircle } from "lucide-react";
+import { ArrowLeft, BookOpen, Mail, MessageCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import SEO from "@/components/SEO";
 
@@ -65,6 +65,33 @@ const Support = () => {
                   className="inline-flex items-center gap-2 text-[rgb(127,98,196)] hover:text-[rgb(107,78,176)] font-semibold text-lg transition-colors"
                 >
                   support@lyricgenie.app
+                </a>
+              </div>
+            </div>
+          </section>
+
+          {/* Docs */}
+          <section className="bg-white rounded-2xl p-8 shadow-sm">
+            <div className="flex items-start gap-4">
+              <div className="bg-[rgb(127,98,196)]/10 p-3 rounded-xl">
+                <BookOpen className="h-6 w-6 text-[rgb(127,98,196)]" />
+              </div>
+              <div>
+                <h2 className="text-2xl font-bold mb-3 text-[rgb(127,98,196)] font-display">
+                  Read the Docs
+                </h2>
+                <p className="text-lg text-gray-700 leading-relaxed mb-4">
+                  Every screen in the app, written up with screenshots — Freestyle, Wish
+                  Workshop, collaboration, recordings, plans and account settings. It is
+                  searchable, so it is usually faster than waiting on an email.
+                </p>
+                {/* /docs/ is the static docs build in public/docs, not a React
+                    route, so this has to be an <a> rather than a <Link>. */}
+                <a
+                  href="/docs/"
+                  className="inline-flex items-center gap-2 text-[rgb(127,98,196)] hover:text-[rgb(107,78,176)] font-semibold text-lg transition-colors"
+                >
+                  Browse the docs →
                 </a>
               </div>
             </div>

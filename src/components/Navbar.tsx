@@ -206,7 +206,7 @@ const Navbar = () => {
                 return (
                   <Link
                     key={link.label}
-                    href={link.href}
+                    to={link.href}
                     className={cls}
                     onClick={onClick}
                   >

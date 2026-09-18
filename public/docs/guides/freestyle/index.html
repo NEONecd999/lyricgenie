@@ -99,9 +99,25 @@ lyrics. It is built for the moment where the melody arrives before the words do.
 <p><strong>From the Start tab.</strong> Tapping Freestyle starts recording immediately. You
 tapped the button because you had something to sing, and making you tap a second
 time loses the take.</p>
+<figure class="fig" style="max-width:min(23rem, 375px)">
+  <div class="fig-shot">
+    <img src="/docs/img/freestyle-from-start.webp" alt="The four round buttons on the Start tab, with Freestyle at the top right" width="375" height="405" loading="lazy" decoding="async">
+    <span class="fig-mark" style="left:68%;top:47.4%;width:35%" aria-label="Recording starts the moment you tap"><span class="fig-badge">1</span></span>
+  </div>
+  <ol class="fig-legend"><li><span class="fig-key">1</span>Recording starts the moment you tap</li></ol>
+  <figcaption>The Start tab. This one does not wait for you.</figcaption>
+</figure>
 <p><strong>From inside a song.</strong> The microphone icon in the song editor opens Freestyle
 ready but not recording. You are already in a writing session, so the app waits
 for you.</p>
+<figure class="fig" style="max-width:min(23rem, 375px)">
+  <div class="fig-shot">
+    <img src="/docs/img/freestyle-from-song.webp" alt="The top bar of the song editor, the microphone at the right of the audio capsule" width="375" height="149" loading="lazy" decoding="async">
+    <span class="fig-mark" style="left:58%;top:14.6%;width:9%" aria-label="Opens ready, and waits for you to start"><span class="fig-badge">1</span></span>
+  </div>
+  <ol class="fig-legend"><li><span class="fig-key">1</span>Opens ready, and waits for you to start</li></ol>
+  <figcaption>The microphone sits with the other audio controls, above the title.</figcaption>
+</figure>
 <aside class="callout callout-tip">
 <p class="callout-title"><span class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg></span>Tip</p>
 <div class="callout-body">
@@ -158,7 +174,7 @@ bar: the purple is what has not been looked at yet.</p>
 </tr>
 <tr>
 <td><strong>Import</strong></td>
-<td>Brings in an audio file instead. See <a href="/docs/guides/importing/">Importing files</a>.</td>
+<td>Adds an audio file onto the end of the take.</td>
 </tr>
 <tr>
 <td><span class="inline-icon" style="--icon:url('/docs/sf-symbols/sparkles.svg')" aria-hidden="true"></span> <strong>Refine</strong></td>
@@ -170,6 +186,23 @@ bar: the purple is what has not been looked at yet.</p>
 </tr>
 </tbody>
 </table></div>
+<p><strong>Import adds to the take rather than replacing it.</strong> The file goes on the end
+as another segment, its words are transcribed and appended below the lines you
+already have, and the result is still one recording. You can carry on recording
+on top of it, and Undo takes the import back out again.</p>
+<p>Tapping Import part way through a take pauses the recording first, so the file
+lands after what you sang rather than behind it. If you had not sung anything
+yet, that silent take is thrown away instead of being left as dead air in front
+of the import.</p>
+<aside class="callout callout-note">
+<p class="callout-title"><span class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span>Note</p>
+<div class="callout-body">
+<p>This is not the same as <a href="/docs/guides/importing/">Importing files</a>, which puts an
+audio file into the song as a recording of its own. Here the file becomes part
+of the Freestyle take you are building, so it is capped at the same length as a
+take, and like Refine it needs AI access.</p>
+</div>
+</aside>
 <h2 id="what-refine-does">What Refine does<a class="hanchor" href="#what-refine-does" aria-label="Link to this section">#</a></h2>
 <p>Refine is a tidy-up, not a rewrite. It goes through the transcription and
 swaps only the words that do not work, keeping the same number of lines and

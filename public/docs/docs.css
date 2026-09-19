@@ -469,6 +469,21 @@ h2:hover .hanchor, h3:hover .hanchor, .hanchor:focus { opacity: .6; }
     margin-block: 0; margin-inline-start: calc(var(--space-3) * -1);
     pointer-events: none;
   }
+  /* `.search` has to clip itself for the collapse animation, and an
+     absolutely positioned panel hanging below its box is precisely what gets
+     clipped. The results were being built, sized and laid out correctly, and
+     were invisible on every phone: search on mobile returned nothing you
+     could see. Fixed takes the panel out of the parent's box, and pins it
+     under the bar wherever the page happens to be scrolled — including with
+     the menu open, since the topbar's z-index sits above the menu's. */
+  .search-results {
+    position: fixed;
+    top: calc(var(--topbar-h) + var(--space-2));
+    left: var(--space-4);
+    right: var(--space-4);
+    max-height: calc(100dvh - var(--topbar-h) - var(--space-8));
+  }
+
   :root.chrome-compact { --topbar-h: 3.25rem; }
 
   /* Losing the search row is most of it, but the bar should also draw itself

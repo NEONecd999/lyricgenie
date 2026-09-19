@@ -174,6 +174,9 @@
       if (Math.abs(moved) < DEADZONE) return;
       last = y;
       if (document.getElementById('sidebar')?.classList.contains('open')) return;
+      // Nor while search results are up. Collapsing the bar takes the field
+      // and the panel with it, so a scroll made the answers vanish mid-read.
+      if (document.getElementById('search-results')?.hidden === false) return;
 
       const compact = moved > 0 && y > REVEAL_ABOVE;
       if (compact === root.classList.contains('chrome-compact')) return;

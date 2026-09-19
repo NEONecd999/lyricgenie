@@ -124,6 +124,15 @@ a:hover { text-decoration: underline; }
   border: 1px solid rgb(246 236 201 / .35);
   background: rgb(255 255 255 / .12); color: var(--lg-cream);
 }
+/* Safari on iOS zooms the whole page in when you focus an input whose text is
+   under 16px, and it does not zoom back out. The only way to decline that
+   without `maximum-scale`, which would take pinch-zoom away from everyone, is
+   to not be under 16px. Scoped to coarse pointers so the desktop bar keeps the
+   14px field that sits level with the links beside it. */
+@media (pointer: coarse) {
+  #search-input { font-size: var(--text-base); }
+}
+
 #search-input::placeholder { color: rgb(246 236 201 / .6); }
 #search-input:focus { outline: 2px solid var(--lg-cream); outline-offset: 1px; background: rgb(255 255 255 / .2); }
 

@@ -1,5 +1,7 @@
-# RhymeGold — Free rhyme tool for songwriters.
+# Served on both lyricgenie.app and rhymegold.com: both sites are built from
+# this one repo, so they share this file.
 User-agent: *
 Allow: /
 
+Sitemap: https://lyricgenie.app/docs/sitemap.xml
 Sitemap: https://rhymegold.com/sitemap.xml

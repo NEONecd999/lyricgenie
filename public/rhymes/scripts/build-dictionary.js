@@ -89,7 +89,7 @@ const ALWAYS_KEEP = new Set([
   "soliloquy","epilogue","prologue","dialogue","analog","analogue",
   "cease","cease-fire","ceasefire","cessation",
   "reverb","reverberation","crescendo","decrescendo",
-  "valor","vigil","void","vacant","vacancy",
+  "valor","vigil","void","vacant","vacancy","vagabond","vagabonds",
   // -INKLE family — common but didn't make the top-20K. Adding the whole
   // family so queries like "wrinkle" actually return rhyme partners.
   "wrinkle","wrinkled","wrinkles","wrinkling",

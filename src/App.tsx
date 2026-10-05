@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import About from "./pages/About";
 import Support from "./pages/Support";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
 import Blog from "./pages/Blog";
 import HitSongsWrittenFast from "./pages/blog/HitSongsWrittenFast";
 import RhymeSchemesThatWork from "./pages/blog/RhymeSchemesThatWork";
@@ -74,6 +75,7 @@ const App = () => {
             <Route path="/about" element={<About />} />
             <Route path="/support" element={<Support />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms" element={<TermsOfService />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/hit-songs-written-in-under-30-minutes" element={<HitSongsWrittenFast />} />
             <Route path="/blog/rhyme-schemes-that-make-songs-unforgettable" element={<RhymeSchemesThatWork />} />

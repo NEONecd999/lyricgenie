@@ -13,6 +13,9 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # A normal build takes ~2 minutes; the react-snap pre-render occasionally hangs (twice on 2026-10-05,
+    # cancelled after 15 min). Fail fast so a re-run can start.
+    timeout-minutes: 8
     steps:
       - name: Checkout
         uses: actions/checkout@v4

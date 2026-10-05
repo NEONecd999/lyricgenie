@@ -34,7 +34,7 @@ const PrivacyPolicy = () => {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="text-lg text-[#F6ECC9]/80 mt-4"
           >
-            Last Updated: January 12, 2025
+            Last Updated: October 5, 2026
           </motion.p>
         </div>
       </header>
@@ -118,7 +118,11 @@ const PrivacyPolicy = () => {
             <p className="mb-4 leading-relaxed text-gray-700">We use:</p>
             <ul className="list-disc ml-6 space-y-2 mb-4 text-gray-700">
               <li>Google Firebase for authentication and data storage</li>
-              <li>Apple StoreKit for subscription management</li>
+              <li>Apple StoreKit for subscriptions bought in the iOS app</li>
+              <li>
+                Stripe for subscriptions bought on the web. Stripe (through its Managed Payments service) sells the
+                subscription and processes your payment and billing details; we never see or store your card number.
+              </li>
               <li>Anthropic's Claude API for AI features</li>
             </ul>
             <p className="leading-relaxed text-gray-700">

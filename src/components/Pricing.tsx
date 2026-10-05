@@ -12,6 +12,8 @@ type Plan = {
   isFree?: boolean;
 };
 
+// Feature lists mirror the iOS paywall (SubscriptionView.swift comparisonRows + free banner) and
+// the web app's paywall; keep all three in step.
 const plans: Plan[] = [
   {
     name: "Free",
@@ -20,9 +22,11 @@ const plans: Plan[] = [
     description: "Perfect for getting started with songwriting",
     features: [
       "Unlimited songs",
-      "Basic rhymes and synonyms",
-      "60 minutes of voice recordings",
       "Real-time collaboration",
+      "Lyric sheets, lyrics-linked recordings & drag-and-drop arranging",
+      "Try every AI tool: 7 AI calls + 40 quick AI calls",
+      "30 rhyme lookups a day",
+      "60 minutes of voice recording (5 min per take)",
     ],
     cta: "Download Now",
     isFree: true,
@@ -31,28 +35,29 @@ const plans: Plan[] = [
     name: "Pro Monthly",
     price: "$4.99",
     period: "/month",
-    description: "For songwriters and professional collaborators",
+    description: "AI built for songwriting, woven into a powerful lyrics editor",
     features: [
       "Everything in Free, plus:",
-      "Wish Workshop AI-powered brainstorming",
-      "Spark creative ideas & song concepts",
-      "Smart rhyming, thesaurus & sound-alikes",
-      "Smart syllable adjustments",
-      "1,000 minutes of voice recordings",
-      "5,000 AI requests per month",
+      "In-line suggestions",
+      "Wish Workshop AI",
+      "Smart dictionaries",
+      "AI song titles & song concepts",
+      "Syllable control",
+      "5,000 AI calls a month + 20,000 quick AI calls (suggestions, rhyme picks)",
+      "Unlimited rhyme lookups",
+      "10,000 minutes of voice recording (60 min per take)",
     ],
     cta: "Start Free Trial",
     popular: true,
   },
   {
     name: "Pro Yearly",
-    price: "$49.99",
+    price: "$29.99",
     period: "/year",
-    description: "Best value, save over 15%",
+    description: "Best value, save 50%",
     features: [
-      "Everything in Free, plus:",
       "Everything in Pro Monthly",
-      "Two months free",
+      "Six months free",
     ],
     cta: "Start Free Trial",
   },

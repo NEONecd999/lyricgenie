@@ -1,69 +1,48 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
-type Plan = {
-  name: string;
-  price: string;
-  period: string;
-  description: string;
-  features: string[];
-  cta: string;
-  popular?: boolean;
-  isFree?: boolean;
-};
-
 // Feature lists mirror the iOS paywall (SubscriptionView.swift comparisonRows + free banner) and
-// the web app's paywall; keep all three in step.
-const plans: Plan[] = [
-  {
-    name: "Free",
-    price: "$0",
-    period: "forever",
-    description: "Perfect for getting started with songwriting",
-    features: [
-      "Unlimited songs",
-      "Real-time collaboration",
-      "Lyric sheets, lyrics-linked recordings & drag-and-drop arranging",
-      "Try every AI tool: 7 AI calls + 40 quick AI calls",
-      "30 rhyme lookups a day",
-      "60 minutes of voice recording (5 min per take)",
-    ],
-    cta: "Download Now",
-    isFree: true,
-  },
-  {
-    name: "Pro Monthly",
-    price: "$4.99",
-    period: "/month",
-    description: "AI built for songwriting, woven into a powerful lyrics editor",
-    features: [
-      "Everything in Free, plus:",
-      "In-line suggestions",
-      "Wish Workshop AI",
-      "Smart dictionaries",
-      "AI song titles & song concepts",
-      "Syllable control",
-      "5,000 AI calls a month + 20,000 quick AI calls (suggestions, rhyme picks)",
-      "Unlimited rhyme lookups",
-      "10,000 minutes of voice recording (60 min per take)",
-    ],
-    cta: "Start Free Trial",
-    popular: true,
-  },
-  {
-    name: "Pro Yearly",
-    price: "$29.99",
-    period: "/year",
-    description: "Best value, save 50%",
-    features: [
-      "Everything in Pro Monthly",
-      "Six months free",
-    ],
-    cta: "Start Free Trial",
-  },
+// the web app's paywall (LYRICGENIE-APP src/data/billing.ts); keep all three in step.
+const FREE_FEATURES = [
+  "Unlimited songs",
+  "Real-time collaboration",
+  "Lyric sheets, lyrics-linked recordings & drag-and-drop arranging",
+  "Try every AI tool: 7 AI calls + 40 quick AI calls",
+  "30 rhyme lookups a day",
+  "60 minutes of voice recording (5 min per take)",
 ];
 
+const PRO_FEATURES = [
+  "Everything in Free, plus:",
+  "In-line suggestions",
+  "Wish Workshop AI",
+  "Smart dictionaries",
+  "AI song titles & song concepts",
+  "Syllable control",
+  "5,000 AI calls a month + 20,000 quick AI calls (suggestions, rhyme picks)",
+  "Unlimited rhyme lookups",
+  "10,000 minutes of voice recording (60 min per take)",
+];
+
+const MONTHLY = 4.99;
+const YEARLY = 29.99;
+// Yearly vs twelve monthly payments: 1 - 29.99 / 59.88 ≈ 50%.
+const SAVINGS = Math.round((1 - YEARLY / (MONTHLY * 12)) * 100);
+
+type Billing = "monthly" | "yearly";
+
+const APP_STORE = "https://apps.apple.com/us/app/lyric-genie/id6739787614";
+
+const Check = () => (
+  <span className="mt-0.5 inline-flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-[#F4EEFE] text-xs font-bold text-primary">
+    ✓
+  </span>
+);
+
 const Pricing = () => {
+  // Yearly first: it's the better deal and the plan we'd rather sell.
+  const [billing, setBilling] = useState<Billing>("yearly");
   return (
     <section className="relative overflow-hidden py-24 bg-background">
       <div className="pointer-events-none absolute top-1/2 left-1/2 h-[800px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/5 blur-3xl" />
@@ -101,77 +80,113 @@ const Pricing = () => {
           </p>
         </motion.div>
 
-        <div className="mx-auto grid max-w-6xl items-start gap-8 pt-6 md:grid-cols-3">
-          {plans.map((plan, index) => (
-            <motion.div
-              key={plan.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              className={`relative rounded-[28px] bg-card p-9 transition-all duration-300 ${
-                plan.popular
-                  ? "scale-[1.04] border-2 border-primary shadow-[0_18px_44px_-12px_rgba(127,98,196,0.32)]"
-                  : "border border-[#E5E4E8] shadow-[0_4px_20px_-4px_rgba(30,19,36,0.08)] hover:shadow-xl"
-              }`}
-            >
-              {plan.popular && (
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
-                  <span className="rounded-full bg-[#6F50B8] px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.1em] text-white">
-                    Most Popular
-                  </span>
-                </div>
-              )}
-
-              <div className="mb-1.5 text-[13px] font-semibold uppercase tracking-[0.1em] text-primary">
-                {plan.name}
-              </div>
-              <div className="mb-2 flex items-baseline gap-1.5">
-                <span className="font-display text-5xl font-bold tracking-tight text-[#1E1324]">
-                  {plan.price}
-                </span>
-                <span className="text-sm text-[#5D5065]">{plan.period}</span>
-              </div>
-              {plan.isFree ? (
-                <div className="mb-6 text-sm text-[#5D5065]">
-                  ✨ Free forever, no credit card
-                </div>
-              ) : (
-                <div className="mb-6 inline-flex items-center gap-1.5 rounded-full border border-yellow-400/40 bg-yellow-400/20 px-3 py-1 text-xs font-semibold text-primary">
-                  <span>✦</span> 14-day free trial, cancel anytime
-                </div>
-              )}
-
-              <a
-                href="https://apps.apple.com/us/app/lyric-genie/id6739787614"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block"
-              >
-                <Button
-                  variant={plan.popular ? "hero" : "outline"}
-                  size="lg"
-                  className="w-full justify-center"
+        {/* Monthly / Yearly switch, with the yearly saving on it. */}
+        <div className="mb-10 flex justify-center">
+          <div role="radiogroup" aria-label="Billing period" className="inline-flex items-center rounded-full border border-[#E5E4E8] bg-card p-1 shadow-[0_4px_20px_-4px_rgba(30,19,36,0.08)]">
+            {(["monthly", "yearly"] as const).map((b) => {
+              const on = billing === b;
+              return (
+                <button
+                  key={b}
+                  type="button"
+                  role="radio"
+                  aria-checked={on}
+                  onClick={() => setBilling(b)}
+                  className={`flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold transition-colors ${
+                    on ? "bg-[#6F50B8] text-white" : "text-[#5D5065] hover:text-[#1E1324]"
+                  }`}
                 >
-                  {plan.cta}
-                </Button>
-              </a>
-
-              <ul className="mt-7 flex flex-col gap-3">
-                {plan.features.map((feature) => (
-                  <li
-                    key={feature}
-                    className="flex items-start gap-2.5 text-[15px] leading-[1.5] text-[#1E1324]"
-                  >
-                    <span className="mt-0.5 inline-flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-[#F4EEFE] text-xs font-bold text-primary">
-                      ✓
+                  {b === "monthly" ? "Monthly" : "Yearly"}
+                  {b === "yearly" && (
+                    <span className={`rounded-full px-2 py-0.5 text-[11px] font-bold ${on ? "bg-white/20 text-white" : "bg-yellow-400/25 text-primary"}`}>
+                      Save {SAVINGS}%
                     </span>
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          ))}
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="mx-auto grid max-w-4xl items-start gap-8 md:grid-cols-2">
+          {/* Free */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className="relative rounded-[28px] border border-[#E5E4E8] bg-card p-9 shadow-[0_4px_20px_-4px_rgba(30,19,36,0.08)] transition-all duration-300 hover:shadow-xl"
+          >
+            <div className="mb-1.5 text-[13px] font-semibold uppercase tracking-[0.1em] text-primary">Free</div>
+            <div className="mb-2 flex items-baseline gap-1.5">
+              <span className="font-display text-5xl font-bold tracking-tight text-[#1E1324]">$0</span>
+              <span className="text-sm text-[#5D5065]">forever</span>
+            </div>
+            <div className="mb-6 text-sm text-[#5D5065]">✨ Free forever, no credit card</div>
+            <a href={APP_STORE} target="_blank" rel="noopener noreferrer" className="block">
+              <Button variant="outline" size="lg" className="w-full justify-center">
+                Download Now
+              </Button>
+            </a>
+            <ul className="mt-7 flex flex-col gap-3">
+              {FREE_FEATURES.map((f) => (
+                <li key={f} className="flex items-start gap-2.5 text-[15px] leading-[1.5] text-[#1E1324]">
+                  <Check />
+                  <span>{f}</span>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+
+          {/* Pro: one plan, priced by the switch above */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            viewport={{ once: true }}
+            className="relative scale-[1.03] rounded-[28px] border-2 border-primary bg-card p-9 shadow-[0_18px_44px_-12px_rgba(127,98,196,0.32)] transition-all duration-300"
+          >
+            <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
+              <span className="rounded-full bg-[#6F50B8] px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.1em] text-white">
+                {billing === "yearly" ? "Best Value" : "Most Popular"}
+              </span>
+            </div>
+            <div className="mb-1.5 text-[13px] font-semibold uppercase tracking-[0.1em] text-primary">Pro</div>
+            <div className="mb-1 flex items-baseline gap-1.5">
+              <span className="font-display text-5xl font-bold tracking-tight text-[#1E1324]">
+                ${billing === "yearly" ? YEARLY : MONTHLY}
+              </span>
+              <span className="text-sm text-[#5D5065]">{billing === "yearly" ? "/year" : "/month"}</span>
+            </div>
+            <div className="mb-4 h-5 text-sm text-[#5D5065]">
+              {billing === "yearly" ? (
+                <>
+                  Just ${(YEARLY / 12).toFixed(2)}/month{" "}
+                  <span className="text-[#9A92A0] line-through">${MONTHLY}</span>
+                </>
+              ) : (
+                <>
+                  Or ${YEARLY}/year and save {SAVINGS}%
+                </>
+              )}
+            </div>
+            <div className="mb-6 inline-flex items-center gap-1.5 rounded-full border border-yellow-400/40 bg-yellow-400/20 px-3 py-1 text-xs font-semibold text-primary">
+              <span>✦</span> 14-day free trial, cancel anytime
+            </div>
+            <a href={APP_STORE} target="_blank" rel="noopener noreferrer" className="block">
+              <Button variant="hero" size="lg" className="w-full justify-center">
+                Start Free Trial
+              </Button>
+            </a>
+            <ul className="mt-7 flex flex-col gap-3">
+              {PRO_FEATURES.map((f) => (
+                <li key={f} className="flex items-start gap-2.5 text-[15px] leading-[1.5] text-[#1E1324]">
+                  <Check />
+                  <span>{f}</span>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
         </div>
       </div>
     </section>

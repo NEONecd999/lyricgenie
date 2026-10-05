@@ -118,11 +118,13 @@ const Pricing = () => {
             className="relative rounded-[28px] border border-[#E5E4E8] bg-card p-9 shadow-[0_4px_20px_-4px_rgba(30,19,36,0.08)] transition-all duration-300 hover:shadow-xl"
           >
             <div className="mb-1.5 text-[13px] font-semibold uppercase tracking-[0.1em] text-primary">Free</div>
-            <div className="mb-2 flex items-baseline gap-1.5">
+            {/* Same rows as the Pro card (lead line, price, note) so the two prices line up. */}
+            <div className="mb-1 font-display text-xl font-bold text-[#1E1324]">Free forever</div>
+            <div className="mb-1 flex items-baseline gap-1.5">
               <span className="font-display text-5xl font-bold tracking-tight text-[#1E1324]">$0</span>
-              <span className="text-sm text-[#5D5065]">forever</span>
             </div>
-            <div className="mb-6 text-sm text-[#5D5065]">✨ Free forever, no credit card</div>
+            <div className="mb-4 h-5 text-sm text-[#5D5065]">No credit card needed</div>
+            <div className="mb-6 h-5" aria-hidden />
             <a href={APP_STORE} target="_blank" rel="noopener noreferrer" className="block">
               <Button variant="outline" size="lg" className="w-full justify-center">
                 Download Now
@@ -152,6 +154,11 @@ const Pricing = () => {
               </span>
             </div>
             <div className="mb-1.5 text-[13px] font-semibold uppercase tracking-[0.1em] text-primary">Pro</div>
+            {/* The trial leads the price: "14 days free, then $29.99/year". */}
+            <div className="mb-1 font-display text-xl font-bold">
+              <span className="bg-gradient-to-r from-[#E8663C] to-[#E45C7A] bg-clip-text text-transparent">14 days free</span>
+              <span className="text-[#5D5065]">, then</span>
+            </div>
             <div className="mb-1 flex items-baseline gap-1.5">
               <span className="font-display text-5xl font-bold tracking-tight text-[#1E1324]">
                 ${billing === "yearly" ? YEARLY : MONTHLY}
@@ -170,9 +177,7 @@ const Pricing = () => {
                 </>
               )}
             </div>
-            <div className="mb-6 inline-flex items-center gap-1.5 rounded-full border border-yellow-400/40 bg-yellow-400/20 px-3 py-1 text-xs font-semibold text-primary">
-              <span>✦</span> 14-day free trial, cancel anytime
-            </div>
+            <div className="mb-6 text-sm text-[#5D5065]">No charge for 14 days. Cancel anytime.</div>
             <a href={APP_STORE} target="_blank" rel="noopener noreferrer" className="block">
               <Button variant="hero" size="lg" className="w-full justify-center">
                 Start Free Trial

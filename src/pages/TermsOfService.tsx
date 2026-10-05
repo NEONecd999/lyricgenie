@@ -104,7 +104,7 @@ const TermsOfService = () => {
 
           <section className="bg-white rounded-2xl p-8 shadow-sm">
             <h2 className="text-2xl font-bold mb-4 text-[rgb(127,98,196)] font-display">Governing law</h2>
-            <p className="mb-4 leading-relaxed text-gray-700">These terms are governed by the laws of the State of [STATE], USA, except where the law of your country gives you rights that cannot be waived.</p>
+            <p className="mb-4 leading-relaxed text-gray-700">These terms are governed by the laws of the United States and of the state in which Edan Dover Inc. is incorporated, except where the law of your country gives you rights that cannot be waived.</p>
           </section>
 
           <section className="bg-white rounded-2xl p-8 shadow-sm">

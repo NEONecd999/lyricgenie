@@ -3,59 +3,99 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lyric Genie</title>
+  <title>Lyric Genie invite</title>
+  <meta name="robots" content="noindex">
+  <!--
+    Invite links (lyricgenie.app/invite?code=… from the apps, ?token=… from invite emails) land here and let
+    the person choose: the iPhone app (lyricgenie:// scheme, which every app version handles) or the web
+    app (app.lyricgenie.app/invite, same query). /invite is deliberately NOT in the apple-app-site-association
+    file any more, so iOS shows this page instead of jumping straight into the app.
+  -->
   <style>
+    :root { --bg: #1E1324; --card: #2A1C33; --cream: #F6ECC9; --purple: #6F50B8; --text: #fff; --muted: rgba(255,255,255,.68); --line: rgba(255,255,255,.12); }
+    * { box-sizing: border-box; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
-      background: #1a1a2e;
-      color: #fff;
-      text-align: center;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      margin: 0; min-height: 100vh; min-height: 100dvh;
+      display: flex; align-items: center; justify-content: center;
+      background: radial-gradient(900px 500px at 50% -10%, rgba(111,80,184,.35), transparent 70%), var(--bg);
+      color: var(--text); padding: 24px 16px;
     }
-    .container { padding: 2rem; }
-    h1 { font-size: 1.5rem; margin-bottom: 0.5rem; }
-    p { color: #aaa; margin-bottom: 1.5rem; }
-    a {
-      display: inline-block;
-      padding: 12px 28px;
-      background: linear-gradient(135deg, #7c3aed, #a855f7);
-      color: #fff;
-      text-decoration: none;
-      border-radius: 999px;
-      font-weight: 600;
+    .card { width: 100%; max-width: 420px; text-align: center; }
+    .logo { width: 56px; height: 56px; border-radius: 14px; margin: 0 auto 20px; display: block; }
+    h1 { font-size: 1.6rem; line-height: 1.2; margin: 0 0 10px; letter-spacing: -.01em; }
+    p { color: var(--muted); margin: 0 0 24px; line-height: 1.5; }
+    .code { display: inline-block; margin: -8px 0 24px; padding: 6px 14px; border: 1px solid var(--line); border-radius: 999px; font-size: .9rem; color: var(--muted); }
+    .code b { color: var(--cream); letter-spacing: .08em; }
+    .btn {
+      display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%;
+      padding: 15px 20px; border-radius: 999px; font-weight: 600; font-size: 1rem;
+      text-decoration: none; border: 0; cursor: pointer; margin-bottom: 12px; font-family: inherit;
     }
-    .status { font-size: 0.9rem; color: #888; margin-top: 1rem; }
+    .primary { background: var(--cream); color: var(--purple); }
+    .secondary { background: transparent; color: var(--text); border: 1px solid var(--line); }
+    .btn:hover { filter: brightness(1.05); }
+    .note { font-size: .875rem; margin: 8px 0 0; }
+    .note a { color: var(--cream); }
+    [hidden] { display: none !important; }
   </style>
 </head>
 <body>
-  <div class="container">
+  <main class="card">
+    <img class="logo" src="/favicon-96x96.png" alt="" onerror="this.remove()">
     <h1 id="title">Open Lyric Genie</h1>
-    <p id="subtitle">Opening the app&hellip;</p>
-    <a href="https://apps.apple.com/app/id6739787614">Get Lyric Genie</a>
-    <p class="status" id="status"></p>
-  </div>
+    <p id="subtitle">Where would you like to open it?</p>
+    <div id="code" class="code" hidden>Invite code <b id="codeValue"></b></div>
+    <div id="buttons"></div>
+    <p class="note" id="missing" hidden>
+      Didn't open? You may not have the app yet.
+      <a href="https://apps.apple.com/app/id6739787614">Get it on the App Store</a>, or continue on the web.
+    </p>
+    <p class="note" id="store">
+      No iPhone app yet? <a href="https://apps.apple.com/app/id6739787614">Get it on the App Store</a>
+    </p>
+  </main>
   <script>
-    (function() {
-      var params = new URLSearchParams(window.location.search);
-      var code = params.get('code');
-      var appStoreUrl = 'https://apps.apple.com/app/id6739787614';
+    (function () {
+      var params = new URLSearchParams(location.search);
+      var code = params.get("code");
+      var query = location.search || "";
+      var appUrl = code ? "lyricgenie://invite?code=" + encodeURIComponent(code) : "lyricgenie://";
+      var webUrl = "https://app.lyricgenie.app/invite" + query;
+      // iPhone / iPad (iPadOS reports a Mac with touch).
+      var ios = /iPhone|iPad|iPod/.test(navigator.userAgent) || (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
+      var mac = !ios && /Macintosh/.test(navigator.userAgent);
 
+      if (code || params.get("token")) {
+        document.getElementById("title").textContent = "You're invited to write together";
+        document.getElementById("subtitle").textContent = "Open the song in the iPhone app or right here in your browser. It's the same account either way.";
+      }
       if (code) {
-        document.getElementById('title').textContent = "You've been invited to collaborate!";
-        document.getElementById('subtitle').textContent = 'Opening Lyric Genie\u2026';
-        window.location.href = 'lyricgenie://invite?code=' + encodeURIComponent(code);
-      } else {
-        window.location.href = 'lyricgenie://';
+        document.getElementById("codeValue").textContent = code;
+        document.getElementById("code").hidden = false;
       }
 
-      setTimeout(function() {
-        document.getElementById('status').textContent = 'App not found. Redirecting to App Store\u2026';
-        window.location.href = appStoreUrl;
-      }, 1500);
+      var app = document.createElement("a");
+      app.href = appUrl;
+      app.textContent = ios ? "Open in the iPhone app" : "Open in the Lyric Genie app";
+      app.addEventListener("click", function () {
+        // If the page is still showing a moment later, the app probably isn't installed.
+        setTimeout(function () {
+          if (!document.hidden) document.getElementById("missing").hidden = false;
+        }, 1600);
+      });
+      var web = document.createElement("a");
+      web.href = webUrl;
+      web.textContent = ios ? "Continue on the web" : "Open in your browser";
+
+      // The likely choice first: the app on iPhone / iPad, the web everywhere else. The app button
+      // shows on Macs too (Apple silicon Macs can run the iPhone app); not on Android or Windows.
+      var order = ios ? [app, web] : mac ? [web, app] : [web];
+      order.forEach(function (el, i) {
+        el.className = "btn " + (i === 0 ? "primary" : "secondary");
+        document.getElementById("buttons").appendChild(el);
+      });
+      if (!ios && !mac) document.getElementById("store").hidden = true;
     })();
   </script>
 </body>

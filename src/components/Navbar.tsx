@@ -17,6 +17,20 @@ const Navbar = () => {
   // disconnected — both should be the purple "elevated" state).
   const navIsDark = isScrolled || isMobileMenuOpen;
 
+  // While the menu is open the page behind it stays put: scrolling it moved Safari's toolbar and let the
+  // site show through below the menu.
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+    const root = document.documentElement;
+    const prev = [root.style.overflow, document.body.style.overflow];
+    root.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+    return () => {
+      root.style.overflow = prev[0];
+      document.body.style.overflow = prev[1];
+    };
+  }, [isMobileMenuOpen]);
+
   useEffect(() => {
     const handleScroll = () => {
       // Announcement strip is ~40px tall and is in flow; once user scrolls past it
@@ -195,7 +209,8 @@ const Navbar = () => {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 z-40 bg-gradient-to-br from-primary via-primary to-accent px-6 pt-24 md:hidden"
+            // Tallest viewport (Safari's toolbar hidden), so nothing shows below it; the menu scrolls itself.
+            className="fixed inset-x-0 top-0 z-40 h-[100lvh] overflow-y-auto overscroll-contain bg-gradient-to-br from-primary via-primary to-accent px-6 pb-[calc(2rem+env(safe-area-inset-bottom))] pt-24 md:hidden"
           >
             <div className="flex flex-col gap-6">
               {mobileLinks.map((link) => {

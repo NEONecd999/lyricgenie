@@ -232,8 +232,8 @@
         </svg>
       </button>
       <a href="https://lyricgenie.app" class="nav-link">Learn more</a>
-      <a href="https://apps.apple.com/us/app/lyric-genie/id6739787614" class="get-app-btn" id="getAppBtn">
-        Download App
+      <a href="https://app.lyricgenie.app/signup" data-try-lg class="get-app-btn" id="getAppBtn">
+        Try Lyric Genie
       </a>
     </nav>
   </header>
@@ -329,9 +329,9 @@
         </svg>
       </div>
       <h2>AI Picks is in the app</h2>
-      <p>AI Picks highlights the rhymes that fit YOUR song's mood, theme, and lyrics so far. It's free in the Lyric Genie iOS app.</p>
+      <p>AI Picks highlights the rhymes that fit YOUR song's mood, theme, and lyrics so far. Try it in Lyric Genie, free on iPhone, iPad, Mac and the web.</p>
       <div class="modal-btns">
-        <a href="https://apps.apple.com/us/app/lyric-genie/id6739787614" class="btn-primary" id="modalGetApp">Get Lyric Genie — Free</a>
+        <a href="https://app.lyricgenie.app/signup" data-try-lg class="btn-primary" id="modalGetApp">Try Lyric Genie Free</a>
         <button class="btn-secondary" id="modalClose">Maybe later</button>
       </div>
     </div>
@@ -369,5 +369,6 @@
   <script src="/rhymes/dictionary.js?v=14"></script>
 
   <script src="/rhymes/_shared/rhymes.js?v=1"></script>
+<script>/* Try Lyric Genie: the web app on computers, the App Store on iPhone and iPad. */(function(){var ios=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1);if(!ios)return;document.querySelectorAll("a[data-try-lg]").forEach(function(a){a.href="https://apps.apple.com/us/app/lyric-genie/id6739787614";});})();</script>
 </body>
 </html>

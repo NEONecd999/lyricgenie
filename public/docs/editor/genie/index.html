@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Genie chat · Lyric Genie Docs</title>
+<meta name="description" content="Talk a song through with Genie, a co-writer that can see your lyrics, check rhymes and syllables, and suggest edits you apply with one click.">
+<link rel="canonical" href="https://lyricgenie.app/docs/editor/genie/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Genie chat · Lyric Genie Docs">
+<meta property="og:description" content="Talk a song through with Genie, a co-writer that can see your lyrics, check rhymes and syllables, and suggest edits you apply with one click.">
+<meta property="og:url" content="https://lyricgenie.app/docs/editor/genie/">
+<meta property="og:site_name" content="Lyric Genie Docs">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"TechArticle","headline":"Genie chat","description":"Talk a song through with Genie, a co-writer that can see your lyrics, check rhymes and syllables, and suggest edits you apply with one click.","url":"https://lyricgenie.app/docs/editor/genie/","inLanguage":"en","isPartOf":{"@type":"WebSite","name":"Lyric Genie Docs","url":"https://lyricgenie.app"},"about":{"@type":"SoftwareApplication","name":"Lyric Genie","applicationCategory":"MultimediaApplication","operatingSystem":"iOS, iPadOS, macOS"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Docs","item":"https://lyricgenie.app/docs/"},{"@type":"ListItem","position":2,"name":"The song editor"},{"@type":"ListItem","position":3,"name":"Genie chat","item":"https://lyricgenie.app/docs/editor/genie/"}]}]}</script>
+<link rel="icon" href="/docs/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/docs/favicon.ico" sizes="32x32">
+<!-- Preload the three weights actually used. Without this the first paint of
+     every page is in the fallback face and then swaps, which is most of what
+     reads as "jittery" when clicking through the sidebar. -->
+<link rel="preload" href="/docs/fonts/Lufga-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/docs/fonts/Lufga-Medium.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/docs/fonts/Lufga-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/docs/tokens.css">
+<link rel="stylesheet" href="/docs/docs.css">
+<script>
+/* Set the theme before first paint so a dark-mode reader never sees a white
+   flash. tokens.css keys dark mode off [data-theme="dark"], matching the
+   marketing site's .dark block, so the two stay in sync. */
+(function(){try{var t=localStorage.getItem('lg-docs-theme');
+if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+/* Same idea for iOS vs Web: ?platform=web (links from the web app) wins and
+   is remembered; otherwise the last choice; otherwise iOS. */
+(function(){var p='ios';try{var q=new URLSearchParams(location.search).get('platform');
+if(q==='ios'||q==='web'){p=q;localStorage.setItem('lg-docs-platform',q);}
+else p=localStorage.getItem('lg-docs-platform')||'ios';}catch(e){}
+document.documentElement.setAttribute('data-platform',p==='web'?'web':'ios');})();
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="/docs/" aria-label="Lyric Genie Docs home">
+      <svg class="wordmark" fill="currentColor" role="img" aria-label="Lyric Genie" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 115.87 20.94"><defs><style>.cls-1{fill:currentColor}</style></defs><path class="cls-1" d="M25.29,6.43v6.06h5.61v2.01h-8.14V6.43h2.53Z"></path><path class="cls-1" d="M32.84,11.38l-4.32-4.95h3.14l2.51,2.97,2.55-2.97h2.85l-4.2,4.95v3.12h-2.53v-3.12Z"></path><path class="cls-1" d="M42.48,14.5h-2.53V6.43h6.51c2.69,0,3.5.93,3.5,2.09v.13c0,1.16-.97,1.59-1.5,1.77.82.24,1.53.81,1.53,1.85v1.18c0,.65.08.86.15.99v.05h-2.57c-.08-.1-.12-.22-.12-.51v-.93c0-.99-.43-1.42-1.68-1.42h-3.3v2.86ZM42.48,9.85h3.83c.73,0,1.02-.35,1.02-.79h0c0-.43-.28-.79-1.02-.79h-3.83v1.58Z"></path><path class="cls-1" d="M53.53,14.5h-2.53V6.43h2.53v8.07Z"></path><path class="cls-1" d="M59.85,14.65c-4.68,0-5.4-2.61-5.4-4.05v-.31c0-1.46.63-3.99,5.4-3.99h.45c4.68,0,5.4,2.23,5.4,3.18v.12h-2.68c-.06-.22-.39-1.35-2.95-1.35-2.42,0-2.97,1.08-2.97,2.09v.13c0,.95.64,2.21,2.99,2.21,2.61,0,2.88-1.25,2.94-1.43h2.68v.12c0,1.02-.8,3.28-5.41,3.28h-.45Z"></path><path class="cls-1" d="M74.99,14.65c-4.37,0-5.38-2.44-5.38-4.06v-.3c0-1.57.82-3.99,5.47-3.99h.47c4.51,0,5.3,1.96,5.35,3.06h0s-2.69.01-2.69.01c-.07-.18-.36-1.15-2.88-1.15s-3.07,1.06-3.07,2.18v.12c0,1.05.82,2.17,3.05,2.17,2.4,0,3.12-.92,3.12-1.15v-.02h-3.17v-1.53h5.68v4.52h-1.52c-.03-.29-.18-.92-.33-1.26-.35.4-1.39,1.4-3.88,1.4h-.23Z"></path><path class="cls-1" d="M90.61,6.43v1.83h-6.01v1.19h5.87v1.84h-5.87v1.32h6.12v1.88h-8.61V6.43h8.51Z"></path><path class="cls-1" d="M94.6,6.43l5.15,5.08v-5.08h2.5v8.07h-2.5l-5.48-5.35v5.35h-2.5V6.43h2.82Z"></path><path class="cls-1" d="M106.02,14.5h-2.53V6.43h2.53v8.07Z"></path><path class="cls-1" d="M115.76,6.43v1.83h-6.01v1.19h5.87v1.84h-5.87v1.32h6.12v1.88h-8.61V6.43h8.51Z"></path><path class="cls-1" d="M8.4,0c-1.43,0-2.6.85-2.6,1.51,0,.39.13.73.67.95.18-.21.86-.93,1.93-.93,1.07,0,1.75.73,1.93.93.54-.22.67-.57.67-.95,0-.67-1.16-1.51-2.6-1.51ZM8.4,2.1c-.93,0-1.53.77-1.53.77-.11.18-.17.38-.17.59,0,.76.76,1.37,1.69,1.37.94,0,1.69-.61,1.69-1.37,0-.2-.06-.41-.17-.59,0,0-.6-.77-1.53-.77ZM8.4,5.25c-3.73,0-6.76,1.35-6.76,3.01,0,.98,1.06,1.37,2.69,1.53,2.4.15,3.36-.88,5.21-1.83,0,0-.55-.15-1.93-.15s-1.93.15-1.93.15c0,0,.86-.57,2.87-.57s2.87.57,2.87.57c-.51.04-1.01.21-1.48.43-.34.16-.67.36-1,.56,1.06.68,2.53.89,3.53.84,1.63-.16,2.69-.55,2.69-1.53,0-1.66-3.03-3.01-6.76-3.01ZM8.34,9.33c-1.27.68-2.58,1.18-4.01,1.03.08.48.22.95.41,1.4.37.87.94,1.63,1.64,2.27.67.11,1.66.12,3.01-.25,1.4-.37,2.26-.9,2.79-1.34-.09-.22-.15-.44-.19-.68-.04-.32-.02-.65.08-.96.05-.16.12-.31.22-.45-1.47.13-2.78-.22-3.95-1.03h0ZM12.78,13.44c-.66.51-1.64,1.07-3.08,1.45-.6.16-1.14.26-1.63.3.41.21.84.38,1.28.51.72.21,1.46.33,2.16.59.35.13.69.31.98.54.29.23.54.52.7.86.21.46.24,1,.07,1.48-.16.48-.52.89-.97,1.12-.45.23-.99.28-1.47.14-.12-.03-.23-.08-.34-.14-.05-.02-.07,0-.02.04.33.24.71.41,1.1.51.77.19,1.6.08,2.3-.29.7-.37,1.24-1.01,1.51-1.76.26-.74.24-1.59-.06-2.31-.25-.6-.67-1.11-1.12-1.57-.45-.47-.94-.9-1.34-1.4-.02-.02-.04-.05-.05-.07Z"></path><path class="cls-1" d="M.83,12.16l-.02,1.66c-.53-.11-.99.41-.75.92.27.57,1.13.44,1.23-.18l.02-2.03,1.47-.38v1.35c-.56-.11-1.01.43-.75.94.28.54,1.09.42,1.22-.17l.03-2.76h-.02s-2.43.63-2.43.63Z"></path><path class="cls-1" d="M16.41,2.61v-.04l-.17-.54-1.1.3v1.65c-.74-.16-1.32.68-.83,1.29.45.58,1.35.3,1.44-.41v-2.06s.67-.19.67-.19Z"></path><path class="cls-1" d="M18.85,5.54l-.18-.72-1.46.36v2.16c-1.08-.28-1.79,1.12-.9,1.82.65.51,1.6.08,1.68-.74v-2.62s.85-.26.85-.26Z"></path></svg>
+      <span class="brand-tag">Docs</span>
+    </a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="sidebar"><span class="icon-menu" style="--icon:url('/docs/sf-symbols/line.3.horizontal.png')" aria-hidden="true"></span><span>Menu</span></button>
+    <div class="search">
+      <input id="search-input" type="search" placeholder="Search the docs" autocomplete="off"
+             aria-label="Search the docs" aria-controls="search-results">
+      <div id="search-results" class="search-results" hidden></div>
+    </div>
+    <div class="platform-toggle" role="group" aria-label="Show the docs for">
+      <button type="button" data-platform-choice="ios">iOS</button>
+      <button type="button" data-platform-choice="web">Web</button>
+    </div>
+    <button class="theme-toggle" type="button" aria-label="Switch between light and dark">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+    </button>
+    <nav class="topbar-links">
+      <a href="https://lyricgenie.app">Lyric Genie</a>
+      <a href="https://lyricgenie.app/support">Support</a>
+    </nav>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar"><button class="sidebar-close" type="button" aria-label="Close the menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button><div class="nav-group">
+      <p class="nav-group-title">Start here</p>
+      <ul><li><a href="/docs/"><span>Overview</span></a></li><li class="nav-only-ios"><a href="/docs/first-launch/"><span>First launch</span><span class="nav-plat nav-plat-ios">iOS</span></a></li><li><a href="/docs/first-song/"><span>Your first song</span></a></li><li><a href="/docs/how-it-fits-together/"><span>How it fits together</span></a></li></ul>
+    </div><div class="nav-group">
+      <p class="nav-group-title">The five tabs</p>
+      <ul><li class="nav-only-ios"><a href="/docs/tabs/start/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/flame.png')"></span><span>Start tab</span><span class="nav-plat nav-plat-ios">iOS</span></a></li><li class="nav-only-web"><a href="/docs/tabs/home/"><span>Home</span><span class="nav-plat nav-plat-web">Web</span></a></li><li><a href="/docs/tabs/songs/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/music.note.list.svg')"></span><span>Songs tab</span></a></li><li><a href="/docs/tabs/concepts/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/lightbulb.png')"></span><span>Concepts tab</span></a></li><li><a href="/docs/tabs/recordings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/recordingtape.svg')"></span><span>Recordings tab</span></a></li><li><a href="/docs/tabs/settings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/gearshape.png')"></span><span>Settings tab</span></a></li></ul>
+    </div><div class="nav-group">
+      <p class="nav-group-title">What you make</p>
+      <ul><li><a href="/docs/objects/songs/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/music.note.list.svg')"></span><span>Songs</span></a></li><li><a href="/docs/objects/recordings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/recordingtape.svg')"></span><span>Recordings</span></a></li><li><a href="/docs/objects/concepts/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/lightbulb.png')"></span><span>Concepts</span></a></li><li><a href="/docs/objects/projects/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/folder.svg')"></span><span>Projects</span></a></li></ul>
+    </div><div class="nav-group">
+      <p class="nav-group-title">Starting a song</p>
+      <ul><li><a href="/docs/guides/song-wizard/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/wand.and.sparkles.svg')"></span><span>The song wizard</span></a></li><li class="nav-only-ios"><a href="/docs/guides/freestyle/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/music.microphone.svg')"></span><span>Freestyle</span><span class="nav-plat nav-plat-ios">iOS</span></a></li><li><a href="/docs/guides/importing/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.arrow.down.png')"></span><span>Importing files</span></a></li></ul>
+    </div><div class="nav-group">
+      <p class="nav-group-title">The song editor</p>
+      <ul><li><a href="/docs/editor/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.pencil.png')"></span><span>The song editor</span></a></li><li class="nav-only-web"><a href="/docs/editor/workspace/"><span>The desktop workspace</span><span class="nav-plat nav-plat-web">Web</span></a></li><li class="nav-only-web"><a href="/docs/editor/genie/" class="active"><span>Genie chat</span><span class="nav-plat nav-plat-web">Web</span></a></li><li><a href="/docs/editor/sections/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/list.bullet.png')"></span><span>Sections and song structure</span></a></li><li><a href="/docs/editor/wish-workshop/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/lamp.svg')"></span><span>Wish Workshop</span></a></li><li><a href="/docs/editor/selecting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/text.cursor.png')"></span><span>Selecting and editing lines</span></a></li><li><a href="/docs/editor/arrange-mode/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.grid.2x2.svg')"></span><span>Arrange mode</span></a></li><li><a href="/docs/editor/perform/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.and.background.dotted.svg')"></span><span>Perform</span></a></li><li><a href="/docs/editor/recordings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/recordingtape.svg')"></span><span>Recordings in a song</span></a></li><li><a href="/docs/editor/rhymes/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/character.book.closed.fill.svg')"></span><span>Rhymes</span></a></li><li><a href="/docs/editor/syllables/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/textformat.123.png')"></span><span>Syllables</span></a></li><li class="nav-only-web"><a href="/docs/editor/view-options/"><span>Rhyme colors and margins</span><span class="nav-plat nav-plat-web">Web</span></a></li><li><a href="/docs/editor/ai-style/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/sparkles.svg')"></span><span>AI Style</span></a></li><li><a href="/docs/editor/inline-suggestions/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/sparkle.svg')"></span><span>In-line suggestions</span></a></li><li><a href="/docs/editor/lyric-sheets/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.arrow.up.svg')"></span><span>Lyric sheets</span></a></li></ul>
+    </div><div class="nav-group">
+      <p class="nav-group-title">Collaboration</p>
+      <ul><li><a href="/docs/collaboration/inviting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.badge.plus.png')"></span><span>Inviting a co-writer</span></a></li><li><a href="/docs/collaboration/tabs/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.2.fill.svg')"></span><span>Collaborator tabs</span></a></li><li class="nav-only-ios"><a href="/docs/collaboration/sending/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/tray.png')"></span><span>Sending lines to a co-writer</span><span class="nav-plat nav-plat-ios">iOS</span></a></li><li><a href="/docs/collaboration/master/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/doc.text.fill.png')"></span><span>The Master</span></a></li><li><a href="/docs/collaboration/notifications/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/bell.svg')"></span><span>Notifications</span></a></li></ul>
+    </div><div class="nav-group">
+      <p class="nav-group-title">Your account</p>
+      <ul><li><a href="/docs/account/signing-in/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/rectangle.portrait.and.arrow.right.png')"></span><span>Signing in</span></a></li><li><a href="/docs/account/profile/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.png')"></span><span>Your profile</span></a></li><li><a href="/docs/account/plans/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/wand.and.sparkles.svg')"></span><span>Plans and Pro</span></a></li><li><a href="/docs/account/preferences/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/slider.horizontal.3.png')"></span><span>Preferences</span></a></li><li class="nav-only-ios"><a href="/docs/account/deleting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/trash.png')"></span><span>Deleting your account</span><span class="nav-plat nav-plat-ios">iOS</span></a></li></ul>
+    </div><div class="nav-group">
+      <p class="nav-group-title">Reference</p>
+      <ul><li><a href="/docs/changelog/"><span>What's new</span></a></li><li><a href="/docs/reference/limits/"><span>Plan limits</span></a></li><li class="nav-only-web"><a href="/docs/reference/keyboard-shortcuts/"><span>Keyboard shortcuts</span><span class="nav-plat nav-plat-web">Web</span></a></li><li><a href="/docs/reference/formats/"><span>Supported formats</span></a></li><li><a href="/docs/reference/glossary/"><span>Glossary</span></a></li></ul>
+    </div><div class="nav-group">
+      <p class="nav-group-title">Help</p>
+      <ul><li><a href="/docs/faq/"><span>FAQ</span></a></li><li><a href="/docs/troubleshooting/"><span>Troubleshooting</span></a></li></ul>
+    </div></aside>
+  <main id="main" class="content">
+    <article class="prose">
+      <p class="eyebrow">The song editor</p>
+      <h1>Genie chat</h1>
+      <p class="lede">Talk a song through with Genie, a co-writer that can see your lyrics, check rhymes and syllables, and suggest edits you apply with one click.</p>
+      <div class="platform-banner platform-banner-web"><span class="plat-chip plat-chip-web">Web app only</span><span class="only-ios">This is in the web app only (app.lyricgenie.app). The iOS app doesn't have it.</span></div>
+      <p>Genie is a chat that lives beside your song. Ask it about a line, tell it where
+you are stuck, or ask for a way into the next verse. It reads the song as it is
+right now, so you never have to paste your lyrics in.</p>
+<p>It is built to help you write your song, not to write it for you. Expect
+questions, options and short notes on what is working. Ask for a whole verse
+and it will write one, but it will not volunteer it.</p>
+<h2 id="opening-genie">Opening Genie<a class="hanchor" href="#opening-genie" aria-label="Link to this section">#</a></h2>
+<p>Any of these opens the Genie chat in the right-hand panel:</p>
+<ul>
+<li><strong>The Genie icon</strong> at the top of the column of icons on the right edge of the
+window.</li>
+<li><strong>The floating genie</strong> in the bottom corner of the lyrics.</li>
+<li><strong>Ask Genie</strong> in the toolbar that appears over a selection. The selected
+lines go with your next message.</li>
+<li><strong>Not sure where to start?</strong> on <a href="/docs/tabs/home/">Home</a>, which opens a new song
+with your first message already sent.</li>
+</ul>
+<p>Click the Genie icon again to close the panel.</p>
+<figure class="fig only-web fig-web" style="max-width:min(46rem, 1280px)">
+  <div class="fig-shot">
+    <img src="/docs/img/web-genie-empty.webp" alt="The Genie panel open beside the lyrics, empty, with a greeting and the message box" width="1280" height="800" loading="lazy" decoding="async">
+    <span class="fig-mark" style="left:98.2%;top:17.5%;width:3.4%" aria-label="Click again to close"><span class="fig-badge">1</span></span><span class="fig-mark" style="left:81.3%;top:91.1%;width:30.2%;height:7.2%;aspect-ratio:auto" aria-label="Ask about the song. Genie sees it as it is now"><span class="fig-badge">2</span></span>
+  </div>
+  <ol class="fig-legend"><li><span class="fig-key">1</span>Click again to close</li><li><span class="fig-key">2</span>Ask about the song. Genie sees it as it is now</li></ol>
+  <figcaption>A new chat. Genie already has the song.</figcaption>
+</figure>
+<h2 id="one-chat-per-song">One chat per song<a class="hanchor" href="#one-chat-per-song" aria-label="Link to this section">#</a></h2>
+<p>Each song has its own chat, and it is still there when you come back. Your
+chat on a shared song is yours alone: co-writers have their own, and do not see
+what you asked.</p>
+<p>The chat is on the web app only for now. The iOS app does not show it.</p>
+<h2 id="what-genie-can-see">What Genie can see<a class="hanchor" href="#what-genie-can-see" aria-label="Link to this section">#</a></h2>
+<p>Every message you send carries a snapshot of the song:</p>
+<ul>
+<li>the title and the <a href="/docs/editor/workspace/#the-left-panel-the-song">AI Context</a>,</li>
+<li>your lyrics,</li>
+<li>on a shared song, your co-writers' tabs and the Master,</li>
+<li>the scratchpad,</li>
+<li>your <a href="/docs/editor/ai-style/">AI Style</a> guidance and words to avoid.</li>
+</ul>
+<p>It always reads the latest version, so if you rewrote a line since your last
+message, Genie sees the new one.</p>
+<h2 id="asking-about-particular-lines">Asking about particular lines<a class="hanchor" href="#asking-about-particular-lines" aria-label="Link to this section">#</a></h2>
+<p>Select lines in your lyrics while the Genie panel is open, or use <strong>Ask Genie</strong>
+on a selection, and they are attached to your next message. They show above the
+message box with a paperclip, and Genie takes your message to be about them.
+The × beside them takes them off again.</p>
+<h2 id="rhymes-and-syllable-counts">Rhymes and syllable counts<a class="hanchor" href="#rhymes-and-syllable-counts" aria-label="Link to this section">#</a></h2>
+<p>When Genie talks about rhymes or syllables, it does not guess. It looks rhymes
+up in the same engine as the <a href="/docs/editor/rhymes/">rhyme sheet</a>, and counts
+syllables with the app's own counter, before it answers. While it does, the
+panel says what it is checking, such as <em>Checking rhymes for &quot;noon&quot;</em>.</p>
+<h2 id="edit-cards">Edit cards<a class="hanchor" href="#edit-cards" aria-label="Link to this section">#</a></h2>
+<p>When Genie suggests a concrete change, it comes as a card rather than as text
+for you to copy. A card can replace a line, add a line after another, add lines
+at the end, or change the title or one of the AI Context fields. The old text
+is struck through above the new.</p>
+<p><strong>Nothing changes until you click Apply.</strong></p>
+<ul>
+<li><strong>Apply</strong> makes the change. It is one step, so <strong>Undo</strong> takes it back.</li>
+<li><strong>Dismiss</strong> sets the card aside.</li>
+<li><strong>Apply all</strong> appears when a reply has more than one card.</li>
+<li>If the line appears more than once in your lyrics, the card offers <strong>Apply to
+first</strong> or <strong>Apply to all</strong>.</li>
+</ul>
+<p>If you have changed the line since Genie suggested the edit, the card says so
+rather than guessing where it should go. Undo an applied edit and the card
+offers <strong>Apply again</strong>.</p>
+<p>Edits only apply to your own tab. On a co-writer's tab or the Master, the cards
+are there to read.</p>
+<h2 id="reply-chips">Reply chips<a class="hanchor" href="#reply-chips" aria-label="Link to this section">#</a></h2>
+<p>When there is an obvious next step, Genie offers two or three short replies
+under its message. Click one to send it as it is, or click the pencil beside it
+to put it in the message box and change it first.</p>
+<h2 id="handing-off-to-wish-workshop">Handing off to Wish Workshop<a class="hanchor" href="#handing-off-to-wish-workshop" aria-label="Link to this section">#</a></h2>
+<p>Ask for several versions of a line and Genie may offer a <strong>Wish Workshop</strong> card
+instead of a long list. <strong>Open in Wish Workshop</strong> opens it with those lines
+selected and the wish already running. See <a href="/docs/editor/wish-workshop/">Wish Workshop</a>.</p>
+<h2 id="chime-ins">Chime-ins<a class="hanchor" href="#chime-ins" aria-label="Link to this section">#</a></h2>
+<p>Now and then Genie offers a short nudge at a natural pause:</p>
+<ul>
+<li>when you come back to a song nobody has touched in a few weeks,</li>
+<li>when you have sat on an empty section for a while,</li>
+<li>when you have just finished a section.</li>
+</ul>
+<p>It appears as a bubble beside the floating genie, or beside the Genie icon if
+the floating genie is off. Nothing is sent until you click it, and then it opens
+the chat with that question asked. Ignore it and it fades. You get at most one
+in a browser session, and never while you are typing.</p>
+<figure class="fig only-web fig-web" style="max-width:min(46rem, 1280px)">
+  <div class="fig-shot">
+    <img src="/docs/img/web-genie-chime.webp" alt="A purple bubble beside the floating genie asking whether you want a quick recap of the song" width="1280" height="800" loading="lazy" decoding="async">
+    <span class="fig-mark" style="left:55.0%;top:78.4%;width:20.6%;height:14.0%;aspect-ratio:auto" aria-label="Nothing is sent until you click"><span class="fig-badge">1</span></span><span class="fig-mark" style="left:63.6%;top:74.1%;width:2.5%" aria-label="Just hides it"><span class="fig-badge">2</span></span>
+  </div>
+  <ol class="fig-legend"><li><span class="fig-key">1</span>Nothing is sent until you click</li><li><span class="fig-key">2</span>Just hides it</li></ol>
+  <figcaption>A chime-in on a song nobody has opened for a while.</figcaption>
+</figure>
+<h2 id="the-two-genie-settings">The two Genie settings<a class="hanchor" href="#the-two-genie-settings" aria-label="Link to this section">#</a></h2>
+<p>Both are in <strong>Settings</strong>, under <strong>Editor</strong>, and both are on to begin with. On a
+computer, open Settings from the avatar menu at the top right: the avatar menu →
+<strong>Settings</strong>. In a phone browser it is the last tab in the bar along the bottom.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Floating Genie</strong></td>
+<td>Shows the genie in the corner of the song editor. Genie stays in the right panel either way.</td>
+</tr>
+<tr>
+<td><strong>Genie can chime in</strong></td>
+<td>Allows the nudges above.</td>
+</tr>
+</tbody>
+</table></div>
+<p>You can also hide the floating genie from the editor itself: point at it and
+click the small ×. Turn it back on from the avatar menu → <strong>Settings</strong>.</p>
+<aside class="callout callout-note">
+<p class="callout-title"><span class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span>On a phone</p>
+<div class="callout-body">
+<p>In a phone browser, the floating genie is how you open Genie. If you turn it
+off, a Genie button appears at the top right of the song instead. Chime-ins
+need the floating genie on a phone, since they have nowhere else to point.</p>
+</div>
+</aside>
+<h2 id="how-genie-counts-toward-your-plan">How Genie counts toward your plan<a class="hanchor" href="#how-genie-counts-toward-your-plan" aria-label="Link to this section">#</a></h2>
+<p>On the free plan, each message to Genie uses one of your
+7 free AI calls, the same allowance the rest of the app
+draws on.</p>
+<aside class="callout callout-pro">
+<p class="callout-title"><span class="callout-icon"><span class="pro-chip">Pro</span></span>Pro plan</p>
+<div class="callout-body">
+<p>On Pro, Genie has a monthly allowance of its own, separate from the
+5,000 AI calls a month your other AI features use. Chatting
+never eats into what Wish Workshop and the rest need. The allowance refills at
+the start of each month.</p>
+</div>
+</aside>
+<p>A message Genie fails to answer is not counted. Send a lot in a row and it asks
+you to wait a minute before the next one.</p>
+<p>The numbers for the rest of the app are on <a href="/docs/reference/limits/">Plan limits</a>.</p>
+<h2 id="guided-start">Guided Start<a class="hanchor" href="#guided-start" aria-label="Link to this section">#</a></h2>
+<p>Guided Start is the <a href="/docs/guides/song-wizard/">song wizard</a> as a conversation with
+Genie. It asks about the song you want to write, fills in the AI Context from
+your answers, then offers titles and opening lines.</p>
+<h3 id="starting-it">Starting it<a class="hanchor" href="#starting-it" aria-label="Link to this section">#</a></h3>
+<p>Click <strong>New Song</strong>. A blank song opens and asks how you want to start:</p>
+<ul>
+<li><strong>Guide me</strong> opens Genie and begins the questions.</li>
+<li><strong>Start from scratch</strong> gives you the blank page, and points out where Genie
+is in case you want it later.</li>
+</ul>
+<p>On a song you have barely started, Genie also offers <strong>Guide me through
+starting this song</strong> when you open the chat. It goes once the song has four
+lyric lines, or once the mood, theme and similar artists are all filled in. It
+is not offered on shared songs.</p>
+<h3 id="the-questions">The questions<a class="hanchor" href="#the-questions" aria-label="Link to this section">#</a></h3>
+<p>Genie asks up to three questions, one at a time:</p>
+<ol>
+<li><strong>What's the mood?</strong> Pick up to three.</li>
+<li><strong>What's the theme?</strong> One sentence on what happens.</li>
+<li><strong>Similar artists?</strong> Pick up to two.</li>
+</ol>
+<p>Each comes with suggestion chips. Click chips to fill the message box, type your
+own answer, or mix the two, then click <strong>Next</strong>. <strong>More ideas</strong> deals a new set
+of chips, and <strong>Skip</strong> moves on without an answer. Any question the AI Context
+already answers is skipped.</p>
+<p>The questions themselves cost nothing. Each answer goes straight into the
+song's AI Context.</p>
+<h3 id="titles">Titles<a class="hanchor" href="#titles" aria-label="Link to this section">#</a></h3>
+<p>Genie then brainstorms title ideas from your answers. Click one and then
+<strong>Next</strong>, or type a title of your own. If the song already has a title of
+yours, you can keep it.</p>
+<p><strong>Brainstorm more titles</strong> asks for another set. Free accounts can do this once
+per Guided Start. <strong>Skip titles</strong> jumps to the end.</p>
+<p>Picking a title sets it as the song's title. If the lyrics are empty, it also
+lays down a section skeleton: Verse 1, Pre-chorus, Chorus and Verse 2.</p>
+<h3 id="lines">Lines<a class="hanchor" href="#lines" aria-label="Link to this section">#</a></h3>
+<p>Last, Genie offers lines that go with the title. Click any to add it under
+Verse 1. Click <strong>Done</strong> when you have what you want, or <strong>Skip lines</strong>.</p>
+<p>Genie wraps up with a summary and reply chips such as <strong>Help me write the
+first verse</strong>, and from there it is an ordinary Genie chat.</p>
+<aside class="callout callout-pro">
+<p class="callout-title"><span class="callout-icon"><span class="pro-chip">Pro</span></span>Pro plan</p>
+<div class="callout-body">
+<p>The questions are free. The titles and lines come from one AI call, plus one
+more if you brainstorm more titles, the same kind as <a href="/docs/editor/wish-workshop/#creative-spark">Spark</a>. If you are out of AI
+calls, Guided Start skips that step and you carry on writing without it.</p>
+</div>
+</aside>
+
+    </article>
+    <nav class="pager">
+      <a class="pager-prev" href="/docs/editor/workspace/"><span>Previous</span>The desktop workspace</a>
+      <a class="pager-next" href="/docs/editor/sections/"><span>Next</span>Sections and song structure</a>
+    </nav>
+    <footer class="page-footer">
+      <p>Something missing or wrong on this page? Email
+        <a href="mailto:support@lyricgenie.app">support@lyricgenie.app</a>.</p>
+      <p class="footer-version only-ios">Written for Lyric Genie <a href="/docs/changelog/"><strong>v2.20</strong></a>. Your version is under the logo in <a href="/docs/tabs/settings/">Settings</a>.</p><p class="footer-version only-web">Written for Lyric Genie for web <strong>0.1.0</strong> and iOS <a href="/docs/changelog/"><strong>v2.20</strong></a>. Your web version is at the bottom of <a href="/docs/tabs/settings/">Settings</a>.</p>
+    </footer>
+  </main>
+  <nav class="toc" aria-label="On this page">
+         <p class="toc-title">On this page</p>
+         <ul><li><a href="#opening-genie">Opening Genie</a></li><li><a href="#one-chat-per-song">One chat per song</a></li><li><a href="#what-genie-can-see">What Genie can see</a></li><li><a href="#asking-about-particular-lines">Asking about particular lines</a></li><li><a href="#rhymes-and-syllable-counts">Rhymes and syllable counts</a></li><li><a href="#edit-cards">Edit cards</a></li><li><a href="#reply-chips">Reply chips</a></li><li><a href="#handing-off-to-wish-workshop">Handing off to Wish Workshop</a></li><li><a href="#chime-ins">Chime-ins</a></li><li><a href="#the-two-genie-settings">The two Genie settings</a></li><li><a href="#how-genie-counts-toward-your-plan">How Genie counts toward your plan</a></li><li><a href="#guided-start">Guided Start</a></li></ul>
+       </nav>
+</div>
+
+<script>window.LG_DOCS_BASE = "/docs/";</script>
+<script src="/docs/docs.js" defer></script>
+</body>
+</html>

@@ -15,6 +15,30 @@
     });
   }
 
+  /* ───────────────────────── iOS / Web toggle ─────────────────────────
+     The initial value is set in <head> (?platform= or the saved choice). The
+     content for both platforms is already in the page; CSS shows one. */
+  // "On this page" lists every h2; hide the ones inside the other platform's blocks.
+  const syncToc = () => {
+    document.querySelectorAll('.toc a[href^="#"]').forEach((a) => {
+      const target = document.getElementById(decodeURIComponent(a.getAttribute('href').slice(1)));
+      const li = a.closest('li');
+      if (li) li.hidden = !!target && target.getClientRects().length === 0;
+    });
+  };
+  syncToc();
+  document.querySelectorAll('[data-platform-choice]').forEach((btn) => {
+    btn.setAttribute('aria-pressed', String(document.documentElement.getAttribute('data-platform') === btn.dataset.platformChoice));
+    btn.addEventListener('click', () => {
+      const p = btn.dataset.platformChoice;
+      document.documentElement.setAttribute('data-platform', p);
+      try { localStorage.setItem('lg-docs-platform', p); } catch (e) { /* private mode */ }
+      document.querySelectorAll('[data-platform-choice]').forEach((b) =>
+        b.setAttribute('aria-pressed', String(b.dataset.platformChoice === p)));
+      syncToc();
+    });
+  });
+
   /* ──────────────────── land at the top of a new page ────────────────────
 
      Every link here is a real page load, and a browser is free to restore the

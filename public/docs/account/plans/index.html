@@ -30,6 +30,12 @@
 (function(){try{var t=localStorage.getItem('lg-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
 document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+/* Same idea for iOS vs Web: ?platform=web (links from the web app) wins and
+   is remembered; otherwise the last choice; otherwise iOS. */
+(function(){var p='ios';try{var q=new URLSearchParams(location.search).get('platform');
+if(q==='ios'||q==='web'){p=q;localStorage.setItem('lg-docs-platform',q);}
+else p=localStorage.getItem('lg-docs-platform')||'ios';}catch(e){}
+document.documentElement.setAttribute('data-platform',p==='web'?'web':'ios');})();
 </script>
 </head>
 <body>
@@ -47,6 +53,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
              aria-label="Search the docs" aria-controls="search-results">
       <div id="search-results" class="search-results" hidden></div>
     </div>
+    <div class="platform-toggle" role="group" aria-label="Show the docs for">
+      <button type="button" data-platform-choice="ios">iOS</button>
+      <button type="button" data-platform-choice="web">Web</button>
+    </div>
     <button class="theme-toggle" type="button" aria-label="Switch between light and dark">
       <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
       <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
@@ -61,28 +71,28 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="shell">
   <aside class="sidebar" id="sidebar"><button class="sidebar-close" type="button" aria-label="Close the menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button><div class="nav-group">
       <p class="nav-group-title">Start here</p>
-      <ul><li><a href="/docs/"><span>Overview</span></a></li><li><a href="/docs/first-launch/"><span>First launch</span></a></li><li><a href="/docs/first-song/"><span>Your first song</span></a></li><li><a href="/docs/how-it-fits-together/"><span>How it fits together</span></a></li></ul>
+      <ul><li><a href="/docs/"><span>Overview</span></a></li><li class="nav-only-ios"><a href="/docs/first-launch/"><span>First launch</span><span class="nav-plat nav-plat-ios">iOS</span></a></li><li><a href="/docs/first-song/"><span>Your first song</span></a></li><li><a href="/docs/how-it-fits-together/"><span>How it fits together</span></a></li></ul>
     </div><div class="nav-group">
       <p class="nav-group-title">The five tabs</p>
-      <ul><li><a href="/docs/tabs/start/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/flame.png')"></span><span>Start tab</span></a></li><li><a href="/docs/tabs/songs/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/music.note.list.svg')"></span><span>Songs tab</span></a></li><li><a href="/docs/tabs/concepts/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/lightbulb.png')"></span><span>Concepts tab</span></a></li><li><a href="/docs/tabs/recordings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/recordingtape.svg')"></span><span>Recordings tab</span></a></li><li><a href="/docs/tabs/settings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/gearshape.png')"></span><span>Settings tab</span></a></li></ul>
+      <ul><li class="nav-only-ios"><a href="/docs/tabs/start/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/flame.png')"></span><span>Start tab</span><span class="nav-plat nav-plat-ios">iOS</span></a></li><li class="nav-only-web"><a href="/docs/tabs/home/"><span>Home</span><span class="nav-plat nav-plat-web">Web</span></a></li><li><a href="/docs/tabs/songs/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/music.note.list.svg')"></span><span>Songs tab</span></a></li><li><a href="/docs/tabs/concepts/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/lightbulb.png')"></span><span>Concepts tab</span></a></li><li><a href="/docs/tabs/recordings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/recordingtape.svg')"></span><span>Recordings tab</span></a></li><li><a href="/docs/tabs/settings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/gearshape.png')"></span><span>Settings tab</span></a></li></ul>
     </div><div class="nav-group">
       <p class="nav-group-title">What you make</p>
       <ul><li><a href="/docs/objects/songs/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/music.note.list.svg')"></span><span>Songs</span></a></li><li><a href="/docs/objects/recordings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/recordingtape.svg')"></span><span>Recordings</span></a></li><li><a href="/docs/objects/concepts/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/lightbulb.png')"></span><span>Concepts</span></a></li><li><a href="/docs/objects/projects/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/folder.svg')"></span><span>Projects</span></a></li></ul>
     </div><div class="nav-group">
       <p class="nav-group-title">Starting a song</p>
-      <ul><li><a href="/docs/guides/song-wizard/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/wand.and.sparkles.svg')"></span><span>The song wizard</span></a></li><li><a href="/docs/guides/freestyle/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/music.microphone.svg')"></span><span>Freestyle</span></a></li><li><a href="/docs/guides/importing/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.arrow.down.png')"></span><span>Importing files</span></a></li></ul>
+      <ul><li><a href="/docs/guides/song-wizard/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/wand.and.sparkles.svg')"></span><span>The song wizard</span></a></li><li class="nav-only-ios"><a href="/docs/guides/freestyle/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/music.microphone.svg')"></span><span>Freestyle</span><span class="nav-plat nav-plat-ios">iOS</span></a></li><li><a href="/docs/guides/importing/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.arrow.down.png')"></span><span>Importing files</span></a></li></ul>
     </div><div class="nav-group">
       <p class="nav-group-title">The song editor</p>
-      <ul><li><a href="/docs/editor/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.pencil.png')"></span><span>The song editor</span></a></li><li><a href="/docs/editor/sections/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/list.bullet.png')"></span><span>Sections and song structure</span></a></li><li><a href="/docs/editor/wish-workshop/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/lamp.svg')"></span><span>Wish Workshop</span></a></li><li><a href="/docs/editor/selecting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/text.cursor.png')"></span><span>Selecting and editing lines</span></a></li><li><a href="/docs/editor/arrange-mode/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.grid.2x2.svg')"></span><span>Arrange mode</span></a></li><li><a href="/docs/editor/perform/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.and.background.dotted.svg')"></span><span>Perform</span></a></li><li><a href="/docs/editor/recordings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/recordingtape.svg')"></span><span>Recordings in a song</span></a></li><li><a href="/docs/editor/rhymes/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/character.book.closed.fill.svg')"></span><span>Rhymes</span></a></li><li><a href="/docs/editor/syllables/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/textformat.123.png')"></span><span>Syllables</span></a></li><li><a href="/docs/editor/ai-style/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/sparkles.svg')"></span><span>AI Style</span></a></li><li><a href="/docs/editor/inline-suggestions/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/sparkle.svg')"></span><span>In-line suggestions</span></a></li><li><a href="/docs/editor/lyric-sheets/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.arrow.up.svg')"></span><span>Lyric sheets</span></a></li></ul>
+      <ul><li><a href="/docs/editor/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.pencil.png')"></span><span>The song editor</span></a></li><li class="nav-only-web"><a href="/docs/editor/workspace/"><span>The desktop workspace</span><span class="nav-plat nav-plat-web">Web</span></a></li><li class="nav-only-web"><a href="/docs/editor/genie/"><span>Genie chat</span><span class="nav-plat nav-plat-web">Web</span></a></li><li><a href="/docs/editor/sections/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/list.bullet.png')"></span><span>Sections and song structure</span></a></li><li><a href="/docs/editor/wish-workshop/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/lamp.svg')"></span><span>Wish Workshop</span></a></li><li><a href="/docs/editor/selecting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/text.cursor.png')"></span><span>Selecting and editing lines</span></a></li><li><a href="/docs/editor/arrange-mode/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.grid.2x2.svg')"></span><span>Arrange mode</span></a></li><li><a href="/docs/editor/perform/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.and.background.dotted.svg')"></span><span>Perform</span></a></li><li><a href="/docs/editor/recordings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/recordingtape.svg')"></span><span>Recordings in a song</span></a></li><li><a href="/docs/editor/rhymes/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/character.book.closed.fill.svg')"></span><span>Rhymes</span></a></li><li><a href="/docs/editor/syllables/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/textformat.123.png')"></span><span>Syllables</span></a></li><li class="nav-only-web"><a href="/docs/editor/view-options/"><span>Rhyme colors and margins</span><span class="nav-plat nav-plat-web">Web</span></a></li><li><a href="/docs/editor/ai-style/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/sparkles.svg')"></span><span>AI Style</span></a></li><li><a href="/docs/editor/inline-suggestions/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/sparkle.svg')"></span><span>In-line suggestions</span></a></li><li><a href="/docs/editor/lyric-sheets/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.arrow.up.svg')"></span><span>Lyric sheets</span></a></li></ul>
     </div><div class="nav-group">
       <p class="nav-group-title">Collaboration</p>
-      <ul><li><a href="/docs/collaboration/inviting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.badge.plus.png')"></span><span>Inviting a co-writer</span></a></li><li><a href="/docs/collaboration/tabs/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.2.fill.svg')"></span><span>Collaborator tabs</span></a></li><li><a href="/docs/collaboration/sending/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/tray.png')"></span><span>Sending lines to a co-writer</span></a></li><li><a href="/docs/collaboration/master/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/doc.text.fill.png')"></span><span>The Master</span></a></li><li><a href="/docs/collaboration/notifications/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/bell.svg')"></span><span>Notifications</span></a></li></ul>
+      <ul><li><a href="/docs/collaboration/inviting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.badge.plus.png')"></span><span>Inviting a co-writer</span></a></li><li><a href="/docs/collaboration/tabs/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.2.fill.svg')"></span><span>Collaborator tabs</span></a></li><li class="nav-only-ios"><a href="/docs/collaboration/sending/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/tray.png')"></span><span>Sending lines to a co-writer</span><span class="nav-plat nav-plat-ios">iOS</span></a></li><li><a href="/docs/collaboration/master/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/doc.text.fill.png')"></span><span>The Master</span></a></li><li><a href="/docs/collaboration/notifications/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/bell.svg')"></span><span>Notifications</span></a></li></ul>
     </div><div class="nav-group">
       <p class="nav-group-title">Your account</p>
-      <ul><li><a href="/docs/account/signing-in/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/rectangle.portrait.and.arrow.right.png')"></span><span>Signing in</span></a></li><li><a href="/docs/account/profile/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.png')"></span><span>Your profile</span></a></li><li><a href="/docs/account/plans/" class="active"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/wand.and.sparkles.svg')"></span><span>Plans and Pro</span></a></li><li><a href="/docs/account/preferences/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/slider.horizontal.3.png')"></span><span>Preferences</span></a></li><li><a href="/docs/account/deleting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/trash.png')"></span><span>Deleting your account</span></a></li></ul>
+      <ul><li><a href="/docs/account/signing-in/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/rectangle.portrait.and.arrow.right.png')"></span><span>Signing in</span></a></li><li><a href="/docs/account/profile/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.png')"></span><span>Your profile</span></a></li><li><a href="/docs/account/plans/" class="active"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/wand.and.sparkles.svg')"></span><span>Plans and Pro</span></a></li><li><a href="/docs/account/preferences/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/slider.horizontal.3.png')"></span><span>Preferences</span></a></li><li class="nav-only-ios"><a href="/docs/account/deleting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/trash.png')"></span><span>Deleting your account</span><span class="nav-plat nav-plat-ios">iOS</span></a></li></ul>
     </div><div class="nav-group">
       <p class="nav-group-title">Reference</p>
-      <ul><li><a href="/docs/changelog/"><span>What's new</span></a></li><li><a href="/docs/reference/limits/"><span>Plan limits</span></a></li><li><a href="/docs/reference/formats/"><span>Supported formats</span></a></li><li><a href="/docs/reference/glossary/"><span>Glossary</span></a></li></ul>
+      <ul><li><a href="/docs/changelog/"><span>What's new</span></a></li><li><a href="/docs/reference/limits/"><span>Plan limits</span></a></li><li class="nav-only-web"><a href="/docs/reference/keyboard-shortcuts/"><span>Keyboard shortcuts</span><span class="nav-plat nav-plat-web">Web</span></a></li><li><a href="/docs/reference/formats/"><span>Supported formats</span></a></li><li><a href="/docs/reference/glossary/"><span>Glossary</span></a></li></ul>
     </div><div class="nav-group">
       <p class="nav-group-title">Help</p>
       <ul><li><a href="/docs/faq/"><span>FAQ</span></a></li><li><a href="/docs/troubleshooting/"><span>Troubleshooting</span></a></li></ul>
@@ -92,14 +102,22 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
       <p class="eyebrow">Your account</p>
       <h1><span class="title-icon" style="--icon:url('/docs/sf-symbols/wand.and.sparkles.svg')" aria-hidden="true"></span>Plans and Pro</h1>
       <p class="lede">What the free plan includes, what Pro adds, and which limits govern what.</p>
+      <p class="platform-switch">Showing the <strong class="only-ios">iOS app</strong><strong class="only-web">web app</strong><span aria-hidden="true"> · </span><button type="button" class="only-ios" data-platform-choice="web">Switch to the web app</button><button type="button" class="only-web" data-platform-choice="ios">Switch to the iOS app</button></p>
       <p>Lyric Genie is free to use. Pro adds the AI writing tools and lifts the caps on
 rhymes and recording.</p>
-<figure class="fig" style="max-width:min(23rem, 330px)">
+<figure class="fig only-ios" style="max-width:min(23rem, 330px)">
   <div class="fig-shot">
     <img src="/docs/img/plans-pro-comparison.png" alt="The Pro screen comparing free and Pro across in-line suggestions, Wish Workshop, dictionaries, titles, concepts, syllables, rhymes and recording" width="330" height="717" loading="lazy" decoding="async">
   </div>
   <figcaption>The comparison as the app presents it.</figcaption>
 </figure>
+<div class="platform-block only-web">
+<p>On the web, the plan is read-only. <strong>Settings</strong> shows whether you are on Free or
+Pro, and <strong>Stats</strong> shows your recording storage and AI use against the limits
+below. You cannot subscribe, change plan or cancel from the web app. Subscribe in
+the iOS app and the same plan applies on both, because Pro belongs to your
+account. On the free plan, Stats tells you the same.</p>
+</div>
 <h2 id="what-pro-adds">What Pro adds<a class="hanchor" href="#what-pro-adds" aria-label="Link to this section">#</a></h2>
 <div class="table-wrap"><table>
 <thead>
@@ -191,7 +209,8 @@ recordings gives the space back.</p>
 <p><strong>Longest recording</strong> applies per item, to both what you record and what you
 import. A long file is refused with its length in the message, rather than
 silently truncated.</p>
-<h2 id="when-you-are-running-out-of-recording-space">When you are running out of recording space<a class="hanchor" href="#when-you-are-running-out-of-recording-space" aria-label="Link to this section">#</a></h2>
+<h2 id="when-you-are-running-out-of-recording-space-ios-app-only">When you are running out of recording space <span class="plat-chip plat-chip-ios">iOS app only</span><a class="hanchor" href="#when-you-are-running-out-of-recording-space-ios-app-only" aria-label="Link to this section">#</a></h2>
+<div class="platform-block only-ios">
 <p>The app warns you before you hit the wall rather than after. At around
 ninety per cent of your total it says <strong>You're running low on storage</strong>, with
 how many minutes you have used and how many you have.</p>
@@ -199,12 +218,16 @@ how many minutes you have used and how many you have.</p>
 carry an <strong>Upgrade to Pro</strong> button beside <strong>OK</strong>, so the upgrade is right there
 if that is what you want. Deleting recordings you no longer need also works,
 and gives the space back immediately.</p>
-<h2 id="starting-a-trial">Starting a trial<a class="hanchor" href="#starting-a-trial" aria-label="Link to this section">#</a></h2>
+</div>
+<h2 id="starting-a-trial-ios-app-only">Starting a trial <span class="plat-chip plat-chip-ios">iOS app only</span><a class="hanchor" href="#starting-a-trial-ios-app-only" aria-label="Link to this section">#</a></h2>
+<div class="platform-block only-ios">
 <p>The Pro screen offers a free trial, then a monthly price, with an annual option
 that works out cheaper per month. Nothing is charged until the trial ends.</p>
 <p>If you have used a trial on this Apple ID before, the app says so and offers
 the subscription without one.</p>
-<h2 id="cancelling-your-subscription">Cancelling your subscription<a class="hanchor" href="#cancelling-your-subscription" aria-label="Link to this section">#</a></h2>
+</div>
+<h2 id="cancelling-your-subscription-ios-app-only">Cancelling your subscription <span class="plat-chip plat-chip-ios">iOS app only</span><a class="hanchor" href="#cancelling-your-subscription-ios-app-only" aria-label="Link to this section">#</a></h2>
+<div class="platform-block only-ios">
 <p><strong>There is no cancel button inside Lyric Genie, and there cannot be.</strong> Pro is
 an Apple subscription, billed by Apple, and only Apple can stop it. That is the
 same for every app on the App Store.</p>
@@ -218,27 +241,31 @@ same for every app on the App Store.</p>
 </ol>
 <p>The App Store app gets you to the same place: tap your photo in the top right,
 then <strong>Subscriptions</strong>.</p>
-<aside class="callout callout-note">
+</div>
+<aside class="callout callout-note only-ios">
 <p class="callout-title"><span class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span>Note</p>
 <div class="callout-body">
-<p><strong>Cancelling does not end Pro straight away.</strong> You keep it until the end of the
-period you have already paid for, and you are not charged again. Nothing is
-deleted when it lapses, either: your songs, recordings and lyric sheets all
-stay. You go back to the free plan's limits.</p>
+<p><strong>Cancelling does not end Pro straight away.</strong> You keep it until the end of the</p>
+<p>period you have already paid for, and you are not charged again. Nothing is</p>
+<p>deleted when it lapses, either: your songs, recordings and lyric sheets all</p>
+<p>stay. You go back to the free plan's limits.</p>
 </div>
 </aside>
+<div class="platform-block only-ios">
 <p>If you cannot find Lyric Genie in that list, you are signed in to a different
 Apple ID from the one that bought it. Subscriptions belong to an Apple ID, not
 to your Lyric Genie account.</p>
-<aside class="callout callout-warn">
+</div>
+<aside class="callout callout-warn only-ios">
 <p class="callout-title"><span class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span>Heads up</p>
 <div class="callout-body">
-<p>Deleting your Lyric Genie account does <strong>not</strong> cancel your subscription. They
-are two separate things with two separate owners, so cancel first and delete
-second. See <a href="/docs/account/deleting/">Deleting your account</a>.</p>
+<p>Deleting your Lyric Genie account does <strong>not</strong> cancel your subscription. They</p>
+<p>are two separate things with two separate owners, so cancel first and delete</p>
+<p>second. See <a href="/docs/account/deleting/">Deleting your account</a>.</p>
 </div>
 </aside>
-<h2 id="if-you-cancelled-and-changed-your-mind">If you cancelled and changed your mind<a class="hanchor" href="#if-you-cancelled-and-changed-your-mind" aria-label="Link to this section">#</a></h2>
+<h2 id="if-you-cancelled-and-changed-your-mind-ios-app-only">If you cancelled and changed your mind <span class="plat-chip plat-chip-ios">iOS app only</span><a class="hanchor" href="#if-you-cancelled-and-changed-your-mind-ios-app-only" aria-label="Link to this section">#</a></h2>
+<div class="platform-block only-ios">
 <p>Cancelling a subscription does not switch Pro off straight away. It runs to the
 end of the period you paid for, and during that window the Pro screen says your
 subscription is <strong>set to expire</strong> rather than thanking you for subscribing.</p>
@@ -247,12 +274,13 @@ sheet, which is the only place auto-renew can be turned back on. <strong>Change 
 is beside it if you want to move between monthly and annual instead.</p>
 <p>Once the period actually ends, the screen goes back to the ordinary upgrade
 offer.</p>
-<aside class="callout callout-note">
+</div>
+<aside class="callout callout-note only-ios">
 <p class="callout-title"><span class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span>Note</p>
 <div class="callout-body">
-<p>There is no Restore Purchases button. Subscriptions restore themselves from
-your Apple ID, so if Pro is not showing after reinstalling, check you are signed
-into the same Apple ID rather than looking for a restore control.</p>
+<p>There is no Restore Purchases button. Subscriptions restore themselves from</p>
+<p>your Apple ID, so if Pro is not showing after reinstalling, check you are signed</p>
+<p>into the same Apple ID rather than looking for a restore control.</p>
 </div>
 </aside>
 <p>The numbers on this page are generated from the app's own configuration, so
@@ -267,12 +295,12 @@ they are what your copy of the app is actually enforcing. See also
     <footer class="page-footer">
       <p>Something missing or wrong on this page? Email
         <a href="mailto:support@lyricgenie.app">support@lyricgenie.app</a>.</p>
-      <p class="footer-version">Written for Lyric Genie <a href="/docs/changelog/"><strong>v2.20</strong></a>. Your version is under the logo in <a href="/docs/tabs/settings/">Settings</a>.</p>
+      <p class="footer-version only-ios">Written for Lyric Genie <a href="/docs/changelog/"><strong>v2.20</strong></a>. Your version is under the logo in <a href="/docs/tabs/settings/">Settings</a>.</p><p class="footer-version only-web">Written for Lyric Genie for web <strong>0.1.0</strong> and iOS <a href="/docs/changelog/"><strong>v2.20</strong></a>. Your web version is at the bottom of <a href="/docs/tabs/settings/">Settings</a>.</p>
     </footer>
   </main>
   <nav class="toc" aria-label="On this page">
          <p class="toc-title">On this page</p>
-         <ul><li><a href="#what-pro-adds">What Pro adds</a></li><li><a href="#what-is-free-and-stays-free">What is free, and stays free</a></li><li><a href="#how-the-limits-actually-work">How the limits actually work</a></li><li><a href="#when-you-are-running-out-of-recording-space">When you are running out of recording space</a></li><li><a href="#starting-a-trial">Starting a trial</a></li><li><a href="#cancelling-your-subscription">Cancelling your subscription</a></li><li><a href="#if-you-cancelled-and-changed-your-mind">If you cancelled and changed your mind</a></li></ul>
+         <ul><li><a href="#what-pro-adds">What Pro adds</a></li><li><a href="#what-is-free-and-stays-free">What is free, and stays free</a></li><li><a href="#how-the-limits-actually-work">How the limits actually work</a></li><li><a href="#when-you-are-running-out-of-recording-space-ios-app-only">When you are running out of recording space iOS app only</a></li><li><a href="#starting-a-trial-ios-app-only">Starting a trial iOS app only</a></li><li><a href="#cancelling-your-subscription-ios-app-only">Cancelling your subscription iOS app only</a></li><li><a href="#if-you-cancelled-and-changed-your-mind-ios-app-only">If you cancelled and changed your mind iOS app only</a></li></ul>
        </nav>
 </div>
 

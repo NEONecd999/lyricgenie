@@ -30,6 +30,12 @@
 (function(){try{var t=localStorage.getItem('lg-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
 document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+/* Same idea for iOS vs Web: ?platform=web (links from the web app) wins and
+   is remembered; otherwise the last choice; otherwise iOS. */
+(function(){var p='ios';try{var q=new URLSearchParams(location.search).get('platform');
+if(q==='ios'||q==='web'){p=q;localStorage.setItem('lg-docs-platform',q);}
+else p=localStorage.getItem('lg-docs-platform')||'ios';}catch(e){}
+document.documentElement.setAttribute('data-platform',p==='web'?'web':'ios');})();
 </script>
 </head>
 <body>
@@ -47,6 +53,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
              aria-label="Search the docs" aria-controls="search-results">
       <div id="search-results" class="search-results" hidden></div>
     </div>
+    <div class="platform-toggle" role="group" aria-label="Show the docs for">
+      <button type="button" data-platform-choice="ios">iOS</button>
+      <button type="button" data-platform-choice="web">Web</button>
+    </div>
     <button class="theme-toggle" type="button" aria-label="Switch between light and dark">
       <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
       <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
@@ -61,28 +71,28 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="shell">
   <aside class="sidebar" id="sidebar"><button class="sidebar-close" type="button" aria-label="Close the menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button><div class="nav-group">
       <p class="nav-group-title">Start here</p>
-      <ul><li><a href="/docs/"><span>Overview</span></a></li><li><a href="/docs/first-launch/"><span>First launch</span></a></li><li><a href="/docs/first-song/"><span>Your first song</span></a></li><li><a href="/docs/how-it-fits-together/"><span>How it fits together</span></a></li></ul>
+      <ul><li><a href="/docs/"><span>Overview</span></a></li><li class="nav-only-ios"><a href="/docs/first-launch/"><span>First launch</span><span class="nav-plat nav-plat-ios">iOS</span></a></li><li><a href="/docs/first-song/"><span>Your first song</span></a></li><li><a href="/docs/how-it-fits-together/"><span>How it fits together</span></a></li></ul>
     </div><div class="nav-group">
       <p class="nav-group-title">The five tabs</p>
-      <ul><li><a href="/docs/tabs/start/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/flame.png')"></span><span>Start tab</span></a></li><li><a href="/docs/tabs/songs/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/music.note.list.svg')"></span><span>Songs tab</span></a></li><li><a href="/docs/tabs/concepts/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/lightbulb.png')"></span><span>Concepts tab</span></a></li><li><a href="/docs/tabs/recordings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/recordingtape.svg')"></span><span>Recordings tab</span></a></li><li><a href="/docs/tabs/settings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/gearshape.png')"></span><span>Settings tab</span></a></li></ul>
+      <ul><li class="nav-only-ios"><a href="/docs/tabs/start/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/flame.png')"></span><span>Start tab</span><span class="nav-plat nav-plat-ios">iOS</span></a></li><li class="nav-only-web"><a href="/docs/tabs/home/"><span>Home</span><span class="nav-plat nav-plat-web">Web</span></a></li><li><a href="/docs/tabs/songs/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/music.note.list.svg')"></span><span>Songs tab</span></a></li><li><a href="/docs/tabs/concepts/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/lightbulb.png')"></span><span>Concepts tab</span></a></li><li><a href="/docs/tabs/recordings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/recordingtape.svg')"></span><span>Recordings tab</span></a></li><li><a href="/docs/tabs/settings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/gearshape.png')"></span><span>Settings tab</span></a></li></ul>
     </div><div class="nav-group">
       <p class="nav-group-title">What you make</p>
       <ul><li><a href="/docs/objects/songs/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/music.note.list.svg')"></span><span>Songs</span></a></li><li><a href="/docs/objects/recordings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/recordingtape.svg')"></span><span>Recordings</span></a></li><li><a href="/docs/objects/concepts/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/lightbulb.png')"></span><span>Concepts</span></a></li><li><a href="/docs/objects/projects/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/folder.svg')"></span><span>Projects</span></a></li></ul>
     </div><div class="nav-group">
       <p class="nav-group-title">Starting a song</p>
-      <ul><li><a href="/docs/guides/song-wizard/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/wand.and.sparkles.svg')"></span><span>The song wizard</span></a></li><li><a href="/docs/guides/freestyle/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/music.microphone.svg')"></span><span>Freestyle</span></a></li><li><a href="/docs/guides/importing/" class="active"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.arrow.down.png')"></span><span>Importing files</span></a></li></ul>
+      <ul><li><a href="/docs/guides/song-wizard/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/wand.and.sparkles.svg')"></span><span>The song wizard</span></a></li><li class="nav-only-ios"><a href="/docs/guides/freestyle/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/music.microphone.svg')"></span><span>Freestyle</span><span class="nav-plat nav-plat-ios">iOS</span></a></li><li><a href="/docs/guides/importing/" class="active"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.arrow.down.png')"></span><span>Importing files</span></a></li></ul>
     </div><div class="nav-group">
       <p class="nav-group-title">The song editor</p>
-      <ul><li><a href="/docs/editor/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.pencil.png')"></span><span>The song editor</span></a></li><li><a href="/docs/editor/sections/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/list.bullet.png')"></span><span>Sections and song structure</span></a></li><li><a href="/docs/editor/wish-workshop/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/lamp.svg')"></span><span>Wish Workshop</span></a></li><li><a href="/docs/editor/selecting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/text.cursor.png')"></span><span>Selecting and editing lines</span></a></li><li><a href="/docs/editor/arrange-mode/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.grid.2x2.svg')"></span><span>Arrange mode</span></a></li><li><a href="/docs/editor/perform/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.and.background.dotted.svg')"></span><span>Perform</span></a></li><li><a href="/docs/editor/recordings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/recordingtape.svg')"></span><span>Recordings in a song</span></a></li><li><a href="/docs/editor/rhymes/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/character.book.closed.fill.svg')"></span><span>Rhymes</span></a></li><li><a href="/docs/editor/syllables/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/textformat.123.png')"></span><span>Syllables</span></a></li><li><a href="/docs/editor/ai-style/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/sparkles.svg')"></span><span>AI Style</span></a></li><li><a href="/docs/editor/inline-suggestions/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/sparkle.svg')"></span><span>In-line suggestions</span></a></li><li><a href="/docs/editor/lyric-sheets/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.arrow.up.svg')"></span><span>Lyric sheets</span></a></li></ul>
+      <ul><li><a href="/docs/editor/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.pencil.png')"></span><span>The song editor</span></a></li><li class="nav-only-web"><a href="/docs/editor/workspace/"><span>The desktop workspace</span><span class="nav-plat nav-plat-web">Web</span></a></li><li class="nav-only-web"><a href="/docs/editor/genie/"><span>Genie chat</span><span class="nav-plat nav-plat-web">Web</span></a></li><li><a href="/docs/editor/sections/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/list.bullet.png')"></span><span>Sections and song structure</span></a></li><li><a href="/docs/editor/wish-workshop/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/lamp.svg')"></span><span>Wish Workshop</span></a></li><li><a href="/docs/editor/selecting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/text.cursor.png')"></span><span>Selecting and editing lines</span></a></li><li><a href="/docs/editor/arrange-mode/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.grid.2x2.svg')"></span><span>Arrange mode</span></a></li><li><a href="/docs/editor/perform/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.and.background.dotted.svg')"></span><span>Perform</span></a></li><li><a href="/docs/editor/recordings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/recordingtape.svg')"></span><span>Recordings in a song</span></a></li><li><a href="/docs/editor/rhymes/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/character.book.closed.fill.svg')"></span><span>Rhymes</span></a></li><li><a href="/docs/editor/syllables/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/textformat.123.png')"></span><span>Syllables</span></a></li><li class="nav-only-web"><a href="/docs/editor/view-options/"><span>Rhyme colors and margins</span><span class="nav-plat nav-plat-web">Web</span></a></li><li><a href="/docs/editor/ai-style/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/sparkles.svg')"></span><span>AI Style</span></a></li><li><a href="/docs/editor/inline-suggestions/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/sparkle.svg')"></span><span>In-line suggestions</span></a></li><li><a href="/docs/editor/lyric-sheets/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.arrow.up.svg')"></span><span>Lyric sheets</span></a></li></ul>
     </div><div class="nav-group">
       <p class="nav-group-title">Collaboration</p>
-      <ul><li><a href="/docs/collaboration/inviting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.badge.plus.png')"></span><span>Inviting a co-writer</span></a></li><li><a href="/docs/collaboration/tabs/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.2.fill.svg')"></span><span>Collaborator tabs</span></a></li><li><a href="/docs/collaboration/sending/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/tray.png')"></span><span>Sending lines to a co-writer</span></a></li><li><a href="/docs/collaboration/master/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/doc.text.fill.png')"></span><span>The Master</span></a></li><li><a href="/docs/collaboration/notifications/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/bell.svg')"></span><span>Notifications</span></a></li></ul>
+      <ul><li><a href="/docs/collaboration/inviting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.badge.plus.png')"></span><span>Inviting a co-writer</span></a></li><li><a href="/docs/collaboration/tabs/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.2.fill.svg')"></span><span>Collaborator tabs</span></a></li><li class="nav-only-ios"><a href="/docs/collaboration/sending/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/tray.png')"></span><span>Sending lines to a co-writer</span><span class="nav-plat nav-plat-ios">iOS</span></a></li><li><a href="/docs/collaboration/master/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/doc.text.fill.png')"></span><span>The Master</span></a></li><li><a href="/docs/collaboration/notifications/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/bell.svg')"></span><span>Notifications</span></a></li></ul>
     </div><div class="nav-group">
       <p class="nav-group-title">Your account</p>
-      <ul><li><a href="/docs/account/signing-in/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/rectangle.portrait.and.arrow.right.png')"></span><span>Signing in</span></a></li><li><a href="/docs/account/profile/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.png')"></span><span>Your profile</span></a></li><li><a href="/docs/account/plans/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/wand.and.sparkles.svg')"></span><span>Plans and Pro</span></a></li><li><a href="/docs/account/preferences/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/slider.horizontal.3.png')"></span><span>Preferences</span></a></li><li><a href="/docs/account/deleting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/trash.png')"></span><span>Deleting your account</span></a></li></ul>
+      <ul><li><a href="/docs/account/signing-in/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/rectangle.portrait.and.arrow.right.png')"></span><span>Signing in</span></a></li><li><a href="/docs/account/profile/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.png')"></span><span>Your profile</span></a></li><li><a href="/docs/account/plans/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/wand.and.sparkles.svg')"></span><span>Plans and Pro</span></a></li><li><a href="/docs/account/preferences/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/slider.horizontal.3.png')"></span><span>Preferences</span></a></li><li class="nav-only-ios"><a href="/docs/account/deleting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/trash.png')"></span><span>Deleting your account</span><span class="nav-plat nav-plat-ios">iOS</span></a></li></ul>
     </div><div class="nav-group">
       <p class="nav-group-title">Reference</p>
-      <ul><li><a href="/docs/changelog/"><span>What's new</span></a></li><li><a href="/docs/reference/limits/"><span>Plan limits</span></a></li><li><a href="/docs/reference/formats/"><span>Supported formats</span></a></li><li><a href="/docs/reference/glossary/"><span>Glossary</span></a></li></ul>
+      <ul><li><a href="/docs/changelog/"><span>What's new</span></a></li><li><a href="/docs/reference/limits/"><span>Plan limits</span></a></li><li class="nav-only-web"><a href="/docs/reference/keyboard-shortcuts/"><span>Keyboard shortcuts</span><span class="nav-plat nav-plat-web">Web</span></a></li><li><a href="/docs/reference/formats/"><span>Supported formats</span></a></li><li><a href="/docs/reference/glossary/"><span>Glossary</span></a></li></ul>
     </div><div class="nav-group">
       <p class="nav-group-title">Help</p>
       <ul><li><a href="/docs/faq/"><span>FAQ</span></a></li><li><a href="/docs/troubleshooting/"><span>Troubleshooting</span></a></li></ul>
@@ -92,15 +102,31 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
       <p class="eyebrow">Starting a song</p>
       <h1><span class="title-icon" style="--icon:url('/docs/sf-symbols/square.and.arrow.down.png')" aria-hidden="true"></span>Importing files</h1>
       <p class="lede">Bringing audio and lyrics in from elsewhere, by file or from the share sheet.</p>
+      <p class="platform-switch">Showing the <strong class="only-ios">iOS app</strong><strong class="only-web">web app</strong><span aria-hidden="true"> · </span><button type="button" class="only-ios" data-platform-choice="web">Switch to the web app</button><button type="button" class="only-web" data-platform-choice="ios">Switch to the iOS app</button></p>
       <p>Lyric Genie imports two different kinds of file: audio, which becomes a
 <a href="/docs/objects/recordings/">recording</a>, and text, which becomes lyrics.</p>
+<div class="platform-block only-ios">
 <p>There are two routes in. Pick a file from inside the app, or send something to
 Lyric Genie from another app's share sheet.</p>
+</div>
+<div class="platform-block only-web">
+<p>On the web you pick a file from your computer. There is no share sheet, so the
+iOS route of sending something from another app does not apply.</p>
+</div>
 <h2 id="picking-a-file">Picking a file<a class="hanchor" href="#picking-a-file" aria-label="Link to this section">#</a></h2>
+<div class="platform-block only-web">
+<p>Each kind has its own button. <strong>Import Lyrics</strong> sits beside the search field on
+the <strong>Songs</strong> page and takes text documents. <strong>Import Audio</strong> sits at the top of
+the <strong>Recordings</strong> page and takes audio files. Both open your browser's file
+picker.</p>
+</div>
+<div class="platform-block only-ios">
 <p>The import button <span class="inline-icon" style="--icon:url('/docs/sf-symbols/square.and.arrow.down.png')" aria-hidden="true"></span> in the top bar of the <strong>Start</strong>
 tab takes either kind. The app works out what it got by inspecting the file
 itself, not by trusting the extension, so a mislabelled file still lands in the
 right place. Audio goes to Recordings. Text goes to lyrics.</p>
+</div>
+<div class="platform-block only-ios">
 <p>If you already know what you are importing, the tab menus are explicit.</p>
 <div class="table-wrap"><table>
 <thead>
@@ -125,14 +151,17 @@ right place. Audio goes to Recordings. Text goes to lyrics.</p>
 </table></div>
 <p>These two were both labelled &quot;Import from Files&quot; in older versions, which made
 them impossible to tell apart. They now say which is which.</p>
-<h2 id="sharing-from-another-app">Sharing from another app<a class="hanchor" href="#sharing-from-another-app" aria-label="Link to this section">#</a></h2>
+</div>
+<h2 id="sharing-from-another-app-ios-app-only">Sharing from another app <span class="plat-chip plat-chip-ios">iOS app only</span><a class="hanchor" href="#sharing-from-another-app-ios-app-only" aria-label="Link to this section">#</a></h2>
+<div class="platform-block only-ios">
 <p>Lyric Genie appears in the iOS share sheet, which is the route most people
 actually use. It works from <strong>Voice Memos</strong>, <strong>Notes</strong>, <strong>Files</strong>, <strong>Mail</strong>, and
 anything else that shares audio or text.</p>
 <p>From Voice Memos: press and hold a memo, tap <strong>Share</strong>, and pick Lyric Genie.
 The app opens with the audio already imported and waiting in Recordings. Nothing
 is exported to your camera roll or your Files app on the way.</p>
-<aside class="callout callout-note">
+</div>
+<aside class="callout callout-note only-ios">
 <p class="callout-title"><span class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span>Note</p>
 <div class="callout-body">
 <p><strong>Audio always wins.</strong> If what you share contains both audio and text, Lyric
@@ -140,7 +169,7 @@ Genie takes the audio and ignores the rest. Share them separately if you want
 both.</p>
 </div>
 </aside>
-<aside class="callout callout-warn">
+<aside class="callout callout-warn only-ios">
 <p class="callout-title"><span class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span>Heads up</p>
 <div class="callout-body">
 <p><strong>One at a time.</strong> Only the most recent thing you shared is held. Share two
@@ -149,9 +178,17 @@ first.</p>
 </div>
 </aside>
 <h2 id="what-the-app-does-with-shared-text">What the app does with shared text<a class="hanchor" href="#what-the-app-does-with-shared-text" aria-label="Link to this section">#</a></h2>
+<div class="platform-block only-ios">
 <p>Sharing a note or a document opens an <strong>Import Song</strong> sheet rather than dropping
 the text straight into a song. Nothing is created until you tap Import.</p>
-<figure class="fig" style="max-width:min(23rem, 330px)">
+</div>
+<div class="platform-block only-web">
+<p>Picking a text file opens an <strong>Import Song</strong> sheet rather than dropping the text
+straight into a song. It shows the lyrics, the context it found and an editable
+title, and lets you file the song in a project. Nothing is created until you
+click Import. A file that is too large or cannot be read says so instead.</p>
+</div>
+<figure class="fig fig-ios-fallback" style="max-width:min(23rem, 330px)">
   <div class="fig-shot">
     <img src="/docs/img/import-song-sheet.png" alt="The Import Song sheet, showing a lyrics preview, a Detected panel with mood, theme and similar artists, a Title field and a project picker" width="330" height="717" loading="lazy" decoding="async">
     <span class="fig-mark" style="left:50%;top:26%;width:92%;height:21%;aspect-ratio:auto" aria-label="The lyrics, and how long they are"><span class="fig-badge">1</span></span><span class="fig-mark" style="left:50%;top:48%;width:92%;height:16%;aspect-ratio:auto" aria-label="Context pulled out of the text"><span class="fig-badge">2</span></span><span class="fig-mark" style="left:50%;top:63%;width:92%;height:8%;aspect-ratio:auto" aria-label="Editable before you commit"><span class="fig-badge">3</span></span><span class="fig-mark" style="left:50%;top:83%;width:92%;height:21%;aspect-ratio:auto" aria-label="File it straight away, if you want"><span class="fig-badge">4</span></span>
@@ -171,14 +208,25 @@ each is used. Everything else stays as lyrics. It means a note you keep in
 another app can carry its own context in, and the song arrives ready for the
 writing tools.</p>
 <h3 id="where-the-title-comes-from">Where the title comes from<a class="hanchor" href="#where-the-title-comes-from" aria-label="Link to this section">#</a></h3>
+<div class="platform-block only-web">
+<p>The <strong>first non-empty line</strong> of the text, taken out of the lyrics. If the file is
+empty, the file's name is used, and failing that <strong>Imported Note</strong>. The title
+field on the sheet is editable either way.</p>
+</div>
+<div class="platform-block only-ios">
 <p>Whatever the sharing app calls it. Apple Notes sends the note's own title, so
 that is what you get. If nothing sends a title, the app takes the <strong>first
 non-empty line</strong> of the text and removes it from the lyrics. Failing both, the
 song is called <strong>Imported Note</strong>.</p>
 <p>The title field on the sheet is editable either way.</p>
+</div>
 <h2 id="where-imported-audio-lands">Where imported audio lands<a class="hanchor" href="#where-imported-audio-lands" aria-label="Link to this section">#</a></h2>
 <p>Audio does not simply fall into the Recordings tab. The import sheet asks you
 first, under an <strong>IMPORT TO</strong> heading.</p>
+<div class="platform-block only-web">
+<p>On the web, the sheet also shows a preview and lets you name the take. It offers
+<strong>Ideas</strong> or any of your songs, and the same two choices below apply.</p>
+</div>
 <ul>
 <li><strong>Ideas</strong> leaves it unattached, filed with your other unassigned recordings.</li>
 <li><strong>Any song</strong> attaches it straight away, so it never spends time as a loose
@@ -196,7 +244,8 @@ which is a recording you cannot find because it is sitting unattached. See
 </div>
 </aside>
 <h2 id="what-happens-to-imported-audio">What happens to imported audio<a class="hanchor" href="#what-happens-to-imported-audio" aria-label="Link to this section">#</a></h2>
-<p>Audio is converted to M4A on your device as it comes in. A long WAV shrinks
+<p>Audio is converted to M4A on your device as it comes in (in your browser, on the
+web, which needs Chrome, Edge or Safari). A long WAV shrinks
 considerably in the process, which is why there is no file size ceiling worth
 worrying about. What matters is length, not megabytes.</p>
 <p>Length is capped exactly the way recording is: 5 minutes
@@ -223,12 +272,12 @@ A file that cannot be read at all says so rather than importing blank.</p>
     <footer class="page-footer">
       <p>Something missing or wrong on this page? Email
         <a href="mailto:support@lyricgenie.app">support@lyricgenie.app</a>.</p>
-      <p class="footer-version">Written for Lyric Genie <a href="/docs/changelog/"><strong>v2.20</strong></a>. Your version is under the logo in <a href="/docs/tabs/settings/">Settings</a>.</p>
+      <p class="footer-version only-ios">Written for Lyric Genie <a href="/docs/changelog/"><strong>v2.20</strong></a>. Your version is under the logo in <a href="/docs/tabs/settings/">Settings</a>.</p><p class="footer-version only-web">Written for Lyric Genie for web <strong>0.1.0</strong> and iOS <a href="/docs/changelog/"><strong>v2.20</strong></a>. Your web version is at the bottom of <a href="/docs/tabs/settings/">Settings</a>.</p>
     </footer>
   </main>
   <nav class="toc" aria-label="On this page">
          <p class="toc-title">On this page</p>
-         <ul><li><a href="#picking-a-file">Picking a file</a></li><li><a href="#sharing-from-another-app">Sharing from another app</a></li><li><a href="#what-the-app-does-with-shared-text">What the app does with shared text</a></li><li><a href="#where-imported-audio-lands">Where imported audio lands</a></li><li><a href="#what-happens-to-imported-audio">What happens to imported audio</a></li><li><a href="#limits-on-imported-text">Limits on imported text</a></li><li><a href="#supported-formats">Supported formats</a></li></ul>
+         <ul><li><a href="#picking-a-file">Picking a file</a></li><li><a href="#sharing-from-another-app-ios-app-only">Sharing from another app iOS app only</a></li><li><a href="#what-the-app-does-with-shared-text">What the app does with shared text</a></li><li><a href="#where-imported-audio-lands">Where imported audio lands</a></li><li><a href="#what-happens-to-imported-audio">What happens to imported audio</a></li><li><a href="#limits-on-imported-text">Limits on imported text</a></li><li><a href="#supported-formats">Supported formats</a></li></ul>
        </nav>
 </div>
 

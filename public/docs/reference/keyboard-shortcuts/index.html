@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Keyboard shortcuts · Lyric Genie Docs</title>
+<meta name="description" content="Every keyboard shortcut in the Lyric Genie web app, for Mac and for Windows and Linux.">
+<link rel="canonical" href="https://lyricgenie.app/docs/reference/keyboard-shortcuts/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Keyboard shortcuts · Lyric Genie Docs">
+<meta property="og:description" content="Every keyboard shortcut in the Lyric Genie web app, for Mac and for Windows and Linux.">
+<meta property="og:url" content="https://lyricgenie.app/docs/reference/keyboard-shortcuts/">
+<meta property="og:site_name" content="Lyric Genie Docs">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"TechArticle","headline":"Keyboard shortcuts","description":"Every keyboard shortcut in the Lyric Genie web app, for Mac and for Windows and Linux.","url":"https://lyricgenie.app/docs/reference/keyboard-shortcuts/","inLanguage":"en","isPartOf":{"@type":"WebSite","name":"Lyric Genie Docs","url":"https://lyricgenie.app"},"about":{"@type":"SoftwareApplication","name":"Lyric Genie","applicationCategory":"MultimediaApplication","operatingSystem":"iOS, iPadOS, macOS"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Docs","item":"https://lyricgenie.app/docs/"},{"@type":"ListItem","position":2,"name":"Reference"},{"@type":"ListItem","position":3,"name":"Keyboard shortcuts","item":"https://lyricgenie.app/docs/reference/keyboard-shortcuts/"}]}]}</script>
+<link rel="icon" href="/docs/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/docs/favicon.ico" sizes="32x32">
+<!-- Preload the three weights actually used. Without this the first paint of
+     every page is in the fallback face and then swaps, which is most of what
+     reads as "jittery" when clicking through the sidebar. -->
+<link rel="preload" href="/docs/fonts/Lufga-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/docs/fonts/Lufga-Medium.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/docs/fonts/Lufga-Bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/docs/tokens.css">
+<link rel="stylesheet" href="/docs/docs.css">
+<script>
+/* Set the theme before first paint so a dark-mode reader never sees a white
+   flash. tokens.css keys dark mode off [data-theme="dark"], matching the
+   marketing site's .dark block, so the two stay in sync. */
+(function(){try{var t=localStorage.getItem('lg-docs-theme');
+if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+/* Same idea for iOS vs Web: ?platform=web (links from the web app) wins and
+   is remembered; otherwise the last choice; otherwise iOS. */
+(function(){var p='ios';try{var q=new URLSearchParams(location.search).get('platform');
+if(q==='ios'||q==='web'){p=q;localStorage.setItem('lg-docs-platform',q);}
+else p=localStorage.getItem('lg-docs-platform')||'ios';}catch(e){}
+document.documentElement.setAttribute('data-platform',p==='web'?'web':'ios');})();
+</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="/docs/" aria-label="Lyric Genie Docs home">
+      <svg class="wordmark" fill="currentColor" role="img" aria-label="Lyric Genie" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 115.87 20.94"><defs><style>.cls-1{fill:currentColor}</style></defs><path class="cls-1" d="M25.29,6.43v6.06h5.61v2.01h-8.14V6.43h2.53Z"></path><path class="cls-1" d="M32.84,11.38l-4.32-4.95h3.14l2.51,2.97,2.55-2.97h2.85l-4.2,4.95v3.12h-2.53v-3.12Z"></path><path class="cls-1" d="M42.48,14.5h-2.53V6.43h6.51c2.69,0,3.5.93,3.5,2.09v.13c0,1.16-.97,1.59-1.5,1.77.82.24,1.53.81,1.53,1.85v1.18c0,.65.08.86.15.99v.05h-2.57c-.08-.1-.12-.22-.12-.51v-.93c0-.99-.43-1.42-1.68-1.42h-3.3v2.86ZM42.48,9.85h3.83c.73,0,1.02-.35,1.02-.79h0c0-.43-.28-.79-1.02-.79h-3.83v1.58Z"></path><path class="cls-1" d="M53.53,14.5h-2.53V6.43h2.53v8.07Z"></path><path class="cls-1" d="M59.85,14.65c-4.68,0-5.4-2.61-5.4-4.05v-.31c0-1.46.63-3.99,5.4-3.99h.45c4.68,0,5.4,2.23,5.4,3.18v.12h-2.68c-.06-.22-.39-1.35-2.95-1.35-2.42,0-2.97,1.08-2.97,2.09v.13c0,.95.64,2.21,2.99,2.21,2.61,0,2.88-1.25,2.94-1.43h2.68v.12c0,1.02-.8,3.28-5.41,3.28h-.45Z"></path><path class="cls-1" d="M74.99,14.65c-4.37,0-5.38-2.44-5.38-4.06v-.3c0-1.57.82-3.99,5.47-3.99h.47c4.51,0,5.3,1.96,5.35,3.06h0s-2.69.01-2.69.01c-.07-.18-.36-1.15-2.88-1.15s-3.07,1.06-3.07,2.18v.12c0,1.05.82,2.17,3.05,2.17,2.4,0,3.12-.92,3.12-1.15v-.02h-3.17v-1.53h5.68v4.52h-1.52c-.03-.29-.18-.92-.33-1.26-.35.4-1.39,1.4-3.88,1.4h-.23Z"></path><path class="cls-1" d="M90.61,6.43v1.83h-6.01v1.19h5.87v1.84h-5.87v1.32h6.12v1.88h-8.61V6.43h8.51Z"></path><path class="cls-1" d="M94.6,6.43l5.15,5.08v-5.08h2.5v8.07h-2.5l-5.48-5.35v5.35h-2.5V6.43h2.82Z"></path><path class="cls-1" d="M106.02,14.5h-2.53V6.43h2.53v8.07Z"></path><path class="cls-1" d="M115.76,6.43v1.83h-6.01v1.19h5.87v1.84h-5.87v1.32h6.12v1.88h-8.61V6.43h8.51Z"></path><path class="cls-1" d="M8.4,0c-1.43,0-2.6.85-2.6,1.51,0,.39.13.73.67.95.18-.21.86-.93,1.93-.93,1.07,0,1.75.73,1.93.93.54-.22.67-.57.67-.95,0-.67-1.16-1.51-2.6-1.51ZM8.4,2.1c-.93,0-1.53.77-1.53.77-.11.18-.17.38-.17.59,0,.76.76,1.37,1.69,1.37.94,0,1.69-.61,1.69-1.37,0-.2-.06-.41-.17-.59,0,0-.6-.77-1.53-.77ZM8.4,5.25c-3.73,0-6.76,1.35-6.76,3.01,0,.98,1.06,1.37,2.69,1.53,2.4.15,3.36-.88,5.21-1.83,0,0-.55-.15-1.93-.15s-1.93.15-1.93.15c0,0,.86-.57,2.87-.57s2.87.57,2.87.57c-.51.04-1.01.21-1.48.43-.34.16-.67.36-1,.56,1.06.68,2.53.89,3.53.84,1.63-.16,2.69-.55,2.69-1.53,0-1.66-3.03-3.01-6.76-3.01ZM8.34,9.33c-1.27.68-2.58,1.18-4.01,1.03.08.48.22.95.41,1.4.37.87.94,1.63,1.64,2.27.67.11,1.66.12,3.01-.25,1.4-.37,2.26-.9,2.79-1.34-.09-.22-.15-.44-.19-.68-.04-.32-.02-.65.08-.96.05-.16.12-.31.22-.45-1.47.13-2.78-.22-3.95-1.03h0ZM12.78,13.44c-.66.51-1.64,1.07-3.08,1.45-.6.16-1.14.26-1.63.3.41.21.84.38,1.28.51.72.21,1.46.33,2.16.59.35.13.69.31.98.54.29.23.54.52.7.86.21.46.24,1,.07,1.48-.16.48-.52.89-.97,1.12-.45.23-.99.28-1.47.14-.12-.03-.23-.08-.34-.14-.05-.02-.07,0-.02.04.33.24.71.41,1.1.51.77.19,1.6.08,2.3-.29.7-.37,1.24-1.01,1.51-1.76.26-.74.24-1.59-.06-2.31-.25-.6-.67-1.11-1.12-1.57-.45-.47-.94-.9-1.34-1.4-.02-.02-.04-.05-.05-.07Z"></path><path class="cls-1" d="M.83,12.16l-.02,1.66c-.53-.11-.99.41-.75.92.27.57,1.13.44,1.23-.18l.02-2.03,1.47-.38v1.35c-.56-.11-1.01.43-.75.94.28.54,1.09.42,1.22-.17l.03-2.76h-.02s-2.43.63-2.43.63Z"></path><path class="cls-1" d="M16.41,2.61v-.04l-.17-.54-1.1.3v1.65c-.74-.16-1.32.68-.83,1.29.45.58,1.35.3,1.44-.41v-2.06s.67-.19.67-.19Z"></path><path class="cls-1" d="M18.85,5.54l-.18-.72-1.46.36v2.16c-1.08-.28-1.79,1.12-.9,1.82.65.51,1.6.08,1.68-.74v-2.62s.85-.26.85-.26Z"></path></svg>
+      <span class="brand-tag">Docs</span>
+    </a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="sidebar"><span class="icon-menu" style="--icon:url('/docs/sf-symbols/line.3.horizontal.png')" aria-hidden="true"></span><span>Menu</span></button>
+    <div class="search">
+      <input id="search-input" type="search" placeholder="Search the docs" autocomplete="off"
+             aria-label="Search the docs" aria-controls="search-results">
+      <div id="search-results" class="search-results" hidden></div>
+    </div>
+    <div class="platform-toggle" role="group" aria-label="Show the docs for">
+      <button type="button" data-platform-choice="ios">iOS</button>
+      <button type="button" data-platform-choice="web">Web</button>
+    </div>
+    <button class="theme-toggle" type="button" aria-label="Switch between light and dark">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+    </button>
+    <nav class="topbar-links">
+      <a href="https://lyricgenie.app">Lyric Genie</a>
+      <a href="https://lyricgenie.app/support">Support</a>
+    </nav>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="sidebar" id="sidebar"><button class="sidebar-close" type="button" aria-label="Close the menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button><div class="nav-group">
+      <p class="nav-group-title">Start here</p>
+      <ul><li><a href="/docs/"><span>Overview</span></a></li><li class="nav-only-ios"><a href="/docs/first-launch/"><span>First launch</span><span class="nav-plat nav-plat-ios">iOS</span></a></li><li><a href="/docs/first-song/"><span>Your first song</span></a></li><li><a href="/docs/how-it-fits-together/"><span>How it fits together</span></a></li></ul>
+    </div><div class="nav-group">
+      <p class="nav-group-title">The five tabs</p>
+      <ul><li class="nav-only-ios"><a href="/docs/tabs/start/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/flame.png')"></span><span>Start tab</span><span class="nav-plat nav-plat-ios">iOS</span></a></li><li class="nav-only-web"><a href="/docs/tabs/home/"><span>Home</span><span class="nav-plat nav-plat-web">Web</span></a></li><li><a href="/docs/tabs/songs/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/music.note.list.svg')"></span><span>Songs tab</span></a></li><li><a href="/docs/tabs/concepts/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/lightbulb.png')"></span><span>Concepts tab</span></a></li><li><a href="/docs/tabs/recordings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/recordingtape.svg')"></span><span>Recordings tab</span></a></li><li><a href="/docs/tabs/settings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/gearshape.png')"></span><span>Settings tab</span></a></li></ul>
+    </div><div class="nav-group">
+      <p class="nav-group-title">What you make</p>
+      <ul><li><a href="/docs/objects/songs/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/music.note.list.svg')"></span><span>Songs</span></a></li><li><a href="/docs/objects/recordings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/recordingtape.svg')"></span><span>Recordings</span></a></li><li><a href="/docs/objects/concepts/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/lightbulb.png')"></span><span>Concepts</span></a></li><li><a href="/docs/objects/projects/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/folder.svg')"></span><span>Projects</span></a></li></ul>
+    </div><div class="nav-group">
+      <p class="nav-group-title">Starting a song</p>
+      <ul><li><a href="/docs/guides/song-wizard/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/wand.and.sparkles.svg')"></span><span>The song wizard</span></a></li><li class="nav-only-ios"><a href="/docs/guides/freestyle/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/music.microphone.svg')"></span><span>Freestyle</span><span class="nav-plat nav-plat-ios">iOS</span></a></li><li><a href="/docs/guides/importing/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.arrow.down.png')"></span><span>Importing files</span></a></li></ul>
+    </div><div class="nav-group">
+      <p class="nav-group-title">The song editor</p>
+      <ul><li><a href="/docs/editor/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.pencil.png')"></span><span>The song editor</span></a></li><li class="nav-only-web"><a href="/docs/editor/workspace/"><span>The desktop workspace</span><span class="nav-plat nav-plat-web">Web</span></a></li><li class="nav-only-web"><a href="/docs/editor/genie/"><span>Genie chat</span><span class="nav-plat nav-plat-web">Web</span></a></li><li><a href="/docs/editor/sections/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/list.bullet.png')"></span><span>Sections and song structure</span></a></li><li><a href="/docs/editor/wish-workshop/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/lamp.svg')"></span><span>Wish Workshop</span></a></li><li><a href="/docs/editor/selecting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/text.cursor.png')"></span><span>Selecting and editing lines</span></a></li><li><a href="/docs/editor/arrange-mode/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.grid.2x2.svg')"></span><span>Arrange mode</span></a></li><li><a href="/docs/editor/perform/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.and.background.dotted.svg')"></span><span>Perform</span></a></li><li><a href="/docs/editor/recordings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/recordingtape.svg')"></span><span>Recordings in a song</span></a></li><li><a href="/docs/editor/rhymes/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/character.book.closed.fill.svg')"></span><span>Rhymes</span></a></li><li><a href="/docs/editor/syllables/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/textformat.123.png')"></span><span>Syllables</span></a></li><li class="nav-only-web"><a href="/docs/editor/view-options/"><span>Rhyme colors and margins</span><span class="nav-plat nav-plat-web">Web</span></a></li><li><a href="/docs/editor/ai-style/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/sparkles.svg')"></span><span>AI Style</span></a></li><li><a href="/docs/editor/inline-suggestions/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/sparkle.svg')"></span><span>In-line suggestions</span></a></li><li><a href="/docs/editor/lyric-sheets/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.arrow.up.svg')"></span><span>Lyric sheets</span></a></li></ul>
+    </div><div class="nav-group">
+      <p class="nav-group-title">Collaboration</p>
+      <ul><li><a href="/docs/collaboration/inviting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.badge.plus.png')"></span><span>Inviting a co-writer</span></a></li><li><a href="/docs/collaboration/tabs/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.2.fill.svg')"></span><span>Collaborator tabs</span></a></li><li class="nav-only-ios"><a href="/docs/collaboration/sending/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/tray.png')"></span><span>Sending lines to a co-writer</span><span class="nav-plat nav-plat-ios">iOS</span></a></li><li><a href="/docs/collaboration/master/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/doc.text.fill.png')"></span><span>The Master</span></a></li><li><a href="/docs/collaboration/notifications/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/bell.svg')"></span><span>Notifications</span></a></li></ul>
+    </div><div class="nav-group">
+      <p class="nav-group-title">Your account</p>
+      <ul><li><a href="/docs/account/signing-in/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/rectangle.portrait.and.arrow.right.png')"></span><span>Signing in</span></a></li><li><a href="/docs/account/profile/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.png')"></span><span>Your profile</span></a></li><li><a href="/docs/account/plans/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/wand.and.sparkles.svg')"></span><span>Plans and Pro</span></a></li><li><a href="/docs/account/preferences/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/slider.horizontal.3.png')"></span><span>Preferences</span></a></li><li class="nav-only-ios"><a href="/docs/account/deleting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/trash.png')"></span><span>Deleting your account</span><span class="nav-plat nav-plat-ios">iOS</span></a></li></ul>
+    </div><div class="nav-group">
+      <p class="nav-group-title">Reference</p>
+      <ul><li><a href="/docs/changelog/"><span>What's new</span></a></li><li><a href="/docs/reference/limits/"><span>Plan limits</span></a></li><li class="nav-only-web"><a href="/docs/reference/keyboard-shortcuts/" class="active"><span>Keyboard shortcuts</span><span class="nav-plat nav-plat-web">Web</span></a></li><li><a href="/docs/reference/formats/"><span>Supported formats</span></a></li><li><a href="/docs/reference/glossary/"><span>Glossary</span></a></li></ul>
+    </div><div class="nav-group">
+      <p class="nav-group-title">Help</p>
+      <ul><li><a href="/docs/faq/"><span>FAQ</span></a></li><li><a href="/docs/troubleshooting/"><span>Troubleshooting</span></a></li></ul>
+    </div></aside>
+  <main id="main" class="content">
+    <article class="prose">
+      <p class="eyebrow">Reference</p>
+      <h1>Keyboard shortcuts</h1>
+      <p class="lede">Every keyboard shortcut in the Lyric Genie web app, for Mac and for Windows and Linux.</p>
+      <div class="platform-banner platform-banner-web"><span class="plat-chip plat-chip-web">Web app only</span><span class="only-ios">This is in the web app only (app.lyricgenie.app). The iOS app doesn't have it.</span></div>
+      <p>Lyric Genie on the web has a small set of shortcuts, most of them in the song
+editor. Where Mac and Windows differ, both are given. On Linux, use the Windows
+keys. To get back here from the app, open the avatar menu at the top right and
+choose <strong>Keyboard shortcuts</strong>.</p>
+<p>Shortcuts that act on a panel or a list are ignored while you are typing in a
+box, so they never eat a letter you meant to type.</p>
+<h2 id="home">Home<a class="hanchor" href="#home" aria-label="Link to this section">#</a></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Mac</th>
+<th>Windows and Linux</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Start a new song</td>
+<td><code>N</code></td>
+<td><code>N</code></td>
+</tr>
+<tr>
+<td>Save the idea in the capture bar to Concepts</td>
+<td><code>Enter</code></td>
+<td><code>Enter</code></td>
+</tr>
+<tr>
+<td>Send a message from <strong>Not sure where to start?</strong></td>
+<td><code>Enter</code></td>
+<td><code>Enter</code></td>
+</tr>
+<tr>
+<td>New line in that message instead</td>
+<td><code>Shift</code> <code>Enter</code></td>
+<td><code>Shift</code> <code>Enter</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>See <a href="/docs/tabs/home/">The Home page</a>.</p>
+<h2 id="writing-lyrics">Writing lyrics<a class="hanchor" href="#writing-lyrics" aria-label="Link to this section">#</a></h2>
+<p>The lyric editor takes all the usual text-editing keys. These are the ones
+worth knowing:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Mac</th>
+<th>Windows and Linux</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Undo</td>
+<td><code>⌘</code> <code>Z</code></td>
+<td><code>Ctrl</code> <code>Z</code></td>
+</tr>
+<tr>
+<td>Redo</td>
+<td><code>⇧</code> <code>⌘</code> <code>Z</code></td>
+<td><code>Ctrl</code> <code>Y</code></td>
+</tr>
+<tr>
+<td>Take the in-line suggestion</td>
+<td><code>Tab</code></td>
+<td><code>Tab</code></td>
+</tr>
+<tr>
+<td>Dismiss the in-line suggestion</td>
+<td><code>Esc</code></td>
+<td><code>Esc</code></td>
+</tr>
+<tr>
+<td>Next in-line suggestion</td>
+<td><code>⌥</code> <code>→</code></td>
+<td><code>Alt</code> <code>→</code></td>
+</tr>
+<tr>
+<td>Previous in-line suggestion</td>
+<td><code>⌥</code> <code>←</code></td>
+<td><code>Alt</code> <code>←</code></td>
+</tr>
+<tr>
+<td>Remove one syllable from a blank</td>
+<td><code>Delete</code> (backspace)</td>
+<td><code>Backspace</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>On Linux, <code>Ctrl</code> <code>Shift</code> <code>Z</code> also redoes.</p>
+<p>The in-line suggestion keys only do anything while a suggestion is showing.
+Otherwise <code>Tab</code> and <code>Esc</code> behave as they normally would. See
+<a href="/docs/editor/inline-suggestions/">In-line suggestions</a>.</p>
+<h2 id="undo-across-the-page">Undo across the page<a class="hanchor" href="#undo-across-the-page" aria-label="Link to this section">#</a></h2>
+<p>The song page keeps one history for the lyrics, the title and the AI Context
+fields, and the <strong>Undo</strong> and <strong>Redo</strong> buttons in the song bar take back
+whichever changed last.</p>
+<p>The keys work slightly differently depending on where you are typing:</p>
+<ul>
+<li><strong>In the lyrics</strong>, <code>⌘</code> <code>Z</code> or <code>Ctrl</code> <code>Z</code> undoes your last change to the
+lyrics.</li>
+<li><strong>In the title or an AI Context field</strong>, it undoes the last change anywhere on
+the page, the same as the <strong>Undo</strong> button.</li>
+</ul>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Action, in the title or AI Context</th>
+<th>Mac</th>
+<th>Windows and Linux</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Undo</td>
+<td><code>⌘</code> <code>Z</code></td>
+<td><code>Ctrl</code> <code>Z</code></td>
+</tr>
+<tr>
+<td>Redo</td>
+<td><code>⇧</code> <code>⌘</code> <code>Z</code></td>
+<td><code>Ctrl</code> <code>Shift</code> <code>Z</code> or <code>Ctrl</code> <code>Y</code></td>
+</tr>
+<tr>
+<td>Finish an AI Context field</td>
+<td><code>Enter</code></td>
+<td><code>Enter</code></td>
+</tr>
+<tr>
+<td>New line in an AI Context field</td>
+<td><code>Shift</code> <code>Enter</code></td>
+<td><code>Shift</code> <code>Enter</code></td>
+</tr>
+</tbody>
+</table></div>
+<p><code>Enter</code> in the title does nothing, since a title is one line.</p>
+<h2 id="moving-between-songs">Moving between songs<a class="hanchor" href="#moving-between-songs" aria-label="Link to this section">#</a></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Mac</th>
+<th>Windows and Linux</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Open the previous song</td>
+<td><code>⌥</code> <code>⌘</code> <code>↑</code></td>
+<td><code>Alt</code> <code>Page Up</code></td>
+</tr>
+<tr>
+<td>Open the next song</td>
+<td><code>⌥</code> <code>⌘</code> <code>↓</code></td>
+<td><code>Alt</code> <code>Page Down</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>These work anywhere in the editor, including while you type lyrics. The ˄ and ˅
+buttons beside <strong>Songs</strong> in the song bar do the same.</p>
+<p>&quot;Next&quot; means the next song in the list you opened this one from: the same view
+(All Songs, Collaborative, a project or Archived), the same search and the same
+sort. The order is fixed when you open the song, so a list sorted by Last
+Edited doesn't reshuffle as you write. If you opened the song from Home or a
+link, it follows All Songs in your usual sort. At the top or bottom of the list
+it stops rather than wrapping round. Your changes are saved before the next song
+opens.</p>
+<h2 id="the-workspace">The workspace<a class="hanchor" href="#the-workspace" aria-label="Link to this section">#</a></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Mac</th>
+<th>Windows and Linux</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Leave an expanded tool and go back to the tool list</td>
+<td><code>Esc</code></td>
+<td><code>Esc</code></td>
+</tr>
+</tbody>
+</table></div>
+<p><code>Esc</code> deals with one thing at a time. If an in-line suggestion is showing, the
+first press dismisses it and the second leaves the tool. See
+<a href="/docs/editor/workspace/">The desktop workspace</a>.</p>
+<h2 id="wish-workshop">Wish Workshop<a class="hanchor" href="#wish-workshop" aria-label="Link to this section">#</a></h2>
+<p>These work once results are showing, and not while you are typing your wish.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Mac</th>
+<th>Windows and Linux</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Move down the results</td>
+<td><code>↓</code></td>
+<td><code>↓</code></td>
+</tr>
+<tr>
+<td>Move up the results</td>
+<td><code>↑</code></td>
+<td><code>↑</code></td>
+</tr>
+<tr>
+<td>Run the main action on the chosen result</td>
+<td><code>Enter</code></td>
+<td><code>Enter</code></td>
+</tr>
+<tr>
+<td>Close the panel inside Wish Workshop, or Wish Workshop itself</td>
+<td><code>Esc</code></td>
+<td><code>Esc</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>The results start with your original line. <code>Enter</code> does whatever the main button
+at the top right says, such as <strong>Replace Selection</strong>. Pick a different action
+from that button's menu and it becomes what <code>Enter</code> does for that kind of wish.
+See <a href="/docs/editor/wish-workshop/">Wish Workshop</a>.</p>
+<h2 id="rhymes-thesaurus-and-syllables">Rhymes, thesaurus and syllables<a class="hanchor" href="#rhymes-thesaurus-and-syllables" aria-label="Link to this section">#</a></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Mac</th>
+<th>Windows and Linux</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Look up what you typed in the rhyme search</td>
+<td><code>Enter</code></td>
+<td><code>Enter</code></td>
+</tr>
+<tr>
+<td>Stop editing the rhyme search</td>
+<td><code>Esc</code></td>
+<td><code>Esc</code></td>
+</tr>
+<tr>
+<td>Close the thesaurus or the syllable rewrite</td>
+<td><code>Esc</code></td>
+<td><code>Esc</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>To move between pages of rhyme columns in the narrow panel, click the arrows or
+dots under the columns.</p>
+<h2 id="genie">Genie<a class="hanchor" href="#genie" aria-label="Link to this section">#</a></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Mac</th>
+<th>Windows and Linux</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Send your message</td>
+<td><code>Enter</code></td>
+<td><code>Enter</code></td>
+</tr>
+<tr>
+<td>New line in your message</td>
+<td><code>Shift</code> <code>Enter</code></td>
+<td><code>Shift</code> <code>Enter</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>See <a href="/docs/editor/genie/">Genie chat</a>.</p>
+<h2 id="recordings">Recordings<a class="hanchor" href="#recordings" aria-label="Link to this section">#</a></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Mac</th>
+<th>Windows and Linux</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Skip forward 5 seconds, with the waveform selected</td>
+<td><code>→</code></td>
+<td><code>→</code></td>
+</tr>
+<tr>
+<td>Skip back 5 seconds, with the waveform selected</td>
+<td><code>←</code></td>
+<td><code>←</code></td>
+</tr>
+<tr>
+<td>Save a new recording's name</td>
+<td><code>Enter</code></td>
+<td><code>Enter</code></td>
+</tr>
+<tr>
+<td>Save a renamed recording</td>
+<td><code>Enter</code></td>
+<td><code>Enter</code></td>
+</tr>
+<tr>
+<td>Cancel renaming</td>
+<td><code>Esc</code></td>
+<td><code>Esc</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>Click the waveform, or move to it with <code>Tab</code>, to select it.</p>
+<h2 id="concepts">Concepts<a class="hanchor" href="#concepts" aria-label="Link to this section">#</a></h2>
+<p>While editing a concept:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Mac</th>
+<th>Windows and Linux</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Save, from the title</td>
+<td><code>Enter</code></td>
+<td><code>Enter</code></td>
+</tr>
+<tr>
+<td>Save, from any field</td>
+<td><code>⌘</code> <code>Enter</code></td>
+<td><code>Ctrl</code> <code>Enter</code></td>
+</tr>
+<tr>
+<td>Cancel your changes</td>
+<td><code>Esc</code></td>
+<td><code>Esc</code></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="everywhere-else">Everywhere else<a class="hanchor" href="#everywhere-else" aria-label="Link to this section">#</a></h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Action</th>
+<th>Mac</th>
+<th>Windows and Linux</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Leave Perform</td>
+<td><code>Esc</code></td>
+<td><code>Esc</code></td>
+</tr>
+<tr>
+<td>Close the notifications list</td>
+<td><code>Esc</code></td>
+<td><code>Esc</code></td>
+</tr>
+</tbody>
+</table></div>
+
+    </article>
+    <nav class="pager">
+      <a class="pager-prev" href="/docs/reference/limits/"><span>Previous</span>Plan limits</a>
+      <a class="pager-next" href="/docs/reference/formats/"><span>Next</span>Supported formats</a>
+    </nav>
+    <footer class="page-footer">
+      <p>Something missing or wrong on this page? Email
+        <a href="mailto:support@lyricgenie.app">support@lyricgenie.app</a>.</p>
+      <p class="footer-version only-ios">Written for Lyric Genie <a href="/docs/changelog/"><strong>v2.20</strong></a>. Your version is under the logo in <a href="/docs/tabs/settings/">Settings</a>.</p><p class="footer-version only-web">Written for Lyric Genie for web <strong>0.1.0</strong> and iOS <a href="/docs/changelog/"><strong>v2.20</strong></a>. Your web version is at the bottom of <a href="/docs/tabs/settings/">Settings</a>.</p>
+    </footer>
+  </main>
+  <nav class="toc" aria-label="On this page">
+         <p class="toc-title">On this page</p>
+         <ul><li><a href="#home">Home</a></li><li><a href="#writing-lyrics">Writing lyrics</a></li><li><a href="#undo-across-the-page">Undo across the page</a></li><li><a href="#moving-between-songs">Moving between songs</a></li><li><a href="#the-workspace">The workspace</a></li><li><a href="#wish-workshop">Wish Workshop</a></li><li><a href="#rhymes-thesaurus-and-syllables">Rhymes, thesaurus and syllables</a></li><li><a href="#genie">Genie</a></li><li><a href="#recordings">Recordings</a></li><li><a href="#concepts">Concepts</a></li><li><a href="#everywhere-else">Everywhere else</a></li></ul>
+       </nav>
+</div>
+
+<script>window.LG_DOCS_BASE = "/docs/";</script>
+<script src="/docs/docs.js" defer></script>
+</body>
+</html>

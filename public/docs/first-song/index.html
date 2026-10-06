@@ -30,6 +30,12 @@
 (function(){try{var t=localStorage.getItem('lg-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
 document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+/* Same idea for iOS vs Web: ?platform=web (links from the web app) wins and
+   is remembered; otherwise the last choice; otherwise iOS. */
+(function(){var p='ios';try{var q=new URLSearchParams(location.search).get('platform');
+if(q==='ios'||q==='web'){p=q;localStorage.setItem('lg-docs-platform',q);}
+else p=localStorage.getItem('lg-docs-platform')||'ios';}catch(e){}
+document.documentElement.setAttribute('data-platform',p==='web'?'web':'ios');})();
 </script>
 </head>
 <body>
@@ -47,6 +53,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
              aria-label="Search the docs" aria-controls="search-results">
       <div id="search-results" class="search-results" hidden></div>
     </div>
+    <div class="platform-toggle" role="group" aria-label="Show the docs for">
+      <button type="button" data-platform-choice="ios">iOS</button>
+      <button type="button" data-platform-choice="web">Web</button>
+    </div>
     <button class="theme-toggle" type="button" aria-label="Switch between light and dark">
       <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
       <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
@@ -61,28 +71,28 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="shell">
   <aside class="sidebar" id="sidebar"><button class="sidebar-close" type="button" aria-label="Close the menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button><div class="nav-group">
       <p class="nav-group-title">Start here</p>
-      <ul><li><a href="/docs/"><span>Overview</span></a></li><li><a href="/docs/first-launch/"><span>First launch</span></a></li><li><a href="/docs/first-song/" class="active"><span>Your first song</span></a></li><li><a href="/docs/how-it-fits-together/"><span>How it fits together</span></a></li></ul>
+      <ul><li><a href="/docs/"><span>Overview</span></a></li><li class="nav-only-ios"><a href="/docs/first-launch/"><span>First launch</span><span class="nav-plat nav-plat-ios">iOS</span></a></li><li><a href="/docs/first-song/" class="active"><span>Your first song</span></a></li><li><a href="/docs/how-it-fits-together/"><span>How it fits together</span></a></li></ul>
     </div><div class="nav-group">
       <p class="nav-group-title">The five tabs</p>
-      <ul><li><a href="/docs/tabs/start/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/flame.png')"></span><span>Start tab</span></a></li><li><a href="/docs/tabs/songs/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/music.note.list.svg')"></span><span>Songs tab</span></a></li><li><a href="/docs/tabs/concepts/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/lightbulb.png')"></span><span>Concepts tab</span></a></li><li><a href="/docs/tabs/recordings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/recordingtape.svg')"></span><span>Recordings tab</span></a></li><li><a href="/docs/tabs/settings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/gearshape.png')"></span><span>Settings tab</span></a></li></ul>
+      <ul><li class="nav-only-ios"><a href="/docs/tabs/start/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/flame.png')"></span><span>Start tab</span><span class="nav-plat nav-plat-ios">iOS</span></a></li><li class="nav-only-web"><a href="/docs/tabs/home/"><span>Home</span><span class="nav-plat nav-plat-web">Web</span></a></li><li><a href="/docs/tabs/songs/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/music.note.list.svg')"></span><span>Songs tab</span></a></li><li><a href="/docs/tabs/concepts/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/lightbulb.png')"></span><span>Concepts tab</span></a></li><li><a href="/docs/tabs/recordings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/recordingtape.svg')"></span><span>Recordings tab</span></a></li><li><a href="/docs/tabs/settings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/gearshape.png')"></span><span>Settings tab</span></a></li></ul>
     </div><div class="nav-group">
       <p class="nav-group-title">What you make</p>
       <ul><li><a href="/docs/objects/songs/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/music.note.list.svg')"></span><span>Songs</span></a></li><li><a href="/docs/objects/recordings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/recordingtape.svg')"></span><span>Recordings</span></a></li><li><a href="/docs/objects/concepts/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/lightbulb.png')"></span><span>Concepts</span></a></li><li><a href="/docs/objects/projects/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/folder.svg')"></span><span>Projects</span></a></li></ul>
     </div><div class="nav-group">
       <p class="nav-group-title">Starting a song</p>
-      <ul><li><a href="/docs/guides/song-wizard/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/wand.and.sparkles.svg')"></span><span>The song wizard</span></a></li><li><a href="/docs/guides/freestyle/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/music.microphone.svg')"></span><span>Freestyle</span></a></li><li><a href="/docs/guides/importing/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.arrow.down.png')"></span><span>Importing files</span></a></li></ul>
+      <ul><li><a href="/docs/guides/song-wizard/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/wand.and.sparkles.svg')"></span><span>The song wizard</span></a></li><li class="nav-only-ios"><a href="/docs/guides/freestyle/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/music.microphone.svg')"></span><span>Freestyle</span><span class="nav-plat nav-plat-ios">iOS</span></a></li><li><a href="/docs/guides/importing/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.arrow.down.png')"></span><span>Importing files</span></a></li></ul>
     </div><div class="nav-group">
       <p class="nav-group-title">The song editor</p>
-      <ul><li><a href="/docs/editor/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.pencil.png')"></span><span>The song editor</span></a></li><li><a href="/docs/editor/sections/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/list.bullet.png')"></span><span>Sections and song structure</span></a></li><li><a href="/docs/editor/wish-workshop/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/lamp.svg')"></span><span>Wish Workshop</span></a></li><li><a href="/docs/editor/selecting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/text.cursor.png')"></span><span>Selecting and editing lines</span></a></li><li><a href="/docs/editor/arrange-mode/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.grid.2x2.svg')"></span><span>Arrange mode</span></a></li><li><a href="/docs/editor/perform/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.and.background.dotted.svg')"></span><span>Perform</span></a></li><li><a href="/docs/editor/recordings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/recordingtape.svg')"></span><span>Recordings in a song</span></a></li><li><a href="/docs/editor/rhymes/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/character.book.closed.fill.svg')"></span><span>Rhymes</span></a></li><li><a href="/docs/editor/syllables/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/textformat.123.png')"></span><span>Syllables</span></a></li><li><a href="/docs/editor/ai-style/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/sparkles.svg')"></span><span>AI Style</span></a></li><li><a href="/docs/editor/inline-suggestions/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/sparkle.svg')"></span><span>In-line suggestions</span></a></li><li><a href="/docs/editor/lyric-sheets/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.arrow.up.svg')"></span><span>Lyric sheets</span></a></li></ul>
+      <ul><li><a href="/docs/editor/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.pencil.png')"></span><span>The song editor</span></a></li><li class="nav-only-web"><a href="/docs/editor/workspace/"><span>The desktop workspace</span><span class="nav-plat nav-plat-web">Web</span></a></li><li class="nav-only-web"><a href="/docs/editor/genie/"><span>Genie chat</span><span class="nav-plat nav-plat-web">Web</span></a></li><li><a href="/docs/editor/sections/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/list.bullet.png')"></span><span>Sections and song structure</span></a></li><li><a href="/docs/editor/wish-workshop/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/lamp.svg')"></span><span>Wish Workshop</span></a></li><li><a href="/docs/editor/selecting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/text.cursor.png')"></span><span>Selecting and editing lines</span></a></li><li><a href="/docs/editor/arrange-mode/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.grid.2x2.svg')"></span><span>Arrange mode</span></a></li><li><a href="/docs/editor/perform/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.and.background.dotted.svg')"></span><span>Perform</span></a></li><li><a href="/docs/editor/recordings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/recordingtape.svg')"></span><span>Recordings in a song</span></a></li><li><a href="/docs/editor/rhymes/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/character.book.closed.fill.svg')"></span><span>Rhymes</span></a></li><li><a href="/docs/editor/syllables/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/textformat.123.png')"></span><span>Syllables</span></a></li><li class="nav-only-web"><a href="/docs/editor/view-options/"><span>Rhyme colors and margins</span><span class="nav-plat nav-plat-web">Web</span></a></li><li><a href="/docs/editor/ai-style/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/sparkles.svg')"></span><span>AI Style</span></a></li><li><a href="/docs/editor/inline-suggestions/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/sparkle.svg')"></span><span>In-line suggestions</span></a></li><li><a href="/docs/editor/lyric-sheets/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.arrow.up.svg')"></span><span>Lyric sheets</span></a></li></ul>
     </div><div class="nav-group">
       <p class="nav-group-title">Collaboration</p>
-      <ul><li><a href="/docs/collaboration/inviting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.badge.plus.png')"></span><span>Inviting a co-writer</span></a></li><li><a href="/docs/collaboration/tabs/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.2.fill.svg')"></span><span>Collaborator tabs</span></a></li><li><a href="/docs/collaboration/sending/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/tray.png')"></span><span>Sending lines to a co-writer</span></a></li><li><a href="/docs/collaboration/master/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/doc.text.fill.png')"></span><span>The Master</span></a></li><li><a href="/docs/collaboration/notifications/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/bell.svg')"></span><span>Notifications</span></a></li></ul>
+      <ul><li><a href="/docs/collaboration/inviting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.badge.plus.png')"></span><span>Inviting a co-writer</span></a></li><li><a href="/docs/collaboration/tabs/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.2.fill.svg')"></span><span>Collaborator tabs</span></a></li><li class="nav-only-ios"><a href="/docs/collaboration/sending/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/tray.png')"></span><span>Sending lines to a co-writer</span><span class="nav-plat nav-plat-ios">iOS</span></a></li><li><a href="/docs/collaboration/master/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/doc.text.fill.png')"></span><span>The Master</span></a></li><li><a href="/docs/collaboration/notifications/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/bell.svg')"></span><span>Notifications</span></a></li></ul>
     </div><div class="nav-group">
       <p class="nav-group-title">Your account</p>
-      <ul><li><a href="/docs/account/signing-in/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/rectangle.portrait.and.arrow.right.png')"></span><span>Signing in</span></a></li><li><a href="/docs/account/profile/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.png')"></span><span>Your profile</span></a></li><li><a href="/docs/account/plans/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/wand.and.sparkles.svg')"></span><span>Plans and Pro</span></a></li><li><a href="/docs/account/preferences/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/slider.horizontal.3.png')"></span><span>Preferences</span></a></li><li><a href="/docs/account/deleting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/trash.png')"></span><span>Deleting your account</span></a></li></ul>
+      <ul><li><a href="/docs/account/signing-in/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/rectangle.portrait.and.arrow.right.png')"></span><span>Signing in</span></a></li><li><a href="/docs/account/profile/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.png')"></span><span>Your profile</span></a></li><li><a href="/docs/account/plans/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/wand.and.sparkles.svg')"></span><span>Plans and Pro</span></a></li><li><a href="/docs/account/preferences/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/slider.horizontal.3.png')"></span><span>Preferences</span></a></li><li class="nav-only-ios"><a href="/docs/account/deleting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/trash.png')"></span><span>Deleting your account</span><span class="nav-plat nav-plat-ios">iOS</span></a></li></ul>
     </div><div class="nav-group">
       <p class="nav-group-title">Reference</p>
-      <ul><li><a href="/docs/changelog/"><span>What's new</span></a></li><li><a href="/docs/reference/limits/"><span>Plan limits</span></a></li><li><a href="/docs/reference/formats/"><span>Supported formats</span></a></li><li><a href="/docs/reference/glossary/"><span>Glossary</span></a></li></ul>
+      <ul><li><a href="/docs/changelog/"><span>What's new</span></a></li><li><a href="/docs/reference/limits/"><span>Plan limits</span></a></li><li class="nav-only-web"><a href="/docs/reference/keyboard-shortcuts/"><span>Keyboard shortcuts</span><span class="nav-plat nav-plat-web">Web</span></a></li><li><a href="/docs/reference/formats/"><span>Supported formats</span></a></li><li><a href="/docs/reference/glossary/"><span>Glossary</span></a></li></ul>
     </div><div class="nav-group">
       <p class="nav-group-title">Help</p>
       <ul><li><a href="/docs/faq/"><span>FAQ</span></a></li><li><a href="/docs/troubleshooting/"><span>Troubleshooting</span></a></li></ul>
@@ -92,15 +102,28 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
       <p class="eyebrow">Start here</p>
       <h1>Your first song</h1>
       <p class="lede">From an empty account to a finished draft you can sing, in ten minutes.</p>
+      <p class="platform-switch">Showing the <strong class="only-ios">iOS app</strong><strong class="only-web">web app</strong><span aria-hidden="true"> · </span><button type="button" class="only-ios" data-platform-choice="web">Switch to the web app</button><button type="button" class="only-web" data-platform-choice="ios">Switch to the iOS app</button></p>
       <p>This is the short path through the app. Every step links to the page that covers
 it properly, so read this once and then go deeper wherever you need to.</p>
 <h2 id="1-sign-in">1. Sign in<a class="hanchor" href="#1-sign-in" aria-label="Link to this section">#</a></h2>
 <p>Lyric Genie signs in with Google or with Apple. There is no email and password
 form. Pick one and remember which, because they are separate accounts and your
 songs belong to whichever you used. See <a href="/docs/account/signing-in/">Signing in</a>.</p>
+<div class="platform-block only-web">
+<p>On the web, <strong>Continue with Google</strong> or <strong>Continue with Apple</strong> opens a small
+sign-in window, so allow pop-ups for the site if nothing appears.</p>
+</div>
 <h2 id="2-start-from-the-start-tab">2. Start from the Start tab<a class="hanchor" href="#2-start-from-the-start-tab" aria-label="Link to this section">#</a></h2>
+<div class="platform-block only-web">
+<p>Everything begins on <strong>Home</strong>, the page you land on after signing in, or the
+logo in the top left from anywhere else. Its <strong>New Song</strong> button opens a blank
+song, and the bar under the greeting saves an idea as a <a href="/docs/objects/concepts/">concept</a>
+without opening anything. See <a href="/docs/tabs/home/">The Home page</a>.</p>
+</div>
+<div class="platform-block only-ios">
 <p>Everything begins here. The four circles are the four ways in.</p>
-<figure class="fig" style="max-width:min(23rem, 375px)">
+</div>
+<figure class="fig only-ios" style="max-width:min(23rem, 375px)">
   <div class="fig-shot">
     <img src="/docs/img/start-tab.webp" alt="The Start tab with four circular buttons, Write, Freestyle, Record and Concept, above a list of recent songs" width="375" height="815" loading="lazy" decoding="async">
     <span class="fig-mark" style="left:32%;top:29%;width:33%" aria-label="Type a song"><span class="fig-badge">1</span></span><span class="fig-mark" style="left:68.5%;top:29%;width:33%" aria-label="Sing or speak one"><span class="fig-badge">2</span></span><span class="fig-mark" style="left:50%;top:69%;width:92%;height:27%;aspect-ratio:auto" aria-label="Everything you were last working on"><span class="fig-badge">3</span></span>
@@ -108,6 +131,15 @@ songs belong to whichever you used. See <a href="/docs/account/signing-in/">Sign
   <ol class="fig-legend"><li><span class="fig-key">1</span>Type a song</li><li><span class="fig-key">2</span>Sing or speak one</li><li><span class="fig-key">3</span>Everything you were last working on</li></ol>
   <figcaption>Write and Freestyle are the two ways to start a song. Record and Concept capture something smaller.</figcaption>
 </figure>
+<figure class="fig only-web fig-web" style="max-width:min(46rem, 1280px)">
+  <div class="fig-shot">
+    <img src="/docs/img/web-home.webp" alt="The web app's Home page with a New Song button, an idea box and the song you were last writing" width="1280" height="800" loading="lazy" decoding="async">
+    <span class="fig-mark" style="left:89.1%;top:18.9%;width:13.1%;height:6.5%;aspect-ratio:auto" aria-label="Start a song (or press N)"><span class="fig-badge">1</span></span><span class="fig-mark" style="left:51.1%;top:26.0%;width:86.4%;height:6.0%;aspect-ratio:auto" aria-label="Type an idea, press Enter, it's a concept"><span class="fig-badge">2</span></span><span class="fig-mark" style="left:34.7%;top:36.5%;width:57.4%;height:4.0%;aspect-ratio:auto" aria-label="The song you last worked on"><span class="fig-badge">3</span></span>
+  </div>
+  <ol class="fig-legend"><li><span class="fig-key">1</span>Start a song (or press N)</li><li><span class="fig-key">2</span>Type an idea, press Enter, it's a concept</li><li><span class="fig-key">3</span>The song you last worked on</li></ol>
+  <figcaption>Home, where the web app opens.</figcaption>
+</figure>
+<div class="platform-block only-ios">
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -136,10 +168,22 @@ songs belong to whichever you used. See <a href="/docs/account/signing-in/">Sign
 </table></div>
 <p>If you have nothing at all in mind, tap <strong>Write</strong>. If you have a melody in your
 head, tap <strong>Freestyle</strong> and sing it. See <a href="/docs/guides/freestyle/">Freestyle</a>.</p>
+</div>
+<div class="platform-block only-web">
+<p>Recording lives on the <a href="/docs/tabs/recordings/">Recordings</a> page, and Freestyle is
+not in the web app yet, so a song starts from <strong>New Song</strong>.</p>
+</div>
 <h2 id="3-answer-three-questions">3. Answer three questions<a class="hanchor" href="#3-answer-three-questions" aria-label="Link to this section">#</a></h2>
+<div class="platform-block only-ios">
 <p>Tapping Write offers a <strong>Guided Start</strong> or a <strong>Blank Editor</strong>. Take the guided
 one the first time.</p>
-<figure class="fig" style="max-width:min(23rem, 330px)">
+</div>
+<div class="platform-block only-web">
+<p>A new song asks how you want to start: <strong>Guide me</strong> or <strong>Start from scratch</strong>.
+Take the guided one the first time. Genie, the chat panel beside your lyrics,
+asks the three questions one at a time. See <a href="/docs/editor/genie/">Guided Start</a>.</p>
+</div>
+<figure class="fig only-ios" style="max-width:min(23rem, 330px)">
   <div class="fig-shot">
     <img src="/docs/img/wizard-mood.png" alt="The mood step of the song wizard, with chips like Melancholic, Nostalgic and Chill" width="330" height="717" loading="lazy" decoding="async">
     <span class="fig-mark" style="left:50%;top:34%;width:88%;height:11%;aspect-ratio:auto" aria-label="Type your own, or pick from below"><span class="fig-badge">1</span></span>
@@ -152,7 +196,7 @@ answering honestly, because they are not a quiz: they become the song's <strong>
 Context</strong>, and every AI feature in the app reads them from then on. A song with
 no context gets generic help. A song with context gets help that sounds like
 your song.</p>
-<p>The wizard then offers titles and opening phrases. Take what you like and ignore
+<p>The guided start then offers titles and opening phrases. Take what you like and ignore
 the rest. See <a href="/docs/guides/song-wizard/">The song wizard</a>.</p>
 <h2 id="4-write-and-let-it-find-your-structure">4. Write, and let it find your structure<a class="hanchor" href="#4-write-and-let-it-find-your-structure" aria-label="Link to this section">#</a></h2>
 <p>You are now in the editor. Type lyrics.</p>
@@ -163,7 +207,13 @@ text.</p>
 <p>See <a href="/docs/editor/sections/">Sections and song structure</a> and
 <a href="/docs/editor/">The song editor</a>.</p>
 <h2 id="5-use-the-lamp-when-you-are-stuck">5. Use the lamp when you are stuck<a class="hanchor" href="#5-use-the-lamp-when-you-are-stuck" aria-label="Link to this section">#</a></h2>
+<div class="platform-block only-ios">
 <p>The genie lamp at the bottom right is <strong>Wish Workshop</strong>. It behaves two ways:</p>
+</div>
+<div class="platform-block only-web">
+<p><strong>Wish Workshop</strong> is the sparkle button in the song bar above your lyrics. It
+behaves two ways:</p>
+</div>
 <ul>
 <li><strong>Nothing selected.</strong> It offers Creative Spark and writes something new for
 the song.</li>
@@ -173,15 +223,33 @@ rhyme unless you tell it not to.</li>
 <p>That difference catches everyone once. If it rewrote a line when you wanted new
 material, deselect and try again. See <a href="/docs/editor/wish-workshop/">Wish Workshop</a>.</p>
 <p>For smaller help there is a rhyme tool, a thesaurus, and a syllable adjuster,
-all in the bar that appears above the keyboard when you select a line. See
+all in the bar that appears when you select a line. See
 <a href="/docs/editor/selecting/">Selecting and editing lines</a>.</p>
+<div class="platform-block only-web">
+<p>The genie in the corner of the editor is something else: it opens <strong>Genie</strong>, the
+chat panel, where you can ask for ideas in plain words. See
+<a href="/docs/editor/genie/">Genie</a>.</p>
+</div>
 <h2 id="6-sing-it">6. Sing it<a class="hanchor" href="#6-sing-it" aria-label="Link to this section">#</a></h2>
+<div class="platform-block only-ios">
 <p>Tap <strong>Perform</strong> and the song goes full screen: black background, white words,
 nothing else. It is for singing from rather than writing in, and the font size
 slider is there because the phone is usually on a stand.</p>
-<figure class="fig" style="max-width:min(23rem, 330px)">
+</div>
+<div class="platform-block only-web">
+<p>Click <strong>Perform</strong> and the song goes full screen: black background, white words,
+nothing else. It is for singing from rather than writing in, and the text size
+control is there because the screen is usually across the room.</p>
+</div>
+<figure class="fig only-ios" style="max-width:min(23rem, 330px)">
   <div class="fig-shot">
     <img src="/docs/img/perform.png" alt="Perform mode showing the lyrics of Human Feel in white on black" width="330" height="717" loading="lazy" decoding="async">
+  </div>
+  <figcaption>The same song, with everything else out of the way.</figcaption>
+</figure>
+<figure class="fig only-web fig-web" style="max-width:min(46rem, 1280px)">
+  <div class="fig-shot">
+    <img src="/docs/img/web-perform.webp" alt="" width="1280" height="800" loading="lazy" decoding="async">
   </div>
   <figcaption>The same song, with everything else out of the way.</figcaption>
 </figure>
@@ -211,7 +279,7 @@ app.</p>
     <footer class="page-footer">
       <p>Something missing or wrong on this page? Email
         <a href="mailto:support@lyricgenie.app">support@lyricgenie.app</a>.</p>
-      <p class="footer-version">Written for Lyric Genie <a href="/docs/changelog/"><strong>v2.20</strong></a>. Your version is under the logo in <a href="/docs/tabs/settings/">Settings</a>.</p>
+      <p class="footer-version only-ios">Written for Lyric Genie <a href="/docs/changelog/"><strong>v2.20</strong></a>. Your version is under the logo in <a href="/docs/tabs/settings/">Settings</a>.</p><p class="footer-version only-web">Written for Lyric Genie for web <strong>0.1.0</strong> and iOS <a href="/docs/changelog/"><strong>v2.20</strong></a>. Your web version is at the bottom of <a href="/docs/tabs/settings/">Settings</a>.</p>
     </footer>
   </main>
   <nav class="toc" aria-label="On this page">

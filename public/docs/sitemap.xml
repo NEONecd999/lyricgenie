@@ -5,6 +5,7 @@
   <url><loc>https://lyricgenie.app/docs/first-song/</loc></url>
   <url><loc>https://lyricgenie.app/docs/how-it-fits-together/</loc></url>
   <url><loc>https://lyricgenie.app/docs/tabs/start/</loc></url>
+  <url><loc>https://lyricgenie.app/docs/tabs/home/</loc></url>
   <url><loc>https://lyricgenie.app/docs/tabs/songs/</loc></url>
   <url><loc>https://lyricgenie.app/docs/tabs/concepts/</loc></url>
   <url><loc>https://lyricgenie.app/docs/tabs/recordings/</loc></url>
@@ -17,6 +18,8 @@
   <url><loc>https://lyricgenie.app/docs/guides/freestyle/</loc></url>
   <url><loc>https://lyricgenie.app/docs/guides/importing/</loc></url>
   <url><loc>https://lyricgenie.app/docs/editor/</loc></url>
+  <url><loc>https://lyricgenie.app/docs/editor/workspace/</loc></url>
+  <url><loc>https://lyricgenie.app/docs/editor/genie/</loc></url>
   <url><loc>https://lyricgenie.app/docs/editor/sections/</loc></url>
   <url><loc>https://lyricgenie.app/docs/editor/wish-workshop/</loc></url>
   <url><loc>https://lyricgenie.app/docs/editor/selecting/</loc></url>
@@ -25,6 +28,7 @@
   <url><loc>https://lyricgenie.app/docs/editor/recordings/</loc></url>
   <url><loc>https://lyricgenie.app/docs/editor/rhymes/</loc></url>
   <url><loc>https://lyricgenie.app/docs/editor/syllables/</loc></url>
+  <url><loc>https://lyricgenie.app/docs/editor/view-options/</loc></url>
   <url><loc>https://lyricgenie.app/docs/editor/ai-style/</loc></url>
   <url><loc>https://lyricgenie.app/docs/editor/inline-suggestions/</loc></url>
   <url><loc>https://lyricgenie.app/docs/editor/lyric-sheets/</loc></url>
@@ -40,6 +44,7 @@
   <url><loc>https://lyricgenie.app/docs/account/deleting/</loc></url>
   <url><loc>https://lyricgenie.app/docs/changelog/</loc></url>
   <url><loc>https://lyricgenie.app/docs/reference/limits/</loc></url>
+  <url><loc>https://lyricgenie.app/docs/reference/keyboard-shortcuts/</loc></url>
   <url><loc>https://lyricgenie.app/docs/reference/formats/</loc></url>
   <url><loc>https://lyricgenie.app/docs/reference/glossary/</loc></url>
   <url><loc>https://lyricgenie.app/docs/faq/</loc></url>

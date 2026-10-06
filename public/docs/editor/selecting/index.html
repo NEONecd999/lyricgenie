@@ -30,6 +30,12 @@
 (function(){try{var t=localStorage.getItem('lg-docs-theme');
 if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
 document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+/* Same idea for iOS vs Web: ?platform=web (links from the web app) wins and
+   is remembered; otherwise the last choice; otherwise iOS. */
+(function(){var p='ios';try{var q=new URLSearchParams(location.search).get('platform');
+if(q==='ios'||q==='web'){p=q;localStorage.setItem('lg-docs-platform',q);}
+else p=localStorage.getItem('lg-docs-platform')||'ios';}catch(e){}
+document.documentElement.setAttribute('data-platform',p==='web'?'web':'ios');})();
 </script>
 </head>
 <body>
@@ -47,6 +53,10 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
              aria-label="Search the docs" aria-controls="search-results">
       <div id="search-results" class="search-results" hidden></div>
     </div>
+    <div class="platform-toggle" role="group" aria-label="Show the docs for">
+      <button type="button" data-platform-choice="ios">iOS</button>
+      <button type="button" data-platform-choice="web">Web</button>
+    </div>
     <button class="theme-toggle" type="button" aria-label="Switch between light and dark">
       <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
       <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
@@ -61,28 +71,28 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <div class="shell">
   <aside class="sidebar" id="sidebar"><button class="sidebar-close" type="button" aria-label="Close the menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg></button><div class="nav-group">
       <p class="nav-group-title">Start here</p>
-      <ul><li><a href="/docs/"><span>Overview</span></a></li><li><a href="/docs/first-launch/"><span>First launch</span></a></li><li><a href="/docs/first-song/"><span>Your first song</span></a></li><li><a href="/docs/how-it-fits-together/"><span>How it fits together</span></a></li></ul>
+      <ul><li><a href="/docs/"><span>Overview</span></a></li><li class="nav-only-ios"><a href="/docs/first-launch/"><span>First launch</span><span class="nav-plat nav-plat-ios">iOS</span></a></li><li><a href="/docs/first-song/"><span>Your first song</span></a></li><li><a href="/docs/how-it-fits-together/"><span>How it fits together</span></a></li></ul>
     </div><div class="nav-group">
       <p class="nav-group-title">The five tabs</p>
-      <ul><li><a href="/docs/tabs/start/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/flame.png')"></span><span>Start tab</span></a></li><li><a href="/docs/tabs/songs/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/music.note.list.svg')"></span><span>Songs tab</span></a></li><li><a href="/docs/tabs/concepts/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/lightbulb.png')"></span><span>Concepts tab</span></a></li><li><a href="/docs/tabs/recordings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/recordingtape.svg')"></span><span>Recordings tab</span></a></li><li><a href="/docs/tabs/settings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/gearshape.png')"></span><span>Settings tab</span></a></li></ul>
+      <ul><li class="nav-only-ios"><a href="/docs/tabs/start/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/flame.png')"></span><span>Start tab</span><span class="nav-plat nav-plat-ios">iOS</span></a></li><li class="nav-only-web"><a href="/docs/tabs/home/"><span>Home</span><span class="nav-plat nav-plat-web">Web</span></a></li><li><a href="/docs/tabs/songs/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/music.note.list.svg')"></span><span>Songs tab</span></a></li><li><a href="/docs/tabs/concepts/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/lightbulb.png')"></span><span>Concepts tab</span></a></li><li><a href="/docs/tabs/recordings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/recordingtape.svg')"></span><span>Recordings tab</span></a></li><li><a href="/docs/tabs/settings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/gearshape.png')"></span><span>Settings tab</span></a></li></ul>
     </div><div class="nav-group">
       <p class="nav-group-title">What you make</p>
       <ul><li><a href="/docs/objects/songs/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/music.note.list.svg')"></span><span>Songs</span></a></li><li><a href="/docs/objects/recordings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/recordingtape.svg')"></span><span>Recordings</span></a></li><li><a href="/docs/objects/concepts/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/lightbulb.png')"></span><span>Concepts</span></a></li><li><a href="/docs/objects/projects/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/folder.svg')"></span><span>Projects</span></a></li></ul>
     </div><div class="nav-group">
       <p class="nav-group-title">Starting a song</p>
-      <ul><li><a href="/docs/guides/song-wizard/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/wand.and.sparkles.svg')"></span><span>The song wizard</span></a></li><li><a href="/docs/guides/freestyle/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/music.microphone.svg')"></span><span>Freestyle</span></a></li><li><a href="/docs/guides/importing/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.arrow.down.png')"></span><span>Importing files</span></a></li></ul>
+      <ul><li><a href="/docs/guides/song-wizard/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/wand.and.sparkles.svg')"></span><span>The song wizard</span></a></li><li class="nav-only-ios"><a href="/docs/guides/freestyle/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/music.microphone.svg')"></span><span>Freestyle</span><span class="nav-plat nav-plat-ios">iOS</span></a></li><li><a href="/docs/guides/importing/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.arrow.down.png')"></span><span>Importing files</span></a></li></ul>
     </div><div class="nav-group">
       <p class="nav-group-title">The song editor</p>
-      <ul><li><a href="/docs/editor/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.pencil.png')"></span><span>The song editor</span></a></li><li><a href="/docs/editor/sections/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/list.bullet.png')"></span><span>Sections and song structure</span></a></li><li><a href="/docs/editor/wish-workshop/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/lamp.svg')"></span><span>Wish Workshop</span></a></li><li><a href="/docs/editor/selecting/" class="active"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/text.cursor.png')"></span><span>Selecting and editing lines</span></a></li><li><a href="/docs/editor/arrange-mode/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.grid.2x2.svg')"></span><span>Arrange mode</span></a></li><li><a href="/docs/editor/perform/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.and.background.dotted.svg')"></span><span>Perform</span></a></li><li><a href="/docs/editor/recordings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/recordingtape.svg')"></span><span>Recordings in a song</span></a></li><li><a href="/docs/editor/rhymes/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/character.book.closed.fill.svg')"></span><span>Rhymes</span></a></li><li><a href="/docs/editor/syllables/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/textformat.123.png')"></span><span>Syllables</span></a></li><li><a href="/docs/editor/ai-style/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/sparkles.svg')"></span><span>AI Style</span></a></li><li><a href="/docs/editor/inline-suggestions/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/sparkle.svg')"></span><span>In-line suggestions</span></a></li><li><a href="/docs/editor/lyric-sheets/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.arrow.up.svg')"></span><span>Lyric sheets</span></a></li></ul>
+      <ul><li><a href="/docs/editor/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.pencil.png')"></span><span>The song editor</span></a></li><li class="nav-only-web"><a href="/docs/editor/workspace/"><span>The desktop workspace</span><span class="nav-plat nav-plat-web">Web</span></a></li><li class="nav-only-web"><a href="/docs/editor/genie/"><span>Genie chat</span><span class="nav-plat nav-plat-web">Web</span></a></li><li><a href="/docs/editor/sections/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/list.bullet.png')"></span><span>Sections and song structure</span></a></li><li><a href="/docs/editor/wish-workshop/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/lamp.svg')"></span><span>Wish Workshop</span></a></li><li><a href="/docs/editor/selecting/" class="active"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/text.cursor.png')"></span><span>Selecting and editing lines</span></a></li><li><a href="/docs/editor/arrange-mode/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.grid.2x2.svg')"></span><span>Arrange mode</span></a></li><li><a href="/docs/editor/perform/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.and.background.dotted.svg')"></span><span>Perform</span></a></li><li><a href="/docs/editor/recordings/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/recordingtape.svg')"></span><span>Recordings in a song</span></a></li><li><a href="/docs/editor/rhymes/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/character.book.closed.fill.svg')"></span><span>Rhymes</span></a></li><li><a href="/docs/editor/syllables/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/textformat.123.png')"></span><span>Syllables</span></a></li><li class="nav-only-web"><a href="/docs/editor/view-options/"><span>Rhyme colors and margins</span><span class="nav-plat nav-plat-web">Web</span></a></li><li><a href="/docs/editor/ai-style/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/sparkles.svg')"></span><span>AI Style</span></a></li><li><a href="/docs/editor/inline-suggestions/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/sparkle.svg')"></span><span>In-line suggestions</span></a></li><li><a href="/docs/editor/lyric-sheets/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.arrow.up.svg')"></span><span>Lyric sheets</span></a></li></ul>
     </div><div class="nav-group">
       <p class="nav-group-title">Collaboration</p>
-      <ul><li><a href="/docs/collaboration/inviting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.badge.plus.png')"></span><span>Inviting a co-writer</span></a></li><li><a href="/docs/collaboration/tabs/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.2.fill.svg')"></span><span>Collaborator tabs</span></a></li><li><a href="/docs/collaboration/sending/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/tray.png')"></span><span>Sending lines to a co-writer</span></a></li><li><a href="/docs/collaboration/master/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/doc.text.fill.png')"></span><span>The Master</span></a></li><li><a href="/docs/collaboration/notifications/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/bell.svg')"></span><span>Notifications</span></a></li></ul>
+      <ul><li><a href="/docs/collaboration/inviting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.badge.plus.png')"></span><span>Inviting a co-writer</span></a></li><li><a href="/docs/collaboration/tabs/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.2.fill.svg')"></span><span>Collaborator tabs</span></a></li><li class="nav-only-ios"><a href="/docs/collaboration/sending/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/tray.png')"></span><span>Sending lines to a co-writer</span><span class="nav-plat nav-plat-ios">iOS</span></a></li><li><a href="/docs/collaboration/master/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/doc.text.fill.png')"></span><span>The Master</span></a></li><li><a href="/docs/collaboration/notifications/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/bell.svg')"></span><span>Notifications</span></a></li></ul>
     </div><div class="nav-group">
       <p class="nav-group-title">Your account</p>
-      <ul><li><a href="/docs/account/signing-in/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/rectangle.portrait.and.arrow.right.png')"></span><span>Signing in</span></a></li><li><a href="/docs/account/profile/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.png')"></span><span>Your profile</span></a></li><li><a href="/docs/account/plans/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/wand.and.sparkles.svg')"></span><span>Plans and Pro</span></a></li><li><a href="/docs/account/preferences/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/slider.horizontal.3.png')"></span><span>Preferences</span></a></li><li><a href="/docs/account/deleting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/trash.png')"></span><span>Deleting your account</span></a></li></ul>
+      <ul><li><a href="/docs/account/signing-in/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/rectangle.portrait.and.arrow.right.png')"></span><span>Signing in</span></a></li><li><a href="/docs/account/profile/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.png')"></span><span>Your profile</span></a></li><li><a href="/docs/account/plans/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/wand.and.sparkles.svg')"></span><span>Plans and Pro</span></a></li><li><a href="/docs/account/preferences/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/slider.horizontal.3.png')"></span><span>Preferences</span></a></li><li class="nav-only-ios"><a href="/docs/account/deleting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/trash.png')"></span><span>Deleting your account</span><span class="nav-plat nav-plat-ios">iOS</span></a></li></ul>
     </div><div class="nav-group">
       <p class="nav-group-title">Reference</p>
-      <ul><li><a href="/docs/changelog/"><span>What's new</span></a></li><li><a href="/docs/reference/limits/"><span>Plan limits</span></a></li><li><a href="/docs/reference/formats/"><span>Supported formats</span></a></li><li><a href="/docs/reference/glossary/"><span>Glossary</span></a></li></ul>
+      <ul><li><a href="/docs/changelog/"><span>What's new</span></a></li><li><a href="/docs/reference/limits/"><span>Plan limits</span></a></li><li class="nav-only-web"><a href="/docs/reference/keyboard-shortcuts/"><span>Keyboard shortcuts</span><span class="nav-plat nav-plat-web">Web</span></a></li><li><a href="/docs/reference/formats/"><span>Supported formats</span></a></li><li><a href="/docs/reference/glossary/"><span>Glossary</span></a></li></ul>
     </div><div class="nav-group">
       <p class="nav-group-title">Help</p>
       <ul><li><a href="/docs/faq/"><span>FAQ</span></a></li><li><a href="/docs/troubleshooting/"><span>Troubleshooting</span></a></li></ul>
@@ -92,15 +102,82 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
       <p class="eyebrow">The song editor</p>
       <h1><span class="title-icon" style="--icon:url('/docs/sf-symbols/text.cursor.png')" aria-hidden="true"></span>Selecting and editing lines</h1>
       <p class="lede">Select a lyric and the editor offers rhymes, synonyms, syllable changes and a rewrite. What appears depends on how much you selected.</p>
+      <p class="platform-switch">Showing the <strong class="only-ios">iOS app</strong><strong class="only-web">web app</strong><span aria-hidden="true"> · </span><button type="button" class="only-ios" data-platform-choice="web">Switch to the web app</button><button type="button" class="only-web" data-platform-choice="ios">Switch to the iOS app</button></p>
       <p>Selecting text is how you point a tool at a particular line. Nothing in the
 editor works on your selection until you make one, and what the app offers back
 depends on how much you picked.</p>
 <p>Select a line and two things appear: a bar above the keyboard, and a menu on the
 selection itself. They hold different tools, so it is worth knowing which is
 which.</p>
+<div class="platform-block only-web">
+<p>On the web there is one bar, not two. Select text and a floating toolbar
+appears just above the selection, holding every tool described below. On a
+phone browser the same buttons sit in a row docked above the keyboard, and
+the less-used ones sit in that row instead of under <strong>More</strong>.</p>
+</div>
 <h2 id="the-bar-above-the-keyboard">The bar above the keyboard<a class="hanchor" href="#the-bar-above-the-keyboard" aria-label="Link to this section">#</a></h2>
+<div class="platform-block only-ios">
 <p>Three buttons, and they are the ones you will reach for most.</p>
-<figure class="fig" style="max-width:min(23rem, 330px)">
+</div>
+<div class="platform-block only-web">
+<p>The floating toolbar holds, left to right:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Button</th>
+<th>What it does</th>
+<th>Available when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Rewrite</strong></td>
+<td>Hands the selection to <a href="/docs/editor/wish-workshop/">Wish Workshop</a> to change.</td>
+<td>The selection is six lines or less, on a tab you can edit.</td>
+</tr>
+<tr>
+<td><strong>To Master</strong></td>
+<td>Sends the selected lines to the Master tab. See <a href="/docs/collaboration/master/">The Master</a>.</td>
+<td>The song is shared, and you are not on the Master tab.</td>
+</tr>
+<tr>
+<td><strong>To Me</strong></td>
+<td>Adds the selected lines to the end of your own tab.</td>
+<td>You are looking at a co-writer's tab or the Master.</td>
+</tr>
+<tr>
+<td><strong>Ask Genie</strong></td>
+<td>Opens <a href="/docs/editor/genie/">Genie</a> with the selection attached.</td>
+<td>There is a selection.</td>
+</tr>
+<tr>
+<td><strong>Rhyme</strong></td>
+<td>Opens the rhyme tool for what you selected.</td>
+<td>The selection is one line or less.</td>
+</tr>
+<tr>
+<td><strong>Thesaurus</strong></td>
+<td>Opens synonyms and related words.</td>
+<td>The selection is one line or less.</td>
+</tr>
+<tr>
+<td><strong>⋯ More</strong></td>
+<td>Make Blank, Move to Scratchpad, Record, Link to Recording. In the Scratchpad it also offers Move to Lyrics.</td>
+<td>Each item appears when it applies.</td>
+</tr>
+<tr>
+<td><strong>−2 −1 +1 +2</strong></td>
+<td>Rewrites the line with fewer or more syllables. See <a href="/docs/editor/syllables/">Syllables</a>.</td>
+<td>The selection is a single line on a tab you can edit. +1 needs a syllable to start from, −1 needs two, −2 needs three.</td>
+</tr>
+</tbody>
+</table></div>
+<p>To Master and To Me send whole lines, widening your selection to the line
+starts and ends, the same as Arrange mode does.</p>
+<p>Rhyme and Thesaurus open in the right-hand panel next to your lyrics rather
+than over them.</p>
+</div>
+<figure class="fig only-ios" style="max-width:min(23rem, 330px)">
   <div class="fig-shot">
     <img src="/docs/img/selection-toolbar.png" alt="A selected lyric line with the Rhyme, Thesaurus and Rewrite buttons above the keyboard" width="330" height="717" loading="lazy" decoding="async">
     <span class="fig-mark" style="left:16%;top:93%;width:26%;height:5%;aspect-ratio:auto" aria-label="Rhymes for the selected word"><span class="fig-badge">1</span></span><span class="fig-mark" style="left:45%;top:93%;width:26%;height:5%;aspect-ratio:auto" aria-label="Synonyms and related words"><span class="fig-badge">2</span></span><span class="fig-mark" style="left:74%;top:93%;width:26%;height:5%;aspect-ratio:auto" aria-label="Hands the line to Wish Workshop"><span class="fig-badge">3</span></span>
@@ -108,6 +185,15 @@ which.</p>
   <ol class="fig-legend"><li><span class="fig-key">1</span>Rhymes for the selected word</li><li><span class="fig-key">2</span>Synonyms and related words</li><li><span class="fig-key">3</span>Hands the line to Wish Workshop</li></ol>
   <figcaption>One line selected, so all three tools are available.</figcaption>
 </figure>
+<figure class="fig only-web fig-web" style="max-width:min(46rem, 1280px)">
+  <div class="fig-shot">
+    <img src="/docs/img/web-selection-toolbar.webp" alt="The floating toolbar over a selected lyric line: Rewrite, Ask Genie, Rhyme, Thesaurus, four syllable buttons and a More button" width="1280" height="800" loading="lazy" decoding="async">
+    <span class="fig-mark" style="left:31.1%;top:57.9%;width:8.2%;height:5.0%;aspect-ratio:auto" aria-label="Wish Workshop on this line"><span class="fig-badge">1</span></span><span class="fig-mark" style="left:39.5%;top:57.9%;width:9.5%;height:5.0%;aspect-ratio:auto" aria-label="Ask Genie about it"><span class="fig-badge">2</span></span><span class="fig-mark" style="left:47.7%;top:57.9%;width:7.8%;height:5.0%;aspect-ratio:auto" aria-label="Rhymes"><span class="fig-badge">3</span></span><span class="fig-mark" style="left:56.0%;top:57.9%;width:9.6%;height:5.0%;aspect-ratio:auto" aria-label="Thesaurus"><span class="fig-badge">4</span></span><span class="fig-mark" style="left:66.1%;top:57.9%;width:10.8%;height:4.8%;aspect-ratio:auto" aria-label="Two syllables shorter to two longer"><span class="fig-badge">5</span></span><span class="fig-mark" style="left:73.2%;top:57.9%;width:3.8%" aria-label="More"><span class="fig-badge">6</span></span>
+  </div>
+  <ol class="fig-legend"><li><span class="fig-key">1</span>Wish Workshop on this line</li><li><span class="fig-key">2</span>Ask Genie about it</li><li><span class="fig-key">3</span>Rhymes</li><li><span class="fig-key">4</span>Thesaurus</li><li><span class="fig-key">5</span>Two syllables shorter to two longer</li><li><span class="fig-key">6</span>More</li></ol>
+  <figcaption>One line selected, so all three tools are available.</figcaption>
+</figure>
+<div class="platform-block only-ios">
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -137,29 +223,92 @@ which.</p>
 <p>Those limits are why Rewrite reaches further than the other two. Rhyme and
 Thesaurus are word tools and need a phrase to work on. Rewrite is a writing
 tool, so it can take a whole stanza.</p>
+</div>
 <h2 id="why-the-buttons-go-grey">Why the buttons go grey<a class="hanchor" href="#why-the-buttons-go-grey" aria-label="Link to this section">#</a></h2>
 <p>They do not disappear when they are unavailable. They dim, so the bar stays in
 the same place and you can see what you are missing.</p>
-<figure class="fig" style="max-width:min(23rem, 330px)">
+<div class="platform-block only-web">
+<p>Rewrite, Rhyme and Thesaurus dim on the web too. To Master, To Me and the
+syllable buttons are different: they are left off the bar when they do not
+apply.</p>
+</div>
+<figure class="fig only-ios" style="max-width:min(23rem, 330px)">
   <div class="fig-shot">
     <img src="/docs/img/selection-too-large.png" alt="The whole song selected, with all three tools dimmed" width="330" height="717" loading="lazy" decoding="async">
   </div>
   <figcaption>Select the whole song and all three dim, because nothing here works on forty lines.</figcaption>
 </figure>
+<figure class="fig only-web fig-web" style="max-width:min(46rem, 1280px)">
+  <div class="fig-shot">
+    <img src="/docs/img/web-selection-too-large.webp" alt="The whole song selected, with Rewrite, Rhyme and Thesaurus dimmed on the toolbar" width="1280" height="800" loading="lazy" decoding="async">
+    <span class="fig-mark" style="left:45.1%;top:29.7%;width:37.5%;height:5.5%;aspect-ratio:auto" aria-label="Rewrite, Rhyme and Thesaurus dimmed, no syllable buttons"><span class="fig-badge">1</span></span><span class="fig-mark" style="left:81.3%;top:44.8%;width:29.0%;height:30.0%;aspect-ratio:auto" aria-label="The panel says why"><span class="fig-badge">2</span></span>
+  </div>
+  <ol class="fig-legend"><li><span class="fig-key">1</span>Rewrite, Rhyme and Thesaurus dimmed, no syllable buttons</li><li><span class="fig-key">2</span>The panel says why</li></ol>
+  <figcaption>Select the whole song and the tools that work on a line or two dim.</figcaption>
+</figure>
 <p>If you ask for a rewrite on more than the app can handle, it tells you rather
 than sending it. The cap is six lines and 500 characters. For a long verse,
 work through it a few lines at a time.</p>
 <h2 id="the-menu-on-the-selection">The menu on the selection<a class="hanchor" href="#the-menu-on-the-selection" aria-label="Link to this section">#</a></h2>
+<div class="platform-block only-web">
+<p>The web has no separate menu on the selection. Cut, Copy, Paste and Select All
+are your browser's own, from the right-click menu or the keyboard. The extra
+tools are in the floating toolbar's <strong>⋯ More</strong> menu:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Item</th>
+<th>When it appears</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Make Blank</strong></td>
+<td>You can edit this tab, and the selection can be turned into a blank.</td>
+</tr>
+<tr>
+<td><strong>Move to Scratchpad</strong></td>
+<td>You can edit this tab. Cuts the selection out of the lyrics into <a href="/docs/editor/">the Scratchpad</a>.</td>
+</tr>
+<tr>
+<td><strong>Record</strong></td>
+<td>You can edit this tab. Starts a recording anchored to this line.</td>
+</tr>
+<tr>
+<td><strong>Link to Recording</strong></td>
+<td>You can edit this tab and the song has a take to link.</td>
+</tr>
+<tr>
+<td><strong>Move to Lyrics</strong></td>
+<td>You are in the Scratchpad. Moves the selection to the end of your lyrics.</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Sounds Like</strong>, <strong>Word Associations</strong> and <strong>Save to Concepts</strong> from the app's
+menu are not on the web selection toolbar.</p>
+<figure class="fig only-web fig-web" style="max-width:min(46rem, 1280px)">
+  <div class="fig-shot">
+    <img src="/docs/img/web-selection-more-menu.webp" alt="The floating toolbar's More menu open with Make Blank, Move to Scratchpad, Record and Link to Recording" width="1280" height="800" loading="lazy" decoding="async">
+    <span class="fig-mark" style="left:73.2%;top:69.1%;width:16.5%;height:17.5%;aspect-ratio:auto" aria-label="The extra tools"><span class="fig-badge">1</span></span>
+  </div>
+  <ol class="fig-legend"><li><span class="fig-key">1</span>The extra tools</li></ol>
+  <figcaption>The More menu on a one-line selection.</figcaption>
+</figure>
+</div>
+<div class="platform-block only-ios">
 <p>Tap the arrow at the end of the small Cut and Copy bar and the rest of the
 menu opens.</p>
-<figure class="fig" style="max-width:min(23rem, 330px)">
+</div>
+<figure class="fig only-ios" style="max-width:min(23rem, 330px)">
   <div class="fig-shot">
     <img src="/docs/img/selection-menu-multiline.png" alt="The selection menu showing Cut, Copy, Paste, Select All, Record, Save to Concepts and Link to Recording" width="330" height="717" loading="lazy" decoding="async">
   </div>
   <figcaption>The menu for a multi-line selection.</figcaption>
 </figure>
+<div class="platform-block only-ios">
 <p>Narrow the selection to a single line and the same menu grows.</p>
-<figure class="fig" style="max-width:min(23rem, 330px)">
+</div>
+<figure class="fig only-ios" style="max-width:min(23rem, 330px)">
   <div class="fig-shot">
     <img src="/docs/img/selection-menu-line.png" alt="The same menu on a one-line selection, now also offering plus one and minus one syllable" width="330" height="717" loading="lazy" decoding="async">
     <span class="fig-mark" style="left:61%;top:58%;width:44%;height:8%;aspect-ratio:auto" aria-label="These two only appear on a single line"><span class="fig-badge">1</span></span>
@@ -167,6 +316,7 @@ menu opens.</p>
   <ol class="fig-legend"><li><span class="fig-key">1</span>These two only appear on a single line</li></ol>
   <figcaption>One line selected, so the syllable tools appear.</figcaption>
 </figure>
+<div class="platform-block only-ios">
 <p>Some items are always there. Others appear only when the selection is small
 enough for them to make sense.</p>
 <div class="table-wrap"><table>
@@ -219,20 +369,26 @@ enough for them to make sense.</p>
 </tr>
 </tbody>
 </table></div>
-<aside class="callout callout-tip">
+</div>
+<aside class="callout callout-tip only-ios">
 <p class="callout-title"><span class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg></span>Tip</p>
 <div class="callout-body">
 <p>If <strong>Sounds Like</strong> and <strong>Word Associations</strong> are missing, you selected more than
 three words. Shorten the selection and they come back.</p>
 </div>
 </aside>
+<div class="platform-block only-ios">
 <p><strong>Record</strong> and <strong>Link to Recording</strong> are the two people miss. They tie audio to
 specific words rather than to the song as a whole, so you can play back the
 take that belongs to a particular line. See <a href="/docs/objects/recordings/">Recordings</a>.</p>
+</div>
 <h2 id="moving-whole-lines-instead">Moving whole lines instead<a class="hanchor" href="#moving-whole-lines-instead" aria-label="Link to this section">#</a></h2>
 <p>Everything above edits text. When you want to reorder, duplicate or delete
 whole lines rather than rewrite them, use Arrange mode, which is the grid button
 at the bottom right of <a href="/docs/editor/">the editor</a>.</p>
+<div class="platform-block only-web">
+<p>On the web it is the <strong>Arrange</strong> pill in the song bar.</p>
+</div>
 <p>The difference is worth holding on to. Selecting text points a writing tool at
 your words. Arrange mode moves your words around without changing them.</p>
 
@@ -244,7 +400,7 @@ your words. Arrange mode moves your words around without changing them.</p>
     <footer class="page-footer">
       <p>Something missing or wrong on this page? Email
         <a href="mailto:support@lyricgenie.app">support@lyricgenie.app</a>.</p>
-      <p class="footer-version">Written for Lyric Genie <a href="/docs/changelog/"><strong>v2.20</strong></a>. Your version is under the logo in <a href="/docs/tabs/settings/">Settings</a>.</p>
+      <p class="footer-version only-ios">Written for Lyric Genie <a href="/docs/changelog/"><strong>v2.20</strong></a>. Your version is under the logo in <a href="/docs/tabs/settings/">Settings</a>.</p><p class="footer-version only-web">Written for Lyric Genie for web <strong>0.1.0</strong> and iOS <a href="/docs/changelog/"><strong>v2.20</strong></a>. Your web version is at the bottom of <a href="/docs/tabs/settings/">Settings</a>.</p>
     </footer>
   </main>
   <nav class="toc" aria-label="On this page">

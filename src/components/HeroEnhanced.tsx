@@ -1,4 +1,5 @@
-import { Download } from "lucide-react";
+import { ArrowRight, Download } from "lucide-react";
+import { APP_STORE, WEB_SIGNUP } from "@/lib/links";
 import { motion } from "framer-motion";
 import SfIcon from "@/components/SfIcon";
 
@@ -364,7 +365,7 @@ const HeroEnhanced = () => {
             className="mb-9"
             style={{ fontSize: 15, color: "rgba(255,255,255,.7)" }}
           >
-            A native iOS app for iPhone, iPad, and Mac.
+            On iPhone, iPad and Mac, and now on the web. Your songs, everywhere.
           </motion.p>
 
           <motion.div
@@ -373,12 +374,20 @@ const HeroEnhanced = () => {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="flex flex-wrap justify-center gap-3 lg:justify-start"
           >
+            {/* Two ways in: the web app (sign up free, right now) and the App Store. */}
             <a
-              href="https://apps.apple.com/us/app/lyric-genie/id6739787614"
+              href={WEB_SIGNUP}
               className="inline-flex items-center gap-2 rounded-full bg-[#F6ECC9] px-9 py-4 text-[15.5px] font-semibold text-[#6F50B8] shadow-[0_10px_30px_-10px_rgba(30,19,36,0.35)] transition-all duration-300 hover:bg-[#FBF2D6] hover:shadow-[0_14px_40px_-10px_rgba(30,19,36,0.45)]"
             >
+              Start Writing Free
+              <ArrowRight className="h-5 w-5" />
+            </a>
+            <a
+              href={APP_STORE}
+              className="inline-flex items-center gap-2 rounded-full border border-white/40 px-7 py-4 text-[15.5px] font-semibold text-white transition-all duration-300 hover:border-white/70 hover:bg-white/10"
+            >
               <Download className="h-5 w-5" />
-              Download on App Store
+              Download for iPhone
             </a>
           </motion.div>
         </div>

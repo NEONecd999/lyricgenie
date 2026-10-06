@@ -8,14 +8,19 @@ import {
 
 const faqs = [
   {
+    question: "Can I use Lyric Genie on my computer?",
+    answer:
+      "Yes. Lyric Genie runs in any modern browser at app.lyricgenie.app, on Mac, Windows or Linux, with a desktop workspace built for long writing sessions. Sign in with the same Google or Apple account you use on your phone and your songs, recordings and concepts are all there, kept in sync live.",
+  },
+  {
     question: "Does Lyric Genie work on my iPad or Mac?",
     answer:
-      "Yes. It's a native iOS, iPadOS, and macOS (Apple Silicon) app. Just download it from the App Store and your songs sync instantly across all three via iCloud.",
+      "Yes. It's a native app for iPhone, iPad and Mac (Apple Silicon) from the App Store, and the web app works on any computer too. Your songs sync across all of them through your Lyric Genie account.",
   },
   {
     question: "Is there a free trial?",
     answer:
-      "Yes! When you subscribe to Pro, Apple offers a free 14-day trial so you can explore all the Pro features risk-free. If you cancel before the trial ends, you won't be charged. You can start your trial directly from the app.",
+      "Yes! Your first Pro subscription starts with a free 14-day trial, so you can explore every Pro feature risk-free. Cancel before it ends and you won't be charged. Start it on the web (we'll take you straight to checkout after you sign up) or in the iPhone app. One Pro subscription covers both.",
   },
   {
     question: "Can I collaborate with others in real-time?",
@@ -25,7 +30,7 @@ const faqs = [
   {
     question: "Can I invite co-writers who don't have the app?",
     answer:
-      "Yes, from within the app you can share a join link that will allow them to download the app and join your song, free.",
+      "Yes. Share a join link and they can sign up free and write with you, either in their browser or in the iPhone app.",
   },
   {
     question: "How does the Wish Workshop AI work?",
@@ -45,7 +50,7 @@ const faqs = [
   {
     question: "What if I need to cancel my subscription?",
     answer:
-      "You can cancel anytime through your App Store account settings. You'll continue to have access to Pro features until the end of your billing period. Your songs and recordings will always be accessible, even on the free plan.",
+      "Anytime. If you subscribed on the web, open Settings in the web app and choose Cancel subscription. If you subscribed in the iPhone app, cancel in your Apple ID's subscription settings. Either way you keep Pro until the end of the period you've paid for, and your songs and recordings stay yours on the free plan.",
   },
 ];
 

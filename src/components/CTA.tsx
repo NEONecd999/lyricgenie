@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Download, ArrowRight } from "lucide-react";
+import { APP_STORE, WEB_SIGNUP } from "@/lib/links";
 
 const CTA = () => {
   return (
@@ -33,18 +34,24 @@ const CTA = () => {
             Ready to Write Your <span className="whitespace-nowrap text-[#F6ECC9]">Next Hit?</span>
           </h2>
           <p className="text-white/80 text-lg md:text-xl mb-10">
-            Join professional songwriters who trust Lyric Genie for every session. 
+            Join songwriters who trust Lyric Genie for every session, on their phone and in the browser.
             Start free today.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
-              href="https://apps.apple.com/us/app/lyric-genie/id6739787614"
+              href={WEB_SIGNUP}
               className="inline-flex items-center justify-center gap-2 bg-[#F6ECC9] text-purple-900 px-8 py-4 rounded-full font-bold text-lg shadow-xl hover:bg-[#F6ECC9]/90 hover:scale-105 transition-all duration-300"
             >
-              <Download className="w-5 h-5" />
-              Download Free on App Store
+              Start Writing Free
+              <ArrowRight className="w-5 h-5" />
             </a>
-          
+            <a
+              href={APP_STORE}
+              className="inline-flex items-center justify-center gap-2 border border-white/50 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white/10 transition-all duration-300"
+            >
+              <Download className="w-5 h-5" />
+              Download for iPhone
+            </a>
           </div>
         </motion.div>
       </div>

@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import HeroEnhanced from "@/components/HeroEnhanced";
+import WebShowcase from "@/components/WebShowcase";
 import AnnouncementStrip from "@/components/AnnouncementStrip";
 import AppStoreBar from "@/components/AppStoreBar";
 import Philosophy from "@/components/Philosophy";
@@ -15,13 +16,14 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background font-sans">
       <SEO
-        title="Lyric Genie — iOS Songwriting App for iPhone, iPad & Mac"
-        description="Lyric Genie is a native iOS songwriting app for iPhone, iPad, Mac, and Vision Pro (iOS, iPadOS, macOS, and visionOS). Built by Edan Dover (Edan Dover Inc) — capture ideas, shape lyrics, and co-write in real-time. Available on the App Store."
+        title="Lyric Genie — Songwriting App for iPhone, iPad, Mac & the Web"
+        description="Lyric Genie is a songwriting app for iPhone, iPad, Mac and the web. Capture ideas, shape lyrics with AI that writes in your voice, record takes and co-write in real time, with your songs synced everywhere. Start free in your browser or download it on the App Store."
       />
       <AppStoreBar />
       <AnnouncementStrip />
       <Navbar />
       <HeroEnhanced />
+      <WebShowcase />
       <div id="features">
         <Features />
       </div>

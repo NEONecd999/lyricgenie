@@ -1,3 +1,5 @@
+import { WEB_SIGNUP } from "@/lib/links";
+
 const AnnouncementStrip = () => {
   return (
     <div
@@ -5,16 +7,10 @@ const AnnouncementStrip = () => {
       style={{ padding: "10px 16px", letterSpacing: ".01em" }}
     >
       <span style={{ opacity: 0.8 }}>
-        <span aria-hidden="true">✦</span> Now available on iOS, iPadOS &amp; Mac —{" "}
+        <span aria-hidden="true">✦</span> New: Lyric Genie is now on the web, with the same songs as your iPhone —{" "}
       </span>
-      <a
-        href="https://apps.apple.com/us/app/lyric-genie/id6739787614"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-[#F6ECC9] underline"
-        style={{ textDecorationThickness: 1, textUnderlineOffset: 3 }}
-      >
-        Download on the App Store
+      <a href={WEB_SIGNUP} className="text-[#F6ECC9] underline" style={{ textDecorationThickness: 1, textUnderlineOffset: 3 }}>
+        Start writing in your browser
       </a>
     </div>
   );

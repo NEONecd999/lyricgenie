@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { APP_STORE, WEB_SIGNUP, webTrial } from "@/lib/links";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
@@ -32,7 +33,6 @@ const SAVINGS = Math.round((1 - YEARLY / (MONTHLY * 12)) * 100);
 
 type Billing = "monthly" | "yearly";
 
-const APP_STORE = "https://apps.apple.com/us/app/lyric-genie/id6739787614";
 
 const Check = () => (
   <span className="mt-0.5 inline-flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-[#F4EEFE] text-xs font-bold text-primary">
@@ -125,10 +125,13 @@ const Pricing = () => {
             </div>
             <div className="mb-4 h-5 text-sm text-[#5D5065]">No credit card needed</div>
             <div className="mb-6 h-5" aria-hidden />
-            <a href={APP_STORE} target="_blank" rel="noopener noreferrer" className="block">
+            <a href={WEB_SIGNUP} className="block">
               <Button variant="outline" size="lg" className="w-full justify-center">
-                Download Now
+                Start Writing Free
               </Button>
+            </a>
+            <a href={APP_STORE} target="_blank" rel="noopener noreferrer" className="mt-3 block text-center text-sm font-medium text-primary hover:underline">
+              or download for iPhone, iPad &amp; Mac
             </a>
             <ul className="mt-7 flex flex-col gap-3">
               {FREE_FEATURES.map((f) => (
@@ -178,10 +181,14 @@ const Pricing = () => {
               )}
             </div>
             <div className="mb-6 text-sm text-[#5D5065]">No charge for 14 days. Cancel anytime.</div>
-            <a href={APP_STORE} target="_blank" rel="noopener noreferrer" className="block">
+            {/* The web: sign up (or in), then straight into Stripe checkout on this plan. */}
+            <a href={webTrial(billing)} className="block">
               <Button variant="hero" size="lg" className="w-full justify-center">
                 Start Free Trial
               </Button>
+            </a>
+            <a href={APP_STORE} target="_blank" rel="noopener noreferrer" className="mt-3 block text-center text-sm font-medium text-primary hover:underline">
+              or subscribe in the iPhone app
             </a>
             <ul className="mt-7 flex flex-col gap-3">
               {PRO_FEATURES.map((f) => (

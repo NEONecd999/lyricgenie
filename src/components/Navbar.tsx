@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Music, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { APP_STORE, WEB_SIGNIN, WEB_SIGNUP } from "@/lib/links";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
@@ -159,14 +160,20 @@ const Navbar = () => {
             {/* CTA */}
             <div className="hidden md:flex items-center gap-4">
               <a
-                href="https://apps.apple.com/us/app/lyric-genie/id6739787614"
+                href={WEB_SIGNIN}
+                className={`text-sm font-semibold transition-colors ${navIsDark ? "text-[#F6ECC9]/85 hover:text-[#F6ECC9]" : "text-[#1E1324]/75 hover:text-[#1E1324]"}`}
+              >
+                Sign in
+              </a>
+              <a
+                href={WEB_SIGNUP}
                 className={`rounded-full px-5 py-2 text-sm font-semibold transition-all ${
                   navIsDark
                     ? "bg-[#F6ECC9] text-[#6F50B8] hover:bg-[#F6ECC9]/90"
                     : "bg-[#6F50B8] text-white shadow-[0_4px_20px_-4px_rgba(30,19,36,0.08)] hover:bg-[#5F43A8]"
                 }`}
               >
-                Download App
+                Start Free
               </a>
             </div>
 
@@ -215,12 +222,14 @@ const Navbar = () => {
                 );
               })}
               <div className="flex flex-col gap-4 mt-6">
-                <a
-                  href="https://apps.apple.com/us/app/lyric-genie/id6739787614"
-                  target="_blank"
-                  className="bg-[#F6ECC9] text-purple-900 px-6 py-3 rounded-full font-semibold text-center"
-                >
-                  Download App
+                <a href={WEB_SIGNUP} className="bg-[#F6ECC9] text-purple-900 px-6 py-3 rounded-full font-semibold text-center">
+                  Start Writing Free
+                </a>
+                <a href={APP_STORE} target="_blank" rel="noopener noreferrer" className="border border-[#F6ECC9]/50 text-[#F6ECC9] px-6 py-3 rounded-full font-semibold text-center">
+                  Download for iPhone
+                </a>
+                <a href={WEB_SIGNIN} className="text-center font-semibold text-[#F6ECC9]/85">
+                  Sign in
                 </a>
               </div>
             </div>

@@ -20,8 +20,8 @@ const SHOTS = [
     key: "genie",
     tab: "Genie",
     src: "/images/web/genie-chat.jpg",
-    alt: "Genie, the AI co-writer, suggesting a line edit for the chorus in a side panel",
-    caption: "Genie reads the song as it is right now and talks it through with you. Its line edits apply in one click.",
+    alt: "Genie, the AI assistant, suggesting a line edit for the chorus in a side panel",
+    caption: "Genie reads the song as it is right now and helps you think it through. You decide what stays, and any edit you like applies in one click.",
   },
   {
     key: "wish",
@@ -41,7 +41,7 @@ const SHOTS = [
 
 const POINTS = [
   "The same songs as your iPhone, synced live",
-  "Genie, your AI co-writer, in the side panel",
+  "Genie, your AI songwriting assistant, in the side panel",
   "Recordings with waveforms, transcripts and linked lyrics",
   "Keyboard shortcuts, bulk select and a full-screen Perform mode",
 ];

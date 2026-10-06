@@ -444,7 +444,7 @@ h2:hover .hanchor, h3:hover .hanchor, .hanchor:focus { opacity: .6; }
   .nav-toggle { display: inline-flex; align-items: center; order: 4; }
   .topbar-links { display: none; }
   .search {
-    order: 5; flex-basis: 100%; max-width: none;
+    max-width: none;
     /* Collapses when the page is scrolled down and returns on the way up, the
        way a phone app hides its chrome to give the content the screen. The
        row is animated rather than hidden outright so the bar does not jump. */
@@ -664,6 +664,28 @@ h2:hover .hanchor, h3:hover .hanchor, .hanchor:focus { opacity: .6; }
 
 @media (max-width: 860px) {
   .platform-toggle button { padding: .2rem .55rem; }
+
+  /* Phones: row one is the brand, then light/dark and Menu at the right (Menu last); row two is
+     the search field with the iOS / Web toggle beside it. The ::after is a zero-height flex item
+     that takes a whole line, which is what breaks the bar into those two rows. */
+  .theme-toggle { order: 3; margin-left: auto; }
+  .nav-toggle { order: 4; }
+  .topbar-inner::after { content: ""; order: 5; flex-basis: 100%; height: 0; }
+  .search { order: 6; flex: 1 1 0; min-width: 0; }
+  .platform-toggle {
+    order: 7; align-self: center;
+    max-height: 3rem; opacity: 1; overflow: hidden;
+    transition: max-height var(--dur-quick) var(--ease-out), opacity var(--dur-quick) var(--ease-out),
+                margin var(--dur-quick) var(--ease-out);
+  }
+  /* Scrolled down: both of row two fold away, and so does the line break, so the slim bar is one row.
+     Like the search field, the toggle keeps a zero-width slot whose row gap the negative margin cancels. */
+  :root.chrome-compact .topbar-inner::after { display: none; }
+  :root.chrome-compact .platform-toggle {
+    max-height: 0; opacity: 0; padding: 0; border-width: 0; width: 0;
+    margin-inline-start: calc(var(--space-3) * -1);
+    pointer-events: none;
+  }
 }
 
 /* "Showing the iOS app · Switch to the web app" under a title (build.mjs platformSwitchLine). */

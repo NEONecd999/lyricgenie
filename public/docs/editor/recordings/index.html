@@ -86,7 +86,7 @@ document.documentElement.setAttribute('data-platform',p==='web'?'web':'ios');})(
       <ul><li><a href="/docs/editor/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.pencil.png')"></span><span>The song editor</span></a></li><li class="nav-only-web"><a href="/docs/editor/workspace/"><span>The desktop workspace</span><span class="nav-plat nav-plat-web">Web</span></a></li><li class="nav-only-web"><a href="/docs/editor/genie/"><span>Genie chat</span><span class="nav-plat nav-plat-web">Web</span></a></li><li><a href="/docs/editor/sections/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/list.bullet.png')"></span><span>Sections and song structure</span></a></li><li><a href="/docs/editor/wish-workshop/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/lamp.svg')"></span><span>Wish Workshop</span></a></li><li><a href="/docs/editor/selecting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/text.cursor.png')"></span><span>Selecting and editing lines</span></a></li><li><a href="/docs/editor/arrange-mode/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.grid.2x2.svg')"></span><span>Arrange mode</span></a></li><li><a href="/docs/editor/perform/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.and.background.dotted.svg')"></span><span>Perform</span></a></li><li><a href="/docs/editor/recordings/" class="active"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/recordingtape.svg')"></span><span>Recordings in a song</span></a></li><li><a href="/docs/editor/rhymes/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/character.book.closed.fill.svg')"></span><span>Rhymes</span></a></li><li><a href="/docs/editor/syllables/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/textformat.123.png')"></span><span>Syllables</span></a></li><li class="nav-only-web"><a href="/docs/editor/view-options/"><span>Rhyme colors and margins</span><span class="nav-plat nav-plat-web">Web</span></a></li><li><a href="/docs/editor/ai-style/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/sparkles.svg')"></span><span>AI Style</span></a></li><li><a href="/docs/editor/inline-suggestions/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/sparkle.svg')"></span><span>In-line suggestions</span></a></li><li><a href="/docs/editor/lyric-sheets/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/square.and.arrow.up.svg')"></span><span>Lyric sheets</span></a></li></ul>
     </div><div class="nav-group">
       <p class="nav-group-title">Collaboration</p>
-      <ul><li><a href="/docs/collaboration/inviting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.badge.plus.png')"></span><span>Inviting a co-writer</span></a></li><li><a href="/docs/collaboration/tabs/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.2.fill.svg')"></span><span>Collaborator tabs</span></a></li><li class="nav-only-ios"><a href="/docs/collaboration/sending/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/tray.png')"></span><span>Sending lines to a co-writer</span><span class="nav-plat nav-plat-ios">iOS</span></a></li><li><a href="/docs/collaboration/master/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/doc.text.fill.png')"></span><span>The Master</span></a></li><li><a href="/docs/collaboration/notifications/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/bell.svg')"></span><span>Notifications</span></a></li></ul>
+      <ul><li><a href="/docs/collaboration/inviting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.badge.plus.png')"></span><span>Inviting a co-writer</span></a></li><li><a href="/docs/collaboration/tabs/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.2.fill.svg')"></span><span>Collaborator tabs</span></a></li><li class="nav-only-web"><a href="/docs/collaboration/chat/"><span>Co-writer chat</span><span class="nav-plat nav-plat-web">Web</span></a></li><li class="nav-only-ios"><a href="/docs/collaboration/sending/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/tray.png')"></span><span>Sending lines to a co-writer</span><span class="nav-plat nav-plat-ios">iOS</span></a></li><li><a href="/docs/collaboration/master/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/doc.text.fill.png')"></span><span>The Master</span></a></li><li><a href="/docs/collaboration/notifications/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/bell.svg')"></span><span>Notifications</span></a></li></ul>
     </div><div class="nav-group">
       <p class="nav-group-title">Your account</p>
       <ul><li><a href="/docs/account/signing-in/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/rectangle.portrait.and.arrow.right.png')"></span><span>Signing in</span></a></li><li><a href="/docs/account/profile/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/person.png')"></span><span>Your profile</span></a></li><li><a href="/docs/account/plans/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/wand.and.sparkles.svg')"></span><span>Plans and Pro</span></a></li><li><a href="/docs/account/preferences/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/slider.horizontal.3.png')"></span><span>Preferences</span></a></li><li class="nav-only-ios"><a href="/docs/account/deleting/"><span class="nav-icon" style="--icon:url('/docs/sf-symbols/trash.png')"></span><span>Deleting your account</span><span class="nav-plat nav-plat-ios">iOS</span></a></li></ul>
@@ -154,7 +154,20 @@ library lives in the Recordings tab, which is a view across everything. See
 <p>On the web this is the Recordings section of the left panel rather than a sheet.
 Takes linked to lyrics come first. Playback happens in a small player pinned
 below the editor, and each take's ⋯ menu has its transcript, rename, link and
-archive options. <strong>Import Audio</strong> adds a file from your computer.</p>
+archive options. While a new name is saving, a small spinner shows beside it.
+<strong>Import Audio</strong> adds a file from your computer.</p>
+<p>Importing keeps a stereo file, such as a demo, in stereo and at a higher
+quality. Takes you record in the app are mono.</p>
+<h3 id="the-player">The player<a class="hanchor" href="#the-player" aria-label="Link to this section">#</a></h3>
+<p>The player below the editor shows the take's name and who recorded it. On a
+shared song, the play button and the waveform are in that writer's colour.</p>
+<ul>
+<li><strong>Click the waveform</strong> to play from that point.</li>
+<li><strong>The 🔗 button</strong> appears when the take is linked to lyrics, and shows you
+those lines. See <a href="#tying-a-take-to-particular-lines">below</a>.</li>
+<li><strong>The volume slider</strong>, on a computer, sets how loud it plays. The speaker
+button beside it mutes and unmutes.</li>
+</ul>
 </div>
 <h2 id="recording-while-you-write">Recording while you write<a class="hanchor" href="#recording-while-you-write" aria-label="Link to this section">#</a></h2>
 <p>Tap <strong>Record</strong> and it starts immediately, because you tapped it with something
@@ -192,6 +205,13 @@ the whole song. It can belong to specific words.</p>
 <p>On the web both are under <strong>⋯ More</strong> on the selection toolbar. A take shows the
 words it is linked to underneath it, and the chip turns red with a broken link
 if you later rewrite those lines so that the app can no longer find them.</p>
+<p>Linked lines carry a marker in the left margin, in the colour of the writer who
+made the take. Point at it and it says <strong>Play</strong>. Click it to play the take from
+the start.</p>
+<p>To find the lines a take belongs to, click its linked lyrics in the Recordings
+section, the 🔗 button in the player, or <strong>Show in song</strong> on the
+<a href="/docs/tabs/recordings/">Recordings page</a>. The song opens on the right tab, scrolls
+to the lines, and flashes them so you can see which they are.</p>
 </div>
 <p>Linked lines can then be played back in order, so you can listen through a song
 in the order you wrote it rather than the order you recorded it. See
@@ -203,7 +223,8 @@ link</strong>. Highlight the lines, tap <strong>Link</strong>, and the two are t
 in this mode and did not mean to be.</p>
 <div class="platform-block only-web">
 <p>On the web, open a take's ⋯ menu and choose <strong>Link to Lyrics</strong> (<strong>Relink to
-Lyrics</strong> if it already has a link). The same banner appears.</p>
+Lyrics</strong> if it already has a link). The same banner appears. Select the lines,
+and the toolbar over them shows just <strong>Link</strong>.</p>
 </div>
 <h2 id="transcription">Transcription<a class="hanchor" href="#transcription" aria-label="Link to this section">#</a></h2>
 <p>Recordings with speech in them get transcribed, and the text turns up under the

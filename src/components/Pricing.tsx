@@ -9,7 +9,7 @@ const FREE_FEATURES = [
   "Unlimited songs",
   "Real-time collaboration",
   "Lyric sheets, lyrics-linked recordings & drag-and-drop arranging",
-  "Try every AI tool: 7 AI calls + 40 quick AI calls",
+  "Try every AI tool: 15 AI calls + 50 quick AI calls",
   "30 rhyme lookups a day",
   "60 minutes of voice recording (5 min per take)",
 ];

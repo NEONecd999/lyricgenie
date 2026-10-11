@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, AudioWaveform, Check, MessageSquareText, MessagesSquare, Mic, ScrollText, Search, SlidersVertical, Video } from "lucide-react";
+import { ArrowRight, AudioWaveform, Check, Menu, MessageSquareText, MessagesSquare, Mic, ScrollText, Search, SlidersVertical, Video, X } from "lucide-react";
 import Footer from "@/components/Footer";
 import Wordmark from "@/components/Wordmark";
 import SfIcon from "@/components/SfIcon";
@@ -95,20 +95,34 @@ const NAV = [
   ["Help", "/docs/"],
 ] as const;
 
-/** The studio pages' nav: the wordmark, the pages (the current one lit), Sign in and Start free. */
+/** The studio pages' nav: the wordmark, the pages (the current one lit), Sign in and Start free. Phones: a
+ *  menu button that opens the pages in a panel under the bar. */
 export function StudioNav({ current }: { current?: string }) {
   const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     const on = () => setScrolled(window.scrollY > 8);
     on();
     window.addEventListener("scroll", on, { passive: true });
     return () => window.removeEventListener("scroll", on);
   }, []);
+  // Open: Escape closes it, and the page behind doesn't scroll.
+  useEffect(() => {
+    if (!open) return;
+    const key = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", key);
+    const overflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", key);
+      document.body.style.overflow = overflow;
+    };
+  }, [open]);
   return (
-    <header className={`sticky top-0 z-50 transition-colors ${scrolled ? "border-b border-white/10 bg-[#1E1324]/85 backdrop-blur-lg" : "border-b border-transparent"}`}>
-      <div className="container mx-auto flex h-16 items-center gap-8 px-6">
-        <a href="/pro/" className="flex items-center text-[#F6ECC9]" aria-label="Lyric Genie home">
-          <Wordmark className="h-7 w-auto" />
+    <header className={`sticky top-0 z-50 transition-colors ${scrolled || open ? "border-b border-white/10 bg-[#1E1324]/95 backdrop-blur-lg" : "border-b border-transparent"}`}>
+      <div className="container mx-auto flex h-16 items-center gap-4 px-6 md:gap-8">
+        <a href="/pro/" className="flex shrink-0 items-center text-[#F6ECC9]" aria-label="Lyric Genie home">
+          <Wordmark className="h-6 w-auto sm:h-7" />
         </a>
         <nav className="hidden items-center gap-6 md:flex">
           {NAV.map(([label, href]) => (
@@ -117,15 +131,54 @@ export function StudioNav({ current }: { current?: string }) {
             </a>
           ))}
         </nav>
-        <div className="ml-auto flex items-center gap-4">
-          <a href={WEB_SIGNIN} className="hidden text-sm font-semibold text-white/75 hover:text-white sm:block">
+        <div className="ml-auto flex items-center gap-3 md:gap-4">
+          <a href={WEB_SIGNIN} className="hidden text-sm font-semibold text-white/75 hover:text-white md:block">
             Sign in
           </a>
-          <a href={WEB_SIGNUP} className="rounded-full bg-[#F6ECC9] px-4 py-2 text-sm font-semibold text-[#6F50B8] hover:bg-[#FBF2D6]">
+          <a href={WEB_SIGNUP} className="whitespace-nowrap rounded-full bg-[#F6ECC9] px-3.5 py-2 text-sm font-semibold text-[#6F50B8] hover:bg-[#FBF2D6] sm:px-4">
             Start free
           </a>
+          <button
+            type="button"
+            onClick={() => setOpen((o) => !o)}
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+            aria-controls="studio-menu"
+            className="-mr-2 flex size-10 items-center justify-center rounded-full text-white/80 hover:bg-white/10 hover:text-white md:hidden"
+          >
+            {open ? <X className="size-5" /> : <Menu className="size-5" />}
+          </button>
         </div>
       </div>
+      {open && (
+        <div id="studio-menu" className="h-[calc(100dvh-4rem)] overflow-y-auto border-t border-white/10 bg-[#1E1324] md:hidden">
+          <nav className="container mx-auto flex flex-col px-6 py-4">
+            {NAV.map(([label, href]) => (
+              <a
+                key={href}
+                href={href}
+                onClick={() => setOpen(false)}
+                aria-current={current === href ? "page" : undefined}
+                className={`flex items-center justify-between border-b border-white/[0.07] py-4 font-display text-2xl font-semibold ${current === href ? "text-[#F6ECC9]" : "text-white"}`}
+              >
+                {label}
+                <ArrowRight className="size-5 text-white/30" />
+              </a>
+            ))}
+            <div className="mt-8 flex flex-col gap-3">
+              <a href={WEB_SIGNUP} className="rounded-full bg-[#F6ECC9] py-3.5 text-center text-[15.5px] font-semibold text-[#6F50B8]">
+                Start free in your browser
+              </a>
+              <a href={APP_STORE} className="rounded-full border border-white/20 py-3.5 text-center text-[15.5px] font-semibold text-white">
+                Download for iPhone
+              </a>
+              <a href={WEB_SIGNIN} className="py-2 text-center text-sm font-semibold text-white/70">
+                Sign in
+              </a>
+            </div>
+          </nav>
+        </div>
+      )}
     </header>
   );
 }

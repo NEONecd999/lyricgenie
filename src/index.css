@@ -43,6 +43,21 @@
   font-style: italic;
   font-display: swap;
 }
+/* Upright Academico: the web app's serif lyric font, for lyrics in /pro's interface mockups. */
+@font-face {
+  font-family: 'Academico';
+  src: url('/fonts/Academico-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Academico';
+  src: url('/fonts/Academico-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 /* Source Serif 4 fallback is imported at the top of the file (CSS @import must precede other statements). */
 
 /* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 

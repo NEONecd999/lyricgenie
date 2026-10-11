@@ -1,6 +1,6 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 import { FeatureKeyframes } from "@/components/Features";
-import { Eyebrow, FinalCTA, Glow, Head, Reveal, RhymeSlidesMock, StudioPage, Window } from "@/components/studio/Studio";
+import { Eyebrow, FinalCTA, Glow, Head, Reveal, RhymeColumnsMock, RhymeSlidesMock, StudioPage } from "@/components/studio/Studio";
 
 /**
  * /rhyme-engine: the rhyme technology behind Lyric Genie, the same engine that runs free at
@@ -204,33 +204,90 @@ function HowItWorks() {
   );
 }
 
-function Inside() {
+/** "Night Ride" as AI Picks reads it: what the song is about, so the picks fit. */
+function SongContext() {
   return (
-    <section id="inside" className="py-24 md:py-32">
-      <div className="container mx-auto px-6">
+    <div className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#1B1B1B] p-4">
+      <p className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-white/45">
+        <Sparkles className="size-3 text-[#AB8EE2]" /> Reading your song
+      </p>
+      <div className="mt-2.5 grid grid-cols-3 gap-2 text-[11px]">
+        {[
+          ["Title", "Night Ride"],
+          ["Mood", "Cinematic, late-night"],
+          ["Theme", "Chasing a ghost down the highway"],
+        ].map(([k, v]) => (
+          <div key={k} className="rounded-lg bg-white/[0.05] px-2.5 py-2">
+            <p className="text-white/40">{k}</p>
+            <p className="mt-0.5 leading-snug text-[#F2EDE4]">{v}</p>
+          </div>
+        ))}
+      </div>
+      <p className="mt-2 rounded-lg bg-white/[0.05] px-2.5 py-2 font-serif text-[12px] not-italic leading-snug text-white/60">
+        I became another stranger / No way that I could be forgiven / Now I'm lost, like a ghost…
+      </p>
+    </div>
+  );
+}
+
+function AiPicks() {
+  const steps: [string, string][] = [
+    ["Every rhyme first", "RhymeGold's columns, exactly as above. Nothing is hidden or made up."],
+    ["A fair sample", "A balanced handful from every column, so short words and long phrases both get a look."],
+    ["Read against your song", "The title, mood, theme, references and your lyrics so far."],
+    ["Picks, with a reason", "The ones that fit get a sparkle and a line on why. Tap the count to see only those."],
+  ];
+  return (
+    <section id="inside" className="relative overflow-hidden py-24 md:py-32">
+      <Glow className="right-[-200px] top-20 h-[520px] w-[700px]" strength={16} />
+      <div className="container relative z-10 mx-auto px-6">
         <Head
           center
-          eyebrow="Inside Lyric Genie"
+          eyebrow="AI Picks · in Lyric Genie"
           title={
             <>
-              The same engine, <span className="text-[#F6ECC9]">right in your song.</span>
+              Not just rhymes. <span className="text-[#F6ECC9]">The ones that fit your song.</span>
             </>
           }
-          lead="Select any word in Lyric Genie, on the web or iPhone, and RhymeGold's rhymes are there. In the app, AI Picks highlights the ones that fit your song's mood, theme and lyrics so far."
+          lead="Inside Lyric Genie, AI Picks reads the song you're writing and highlights the rhymes that suit it, with a reason for each."
         />
-        <Reveal className="mx-auto mt-12 max-w-5xl">
-          <Window>
-            <img src="/images/web/rhymes.jpg" alt="Rhymes for a selected word in the Lyric Genie web app" width={1920} height={1200} loading="lazy" className="block w-full" />
-          </Window>
-        </Reveal>
-        <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <a href="/web/" className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#F6ECC9]">
-            Lyric Genie for the web <ArrowRight className="size-4" />
-          </a>
-          <a href="/iphone/" className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#F6ECC9]">
-            Lyric Genie for iPhone <ArrowRight className="size-4" />
-          </a>
+        <div className="mx-auto mt-16 grid max-w-6xl items-center gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-16">
+          <ol className="space-y-7">
+            {steps.map(([title, text], i) => (
+              <Reveal key={title} delay={i * 0.06} className="flex gap-4">
+                <span className="flex size-9 shrink-0 items-center justify-center rounded-full border border-[#AB8EE2]/60 font-display text-base font-bold text-[#AB8EE2]">{i + 1}</span>
+                <span>
+                  <span className="block text-lg font-semibold text-white">{title}</span>
+                  <span className="mt-1 block text-[15px] leading-relaxed text-white/60">{text}</span>
+                </span>
+              </Reveal>
+            ))}
+            <Reveal delay={0.3} className="pl-[52px] text-sm text-white/45">
+              It runs by itself once you've settled on a word. On the free plan it uses quick calls, so your AI calls stay yours.
+            </Reveal>
+          </ol>
+          <Reveal delay={0.1} className="flex flex-col items-center gap-3">
+            <SongContext />
+            <span className="text-white/30" aria-hidden>
+              ↓
+            </span>
+            <RhymeColumnsMock aiPicks />
+          </Reveal>
         </div>
+        {/* Where it is */}
+        <Reveal className="mx-auto mt-16 flex max-w-3xl flex-col items-center gap-5 border-t border-white/10 pt-10 text-center">
+          <p className="text-[15px] text-white/65">
+            AI Picks is part of <span className="font-semibold text-white">Lyric Genie on the web and iPhone</span> (iPad and Mac too). RhymeGold.com has the full engine, free, without it.
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-5">
+            <a href="/web/" className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#F6ECC9]">
+              Lyric Genie for the web <ArrowRight className="size-4" />
+            </a>
+            <a href="/iphone/" className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#F6ECC9]">
+              Lyric Genie for iPhone <ArrowRight className="size-4" />
+            </a>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -247,7 +304,7 @@ const RhymeEnginePage = () => (
     <FeatureKeyframes />
     <RhymeHero />
     <HowItWorks />
-    <Inside />
+    <AiPicks />
     <FinalCTA />
   </StudioPage>
 );

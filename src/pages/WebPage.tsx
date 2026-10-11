@@ -69,7 +69,7 @@ function Together() {
               Chat beside the song, <span className="text-[#F6ECC9]">with everything attached.</span>
             </>
           }
-          text="Drop in a voice memo, a bounce or a photo of your notebook. Audio you send lands in the song's Recordings too."
+          text="Drop in a voice memo, a bounce, the artwork or a photo. Audio you send lands in the song's Recordings too."
         >
           {() => <ChatAttachMock />}
         </Row>

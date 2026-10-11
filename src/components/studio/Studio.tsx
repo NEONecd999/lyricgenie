@@ -1809,7 +1809,7 @@ export function ImportMock() {
   );
 }
 
-/** The song's chat on the desk: messages with attachments (a photo of a notebook page, a take). */
+/** The song's chat on the desk: messages with attachments (the single's artwork, a take). */
 export function ChatAttachMock() {
   return (
     <div className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#1B1B1B] p-5 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]">
@@ -1823,17 +1823,9 @@ export function ChatAttachMock() {
             <p className="text-[11px] font-semibold" style={{ color: WRITERS[1].color }}>
               Anton
             </p>
-            {/* A photo of a notebook page */}
-            <div className="relative h-28 w-48 overflow-hidden rounded-xl bg-[#EFE6CC] p-3 shadow-inner" style={{ backgroundImage: "repeating-linear-gradient(transparent 0 15px, rgba(58,123,208,.25) 15px 16px)" }}>
-              <p className="font-serif text-[12px] italic leading-[16px] text-[#2A1B33]">
-                headlights in the rain
-                <br />
-                ghost on fifth again
-                <br />
-                <span className="line-through opacity-60">burning out</span> bleeding out
-              </p>
-            </div>
-            <p className="rounded-2xl rounded-bl-md bg-white/[0.07] px-3 py-1.5 text-[#F2EDE4]">From my notebook last night. Bridge?</p>
+            {/* An image attachment: the single's artwork (Deane, "Night Ride"; the owner's, shared with permission) */}
+            <img src="/images/pro/night-ride-art.jpg" alt="Night Ride single artwork by Deane" width={176} height={176} loading="lazy" className="size-44 rounded-xl object-cover shadow-lg" />
+            <p className="rounded-2xl rounded-bl-md bg-white/[0.07] px-3 py-1.5 text-[#F2EDE4]">Art's back for Night Ride. Let's write the bridge to this.</p>
           </div>
         </div>
         <div className="flex justify-end">
@@ -1845,7 +1837,7 @@ export function ChatAttachMock() {
                 <span className="text-[10px] text-white/50">0:28 · added to Recordings</span>
               </span>
             </p>
-            <p className="rounded-2xl rounded-br-md bg-[#AB8EE2]/20 px-3 py-1.5 text-[#F2EDE4]">Sang it over your lines 👆</p>
+            <p className="rounded-2xl rounded-br-md bg-[#AB8EE2]/20 px-3 py-1.5 text-[#F2EDE4]">Love it. Here's a melody for it 👆</p>
           </div>
         </div>
       </div>

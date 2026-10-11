@@ -447,6 +447,13 @@ export function PhoneArt() {
 }
 
 /** The hero's picture: the browser app behind, the iPhone app overlapping it in front, a co-writer's chip. */
+/** A small floating piece of the app in the hero, at depth `z`. */
+const Float = ({ z, className, children }: { z: number; className: string; children: ReactNode }) => (
+  <div className={`absolute flex items-center gap-2 rounded-2xl border border-white/10 bg-[#1B1B1B]/95 px-3 py-2 shadow-[0_18px_40px_-12px_rgba(0,0,0,0.7)] ${className}`} style={{ transform: `translateZ(${z}px)` }}>
+    {children}
+  </div>
+);
+
 /**
  * The hero's picture in 3D: the browser app set back in depth, the iPhone app in front of it, a
  * co-writer's chip nearest. The scene turns slowly by itself and leans toward the pointer. One
@@ -459,7 +466,7 @@ export function HeroDevices() {
     const el = stage.current;
     if (!el) return;
     const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const rest = { x: 6, y: -14 }; // degrees: tipped back a little, turned toward the text
+    const rest = { x: 6, y: -8 }; // degrees: tipped back a little, turned slightly toward the text
     if (still) {
       el.style.transform = `rotateX(${rest.x}deg) rotateY(${rest.y}deg)`;
       return;
@@ -467,9 +474,15 @@ export function HeroDevices() {
     const pointer = { x: 0, y: 0 }; // -1..1 from the picture's centre
     const now = { x: rest.x, y: rest.y };
     const onMove = (e: PointerEvent) => {
+      // -1..1 from the picture's centre to each edge of the window, so it turns as far either way even
+      // though the picture sits right of centre.
       const r = el.getBoundingClientRect();
-      pointer.x = Math.max(-1, Math.min(1, (e.clientX - (r.left + r.width / 2)) / (window.innerWidth / 2)));
-      pointer.y = Math.max(-1, Math.min(1, (e.clientY - (r.top + r.height / 2)) / (window.innerHeight / 2)));
+      const cx = r.left + r.width / 2;
+      const cy = r.top + r.height / 2;
+      const dx = e.clientX - cx;
+      const dy = e.clientY - cy;
+      pointer.x = Math.max(-1, Math.min(1, dx / Math.max(1, dx < 0 ? cx : window.innerWidth - cx)));
+      pointer.y = Math.max(-1, Math.min(1, dy / Math.max(1, dy < 0 ? cy : window.innerHeight - cy)));
     };
     window.addEventListener("pointermove", onMove, { passive: true });
     let raf = 0;
@@ -477,9 +490,10 @@ export function HeroDevices() {
     const frame = (t: number) => {
       const s = (t - t0) / 1000;
       // The slow drift, plus a lean toward the pointer.
+      // Turns well both ways (about -36° to +22°): a slow swing plus the pointer.
       const target = {
-        x: rest.x + Math.sin(s * 0.35) * 2.5 - pointer.y * 6,
-        y: rest.y + Math.sin(s * 0.22 + 1) * 6 + pointer.x * 10,
+        x: rest.x + Math.sin(s * 0.35) * 3 - pointer.y * 7,
+        y: rest.y + Math.sin(s * 0.18 + 1) * 14 + pointer.x * 14,
       };
       now.x += (target.x - now.x) * 0.05;
       now.y += (target.y - now.y) * 0.05;
@@ -504,8 +518,8 @@ export function HeroDevices() {
           <div className="absolute bottom-[30px] right-[30px] w-[200px]" style={{ transform: "translateZ(110px)" }}>
             <PhoneArt />
           </div>
-          {/* Nearest: a co-writer at work */}
-          <div className="absolute left-[-6px] top-[352px] flex items-center gap-2 rounded-2xl border border-white/10 bg-[#1B1B1B]/90 px-3 py-2 shadow-xl backdrop-blur" style={{ transform: "translateZ(170px)" }}>
+          {/* Floating pieces of the app at different depths, so turning shows the layers */}
+          <Float z={170} className="left-[-34px] top-[300px]">
             <span className="flex -space-x-1.5">
               {WRITERS.slice(0, 2).map((w) => (
                 <span key={w.name} className="flex size-6 items-center justify-center rounded-full text-[10px] font-bold text-white" style={{ background: w.color, boxShadow: "0 0 0 2px #1B1B1B" }}>
@@ -518,7 +532,56 @@ export function HeroDevices() {
               <br />
               <span className="text-white/50">on his iPhone</span>
             </span>
-          </div>
+          </Float>
+          <Float z={150} className="left-[-48px] top-[70px] w-[200px] flex-col !items-start !gap-1.5">
+            <span className="flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-[0.12em] text-[#AB8EE2]">
+              <SfIcon name="wand.and.sparkles" size={10} color="#AB8EE2" /> Wish Workshop
+            </span>
+            <span className="flex gap-1">
+              <span className="rounded-full bg-[#7F62C4] px-2 py-0.5 text-[9px] font-semibold text-white">Darker</span>
+              <span className="rounded-full border border-white/20 px-2 py-0.5 text-[9px] text-white/70">Happier</span>
+            </span>
+            <span className="w-full rounded-lg bg-[#AB8EE2]/15 px-2 py-1.5 text-[11px] text-[#F2EDE4]">I dove straight into the blackness</span>
+          </Float>
+          <Float z={120} className="left-[170px] top-[-34px] flex-col !items-start !gap-1">
+            <span className="text-[9px] font-bold uppercase tracking-[0.12em] text-white/45">Rhymes · highway</span>
+            <span className="flex gap-1">
+              {[
+                ["driveway", "#AB8EE2"],
+                ["by the way", "#6FD08C"],
+                ["fly away", "#6FD08C"],
+              ].map(([w, c]) => (
+                <span key={w} className="rounded-full border px-2 py-0.5 text-[10px] font-medium" style={{ borderColor: c, color: c }}>
+                  {w}
+                </span>
+              ))}
+            </span>
+          </Float>
+          <Float z={190} className="left-[140px] top-[452px]">
+            <span className="flex size-7 items-center justify-center rounded-lg bg-[#E8663C]">
+              <SfIcon name="recordingtape" size={14} color="#fff" />
+            </span>
+            <span className="flex flex-col gap-1">
+              <span className="text-[11px] font-semibold text-white">Verse melody</span>
+              <span className="flex items-center gap-1.5">
+                <span className="flex h-3.5 items-center gap-[2px]">
+                  {[5, 10, 14, 8, 12, 6, 11, 4, 13, 7, 9, 5].map((h, i) => (
+                    <span key={i} className="w-[2px] rounded-sm bg-[#F6ECC9]" style={{ height: h }} />
+                  ))}
+                </span>
+                <span className="font-mono text-[9px] text-white/55">0:42</span>
+              </span>
+            </span>
+          </Float>
+          <Float z={210} className="right-[150px] top-[-40px] flex-col !items-stretch !gap-1.5 !p-1.5">
+            <span className="relative block h-[62px] w-[96px] overflow-hidden rounded-lg">
+              <img src="/images/pro/session-sam.jpg" alt="" className="h-full w-full object-cover" />
+              <span className="absolute left-1 top-1 flex items-center gap-1 rounded bg-black/55 px-1 text-[8px] font-bold uppercase text-[#30D158]">
+                <span className="size-1 rounded-full bg-[#30D158]" /> Live
+              </span>
+            </span>
+            <span className="px-1 text-[9.5px] font-medium text-white/75">Session · 3 here</span>
+          </Float>
         </div>
       </div>
     </Scaled>

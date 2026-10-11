@@ -129,7 +129,7 @@ const ProHome = () => (
     <TwoWays />
     <CoWriting />
     <ToolsTabs
-      variant="web"
+      variant="home"
       eyebrow="Tools that help"
       title={
         <>

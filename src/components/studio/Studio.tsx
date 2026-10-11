@@ -1408,6 +1408,12 @@ const TOOL_TABS = {
     { key: "rhymes", label: "Rhymes", text: "Select any word for rhymes in columns, with AI Picks for the ones that fit this song.", art: () => <RhymeColumnsMock aiPicks /> },
     { key: "context", label: "AI context", text: "Mood, story and references: every tool starts from your song, not a blank prompt.", art: (a: boolean) => <AiContextSpotlight active={a} /> },
   ],
+  // Home has its own rhyme-engine section, so its tabs leave Rhymes out.
+  home: [
+    { key: "genie", label: "Genie", text: "Ask about the song as it is right now. Suggested edits apply in one click, or not at all.", art: () => <GenieMock /> },
+    { key: "wish", label: "Wish Workshop", text: "Select a line, make a wish: darker, more visual, your own words. Keep the rhyme and meter.", art: (a: boolean) => <WishWorkshopSpotlight active={a} /> },
+    { key: "context", label: "AI context", text: "Mood, story and references: every tool starts from your song, not a blank prompt.", art: (a: boolean) => <AiContextSpotlight active={a} /> },
+  ],
   iphone: [
     { key: "rhymes", label: "Rhymes", text: "The line that came on the walk, finished before you're home. Tap a word for rhymes in columns.", art: () => <RhymeColumnsMock aiPicks /> },
     { key: "wish", label: "Wish Workshop", text: "Stuck in the car? Rewrite a line darker, happier or your way, keeping the rhyme.", art: (a: boolean) => <WishWorkshopSpotlight active={a} /> },
@@ -1419,7 +1425,7 @@ const TOOL_TABS = {
  * The writing tools as one section with tabs (not a row each): the same tools on both apps, framed for
  * where you are, the desk (`web`) or on the go (`iphone`).
  */
-export function ToolsTabs({ variant, eyebrow, title }: { variant: "web" | "iphone"; eyebrow: string; title: ReactNode }) {
+export function ToolsTabs({ variant, eyebrow, title }: { variant: keyof typeof TOOL_TABS; eyebrow: string; title: ReactNode }) {
   const tabs = TOOL_TABS[variant];
   const [active, setActive] = useState(tabs[0].key);
   const [ref, inView] = useInView();

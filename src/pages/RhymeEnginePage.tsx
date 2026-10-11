@@ -232,10 +232,9 @@ function SongContext() {
 
 function AiPicks() {
   const steps: [string, string][] = [
-    ["Every rhyme first", "RhymeGold's columns, exactly as above. Nothing is hidden or made up."],
-    ["A fair sample", "A balanced handful from every column, so short words and long phrases both get a look."],
-    ["Read against your song", "The title, mood, theme, references and your lyrics so far."],
-    ["Picks, with a reason", "The ones that fit get a sparkle and a line on why. Tap the count to see only those."],
+    ["Every rhyme first", "The engine's full columns."],
+    ["Read against your song", "Its mood, story and lyrics so far."],
+    ["Picks, with a reason", "A sparkle and a line on why."],
   ];
   return (
     <section id="inside" className="relative overflow-hidden py-24 md:py-32">
@@ -249,7 +248,7 @@ function AiPicks() {
               Not just rhymes. <span className="text-[#F6ECC9]">The ones that fit your song.</span>
             </>
           }
-          lead="Inside Lyric Genie, AI Picks reads the song you're writing and highlights the rhymes that suit it, with a reason for each."
+          lead="AI Picks highlights the rhymes that suit the song you're writing."
         />
         <div className="mx-auto mt-16 grid max-w-6xl items-center gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-16">
           <ol className="space-y-7">
@@ -263,7 +262,7 @@ function AiPicks() {
               </Reveal>
             ))}
             <Reveal delay={0.3} className="pl-[52px] text-sm text-white/45">
-              It runs by itself once you've settled on a word. On the free plan it uses quick calls, so your AI calls stay yours.
+              Automatic, and free plans included.
             </Reveal>
           </ol>
           <Reveal delay={0.1} className="flex flex-col items-center gap-3">
@@ -277,7 +276,7 @@ function AiPicks() {
         {/* Where it is */}
         <Reveal className="mx-auto mt-16 flex max-w-3xl flex-col items-center gap-5 border-t border-white/10 pt-10 text-center">
           <p className="text-[15px] text-white/65">
-            AI Picks is part of <span className="font-semibold text-white">Lyric Genie on the web and iPhone</span> (iPad and Mac too). RhymeGold.com has the full engine, free, without it.
+            Only in <span className="font-semibold text-white">Lyric Genie, on the web and iPhone</span>.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-5">
             <a href="/web/" className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#F6ECC9]">

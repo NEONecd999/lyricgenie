@@ -1,6 +1,6 @@
 import { ArrowRight, Check } from "lucide-react";
 import { FeatureKeyframes } from "@/components/Features";
-import { BrowserArt, CoWriteMock, FinalCTA, Glow, Head, Hero, PhoneArt, Philosophy, Pricing, Reveal, Row, Scaled, StudioPage, Testimonials, RhymeColumnsMock } from "@/components/studio/Studio";
+import { BrowserArt, CoWriteMock, FinalCTA, Glow, Head, Hero, PhoneArt, Pricing, Reveal, Row, Scaled, StudioPage, Testimonials, RhymeColumnsMock } from "@/components/studio/Studio";
 
 /**
  * /pro: the new home page (to become /). The pitch in half a minute: the studio on both devices, a door
@@ -129,7 +129,6 @@ const ProHome = () => (
     <TwoWays />
     <CoWriting />
     <RhymeTeaser />
-    <Philosophy />
     <Testimonials />
     <Pricing />
     <FinalCTA />

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, AudioWaveform, Check, Menu, MessageSquareText, MessagesSquare, Mic, ScrollText, Search, SlidersVertical, Video, X } from "lucide-react";
 import Footer from "@/components/Footer";
@@ -106,16 +107,19 @@ export function StudioNav({ current }: { current?: string }) {
     window.addEventListener("scroll", on, { passive: true });
     return () => window.removeEventListener("scroll", on);
   }, []);
-  // Open: Escape closes it, and the page behind doesn't scroll.
+  // Open: Escape closes it, and the page behind doesn't scroll. The lock goes on <html>, not <body>:
+  // html and body have overflow-x: clip (index.css), so overflow on body would make it its own scroll box
+  // and the sticky bar would jump to the top of the page, out of sight when scrolled down.
   useEffect(() => {
     if (!open) return;
     const key = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
     window.addEventListener("keydown", key);
-    const overflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    const root = document.documentElement;
+    const overflow = root.style.overflow;
+    root.style.overflow = "hidden";
     return () => {
       window.removeEventListener("keydown", key);
-      document.body.style.overflow = overflow;
+      root.style.overflow = overflow;
     };
   }, [open]);
   return (
@@ -150,8 +154,11 @@ export function StudioNav({ current }: { current?: string }) {
           </button>
         </div>
       </div>
-      {open && (
-        <div id="studio-menu" className="h-[calc(100dvh-4rem)] overflow-y-auto border-t border-white/10 bg-[#1E1324] md:hidden">
+      {open &&
+        // Fixed to the screen, under the bar: there wherever the page is scrolled to. Rendered into <body>:
+        // the bar's backdrop blur would otherwise make the bar the box `fixed` is measured from.
+        createPortal(
+        <div id="studio-menu" className="fixed inset-x-0 bottom-0 top-16 z-50 overflow-y-auto overscroll-contain border-t border-white/10 bg-[#1E1324] md:hidden">
           <nav className="container mx-auto flex flex-col px-6 py-4">
             {NAV.map(([label, href]) => (
               <a
@@ -177,7 +184,8 @@ export function StudioNav({ current }: { current?: string }) {
               </a>
             </div>
           </nav>
-        </div>
+        </div>,
+        document.body,
       )}
     </header>
   );

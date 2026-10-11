@@ -1112,3 +1112,116 @@ export function RhymeColumnsMock({ aiPicks = false }: { aiPicks?: boolean }) {
     </div>
   );
 }
+
+// ─── A multi-syllable lookup, sliding through its pages ─────────────────────
+
+/** "highway" in the real engine (public/rhymes, run in Node 2026-10-11): anchors -eye and -ay. Counts are
+ *  each column's words across Perfect, Near and Slant. */
+const HIGHWAY = [
+  { id: "A", label: "A", title: "-eye", note: "single syllable", count: 438, color: "#64A8FF", perfect: ["by", "cry", "dry", "eye", "fly", "high", "lie", "my"], near: [] as string[] },
+  { id: "B", label: "B", title: "-ay", note: "single syllable", count: 592, color: "#FF8A65", perfect: ["bay", "clay", "day", "fray", "gray", "hey", "lay", "may"], near: [] as string[] },
+  { id: "AB", label: "A B", title: "-eye -ay", note: "no weak syllables between", count: 122, color: "#AB8EE2", perfect: ["driveway", "Friday", "child's play", "by day", "I pray", "I stay"], near: ["blind date", "by name"] },
+  { id: "A.B", label: "A • B", title: "-eye · -ay", note: "one syllable between", count: 83, color: "#6FD08C", perfect: ["by the way", "fly away", "drive away", "find a way", "final say", "I'm okay"], near: ["brighter days", "crying shame"] },
+  { id: "A..B", label: "A • • B", title: "-eye · · -ay", note: "two or more between", count: 36, color: "#F5B642", perfect: ["by a long way", "I hear you say", "like every day", "try as one may", "dry up and blow away"], near: ["I can't explain", "I'm not afraid"] },
+];
+/** The app's pages: [A, B] / [A B, A • B] / [A • • B]. */
+const HIGHWAY_PAGES = [HIGHWAY.slice(0, 2), HIGHWAY.slice(2, 4), HIGHWAY.slice(4)];
+
+/**
+ * The rhyme panel for a multi-syllable word ("highway"), the plain engine as RhymeGold.com shows it:
+ * the word, a chip per column (the ones on screen lit), then the pages of columns, sliding by themselves
+ * (paused while the pointer is over it; still with reduced motion). Dots pick a page.
+ */
+export function RhymeSlidesMock() {
+  const [page, setPage] = useState(0);
+  const [paused, setPaused] = useState(false);
+  useEffect(() => {
+    if (paused || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const t = setInterval(() => setPage((p) => (p + 1) % HIGHWAY_PAGES.length), 3800);
+    return () => clearInterval(t);
+  }, [paused]);
+  const onPage = new Set(HIGHWAY_PAGES[page].map((c) => c.id));
+  return (
+    <div
+      className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#1B1B1B] p-5 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]"
+      onPointerEnter={() => setPaused(true)}
+      onPointerLeave={() => setPaused(false)}
+    >
+      <div className="flex items-center gap-3">
+        <span className="flex items-center gap-2 text-xs text-white/65">
+          Slant
+          <span className="flex h-4 w-7 items-center justify-end rounded-full bg-[#AB8EE2] px-0.5">
+            <span className="size-3 rounded-full bg-white" />
+          </span>
+        </span>
+        <span className="ml-auto inline-flex items-center gap-1 rounded-full border border-white/10 px-3 py-1 text-xs text-white/40">Insert ▾</span>
+      </div>
+      <p className="mt-3 text-[26px] font-bold leading-none text-[#F2EDE4]">highway</p>
+      <p className="mt-2 flex items-center gap-1.5 text-[12px] text-white/50">
+        <span className="rounded-md bg-[#64A8FF]/15 px-1.5 py-0.5 font-mono text-[#64A8FF]">high</span>
+        <span className="rounded-md bg-[#FF8A65]/15 px-1.5 py-0.5 font-mono text-[#FF8A65]">way</span>
+        two stressed syllables
+      </p>
+      <div className="mt-2.5 flex flex-wrap gap-1.5">
+        {HIGHWAY.map((c) => {
+          const on = onPage.has(c.id);
+          return (
+            <span
+              key={c.id}
+              className="rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-all duration-500"
+              style={{ borderColor: on ? c.color : "rgba(255,255,255,0.12)", color: on ? c.color : "rgba(255,255,255,0.4)", background: on ? `${c.color}14` : "transparent" }}
+            >
+              {c.label} <span className="font-mono font-normal opacity-70">{c.count}</span>
+            </span>
+          );
+        })}
+      </div>
+      {/* The pages, side by side, sliding */}
+      <div className="mt-3 overflow-hidden">
+        <div className="flex transition-transform duration-700 ease-[cubic-bezier(.4,0,.2,1)]" style={{ transform: `translateX(-${page * 100}%)` }}>
+          {HIGHWAY_PAGES.map((cols, pi) => (
+            <div key={pi} className="grid w-full shrink-0 gap-2.5" style={{ gridTemplateColumns: `repeat(${cols.length}, minmax(0, 1fr))` }}>
+              {cols.map((c) => (
+                <div key={c.id} className="overflow-hidden rounded-xl border-[1.5px]" style={{ borderColor: c.color }}>
+                  <div className="border-b px-3 py-2" style={{ borderColor: `${c.color}55`, background: `${c.color}14` }}>
+                    <p className="flex items-baseline justify-between gap-2">
+                      <span className="truncate text-[15px] font-bold" style={{ color: c.color }}>
+                        {c.title}
+                      </span>
+                      <span className="font-mono text-[11px] text-white/55">{c.count}</span>
+                    </p>
+                    <p className="truncate text-[11px] text-white/50">{c.note}</p>
+                  </div>
+                  <div className="relative h-[224px] overflow-hidden px-2 pb-2">
+                    <p className="px-1 pb-1 pt-2.5 text-[9.5px] font-bold uppercase tracking-[0.12em] text-white/40">Perfect</p>
+                    {c.perfect.map((w) => (
+                      <p key={w} className="truncate px-1.5 py-[5px] text-[14px] text-[#F2EDE4]/90">
+                        {w}
+                      </p>
+                    ))}
+                    {c.near.length > 0 && (
+                      <>
+                        <p className="px-1 pb-1 pt-2.5 text-[9.5px] font-bold uppercase tracking-[0.12em] text-white/40">Near</p>
+                        {c.near.map((w) => (
+                          <p key={w} className="truncate px-1.5 py-[5px] text-[14px] text-[#F2EDE4]/70">
+                            {w}
+                          </p>
+                        ))}
+                      </>
+                    )}
+                    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-[#1B1B1B] to-transparent" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="mt-3 flex justify-center gap-1.5">
+        {HIGHWAY_PAGES.map((_, i) => (
+          <button key={i} type="button" aria-label={`Page ${i + 1}`} onClick={() => setPage(i)} className={`h-1.5 rounded-full transition-all ${i === page ? "w-5 bg-[#F2EDE4]" : "w-1.5 bg-white/25 hover:bg-white/45"}`} />
+        ))}
+      </div>
+    </div>
+  );
+}

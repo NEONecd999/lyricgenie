@@ -1,6 +1,6 @@
 import { ArrowRight, AudioLines, BookOpen, Quote, Sparkles } from "lucide-react";
 import { FeatureKeyframes } from "@/components/Features";
-import { Eyebrow, FinalCTA, Glow, Head, Reveal, RhymeColumnsMock, StudioPage, Window } from "@/components/studio/Studio";
+import { Eyebrow, FinalCTA, Glow, Head, Reveal, RhymeSlidesMock, StudioPage, Window } from "@/components/studio/Studio";
 
 /**
  * /rhyme-engine: the rhyme technology behind Lyric Genie, the same engine that runs free at
@@ -30,7 +30,7 @@ function RhymeHero() {
           </div>
         </Reveal>
         <Reveal delay={0.12} className="relative mx-auto w-full max-w-[520px]">
-          <RhymeColumnsMock />
+          <RhymeSlidesMock />
         </Reveal>
       </div>
     </section>

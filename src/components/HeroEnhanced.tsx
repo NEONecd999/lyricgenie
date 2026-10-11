@@ -282,6 +282,245 @@ const PhoneMockup = () => {
   );
 };
 
+/**
+ * The hero's picture: the iPhone mockup with the floating cards (Wish Workshop, rhymes, collaborators,
+ * the chorus, a melody) around it. Shared with /pro (pages/ProHome.tsx).
+ */
+export const HeroDeviceArt = () => (
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, delay: 0.35 }}
+      className="relative"
+    >
+      <PhoneMockup />
+
+      {/* Floating bubbles — each one mirrors a spotlight below so the hero
+          previews the visual language of the rest of the page.
+          Cream paper surface, SF symbols, verse-green / writer colors,
+          Academico italic for lyric lines. */}
+
+      {/* Wish Workshop — purple eyebrow, filled Darker pill, one blue-highlighted rewrite */}
+      <div
+        className="absolute hidden animate-float xl:block"
+        style={{ top: 24, left: -260, width: 240 }}
+      >
+        <div
+          className="rounded-2xl p-3.5 shadow-[0_18px_40px_-12px_rgba(30,19,36,0.55)]"
+          style={{
+            background: "rgba(30,19,36,0.55)",
+            backdropFilter: "blur(24px) saturate(180%)",
+            WebkitBackdropFilter: "blur(24px) saturate(180%)",
+            border: "1px solid rgba(255,255,255,0.15)",
+          }}
+        >
+          <div className="mb-2 flex items-center gap-1.5">
+            <SfIcon name="sparkles" size={11} color="#F6ECC9" />
+            <span
+              className="text-[9.5px] font-bold uppercase"
+              style={{ letterSpacing: ".12em", color: "#F6ECC9" }}
+            >
+              Wish Workshop AI
+            </span>
+          </div>
+          <div className="mb-2 flex flex-wrap gap-1">
+            <span
+              className="rounded-full px-2.5 py-0.5 text-[10px] font-semibold text-white"
+              style={{ background: "#6F50B8" }}
+            >
+              Darker
+            </span>
+            <span
+              className="rounded-full border px-2.5 py-0.5 text-[10px] font-semibold"
+              style={{ borderColor: "#B19BE2", color: "#B19BE2" }}
+            >
+              Happier
+            </span>
+          </div>
+          <div
+            className="font-serif italic"
+            style={{
+              fontSize: 13.5,
+              color: "#fff",
+              background: "rgba(58,123,208,0.35)",
+              borderRadius: 10,
+              padding: "7px 10px",
+              lineHeight: 1.35,
+            }}
+          >
+            I dove straight into the blackness
+          </div>
+        </div>
+      </div>
+
+      {/* Rhymes — mini rhyme sheet with the lookup word big, 4 tokens in a 2-col grid */}
+      <div
+        className="absolute hidden animate-float xl:block"
+        style={{ top: 170, right: -240, width: 210, animationDelay: "0.6s" }}
+      >
+        <div
+          className="rounded-2xl p-3.5 shadow-[0_18px_40px_-12px_rgba(30,19,36,0.55)]"
+          style={{
+            background: "rgba(30,19,36,0.55)",
+            backdropFilter: "blur(24px) saturate(180%)",
+            WebkitBackdropFilter: "blur(24px) saturate(180%)",
+            border: "1px solid rgba(255,255,255,0.15)",
+          }}
+        >
+          <div className="mb-2 flex items-center gap-1.5">
+            <SfIcon name="character.book.closed.fill" size={11} color="#F6ECC9" />
+            <span
+              className="text-[9.5px] font-bold uppercase"
+              style={{ letterSpacing: ".12em", color: "#F6ECC9" }}
+            >
+              Rhymes
+            </span>
+          </div>
+          <div
+            className="mb-2 font-display"
+            style={{
+              fontSize: 20,
+              fontWeight: 700,
+              color: "#fff",
+              letterSpacing: "-0.015em",
+              lineHeight: 1,
+            }}
+          >
+            home
+          </div>
+          <div
+            className="grid grid-cols-2"
+            style={{ gap: "3px 12px", fontSize: 12, color: "#B19BE2" }}
+          >
+            <span>alone</span>
+            <span>stone</span>
+            <span>chrome</span>
+            <span>zone</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Co-write — three colored writer dots + verse rail + session status */}
+      <div
+        className="absolute hidden animate-float xl:block"
+        style={{ top: 330, left: -240, width: 220, animationDelay: "1.2s" }}
+      >
+        <div
+          className="rounded-2xl p-3.5 shadow-[0_18px_40px_-12px_rgba(30,19,36,0.55)]"
+          style={{
+            background: "rgba(30,19,36,0.55)",
+            backdropFilter: "blur(24px) saturate(180%)",
+            WebkitBackdropFilter: "blur(24px) saturate(180%)",
+            border: "1px solid rgba(255,255,255,0.15)",
+          }}
+        >
+          <div className="mb-2 flex items-center gap-1.5">
+            <SfIcon name="person.2.fill" size={11} color="#F6ECC9" />
+            <span
+              className="text-[9.5px] font-bold uppercase"
+              style={{ letterSpacing: ".12em", color: "#F6ECC9" }}
+            >
+              Collaborators
+            </span>
+          </div>
+          <div className="mb-2 flex flex-wrap gap-1">
+            {[
+              { c: "#6FA83C", light: "#9DD366", n: "Edan" },
+              { c: "#6F50B8", light: "#B19BE2", n: "Anton" },
+              { c: "#C9932E", light: "#E6B859", n: "Kasper" },
+            ].map((p) => (
+              <span
+                key={p.n}
+                className="inline-flex items-center gap-1 rounded-full"
+                style={{
+                  padding: "2px 7px 2px 5px",
+                  background: `${p.c}33`,
+                  color: p.light,
+                  fontSize: 10,
+                  fontWeight: 700,
+                }}
+              >
+                <span
+                  style={{
+                    width: 5,
+                    height: 5,
+                    borderRadius: 9999,
+                    background: p.light,
+                  }}
+                />
+                {p.n}
+              </span>
+            ))}
+          </div>
+          <div className="flex items-center gap-2">
+            <span style={{ width: 3, height: 14, background: "#9DD366", borderRadius: 2 }} />
+            <span
+              className="text-[10px] font-bold"
+              style={{ color: "#9DD366", letterSpacing: ".05em" }}
+            >
+              CHORUS · 3 writers
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Recordings — coral recordingtape + waveform + duration */}
+      <div
+        className="absolute hidden animate-float xl:block"
+        style={{ bottom: 40, right: -250, width: 230, animationDelay: "1.8s" }}
+      >
+        <div
+          className="rounded-2xl p-3.5 shadow-[0_18px_40px_-12px_rgba(30,19,36,0.55)]"
+          style={{
+            background: "rgba(30,19,36,0.55)",
+            backdropFilter: "blur(24px) saturate(180%)",
+            WebkitBackdropFilter: "blur(24px) saturate(180%)",
+            border: "1px solid rgba(255,255,255,0.15)",
+          }}
+        >
+          <div className="flex items-center gap-2.5">
+            <div
+              className="flex flex-shrink-0 items-center justify-center"
+              style={{
+                width: 34,
+                height: 34,
+                borderRadius: 10,
+                background: "#E8663C",
+              }}
+            >
+              <SfIcon name="recordingtape" size={18} color="#fff" />
+            </div>
+            <div className="min-w-0 flex-1">
+              <div
+                className="mb-1"
+                style={{ fontSize: 11.5, fontWeight: 700, color: "#fff", lineHeight: 1 }}
+              >
+                Verse Melody
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-[2px]" style={{ height: 14 }}>
+                  {[5, 10, 16, 9, 13, 6, 11, 4, 14, 8].map((h, i) => (
+                    <span
+                      key={i}
+                      className="rounded-sm"
+                      style={{
+                        width: 2,
+                        height: h,
+                        background: "#F6ECC9",
+                        animation: `wave 1.2s ease-in-out ${i * 0.08}s infinite`,
+                      }}
+                    />
+                  ))}
+                </div>
+                <span style={{ fontSize: 10, color: "rgba(255,255,255,0.7)" }}>0:42</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+);
+
 const HeroEnhanced = () => {
   return (
     <section
@@ -394,238 +633,7 @@ const HeroEnhanced = () => {
 
         {/* Right column — phone mockup + floating bubbles (existing site content) */}
         <div className="relative mx-auto flex w-full justify-center">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.35 }}
-            className="relative"
-          >
-            <PhoneMockup />
-
-            {/* Floating bubbles — each one mirrors a spotlight below so the hero
-                previews the visual language of the rest of the page.
-                Cream paper surface, SF symbols, verse-green / writer colors,
-                Academico italic for lyric lines. */}
-
-            {/* Wish Workshop — purple eyebrow, filled Darker pill, one blue-highlighted rewrite */}
-            <div
-              className="absolute hidden animate-float xl:block"
-              style={{ top: 24, left: -260, width: 240 }}
-            >
-              <div
-                className="rounded-2xl p-3.5 shadow-[0_18px_40px_-12px_rgba(30,19,36,0.55)]"
-                style={{
-                  background: "rgba(30,19,36,0.55)",
-                  backdropFilter: "blur(24px) saturate(180%)",
-                  WebkitBackdropFilter: "blur(24px) saturate(180%)",
-                  border: "1px solid rgba(255,255,255,0.15)",
-                }}
-              >
-                <div className="mb-2 flex items-center gap-1.5">
-                  <SfIcon name="sparkles" size={11} color="#F6ECC9" />
-                  <span
-                    className="text-[9.5px] font-bold uppercase"
-                    style={{ letterSpacing: ".12em", color: "#F6ECC9" }}
-                  >
-                    Wish Workshop AI
-                  </span>
-                </div>
-                <div className="mb-2 flex flex-wrap gap-1">
-                  <span
-                    className="rounded-full px-2.5 py-0.5 text-[10px] font-semibold text-white"
-                    style={{ background: "#6F50B8" }}
-                  >
-                    Darker
-                  </span>
-                  <span
-                    className="rounded-full border px-2.5 py-0.5 text-[10px] font-semibold"
-                    style={{ borderColor: "#B19BE2", color: "#B19BE2" }}
-                  >
-                    Happier
-                  </span>
-                </div>
-                <div
-                  className="font-serif italic"
-                  style={{
-                    fontSize: 13.5,
-                    color: "#fff",
-                    background: "rgba(58,123,208,0.35)",
-                    borderRadius: 10,
-                    padding: "7px 10px",
-                    lineHeight: 1.35,
-                  }}
-                >
-                  I dove straight into the blackness
-                </div>
-              </div>
-            </div>
-
-            {/* Rhymes — mini rhyme sheet with the lookup word big, 4 tokens in a 2-col grid */}
-            <div
-              className="absolute hidden animate-float xl:block"
-              style={{ top: 170, right: -240, width: 210, animationDelay: "0.6s" }}
-            >
-              <div
-                className="rounded-2xl p-3.5 shadow-[0_18px_40px_-12px_rgba(30,19,36,0.55)]"
-                style={{
-                  background: "rgba(30,19,36,0.55)",
-                  backdropFilter: "blur(24px) saturate(180%)",
-                  WebkitBackdropFilter: "blur(24px) saturate(180%)",
-                  border: "1px solid rgba(255,255,255,0.15)",
-                }}
-              >
-                <div className="mb-2 flex items-center gap-1.5">
-                  <SfIcon name="character.book.closed.fill" size={11} color="#F6ECC9" />
-                  <span
-                    className="text-[9.5px] font-bold uppercase"
-                    style={{ letterSpacing: ".12em", color: "#F6ECC9" }}
-                  >
-                    Rhymes
-                  </span>
-                </div>
-                <div
-                  className="mb-2 font-display"
-                  style={{
-                    fontSize: 20,
-                    fontWeight: 700,
-                    color: "#fff",
-                    letterSpacing: "-0.015em",
-                    lineHeight: 1,
-                  }}
-                >
-                  home
-                </div>
-                <div
-                  className="grid grid-cols-2"
-                  style={{ gap: "3px 12px", fontSize: 12, color: "#B19BE2" }}
-                >
-                  <span>alone</span>
-                  <span>stone</span>
-                  <span>chrome</span>
-                  <span>zone</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Co-write — three colored writer dots + verse rail + session status */}
-            <div
-              className="absolute hidden animate-float xl:block"
-              style={{ top: 330, left: -240, width: 220, animationDelay: "1.2s" }}
-            >
-              <div
-                className="rounded-2xl p-3.5 shadow-[0_18px_40px_-12px_rgba(30,19,36,0.55)]"
-                style={{
-                  background: "rgba(30,19,36,0.55)",
-                  backdropFilter: "blur(24px) saturate(180%)",
-                  WebkitBackdropFilter: "blur(24px) saturate(180%)",
-                  border: "1px solid rgba(255,255,255,0.15)",
-                }}
-              >
-                <div className="mb-2 flex items-center gap-1.5">
-                  <SfIcon name="person.2.fill" size={11} color="#F6ECC9" />
-                  <span
-                    className="text-[9.5px] font-bold uppercase"
-                    style={{ letterSpacing: ".12em", color: "#F6ECC9" }}
-                  >
-                    Collaborators
-                  </span>
-                </div>
-                <div className="mb-2 flex flex-wrap gap-1">
-                  {[
-                    { c: "#6FA83C", light: "#9DD366", n: "Edan" },
-                    { c: "#6F50B8", light: "#B19BE2", n: "Anton" },
-                    { c: "#C9932E", light: "#E6B859", n: "Kasper" },
-                  ].map((p) => (
-                    <span
-                      key={p.n}
-                      className="inline-flex items-center gap-1 rounded-full"
-                      style={{
-                        padding: "2px 7px 2px 5px",
-                        background: `${p.c}33`,
-                        color: p.light,
-                        fontSize: 10,
-                        fontWeight: 700,
-                      }}
-                    >
-                      <span
-                        style={{
-                          width: 5,
-                          height: 5,
-                          borderRadius: 9999,
-                          background: p.light,
-                        }}
-                      />
-                      {p.n}
-                    </span>
-                  ))}
-                </div>
-                <div className="flex items-center gap-2">
-                  <span style={{ width: 3, height: 14, background: "#9DD366", borderRadius: 2 }} />
-                  <span
-                    className="text-[10px] font-bold"
-                    style={{ color: "#9DD366", letterSpacing: ".05em" }}
-                  >
-                    CHORUS · 3 writers
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Recordings — coral recordingtape + waveform + duration */}
-            <div
-              className="absolute hidden animate-float xl:block"
-              style={{ bottom: 40, right: -250, width: 230, animationDelay: "1.8s" }}
-            >
-              <div
-                className="rounded-2xl p-3.5 shadow-[0_18px_40px_-12px_rgba(30,19,36,0.55)]"
-                style={{
-                  background: "rgba(30,19,36,0.55)",
-                  backdropFilter: "blur(24px) saturate(180%)",
-                  WebkitBackdropFilter: "blur(24px) saturate(180%)",
-                  border: "1px solid rgba(255,255,255,0.15)",
-                }}
-              >
-                <div className="flex items-center gap-2.5">
-                  <div
-                    className="flex flex-shrink-0 items-center justify-center"
-                    style={{
-                      width: 34,
-                      height: 34,
-                      borderRadius: 10,
-                      background: "#E8663C",
-                    }}
-                  >
-                    <SfIcon name="recordingtape" size={18} color="#fff" />
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <div
-                      className="mb-1"
-                      style={{ fontSize: 11.5, fontWeight: 700, color: "#fff", lineHeight: 1 }}
-                    >
-                      Verse Melody
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="flex items-center gap-[2px]" style={{ height: 14 }}>
-                        {[5, 10, 16, 9, 13, 6, 11, 4, 14, 8].map((h, i) => (
-                          <span
-                            key={i}
-                            className="rounded-sm"
-                            style={{
-                              width: 2,
-                              height: h,
-                              background: "#F6ECC9",
-                              animation: `wave 1.2s ease-in-out ${i * 0.08}s infinite`,
-                            }}
-                          />
-                        ))}
-                      </div>
-                      <span style={{ fontSize: 10, color: "rgba(255,255,255,0.7)" }}>0:42</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
+          <HeroDeviceArt />
         </div>
       </div>
     </section>

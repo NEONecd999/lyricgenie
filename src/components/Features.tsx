@@ -1524,6 +1524,17 @@ const CompactProjects = () => {
 // ══════════════════════════════════════════════════════════
 // Row wrapper
 // ══════════════════════════════════════════════════════════
+/** The keyframes the spotlights animate with (shared with /pro). */
+export const FeatureKeyframes = () => (
+  <style>{`
+    @keyframes lgCaret  { 50% { opacity: 0 } }
+    @keyframes lgFadeUp { to { opacity: 1; transform: translateY(0) } }
+    @keyframes lgFloaty { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-8px) } }
+    @keyframes lgPing   { 0% { transform: scale(1); opacity: .7 } 100% { transform: scale(2); opacity: 0 } }
+    @keyframes lgWavePulse { 0%,100% { transform: scaleY(.6); opacity: .5 } 50% { transform: scaleY(1); opacity: .9 } }
+  `}</style>
+);
+
 const SpotlightRow = ({
   eyebrow,
   title,
@@ -1679,13 +1690,7 @@ const Features = () => {
 
   return (
     <section id="features" className="relative overflow-hidden py-16 md:py-20 lg:pt-[110px] lg:pb-[90px]">
-      <style>{`
-        @keyframes lgCaret  { 50% { opacity: 0 } }
-        @keyframes lgFadeUp { to { opacity: 1; transform: translateY(0) } }
-        @keyframes lgFloaty { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-8px) } }
-        @keyframes lgPing   { 0% { transform: scale(1); opacity: .7 } 100% { transform: scale(2); opacity: 0 } }
-        @keyframes lgWavePulse { 0%,100% { transform: scaleY(.6); opacity: .5 } 50% { transform: scaleY(1); opacity: .9 } }
-      `}</style>
+      <FeatureKeyframes />
 
       <div
         className="pointer-events-none absolute rounded-full"
@@ -1837,3 +1842,6 @@ const Features = () => {
 };
 
 export default Features;
+
+// The spotlights and compact previews, for /pro (pages/ProHome.tsx).
+export { WishWorkshopSpotlight, RhymeSpotlight, AiContextSpotlight, FreestyleSpotlight, CompactVoice, CompactConcepts, CompactSheet, CompactPerformance, CompactImport, CompactProjects };

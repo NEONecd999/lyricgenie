@@ -1,7 +1,22 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, AudioWaveform, Check, FileText, FolderOpen, Lightbulb, MessageSquareText, Mic, Presentation, Search, SlidersVertical, Sparkles, Upload, Video } from "lucide-react";
+import { ArrowRight, AudioWaveform, Check, MessageSquareText, Mic, SlidersVertical, Video } from "lucide-react";
 import Footer from "@/components/Footer";
+import Wordmark from "@/components/Wordmark";
+import { HeroDeviceArt } from "@/components/HeroEnhanced";
+import {
+  AiContextSpotlight,
+  CompactConcepts,
+  CompactImport,
+  CompactPerformance,
+  CompactProjects,
+  CompactSheet,
+  CompactVoice,
+  FeatureKeyframes,
+  FreestyleSpotlight,
+  RhymeSpotlight,
+  WishWorkshopSpotlight,
+} from "@/components/Features";
 import SEO from "@/components/SEO";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { APP_STORE, WEB_APP, WEB_SIGNIN, WEB_SIGNUP, webTrial } from "@/lib/links";
@@ -52,15 +67,6 @@ function Window({ children, className = "" }: { children: ReactNode; className?:
   );
 }
 
-/** The iPhone app, in a phone. */
-function Phone({ src, alt, className = "" }: { src: string; alt: string; className?: string }) {
-  return (
-    <div className={`rounded-[40px] border border-white/15 bg-[#0D0910] p-2 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.7)] ${className}`}>
-      <img src={src} alt={alt} loading="lazy" className="block w-full rounded-[32px]" />
-    </div>
-  );
-}
-
 const Avatar = ({ letter, color }: { letter: string; color: string }) => (
   <span className="flex size-7 items-center justify-center rounded-full text-[11px] font-bold text-white" style={{ background: color, boxShadow: "0 0 0 2px #1B1B1B" }}>
     {letter}
@@ -92,9 +98,8 @@ function ProNav() {
   return (
     <header className={`sticky top-0 z-50 transition-colors ${scrolled ? "border-b border-white/10 bg-[#1E1324]/85 backdrop-blur-lg" : "border-b border-transparent"}`}>
       <div className="container mx-auto flex h-16 items-center gap-8 px-6">
-        <a href="/pro/" className="flex items-center gap-2.5" aria-label="Lyric Genie">
-          <img src="/images/genie-icon.svg" alt="" className="h-7 w-7" />
-          <span className="font-display text-[15px] font-bold uppercase tracking-[0.08em] text-[#F6ECC9]">Lyric Genie</span>
+        <a href="/pro/" className="flex items-center text-[#F6ECC9]" aria-label="Lyric Genie">
+          <Wordmark className="h-7 w-auto" />
         </a>
         <nav className="hidden items-center gap-6 md:flex">
           {[
@@ -125,38 +130,34 @@ function ProNav() {
 
 function Hero() {
   return (
-    <section className="relative overflow-hidden pb-24 pt-14 md:pt-20">
-      <div className="pointer-events-none absolute left-1/2 top-[-200px] h-[700px] w-[1100px] -translate-x-1/2 rounded-full bg-[#6F50B8]/30 blur-3xl" />
-      <div className="container relative z-10 mx-auto px-6">
-        <Reveal className="mx-auto max-w-4xl text-center">
+    <section className="relative overflow-hidden pb-20 pt-12 md:pb-28 md:pt-16">
+      <div className="pointer-events-none absolute left-[-120px] top-[-160px] h-[520px] w-[520px] rounded-full bg-[#6F50B8]/40 blur-3xl" />
+      <div className="pointer-events-none absolute bottom-[-200px] right-[-120px] h-[560px] w-[560px] rounded-full bg-[#C48AE3]/20 blur-3xl" />
+      {/* As the main home page: words on the left, the iPhone and its floating cards on the right, with the
+          desktop workspace behind them (the studio, and its partner). */}
+      <div className="container relative z-10 mx-auto grid grid-cols-1 items-center gap-12 px-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-14">
+        <Reveal className="mx-auto max-w-xl text-center lg:mx-0 lg:text-left">
           <Eyebrow>Built by pro songwriters in LA</Eyebrow>
-          <h1 className="font-display text-[48px] font-bold leading-[1.02] tracking-tight text-white md:text-[76px]">
+          <h1 className="font-display text-[48px] font-bold leading-[1.02] tracking-tight text-white md:text-[72px]">
             The songwriting <span className="text-[#F6ECC9]">studio.</span>
           </h1>
-          <p className="mx-auto mt-5 max-w-xl text-lg text-white/70 md:text-xl">Write, co-write and record. At your desk and on your iPhone.</p>
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <p className="mt-5 text-lg text-white/70 md:text-xl">Write, co-write and record. At your desk and on your iPhone.</p>
+          <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row lg:items-start">
             <PrimaryCTA />
             <AppStoreCTA />
           </div>
         </Reveal>
-
-        <Reveal delay={0.15} className="relative mx-auto mt-14 max-w-6xl pb-10 md:pr-24">
-          <Window>
-            <div className="relative aspect-[16/10]">
-              <img src="/images/web/editor.jpg" alt="The Lyric Genie workspace on the desktop" width={1920} height={1200} className="absolute inset-0 h-full w-full object-cover object-top" />
-              <div className="absolute right-[34%] top-[22.5%] hidden items-center gap-2 rounded-full border border-white/10 bg-[#1B1B1B]/90 py-1 pl-1 pr-3 shadow-xl backdrop-blur md:flex">
-                <span className="flex -space-x-2">
-                  <Avatar letter="E" color={C.accent} />
-                  <Avatar letter="S" color={C.coral} />
-                  <Avatar letter="M" color={C.blue} />
-                </span>
-                <span className="text-xs font-medium text-white/80">3 writers here</span>
-              </div>
-            </div>
-          </Window>
-          {/* The partner: the iPhone app, in front of the desk. */}
-          <Phone src="/images/screenshot_editor.jpeg" alt="A song in the Lyric Genie iPhone app" className="absolute -bottom-2 right-0 hidden w-[200px] md:block lg:w-[230px]" />
-        </Reveal>
+        <div className="relative mx-auto flex w-full justify-center">
+          {/* The desk, behind */}
+          <div className="pointer-events-none absolute left-[18%] top-6 hidden w-[760px] opacity-60 lg:block" aria-hidden>
+            <Window>
+              <img src="/images/web/editor.jpg" alt="" width={1920} height={1200} className="block w-full" />
+            </Window>
+          </div>
+          <div className="relative">
+            <HeroDeviceArt />
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -217,15 +218,30 @@ function Desk() {
 
 // ─── Feature rows ───────────────────────────────────────────────────────────
 
-/** One feature: a short head on one side, its picture on the other (sides alternate). */
-function Row({ eyebrow, title, text, flip = false, children }: { eyebrow: ReactNode; title: ReactNode; text: string; flip?: boolean; children: ReactNode }) {
+/** Whether the element is on screen (the spotlights animate while they are). */
+function useInView(threshold = 0.25): [React.RefObject<HTMLDivElement>, boolean] {
+  const ref = useRef<HTMLDivElement>(null);
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    if (!ref.current) return;
+    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), { threshold });
+    io.observe(ref.current);
+    return () => io.disconnect();
+  }, [threshold]);
+  return [ref, inView];
+}
+
+/** One feature: a short head on one side, its picture on the other (sides alternate), a soft glow behind it. */
+function Row({ eyebrow, title, text, flip = false, tint, children }: { eyebrow: ReactNode; title: ReactNode; text: string; flip?: boolean; tint: string; children: (active: boolean) => ReactNode }) {
+  const [ref, inView] = useInView();
   return (
-    <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+    <div ref={ref} className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
       <div className={flip ? "lg:order-2" : ""}>
         <Head eyebrow={eyebrow} title={title} lead={text} />
       </div>
-      <Reveal delay={0.1} className={`flex justify-center ${flip ? "lg:order-1" : ""}`}>
-        {children}
+      <Reveal delay={0.1} className={`relative flex justify-center ${flip ? "lg:order-1" : ""}`}>
+        <div className="pointer-events-none absolute inset-[-8%_-4%] rounded-full opacity-60 blur-[80px]" style={{ background: tint }} />
+        <div className="relative z-10 flex w-full max-w-[520px] justify-center">{children(inView)}</div>
       </Reveal>
     </div>
   );
@@ -327,9 +343,11 @@ function SessionMock() {
 function Features() {
   return (
     <section id="features" className="py-24 md:py-32">
+      <FeatureKeyframes />
       <div className="container mx-auto space-y-28 px-6 md:space-y-36">
         <Row
           eyebrow="Co-write in real time"
+          tint="rgba(232,102,60,.22)"
           title={
             <>
               Every writer <span className="text-[#F6ECC9]">gets a tab.</span>
@@ -337,10 +355,11 @@ function Features() {
           }
           text="Try ideas on your own tab, agree on the Master. See who's here and where they're typing."
         >
-          <CoWriteMock />
+          {() => <CoWriteMock />}
         </Row>
         <Row
           flip
+          tint="rgba(48,209,88,.16)"
           eyebrow={
             <span className="inline-flex items-center gap-2">
               Sessions <span className="rounded-full bg-[#30D158]/15 px-2 py-0.5 text-[10px] tracking-[0.12em] text-[#30D158]">Early access</span>
@@ -353,10 +372,24 @@ function Features() {
           }
           text="Video and voice inside the song, with your DAW streaming in full quality through our VST3 and AU plugin."
         >
-          <SessionMock />
+          {() => <SessionMock />}
         </Row>
         <Row
+          eyebrow="AI context"
+          tint="rgba(177,155,226,.3)"
+          title={
+            <>
+              AI that knows <span className="text-[#F6ECC9]">your song.</span>
+            </>
+          }
+          text="Give it the mood, the story and your references. Every suggestion starts from there."
+        >
+          {(a) => <AiContextSpotlight active={a} />}
+        </Row>
+        <Row
+          flip
           eyebrow="Wish Workshop"
+          tint="rgba(127,98,196,.3)"
           title={
             <>
               Stuck on a line? <span className="text-[#F6ECC9]">Make a wish.</span>
@@ -364,11 +397,11 @@ function Features() {
           }
           text="Darker, happier, more visual, or your own words. Keep the rhyme and the meter."
         >
-          <Phone src="/images/screenshot_wishworkshop.jpeg" alt="Wish Workshop on iPhone, rewriting a line" className="w-[250px]" />
+          {(a) => <WishWorkshopSpotlight active={a} />}
         </Row>
         <Row
-          flip
           eyebrow="Rhymes"
+          tint="rgba(58,123,208,.22)"
           title={
             <>
               Every rhyme, <span className="text-[#F6ECC9]">one tap away.</span>
@@ -376,18 +409,7 @@ function Features() {
           }
           text="Perfect, near, multi-syllable and phrase rhymes, plus synonyms and sound-alikes."
         >
-          <Phone src="/images/screenshot_rhyme.jpeg" alt="Rhymes for a word on iPhone" className="w-[250px]" />
-        </Row>
-        <Row
-          eyebrow="Recordings"
-          title={
-            <>
-              Hum it. <span className="text-[#F6ECC9]">Keep it linked.</span>
-            </>
-          }
-          text="Takes and voice memos pinned to the line they belong to."
-        >
-          <Phone src="/images/screenshot_voicerecordings.jpeg" alt="Recordings for a song on iPhone" className="w-[250px]" />
+          {(a) => <RhymeSpotlight active={a} />}
         </Row>
       </div>
     </section>
@@ -397,26 +419,30 @@ function Features() {
 // ─── And more ───────────────────────────────────────────────────────────────
 
 function More() {
-  const items: [typeof Search, string, string][] = [
-    [Search, "Search everything", "Songs, lines, notes and takes. ⌘K."],
-    [FileText, "Lyric sheets", "Credits, PROs and IPIs, ready to send."],
-    [Presentation, "Perform", "Big lyrics on a black screen, for the stage."],
-    [Lightbulb, "Concepts", "Titles and themes, saved for later."],
-    [Sparkles, "Spark", "Ideas for sections, titles, phrases and lines."],
-    [FolderOpen, "Projects", "Group songs by album, EP or client."],
-    [Upload, "Import audio", "Bring in demos from Logic, Files or anywhere."],
-    [MessageSquareText, "Notes and chat", "Talk it through, pinned to the words."],
+  const items: { eyebrow: string; title: string; text: string; preview: ReactNode; tint: string }[] = [
+    { eyebrow: "Recordings", title: "Hum it. Keep it linked.", text: "Takes pinned to the line they belong to.", preview: <CompactVoice />, tint: "#E8663C" },
+    { eyebrow: "Concepts", title: "Capture half-formed ideas.", text: "Titles, themes and hooks for later.", preview: <CompactConcepts />, tint: "#7F62C4" },
+    { eyebrow: "Lyric sheets", title: "Ready to send.", text: "Credits, PROs and IPIs, at a link or as a PDF.", preview: <CompactSheet />, tint: "#F5B642" },
+    { eyebrow: "Perform", title: "Stage-ready lyrics.", text: "Big type on a black screen.", preview: <CompactPerformance />, tint: "#30D158" },
+    { eyebrow: "Import audio", title: "Demos from anywhere.", text: "Logic bounces, voice memos, files.", preview: <CompactImport />, tint: "#3A7BD0" },
+    { eyebrow: "Projects", title: "Your catalog, organised.", text: "Group songs by album, EP or client.", preview: <CompactProjects />, tint: "#E45C7A" },
   ];
   return (
     <section className="bg-[#170E1C] py-24">
       <div className="container mx-auto px-6">
         <Head center eyebrow="And more" title="Built for how songs get finished." />
-        <div className="mx-auto mt-12 grid max-w-5xl gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {items.map(([Icon, title, text], i) => (
-            <Reveal key={title} delay={(i % 4) * 0.05} className="rounded-2xl border border-white/10 bg-[#1B1B1B] p-5">
-              <Icon className="size-5 text-[#AB8EE2]" />
-              <p className="mt-3 font-semibold text-white">{title}</p>
-              <p className="mt-1 text-sm text-white/55">{text}</p>
+        <div className="mx-auto mt-12 grid max-w-6xl gap-5 md:grid-cols-3">
+          {items.map((it, i) => (
+            <Reveal key={it.title} delay={(i % 3) * 0.06} className="flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-[#1B1B1B]">
+              {/* The preview keeps the app's own paper look, as in the main home page. */}
+              <div className="relative h-[170px] overflow-hidden border-b border-white/10" style={{ background: `linear-gradient(160deg, ${it.tint}26 0%, ${it.tint}0d 100%), #F6F1E3` }}>
+                {it.preview}
+              </div>
+              <div className="px-6 pb-6 pt-5">
+                <p className="mb-2 text-[10.5px] font-bold uppercase tracking-[0.14em] text-[#AB8EE2]">{it.eyebrow}</p>
+                <p className="font-display text-xl font-bold tracking-tight text-white">{it.title}</p>
+                <p className="mt-1.5 text-sm text-white/55">{it.text}</p>
+              </div>
             </Reveal>
           ))}
         </div>
@@ -428,35 +454,32 @@ function More() {
 // ─── iPhone ─────────────────────────────────────────────────────────────────
 
 function IPhone() {
+  const [ref, inView] = useInView();
   return (
     <section id="iphone" className="relative overflow-hidden py-24 md:py-32">
       <div className="pointer-events-none absolute bottom-[-250px] left-1/2 h-[600px] w-[900px] -translate-x-1/2 rounded-full bg-[#6F50B8]/25 blur-3xl" />
-      <div className="container relative z-10 mx-auto px-6">
-        <Head
-          center
-          eyebrow="On your iPhone"
-          title={
-            <>
-              Your studio, <span className="text-[#F6ECC9]">in your pocket.</span>
-            </>
-          }
-          lead="Catch the line in the car and the melody on a walk. It's on your desk when you sit down."
-        />
-        <div className="mt-8 flex justify-center">
-          <AppStoreCTA>Download on the App Store</AppStoreCTA>
+      <div ref={ref} className="container relative z-10 mx-auto grid items-center gap-12 px-6 lg:grid-cols-2 lg:gap-20">
+        <div>
+          <Head
+            eyebrow="On your iPhone"
+            title={
+              <>
+                Your studio, <span className="text-[#F6ECC9]">in your pocket.</span>
+              </>
+            }
+            lead="Catch the line in the car and the melody on a walk. Freestyle a melody and get real lyrics in its phrasing. It's all on your desk when you sit down."
+          />
+          <div className="mt-8">
+            <AppStoreCTA>Download on the App Store</AppStoreCTA>
+          </div>
+          <p className="mt-6 text-sm text-white/45">iPhone, iPad and Mac · One account, synced live with the web</p>
         </div>
-        <div className="mx-auto mt-16 flex max-w-4xl items-end justify-center gap-4 md:gap-8">
-          <Reveal className="hidden w-[30%] max-w-[230px] translate-y-6 sm:block">
-            <Phone src="/images/screenshot_spark.jpeg" alt="Creative Spark on iPhone" className="-rotate-3" />
-          </Reveal>
-          <Reveal delay={0.08} className="w-[62%] max-w-[260px] sm:w-[34%]">
-            <Phone src="/images/screenshot_editor.jpeg" alt="A song in the iPhone editor" />
-          </Reveal>
-          <Reveal delay={0.16} className="hidden w-[30%] max-w-[230px] translate-y-6 sm:block">
-            <Phone src="/images/screenshot_voicerecordings.jpeg" alt="Voice recordings on iPhone" className="rotate-3" />
-          </Reveal>
-        </div>
-        <p className="mt-12 text-center text-sm text-white/45">iPhone, iPad and Mac · One account, synced live with the web</p>
+        <Reveal delay={0.1} className="relative flex justify-center">
+          <div className="pointer-events-none absolute inset-[-8%_-4%] rounded-full bg-[#E45C7A]/20 opacity-60 blur-[80px]" />
+          <div className="relative z-10 w-full max-w-[520px]">
+            <FreestyleSpotlight active={inView} />
+          </div>
+        </Reveal>
       </div>
     </section>
   );

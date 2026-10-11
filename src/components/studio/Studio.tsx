@@ -448,8 +448,8 @@ export function PhoneArt() {
 
 /** The hero's picture: the browser app behind, the iPhone app overlapping it in front, a co-writer's chip. */
 /** A small floating piece of the app in the hero, at depth `z`. */
-const Float = ({ z, className, children }: { z: number; className: string; children: ReactNode }) => (
-  <div className={`absolute flex items-center gap-2 rounded-2xl border border-white/10 bg-[#1B1B1B]/95 px-3 py-2 shadow-[0_18px_40px_-12px_rgba(0,0,0,0.7)] ${className}`} style={{ transform: `translateZ(${z}px)` }}>
+const Float = ({ style, className, children }: { style: React.CSSProperties; className: string; children: ReactNode }) => (
+  <div className={`absolute flex items-center gap-2 rounded-2xl border border-white/10 bg-[#1B1B1B]/95 px-3 py-2 shadow-[0_18px_40px_-12px_rgba(0,0,0,0.7)] ${className}`} style={style}>
     {children}
   </div>
 );
@@ -462,6 +462,25 @@ const Float = ({ z, className, children }: { z: number; className: string; child
  */
 export function HeroDevices() {
   const stage = useRef<HTMLDivElement>(null);
+  // Arrival: every layer starts far back and off to a side, then flies to its place in depth, one after
+  // another. With reduced motion they're simply there.
+  const [arrived, setArrived] = useState(false);
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return setArrived(true);
+    // Two frames, so the starting positions are painted before the move.
+    let b = 0;
+    const a = requestAnimationFrame(() => (b = requestAnimationFrame(() => setArrived(true))));
+    return () => {
+      cancelAnimationFrame(a);
+      cancelAnimationFrame(b);
+    };
+  }, []);
+  /** A layer at depth `z`, flying in from `from` (x, y, extra depth) after `delay` ms. */
+  const fly = (z: number, from: [number, number, number], delay: number): React.CSSProperties => ({
+    transform: arrived ? `translateZ(${z}px)` : `translate3d(${from[0]}px, ${from[1]}px, ${z + from[2]}px)`,
+    opacity: arrived ? 1 : 0,
+    transition: `transform 1.6s cubic-bezier(.16,1,.3,1) ${delay}ms, opacity .9s ease ${delay}ms`,
+  });
   useEffect(() => {
     const el = stage.current;
     if (!el) return;
@@ -511,15 +530,15 @@ export function HeroDevices() {
       <div className="absolute inset-0" style={{ perspective: 1500, perspectiveOrigin: "50% 40%" }}>
         <div ref={stage} className="absolute inset-0" style={{ transformStyle: "preserve-3d", willChange: "transform" }}>
           {/* Back: the browser */}
-          <div className="absolute left-[10px] top-[20px] w-[590px]" style={{ transform: "translateZ(-90px)" }}>
+          <div className="absolute left-[10px] top-[20px] w-[590px]" style={fly(-90, [-60, 60, -1100], 0)}>
             <BrowserArt />
           </div>
           {/* Front: the iPhone, well forward of the browser */}
-          <div className="absolute bottom-[30px] right-[30px] w-[200px]" style={{ transform: "translateZ(110px)" }}>
+          <div className="absolute bottom-[30px] right-[30px] w-[200px]" style={fly(110, [320, 80, -900], 280)}>
             <PhoneArt />
           </div>
           {/* Floating pieces of the app at different depths, so turning shows the layers */}
-          <Float z={170} className="left-[-34px] top-[300px]">
+          <Float style={fly(170, [-260, 60, -800], 650)} className="left-[-34px] top-[300px]">
             <span className="flex -space-x-1.5">
               {WRITERS.slice(0, 2).map((w) => (
                 <span key={w.name} className="flex size-6 items-center justify-center rounded-full text-[10px] font-bold text-white" style={{ background: w.color, boxShadow: "0 0 0 2px #1B1B1B" }}>
@@ -533,7 +552,7 @@ export function HeroDevices() {
               <span className="text-white/50">on his iPhone</span>
             </span>
           </Float>
-          <Float z={150} className="left-[-48px] top-[70px] w-[200px] flex-col !items-start !gap-1.5">
+          <Float style={fly(150, [-300, -120, -800], 760)} className="left-[-48px] top-[70px] w-[200px] flex-col !items-start !gap-1.5">
             <span className="flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-[0.12em] text-[#AB8EE2]">
               <SfIcon name="wand.and.sparkles" size={10} color="#AB8EE2" /> Wish Workshop
             </span>
@@ -543,7 +562,7 @@ export function HeroDevices() {
             </span>
             <span className="w-full rounded-lg bg-[#AB8EE2]/15 px-2 py-1.5 text-[11px] text-[#F2EDE4]">I dove straight into the blackness</span>
           </Float>
-          <Float z={120} className="left-[170px] top-[-34px] flex-col !items-start !gap-1">
+          <Float style={fly(120, [0, -260, -800], 870)} className="left-[170px] top-[-34px] flex-col !items-start !gap-1">
             <span className="text-[9px] font-bold uppercase tracking-[0.12em] text-white/45">Rhymes · highway</span>
             <span className="flex gap-1">
               {[
@@ -557,7 +576,7 @@ export function HeroDevices() {
               ))}
             </span>
           </Float>
-          <Float z={190} className="left-[140px] top-[452px]">
+          <Float style={fly(190, [-80, 260, -800], 980)} className="left-[140px] top-[452px]">
             <span className="flex size-7 items-center justify-center rounded-lg bg-[#E8663C]">
               <SfIcon name="recordingtape" size={14} color="#fff" />
             </span>
@@ -573,7 +592,7 @@ export function HeroDevices() {
               </span>
             </span>
           </Float>
-          <Float z={210} className="right-[150px] top-[-40px] flex-col !items-stretch !gap-1.5 !p-1.5">
+          <Float style={fly(210, [260, -220, -800], 1090)} className="right-[150px] top-[-40px] flex-col !items-stretch !gap-1.5 !p-1.5">
             <span className="relative block h-[62px] w-[96px] overflow-hidden rounded-lg">
               <img src="/images/pro/session-sam.jpg" alt="" className="h-full w-full object-cover" />
               <span className="absolute left-1 top-1 flex items-center gap-1 rounded bg-black/55 px-1 text-[8px] font-bold uppercase text-[#30D158]">

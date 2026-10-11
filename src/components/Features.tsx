@@ -3,11 +3,16 @@ import { motion } from "framer-motion";
 import SfIcon from "@/components/SfIcon";
 
 // ── Palette (from design reference) ─────────────────────────
-const LG_PAPER = "#F5EFD9";
-const LG_INK = "#1E1324";
-const LG_INK_SOFT = "#635468";
-const LG_INK_MUTED = "rgba(30,19,36,0.55)";
-const LG_PURPLE = "#6F50B8";
+// The neutrals (and purple) are CSS variables whose fallbacks are these colours, so this page draws
+// as it always has; /pro (pages/ProHome.tsx, .lg-mock-dark in index.css) sets them to the app's dark mode.
+const LG_PAPER = "var(--mk-paper, #F5EFD9)";
+const LG_SURFACE = "var(--mk-surface, #fff)";
+const LG_INK = "var(--mk-ink, #1E1324)";
+const LG_INK_SOFT = "var(--mk-ink-soft, #635468)";
+const LG_INK_MUTED = "var(--mk-ink-muted, rgb(var(--mk-ink-rgb, 30 19 36) / 0.55))";
+const LG_PURPLE = "var(--mk-purple, #6F50B8)";
+/** A colour at `pct` percent strength (works for the variables above, unlike hex alpha suffixes). */
+const tint = (c: string, pct: number) => `color-mix(in srgb, ${c} ${pct}%, transparent)`;
 const LG_PURPLE_SOFT = "#B19BE2";
 const LG_GREEN = "#6FA83C";
 const LG_CORAL = "#E8663C";
@@ -55,11 +60,11 @@ const UIFrame = ({
     <div
       className={`relative w-full max-w-[520px] ${mobileClass} md:aspect-[5/6]`}
       style={{
-        background: tone === "paper" ? LG_PAPER : "#fff",
+        background: tone === "paper" ? LG_PAPER : LG_SURFACE,
         borderRadius: 28,
         overflow: "hidden",
         boxShadow:
-          "0 30px 80px -20px rgba(30,19,36,.35), 0 0 0 1px rgba(30,19,36,.06), inset 0 1px 0 rgba(255,255,255,.5)",
+          "var(--mk-frame-shadow, 0 30px 80px -20px rgb(var(--mk-ink-rgb, 30 19 36) / .35), 0 0 0 1px rgb(var(--mk-ink-rgb, 30 19 36) / .06), inset 0 1px 0 rgba(255,255,255,.5))",
       }}
     >
       {children}
@@ -189,12 +194,12 @@ const WriteLyricsSpotlight = ({ active }: { active: boolean }) => {
         </div>
       </div>
       <div
-        className="absolute flex items-center gap-2.5 rounded-xl bg-white"
+        className="absolute flex items-center gap-2.5 rounded-xl bg-[var(--mk-surface,#fff)]"
         style={{
           bottom: 28,
           right: 26,
           padding: "10px 14px",
-          boxShadow: "0 12px 30px -8px rgba(30,19,36,.25), 0 0 0 1px rgba(30,19,36,.05)",
+          boxShadow: "0 12px 30px -8px rgb(var(--mk-ink-rgb, 30 19 36) / .25), 0 0 0 1px rgb(var(--mk-ink-rgb, 30 19 36) / .05)",
           animation: active ? "lgFloaty 4s ease-in-out infinite" : "none",
         }}
       >
@@ -391,8 +396,8 @@ const WishWorkshopSpotlight = ({ active }: { active: boolean }) => {
                 width: 26,
                 height: 15,
                 borderRadius: 9999,
-                background: on ? LG_PURPLE : "rgba(30,19,36,0.18)",
-                boxShadow: "inset 0 1px 2px rgba(30,19,36,.12)",
+                background: on ? LG_PURPLE : "rgb(var(--mk-ink-rgb, 30 19 36) / 0.18)",
+                boxShadow: "inset 0 1px 2px rgb(var(--mk-ink-rgb, 30 19 36) / .12)",
                 transition: "background .3s",
               }}
             >
@@ -404,8 +409,8 @@ const WishWorkshopSpotlight = ({ active }: { active: boolean }) => {
                   width: 12,
                   height: 12,
                   borderRadius: 9999,
-                  background: "#fff",
-                  boxShadow: "0 1px 2px rgba(30,19,36,.2)",
+                  background: LG_SURFACE,
+                  boxShadow: "0 1px 2px rgb(var(--mk-ink-rgb, 30 19 36) / .2)",
                   transition: "left .3s",
                 }}
               />
@@ -416,7 +421,7 @@ const WishWorkshopSpotlight = ({ active }: { active: boolean }) => {
       </div>
 
       <div
-        className="absolute flex items-center gap-2 rounded-full border border-[rgba(30,19,36,0.12)] bg-white"
+        className="absolute flex items-center gap-2 rounded-full border border-[rgb(var(--mk-ink-rgb,30_19_36)_/_0.12)] bg-[var(--mk-surface,#fff)]"
         style={{ left: 22, right: 22, bottom: 22, padding: "11px 16px" }}
       >
         <span style={{ color: LG_INK_MUTED, fontSize: 13, flex: 1 }}>Describe your wish…</span>
@@ -620,10 +625,10 @@ const RhymeSpotlight = ({ active }: { active: boolean }) => {
           <span style={{ color: LG_INK_MUTED, opacity: 0.45 }}>· ASSOCIATIONS</span>
         </div>
         <div
-          className="mt-3 inline-flex items-baseline gap-2.5 rounded-xl bg-white"
+          className="mt-3 inline-flex items-baseline gap-2.5 rounded-xl bg-[var(--mk-surface,#fff)]"
           style={{
             padding: "10px 18px",
-            boxShadow: "0 4px 14px rgba(30,19,36,.08), 0 0 0 1px rgba(30,19,36,.05)",
+            boxShadow: "0 4px 14px rgb(var(--mk-ink-rgb, 30 19 36) / .08), 0 0 0 1px rgb(var(--mk-ink-rgb, 30 19 36) / .05)",
           }}
         >
           <span style={{ fontSize: 22, fontWeight: 700, color: LG_INK, letterSpacing: "-0.01em" }}>home</span>
@@ -640,7 +645,7 @@ const RhymeSpotlight = ({ active }: { active: boolean }) => {
               style={{
                 padding: "5px 11px",
                 borderRadius: 9999,
-                background: on ? `${t.color}22` : "rgba(30,19,36,0.05)",
+                background: on ? `${t.color}22` : "rgb(var(--mk-ink-rgb, 30 19 36) / 0.05)",
                 color: on ? t.color : LG_INK_MUTED,
                 fontSize: 11,
                 fontWeight: 700,
@@ -817,7 +822,7 @@ const AiContextSpotlight = ({ active }: { active: boolean }) => {
         className="flex items-center justify-center"
         style={{
           padding: "16px 20px 12px",
-          borderBottom: "1px solid rgba(30,19,36,.08)",
+          borderBottom: "1px solid rgb(var(--mk-ink-rgb, 30 19 36) / .08)",
         }}
       >
         <div
@@ -864,14 +869,14 @@ const AiContextSpotlight = ({ active }: { active: boolean }) => {
               <div
                 className="flex flex-wrap items-center gap-1.5"
                 style={{
-                  background: "#fff",
-                  border: `1px solid ${focused ? LG_PURPLE : "#E5E4E8"}`,
+                  background: LG_SURFACE,
+                  border: `1px solid ${focused ? LG_PURPLE : "var(--mk-line, #E5E4E8)"}`,
                   borderRadius: 12,
                   padding: "10px 12px",
                   minHeight: 48,
                   boxShadow: focused
-                    ? `0 0 0 4px ${LG_PURPLE}1F`
-                    : "inset 0 1px 2px rgba(30,19,36,.03)",
+                    ? `0 0 0 4px ${tint(LG_PURPLE, 12)}`
+                    : "inset 0 1px 2px rgb(var(--mk-ink-rgb, 30 19 36) / .03)",
                   transition: "border-color .25s, box-shadow .25s",
                 }}
               >
@@ -879,7 +884,7 @@ const AiContextSpotlight = ({ active }: { active: boolean }) => {
                   <span
                     key={chip}
                     style={{
-                      background: `${LG_PURPLE}14`,
+                      background: `${tint(LG_PURPLE, 8)}`,
                       color: LG_INK,
                       borderRadius: 8,
                       padding: "4px 9px",
@@ -1043,7 +1048,7 @@ const FreestyleSpotlight = ({ active }: { active: boolean }) => {
           style={{
             padding: "4px 9px",
             borderRadius: 9999,
-            background: phase === "listening" ? `${LG_PINK}18` : "rgba(30,19,36,0.05)",
+            background: phase === "listening" ? `${LG_PINK}18` : "rgb(var(--mk-ink-rgb, 30 19 36) / 0.05)",
             color: phase === "listening" ? LG_PINK : LG_INK_MUTED,
             fontSize: 10,
             fontWeight: 700,
@@ -1083,7 +1088,7 @@ const FreestyleSpotlight = ({ active }: { active: boolean }) => {
             <span
               key={c}
               style={{
-                background: `${LG_PURPLE}12`,
+                background: `${tint(LG_PURPLE, 7)}`,
                 color: LG_INK,
                 borderRadius: 8,
                 padding: "5px 10px",
@@ -1135,7 +1140,7 @@ const FreestyleSpotlight = ({ active }: { active: boolean }) => {
             style={{
               width: 52,
               height: 52,
-              background: phase === "listening" ? LG_PINK : "#fff",
+              background: phase === "listening" ? LG_PINK : LG_SURFACE,
               border: phase === "listening" ? "none" : `1.5px solid ${LG_PINK}55`,
               boxShadow: phase === "listening" ? `0 8px 20px ${LG_PINK}55` : "none",
               transition: "all .35s",
@@ -1179,25 +1184,25 @@ const FreestyleSpotlight = ({ active }: { active: boolean }) => {
 
       {/* Transform indicator */}
       <div className="flex items-center justify-center gap-2" style={{ padding: "14px 26px 0" }}>
-        <span style={{ flex: 1, height: 1, background: "rgba(30,19,36,.1)" }} />
+        <span style={{ flex: 1, height: 1, background: "rgb(var(--mk-ink-rgb, 30 19 36) / .1)" }} />
         <span
           className="inline-flex items-center gap-1.5"
           style={{
             padding: "5px 12px",
             borderRadius: 9999,
-            background: phase === "thinking" ? LG_PURPLE : `${LG_PURPLE}14`,
+            background: phase === "thinking" ? LG_PURPLE : `${tint(LG_PURPLE, 8)}`,
             color: phase === "thinking" ? "#fff" : LG_PURPLE,
             fontSize: 11,
             fontWeight: 700,
             letterSpacing: ".02em",
-            boxShadow: phase === "thinking" ? `0 4px 14px ${LG_PURPLE}55` : "none",
+            boxShadow: phase === "thinking" ? `0 4px 14px ${tint(LG_PURPLE, 33)}` : "none",
             transition: "all .3s",
           }}
         >
           <SfIcon name="sparkles" size={12} color={phase === "thinking" ? "#fff" : LG_PURPLE} />
           {phase === "thinking" ? "Writing lyrics…" : "Turn into lyrics"}
         </span>
-        <span style={{ flex: 1, height: 1, background: "rgba(30,19,36,.1)" }} />
+        <span style={{ flex: 1, height: 1, background: "rgb(var(--mk-ink-rgb, 30 19 36) / .1)" }} />
       </div>
 
       {/* Result — the real lyrics the gibberish became */}
@@ -1286,8 +1291,8 @@ const CompactConcepts = () => {
             fontSize: 11,
             fontWeight: 700,
             letterSpacing: "-0.01em",
-            boxShadow: "0 2px 8px rgba(30,19,36,.08)",
-            border: c.g.startsWith("#") ? "1px solid rgba(30,19,36,.08)" : "none",
+            boxShadow: "0 2px 8px rgb(var(--mk-ink-rgb, 30 19 36) / .08)",
+            border: c.g.startsWith("#") ? "1px solid rgb(var(--mk-ink-rgb, 30 19 36) / .08)" : "none",
             transform: `translateY(${[0, -4, 4, -2][i]}px)`,
           }}
         >
@@ -1300,12 +1305,12 @@ const CompactConcepts = () => {
 
 const CompactSheet = () => (
   <div
-    className="absolute bg-white"
+    className="absolute bg-[var(--mk-surface,#fff)]"
     style={{
       inset: "18px 30px 0",
       borderRadius: "8px 8px 0 0",
       padding: "14px 16px",
-      boxShadow: "0 8px 20px -6px rgba(30,19,36,.18), 0 0 0 1px rgba(30,19,36,.05)",
+      boxShadow: "0 8px 20px -6px rgb(var(--mk-ink-rgb, 30 19 36) / .18), 0 0 0 1px rgb(var(--mk-ink-rgb, 30 19 36) / .05)",
       fontSize: 8,
       color: LG_INK,
       lineHeight: 1.4,
@@ -1319,7 +1324,7 @@ const CompactSheet = () => (
     <div style={{ color: LG_INK_SOFT, fontSize: 7.5 }}>Universal · ASCAP · 50%</div>
     <div style={{ fontSize: 9, fontWeight: 700, marginTop: 4 }}>Victor Anton</div>
     <div style={{ color: LG_INK_SOFT, fontSize: 7.5 }}>AntonMusic · PRS · 50%</div>
-    <div style={{ height: 1, background: "rgba(30,19,36,.1)", margin: "8px 0" }} />
+    <div style={{ height: 1, background: "rgb(var(--mk-ink-rgb, 30 19 36) / .1)", margin: "8px 0" }} />
     <div style={{ fontSize: 9, fontWeight: 700 }}>Verse 1</div>
     <div style={{ marginTop: 2, lineHeight: 1.45, fontSize: 7.5 }}>
       I became another stranger
@@ -1394,10 +1399,10 @@ const CompactImport = () => {
             key={t.name}
             className="flex items-center gap-2"
             style={{
-              background: "#fff",
+              background: LG_SURFACE,
               borderRadius: 8,
               padding: "7px 10px",
-              boxShadow: "0 2px 8px rgba(30,19,36,.08), 0 0 0 1px rgba(30,19,36,.04)",
+              boxShadow: "0 2px 8px rgb(var(--mk-ink-rgb, 30 19 36) / .08), 0 0 0 1px rgb(var(--mk-ink-rgb, 30 19 36) / .04)",
               transform: `translateX(${t.from * 6}px)`,
               flex: 1,
             }}
@@ -1458,21 +1463,21 @@ const CompactProjects = () => {
         className="absolute"
         style={{
           inset: "24px 34px 18px 30px",
-          background: "#fff",
+          background: LG_SURFACE,
           borderRadius: 12,
           transform: "rotate(-3.5deg)",
-          boxShadow: "0 2px 10px rgba(30,19,36,.07)",
-          border: "1px solid rgba(30,19,36,.05)",
+          boxShadow: "0 2px 10px rgb(var(--mk-ink-rgb, 30 19 36) / .07)",
+          border: "1px solid rgb(var(--mk-ink-rgb, 30 19 36) / .05)",
         }}
       />
       {/* Front project — a folder full of songs */}
       <div
         className="relative flex h-full flex-col"
         style={{
-          background: "#fff",
+          background: LG_SURFACE,
           borderRadius: 12,
           padding: "11px 13px",
-          boxShadow: "0 8px 20px -6px rgba(30,19,36,.16), 0 0 0 1px rgba(30,19,36,.05)",
+          boxShadow: "0 8px 20px -6px rgb(var(--mk-ink-rgb, 30 19 36) / .16), 0 0 0 1px rgb(var(--mk-ink-rgb, 30 19 36) / .05)",
         }}
       >
         <div className="flex items-center gap-2" style={{ marginBottom: 9 }}>
@@ -1504,7 +1509,7 @@ const CompactProjects = () => {
               key={s.t}
               className="flex items-center gap-2"
               style={{
-                background: "#FAF8F0",
+                background: "var(--mk-surface-2, #FAF8F0)",
                 borderRadius: 6,
                 padding: "6px 9px",
               }}
@@ -1589,7 +1594,7 @@ const SpotlightRow = ({
       {cta && (
         <a
           href={cta.href}
-          className="mt-5 inline-flex items-center gap-1.5 rounded-full px-5 py-2.5 text-sm font-semibold text-white shadow-[0_4px_20px_-4px_rgba(30,19,36,0.12)] transition-all hover:bg-[#5F43A8]"
+          className="mt-5 inline-flex items-center gap-1.5 rounded-full px-5 py-2.5 text-sm font-semibold text-white shadow-[0_4px_20px_-4px_rgb(var(--mk-ink-rgb, 30 19 36) / 0.12)] transition-all hover:bg-[#5F43A8]"
           style={{ background: LG_PURPLE }}
         >
           {cta.label}
@@ -1808,14 +1813,14 @@ const Features = () => {
               <div
                 key={it.title}
                 className="flex flex-col overflow-hidden rounded-3xl border border-[#E5E4E8] bg-white"
-                style={{ boxShadow: "0 2px 4px rgba(30,19,36,.03), 0 12px 24px -12px rgba(30,19,36,.08)" }}
+                style={{ boxShadow: "0 2px 4px rgb(var(--mk-ink-rgb, 30 19 36) / .03), 0 12px 24px -12px rgb(var(--mk-ink-rgb, 30 19 36) / .08)" }}
               >
                 <div
                   className="relative overflow-hidden"
                   style={{
                     height: 170,
                     background: `linear-gradient(160deg, ${it.tint}15 0%, ${it.tint}05 100%)`,
-                    borderBottom: "1px solid rgba(30,19,36,.05)",
+                    borderBottom: "1px solid rgb(var(--mk-ink-rgb, 30 19 36) / .05)",
                   }}
                 >
                   {it.preview}

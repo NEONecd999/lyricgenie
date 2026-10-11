@@ -219,3 +219,18 @@ All colors MUST be HSL.
     @apply my-2;
   }
 }
+
+/* /pro: the shared interface mockups (components/Features.tsx) in the app's dark mode. The mockups read
+   these variables and fall back to their light colours everywhere else. */
+.lg-mock-dark {
+  --mk-paper: #1b1b1b;
+  --mk-surface: #262626;
+  --mk-surface-2: #222222;
+  --mk-ink: #f2ede4;
+  --mk-ink-soft: rgba(242, 237, 228, 0.68);
+  --mk-ink-muted: rgba(242, 237, 228, 0.48);
+  --mk-ink-rgb: 255 255 255;
+  --mk-purple: #ab8ee2;
+  --mk-line: rgba(255, 255, 255, 0.12);
+  --mk-frame-shadow: 0 40px 100px -30px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.1);
+}

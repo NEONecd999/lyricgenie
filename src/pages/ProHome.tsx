@@ -1,9 +1,8 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, AudioWaveform, Check, MessageSquareText, Mic, SlidersVertical, Video } from "lucide-react";
+import { ArrowRight, AudioWaveform, Check, MessageSquareText, Mic, SlidersVertical, Sparkles, Video } from "lucide-react";
 import Footer from "@/components/Footer";
 import Wordmark from "@/components/Wordmark";
-import { HeroDeviceArt } from "@/components/HeroEnhanced";
 import {
   AiContextSpotlight,
   CompactConcepts,
@@ -126,15 +125,229 @@ function ProNav() {
   );
 }
 
-// ─── Hero: the desk and the pocket ──────────────────────────────────────────
+// ─── Hero art: the desk and the pocket ──────────────────────────────────────
+
+const LYRICS = ["I became another stranger", "No way that I could be forgiven", "Oh what have I done", "Now I'm lost, like a ghost,", "bleeding out for your love"];
+const WRITERS = [
+  { name: "Edan", color: C.accent },
+  { name: "Anton", color: C.coral },
+  { name: "Master", color: C.amber },
+];
+
+/** Draws `children` on a fixed design-size canvas, scaled to the width it's given (so it stays crisp). */
+function Scaled({ w, h, children }: { w: number; h: number; children: ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [k, setK] = useState(1);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const ro = new ResizeObserver(([e]) => setK(e.contentRect.width / w));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [w]);
+  return (
+    <div ref={ref} className="relative w-full" style={{ height: h * k }}>
+      <div className="absolute left-0 top-0 origin-top-left" style={{ width: w, height: h, transform: `scale(${k})` }}>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+/** A simplified Lyric Genie in a browser window, dark mode: sidebar, the song with writer tabs, tools. */
+function BrowserArt() {
+  return (
+    <div className="overflow-hidden rounded-[18px] border border-white/10 bg-[#1B1B1B] shadow-[0_50px_120px_-30px_rgba(0,0,0,0.8),0_0_0_1px_rgba(255,255,255,0.04)]">
+      <div className="flex items-center gap-1.5 border-b border-white/10 bg-[#141015] px-3.5 py-2.5">
+        <span className="size-2.5 rounded-full bg-[#FF5F57]" />
+        <span className="size-2.5 rounded-full bg-[#FEBC2E]" />
+        <span className="size-2.5 rounded-full bg-[#28C840]" />
+        <span className="mx-auto rounded-md bg-white/5 px-8 py-0.5 text-[10px] text-white/45">app.lyricgenie.app</span>
+      </div>
+      {/* App bar */}
+      <div className="flex items-center gap-4 border-b border-white/[0.07] bg-[#252525] px-4 py-2.5">
+        <Wordmark className="h-[11px] w-auto text-[#AB8EE2]" />
+        <span className="rounded-full bg-white/10 px-2.5 py-0.5 text-[10px] font-medium text-[#AB8EE2]">Songs</span>
+        <span className="text-[10px] text-white/55">Concepts</span>
+        <span className="text-[10px] text-white/55">Recordings</span>
+        <span className="ml-auto flex -space-x-1.5">
+          {WRITERS.slice(0, 2).map((w) => (
+            <span key={w.name} className="flex size-5 items-center justify-center rounded-full text-[8px] font-bold text-white" style={{ background: w.color, boxShadow: "0 0 0 1.5px #252525" }}>
+              {w.name[0]}
+            </span>
+          ))}
+        </span>
+      </div>
+      <div className="grid h-[318px] grid-cols-[130px_1fr_150px] bg-[#252525]">
+        {/* Sidebar */}
+        <div className="space-y-3 border-r border-white/[0.07] p-3.5">
+          <p className="text-[8px] font-bold uppercase tracking-[0.14em] text-white/45">AI context</p>
+          <div>
+            <p className="text-[8px] font-semibold text-white/45">Mood</p>
+            <p className="text-[10px] leading-snug text-white/85">Cinematic, late-night</p>
+          </div>
+          <div>
+            <p className="text-[8px] font-semibold text-white/45">Theme</p>
+            <p className="text-[10px] leading-snug text-white/85">Chasing an old flame down the highway</p>
+          </div>
+          <p className="pt-1 text-[8px] font-bold uppercase tracking-[0.14em] text-white/45">Sections</p>
+          {["Verse 1", "Chorus", "Verse 2", "Bridge"].map((x) => (
+            <p key={x} className="text-[10px] font-medium text-white/80">
+              {x}
+            </p>
+          ))}
+        </div>
+        {/* The song */}
+        <div className="p-4">
+          <div className="h-full rounded-xl border border-white/[0.07] bg-[#1B1B1B] px-5 py-4">
+            <p className="font-serif text-[22px] font-bold not-italic text-[#F2EDE4]">Night Ride</p>
+            <div className="mt-2 flex gap-1">
+              {WRITERS.map((w, i) => (
+                <span key={w.name} className={`flex items-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-medium ${i === 0 ? "bg-white/10 text-white" : "text-white/55"}`}>
+                  <span className="size-1.5 rounded-full" style={{ background: w.color }} />
+                  {w.name}
+                </span>
+              ))}
+            </div>
+            <p className="mt-3 font-serif text-[12px] font-bold not-italic text-[#AB8EE2]">Verse 1</p>
+            <div className="mt-0.5 space-y-[3px] font-serif text-[12.5px] not-italic leading-snug text-[#F2EDE4]/90">
+              {LYRICS.map((l, i) => (
+                <p key={l} className="flex items-center">
+                  {l}
+                  {i === 2 && (
+                    <>
+                      <span className="ml-0.5 inline-block h-3.5 w-[1.5px] rounded-full" style={{ background: C.coral }} />
+                      <span className="ml-1 rounded px-1 py-px font-sans text-[8px] font-semibold leading-none text-[#1B0F31]" style={{ background: C.coral }}>
+                        Anton
+                      </span>
+                    </>
+                  )}
+                </p>
+              ))}
+            </div>
+          </div>
+        </div>
+        {/* Tools */}
+        <div className="space-y-2 border-l border-white/[0.07] p-3">
+          <p className="text-[8px] font-bold uppercase tracking-[0.14em] text-white/45">Spark</p>
+          <div className="grid grid-cols-2 gap-1.5">
+            {[
+              ["Sections", "linear-gradient(135deg,#7251BD,#B870DB)"],
+              ["Titles", "linear-gradient(135deg,#E05297,#F4845F)"],
+              ["Phrases", "linear-gradient(135deg,#2563EB,#38BDF8)"],
+              ["Lines", "linear-gradient(135deg,#D97706,#FBBF24)"],
+            ].map(([t, g]) => (
+              <span key={t} className="flex h-12 items-end rounded-lg p-1.5 text-[8.5px] font-bold text-white" style={{ background: g }}>
+                {t}
+              </span>
+            ))}
+          </div>
+          <p className="pt-1.5 text-[8px] font-bold uppercase tracking-[0.14em] text-white/45">Rhymes · stranger</p>
+          <div className="flex flex-wrap gap-1">
+            {["danger", "anger", "changer", "ranger", "safer"].map((r) => (
+              <span key={r} className="rounded-full bg-white/[0.07] px-1.5 py-0.5 text-[9px] text-white/80">
+                {r}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/** A simplified Lyric Genie on iPhone, dark mode: the same song, the writer tabs, the round buttons. */
+function PhoneArt() {
+  return (
+    <div className="rounded-[34px] border border-white/15 bg-[#0D0910] p-[7px] shadow-[0_40px_90px_-20px_rgba(0,0,0,0.85)]">
+      <div className="relative h-[372px] overflow-hidden rounded-[28px] bg-[#252525]">
+        <div className="flex items-center justify-between px-5 pt-2.5 text-[9px] font-semibold text-white">
+          <span>9:41</span>
+          <span className="h-[18px] w-[64px] rounded-full bg-black" />
+          <span className="flex gap-0.5">
+            <span className="h-1.5 w-3 rounded-sm bg-white/80" />
+          </span>
+        </div>
+        <div className="flex items-center gap-3 px-4 pt-3 text-white/60">
+          <ArrowRight className="size-3 rotate-180" />
+          <span className="ml-auto flex gap-2">
+            {[0, 1, 2].map((i) => (
+              <span key={i} className="size-3 rounded-full border border-white/40" />
+            ))}
+          </span>
+        </div>
+        <p className="mt-0.5 px-4 text-[8px] text-white/45">
+          <span className="rounded bg-[#AB8EE2]/20 px-1 text-[#AB8EE2]">AI Context</span> Cinematic, late-night…
+        </p>
+        <p className="px-4 pt-2 text-[17px] font-bold text-[#F2EDE4]">Night Ride</p>
+        <div className="mx-4 mt-1.5 flex gap-1 border-b border-white/10 pb-1.5">
+          {WRITERS.map((w, i) => (
+            <span key={w.name} className={`flex items-center gap-1 rounded-full px-1.5 py-0.5 text-[8px] font-medium ${i === 0 ? "bg-white/10 text-white" : "text-white/55"}`}>
+              <span className="size-1.5 rounded-full" style={{ background: w.color }} />
+              {w.name}
+            </span>
+          ))}
+        </div>
+        <div className="space-y-1 px-4 pt-2.5 text-[10.5px] leading-snug text-[#F2EDE4]/90">
+          <p className="text-[9px] font-bold text-[#AB8EE2]">Verse 1</p>
+          {LYRICS.map((l) => (
+            <p key={l}>{l}</p>
+          ))}
+          <p className="pt-1.5 text-[9px] font-bold text-[#AB8EE2]">Chorus</p>
+          <p>I'll take you on a night ride</p>
+          <p className="text-white/45">It's just you and I…</p>
+        </div>
+        <div className="absolute bottom-4 right-3.5 flex flex-col gap-2">
+          <span className="flex size-8 items-center justify-center rounded-full bg-[#AB8EE2] text-[#1B0F31]">
+            <Sparkles className="size-3.5" />
+          </span>
+          <span className="flex size-8 items-center justify-center rounded-full bg-[#AB8EE2]/80 text-[#1B0F31]">
+            <Mic className="size-3.5" />
+          </span>
+        </div>
+        <span className="absolute bottom-1.5 left-1/2 h-1 w-20 -translate-x-1/2 rounded-full bg-white/60" />
+      </div>
+    </div>
+  );
+}
+
+/** The hero's picture: the browser app behind, the iPhone app overlapping it in front, a co-writer's chip. */
+function HeroDevices() {
+  return (
+    <Scaled w={680} h={470}>
+      <div className="absolute left-0 top-0 w-[600px]">
+        <BrowserArt />
+      </div>
+      <div className="absolute bottom-0 right-0 w-[190px] rotate-[2deg]">
+        <PhoneArt />
+      </div>
+      <div className="absolute left-[-14px] top-[318px] flex items-center gap-2 rounded-2xl border border-white/10 bg-[#1B1B1B]/90 px-3 py-2 shadow-xl backdrop-blur">
+        <span className="flex -space-x-1.5">
+          {WRITERS.slice(0, 2).map((w) => (
+            <span key={w.name} className="flex size-6 items-center justify-center rounded-full text-[10px] font-bold text-white" style={{ background: w.color, boxShadow: "0 0 0 2px #1B1B1B" }}>
+              {w.name[0]}
+            </span>
+          ))}
+        </span>
+        <span className="text-[11px] leading-tight text-white/80">
+          <span className="font-semibold text-white">Anton</span> is writing
+          <br />
+          <span className="text-white/50">on his iPhone</span>
+        </span>
+      </div>
+    </Scaled>
+  );
+}
+
+// ─── Hero ───────────────────────────────────────────────────────────────────
 
 function Hero() {
   return (
     <section className="relative overflow-hidden pb-20 pt-12 md:pb-28 md:pt-16">
       <div className="pointer-events-none absolute left-[-120px] top-[-160px] h-[520px] w-[520px] rounded-full bg-[#6F50B8]/40 blur-3xl" />
       <div className="pointer-events-none absolute bottom-[-200px] right-[-120px] h-[560px] w-[560px] rounded-full bg-[#C48AE3]/20 blur-3xl" />
-      {/* As the main home page: words on the left, the iPhone and its floating cards on the right, with the
-          desktop workspace behind them (the studio, and its partner). */}
+      {/* As the main home page: words on the left, the picture on the right (here, the browser app and the
+          iPhone app together: the studio and its partner). */}
       <div className="container relative z-10 mx-auto grid grid-cols-1 items-center gap-12 px-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-14">
         <Reveal className="mx-auto max-w-xl text-center lg:mx-0 lg:text-left">
           <Eyebrow>Built by pro songwriters in LA</Eyebrow>
@@ -147,17 +360,9 @@ function Hero() {
             <AppStoreCTA />
           </div>
         </Reveal>
-        <div className="relative mx-auto flex w-full justify-center">
-          {/* The desk, behind */}
-          <div className="pointer-events-none absolute left-[18%] top-6 hidden w-[760px] opacity-60 lg:block" aria-hidden>
-            <Window>
-              <img src="/images/web/editor.jpg" alt="" width={1920} height={1200} className="block w-full" />
-            </Window>
-          </div>
-          <div className="relative">
-            <HeroDeviceArt />
-          </div>
-        </div>
+        <Reveal delay={0.15} className="relative mx-auto w-full max-w-[680px]">
+          <HeroDevices />
+        </Reveal>
       </div>
     </section>
   );
@@ -344,7 +549,7 @@ function SessionMock() {
 
 function Features() {
   return (
-    <section id="features" className="py-24 md:py-32">
+    <section id="features" className="lg-mock-dark py-24 md:py-32">
       <FeatureKeyframes />
       <div className="container mx-auto space-y-28 px-6 md:space-y-36">
         <Row
@@ -430,14 +635,14 @@ function More() {
     { eyebrow: "Projects", title: "Your catalog, organised.", text: "Group songs by album, EP or client.", preview: <CompactProjects />, tint: "#E45C7A" },
   ];
   return (
-    <section className="bg-[#170E1C] py-24">
+    <section className="lg-mock-dark bg-[#170E1C] py-24">
       <div className="container mx-auto px-6">
         <Head center eyebrow="And more" title="Built for how songs get finished." />
         <div className="mx-auto mt-12 grid max-w-6xl gap-5 md:grid-cols-3">
           {items.map((it, i) => (
             <Reveal key={it.title} delay={(i % 3) * 0.06} className="flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-[#1B1B1B]">
-              {/* The preview keeps the app's own paper look, as in the main home page. */}
-              <div className="relative h-[170px] overflow-hidden border-b border-white/10" style={{ background: `linear-gradient(160deg, ${it.tint}26 0%, ${it.tint}0d 100%), #F6F1E3` }}>
+              {/* The preview: the main home page's, in the app's dark mode (.lg-mock-dark). */}
+              <div className="relative h-[170px] overflow-hidden border-b border-white/10" style={{ background: `linear-gradient(160deg, ${it.tint}2e 0%, ${it.tint}0a 100%), #202020` }}>
                 {it.preview}
               </div>
               <div className="px-6 pb-6 pt-5">
@@ -458,7 +663,7 @@ function More() {
 function IPhone() {
   const [ref, inView] = useInView();
   return (
-    <section id="iphone" className="relative overflow-hidden py-24 md:py-32">
+    <section id="iphone" className="lg-mock-dark relative overflow-hidden py-24 md:py-32">
       <div className="pointer-events-none absolute bottom-[-250px] left-1/2 h-[600px] w-[900px] -translate-x-1/2 rounded-full bg-[#6F50B8]/25 blur-3xl" />
       <div ref={ref} className="container relative z-10 mx-auto grid items-center gap-12 px-6 lg:grid-cols-2 lg:gap-20">
         <div>

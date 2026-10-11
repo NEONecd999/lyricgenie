@@ -1,5 +1,5 @@
-import { AiContextSpotlight, FeatureKeyframes, RhymeSpotlight, WishWorkshopSpotlight } from "@/components/Features";
-import { BrowserArt, CoWriteMock, Desk, Eyebrow, FinalCTA, Glow, More, PrimaryCTA, Reveal, Row, Scaled, SearchMock, SessionMock, StudioPage } from "@/components/studio/Studio";
+import { AiContextSpotlight, FeatureKeyframes, WishWorkshopSpotlight } from "@/components/Features";
+import { BrowserArt, CoWriteMock, Desk, Eyebrow, FinalCTA, Glow, More, PrimaryCTA, Reveal, Row, Scaled, SearchMock, SessionMock, StudioPage, RhymeColumnsMock } from "@/components/studio/Studio";
 import { WEB_SIGNIN } from "@/lib/links";
 
 /** /web: Lyric Genie on your computer. Lavender, like the desktop app's accent. */
@@ -100,7 +100,7 @@ function Rows() {
           }
           text="Select anything for perfect, near, multi-syllable and phrase rhymes, synonyms and syllable counts."
         >
-          {(a) => <RhymeSpotlight active={a} />}
+          {() => <RhymeColumnsMock aiPicks />}
         </Row>
         <Row
           flip

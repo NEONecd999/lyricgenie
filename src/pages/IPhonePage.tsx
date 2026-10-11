@@ -1,5 +1,5 @@
-import { AiContextSpotlight, FeatureKeyframes, FreestyleSpotlight, RhymeSpotlight, WishWorkshopSpotlight } from "@/components/Features";
-import { AppStoreCTA, CoWriteMock, Eyebrow, Glow, Head, More, PhoneArt, Reveal, Row, StudioPage } from "@/components/studio/Studio";
+import { AiContextSpotlight, FeatureKeyframes, FreestyleSpotlight, WishWorkshopSpotlight } from "@/components/Features";
+import { AppStoreCTA, CoWriteMock, Eyebrow, Glow, Head, More, PhoneArt, Reveal, Row, StudioPage, RhymeColumnsMock } from "@/components/studio/Studio";
 import { WEB_SIGNUP } from "@/lib/links";
 
 /** /iphone: Lyric Genie for iPhone, iPad and Mac. Warm coral, the mobile side's colour. */
@@ -73,7 +73,7 @@ function Rows() {
           }
           text="Perfect, near, multi-syllable and phrase rhymes, plus synonyms and sound-alikes, in one sheet."
         >
-          {(a) => <RhymeSpotlight active={a} />}
+          {() => <RhymeColumnsMock aiPicks />}
         </Row>
         <Row
           flip

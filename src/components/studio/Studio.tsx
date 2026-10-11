@@ -998,3 +998,117 @@ export function SearchMock() {
     </div>
   );
 }
+
+// ─── Rhymes, as the apps lay them out today ─────────────────────────────────
+
+const RHYME_COLS = [
+  {
+    ending: "-eyed",
+    note: "single syllable",
+    total: "439",
+    picked: "23",
+    color: "#64A8FF",
+    sections: [
+      { label: "Perfect", words: ["cried", "died", "dried", "guide", "pride", "side", "tide", "wide"] },
+      { label: "Near", words: ["time", "light", "mine"] },
+    ],
+    picks: [
+      ["cried", "carries the grief under the speed"],
+      ["died", "mirrors the bleeding-out imagery"],
+      ["tide", "the night pulling you along"],
+    ],
+  },
+  {
+    ending: "… -eyed",
+    note: "phrases ending in -eyed",
+    total: "4,195",
+    picked: "16",
+    color: "#FF8A65",
+    sections: [{ label: "Perfect", words: ["abide", "aside", "beside", "dark side", "joyride", "worldwide", "high tide", "open wide"] }],
+    picks: [
+      ["joyride", "the drive, turned reckless"],
+      ["beside", "the happier memory of being together"],
+      ["dark side", "the ghost you're becoming"],
+    ],
+  },
+];
+
+/**
+ * The rhyme panel as the apps lay it out (web and iPhone, 2026-10), dark mode: the word and its sound,
+ * family chips, then one outlined column per rhyme family. `aiPicks`: the app's AI Picks (sparkle, a
+ * reason each); without it, the plain engine, as RhymeGold.com shows it.
+ */
+export function RhymeColumnsMock({ aiPicks = false }: { aiPicks?: boolean }) {
+  return (
+    <div className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#1B1B1B] p-5 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]">
+      <div className="flex items-center gap-3">
+        {aiPicks && (
+          <span className="inline-flex items-center gap-1 rounded-full bg-gradient-to-br from-[#8F6FDC] to-[#B98BE8] px-2.5 py-1 text-xs font-semibold text-white">
+            <SfIcon name="sparkles" size={12} color="#fff" /> 39
+          </span>
+        )}
+        <span className="flex items-center gap-2 text-xs text-white/65">
+          Slant
+          <span className="flex h-4 w-7 items-center justify-end rounded-full bg-[#AB8EE2] px-0.5">
+            <span className="size-3 rounded-full bg-white" />
+          </span>
+        </span>
+        <span className="ml-auto inline-flex items-center gap-1 rounded-full border border-white/10 px-3 py-1 text-xs text-white/40">Insert ▾</span>
+      </div>
+      <p className="mt-3 text-[26px] font-bold leading-none text-[#F2EDE4]">ride</p>
+      <span className="mt-2 inline-block rounded-md bg-[#AB8EE2]/15 px-1.5 py-0.5 font-mono text-[12px] text-[#AB8EE2]">reyed</span>
+      <div className="mt-2.5 flex gap-1.5">
+        {RHYME_COLS.map((c, i) => (
+          <span key={c.ending} className="rounded-full border px-2.5 py-0.5 text-xs font-semibold" style={{ borderColor: c.color, color: c.color }}>
+            {i === 0 ? "A" : "Multi"} <span className="font-mono font-normal text-white/60">{c.total}</span>
+          </span>
+        ))}
+      </div>
+      <div className="mt-3 grid grid-cols-2 gap-2.5">
+        {RHYME_COLS.map((c) => (
+          <div key={c.ending} className="overflow-hidden rounded-xl border-[1.5px]" style={{ borderColor: c.color }}>
+            <div className="border-b px-3 py-2" style={{ borderColor: `${c.color}55`, background: `${c.color}14` }}>
+              <p className="flex items-baseline justify-between gap-2">
+                <span className="text-[15px] font-bold" style={{ color: c.color }}>
+                  {c.ending}
+                </span>
+                <span className="flex items-center gap-1 text-[11px] text-white/55">
+                  {aiPicks && <SfIcon name="sparkle" size={9} color="#AB8EE2" />}
+                  {aiPicks ? `${c.picked} of ${c.total}` : c.total}
+                </span>
+              </p>
+              <p className="text-[11px] text-white/50">{c.note}</p>
+            </div>
+            <div className="relative h-[232px] overflow-hidden px-2 pb-2">
+              {aiPicks ? (
+                <div className="space-y-1.5 pt-2">
+                  {c.picks.map(([w, why]) => (
+                    <div key={w} className="rounded-lg bg-white/[0.06] px-2.5 py-2">
+                      <p className="flex items-center gap-1.5 text-[14px] font-semibold text-[#F2EDE4]">
+                        <SfIcon name="sparkle" size={10} color="#AB8EE2" /> {w}
+                      </p>
+                      <p className="mt-0.5 text-[11px] leading-snug text-white/55">{why}</p>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                c.sections.map((sec) => (
+                  <div key={sec.label}>
+                    <p className="px-1 pb-1 pt-2.5 text-[9.5px] font-bold uppercase tracking-[0.12em] text-white/40">{sec.label}</p>
+                    {sec.words.map((w) => (
+                      <p key={w} className="px-1.5 py-[5px] text-[14px] text-[#F2EDE4]/90">
+                        {w}
+                      </p>
+                    ))}
+                  </div>
+                ))
+              )}
+              {/* The list keeps going */}
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-gradient-to-t from-[#1B1B1B] to-transparent" />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}

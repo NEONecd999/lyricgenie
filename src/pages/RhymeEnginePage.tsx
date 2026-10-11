@@ -1,6 +1,6 @@
 import { ArrowRight, AudioLines, BookOpen, Quote, Sparkles } from "lucide-react";
-import { FeatureKeyframes, RhymeSpotlight } from "@/components/Features";
-import { Eyebrow, FinalCTA, Glow, Head, Reveal, StudioPage, useInView, Window } from "@/components/studio/Studio";
+import { FeatureKeyframes } from "@/components/Features";
+import { Eyebrow, FinalCTA, Glow, Head, Reveal, RhymeColumnsMock, StudioPage, Window } from "@/components/studio/Studio";
 
 /**
  * /rhyme-engine: the rhyme technology behind Lyric Genie, the same engine that runs free at
@@ -10,11 +10,10 @@ import { Eyebrow, FinalCTA, Glow, Head, Reveal, StudioPage, useInView, Window } 
 const RHYMEGOLD = "https://rhymegold.com";
 
 function RhymeHero() {
-  const [ref, inView] = useInView();
   return (
     <section className="lg-mock-dark relative overflow-hidden pb-20 pt-12 md:pb-28 md:pt-16">
       <Glow className="left-[-140px] top-[-160px] h-[560px] w-[560px]" strength={30} />
-      <div ref={ref} className="container relative z-10 mx-auto grid items-center gap-12 px-6 lg:grid-cols-2 lg:gap-16">
+      <div className="container relative z-10 mx-auto grid items-center gap-12 px-6 lg:grid-cols-2 lg:gap-16">
         <Reveal className="mx-auto max-w-xl text-center lg:mx-0 lg:text-left">
           <Eyebrow>RhymeGold · the rhyme engine</Eyebrow>
           <h1 className="font-display text-[46px] font-bold leading-[1.03] tracking-tight text-white md:text-[64px]">
@@ -31,7 +30,7 @@ function RhymeHero() {
           </div>
         </Reveal>
         <Reveal delay={0.12} className="relative mx-auto w-full max-w-[520px]">
-          <RhymeSpotlight active={inView} />
+          <RhymeColumnsMock />
         </Reveal>
       </div>
     </section>

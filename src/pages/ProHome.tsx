@@ -1,6 +1,6 @@
 import { ArrowRight, Check } from "lucide-react";
-import { FeatureKeyframes, RhymeSpotlight } from "@/components/Features";
-import { BrowserArt, CoWriteMock, FinalCTA, Glow, Head, Hero, PhoneArt, Philosophy, Pricing, Reveal, Row, Scaled, StudioPage, Testimonials, useInView } from "@/components/studio/Studio";
+import { FeatureKeyframes } from "@/components/Features";
+import { BrowserArt, CoWriteMock, FinalCTA, Glow, Head, Hero, PhoneArt, Philosophy, Pricing, Reveal, Row, Scaled, StudioPage, Testimonials, RhymeColumnsMock } from "@/components/studio/Studio";
 
 /**
  * /pro: the new home page (to become /). The pitch in half a minute: the studio on both devices, a door
@@ -89,10 +89,9 @@ function CoWriting() {
 }
 
 function RhymeTeaser() {
-  const [ref, inView] = useInView();
   return (
     <section className="lg-mock-dark relative overflow-hidden bg-[#170E1C] py-24">
-      <div ref={ref} className="container mx-auto grid max-w-6xl items-center gap-12 px-6 lg:grid-cols-2 lg:gap-16">
+      <div className="container mx-auto grid max-w-6xl items-center gap-12 px-6 lg:grid-cols-2 lg:gap-16">
         <div className="w-full max-w-md justify-self-center">
           <Head
             eyebrow="RhymeGold"
@@ -115,7 +114,7 @@ function RhymeTeaser() {
         <Reveal delay={0.1} className="relative flex w-full max-w-[520px] justify-center justify-self-center">
           <Glow className="inset-[-8%_-4%] opacity-60" strength={20} />
           <div className="relative z-10 w-full max-w-[520px]">
-            <RhymeSpotlight active={inView} />
+            <RhymeColumnsMock aiPicks />
           </div>
         </Reveal>
       </div>

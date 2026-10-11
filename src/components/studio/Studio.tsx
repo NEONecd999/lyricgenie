@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, AudioWaveform, Check, MessageSquareText, Mic, Search, SlidersVertical, Sparkles, Video } from "lucide-react";
+import { ArrowRight, AudioWaveform, Check, MessageSquareText, MessagesSquare, Mic, ScrollText, Search, SlidersVertical, Video } from "lucide-react";
 import Footer from "@/components/Footer";
 import Wordmark from "@/components/Wordmark";
+import SfIcon from "@/components/SfIcon";
 import {
   AiContextSpotlight,
   CompactConcepts,
@@ -159,9 +160,11 @@ export function StudioPage({ title, description, current, accent = "#AB8EE2", gl
 // ─── Hero art: the desk and the pocket ──────────────────────────────────────
 
 export const LYRICS = ["I became another stranger", "No way that I could be forgiven", "Oh what have I done", "Now I'm lost, like a ghost,", "bleeding out for your love"];
+// As the iPhone app colours them (App Store screenshots, 2026-10): the owner green, a co-writer purple,
+// Master amber. Both devices use the same, so it reads as one song.
 export const WRITERS = [
-  { name: "Edan", color: C.accent },
-  { name: "Anton", color: C.coral },
+  { name: "Edan", color: "#8BC34A" },
+  { name: "Anton", color: C.accent },
   { name: "Master", color: C.amber },
 ];
 
@@ -247,8 +250,8 @@ export function BrowserArt() {
                   {l}
                   {i === 2 && (
                     <>
-                      <span className="ml-0.5 inline-block h-3.5 w-[1.5px] rounded-full" style={{ background: C.coral }} />
-                      <span className="ml-1 rounded px-1 py-px font-sans text-[8px] font-semibold leading-none text-[#1B0F31]" style={{ background: C.coral }}>
+                      <span className="ml-0.5 inline-block h-3.5 w-[1.5px] rounded-full" style={{ background: WRITERS[1].color }} />
+                      <span className="ml-1 rounded px-1 py-px font-sans text-[8px] font-semibold leading-none text-[#1B0F31]" style={{ background: WRITERS[1].color }}>
                         Anton
                       </span>
                     </>
@@ -287,53 +290,86 @@ export function BrowserArt() {
   );
 }
 
-/** A simplified Lyric Genie on iPhone, dark mode: the same song, the writer tabs, the round buttons. */
+/**
+ * A simplified Lyric Genie on iPhone, dark mode, as the current editor looks (App Store screenshots,
+ * 2026-10): the toolbar with its recording capsule, AI context, the title, folder tabs per writer, the
+ * lyrics, and Arrange / Spark / Genie along the bottom.
+ */
 export function PhoneArt() {
+  const ink = "#F2EDE4";
+  const icon = (name: string, size = 11, color = "#AB8EE2") => <SfIcon name={name} size={size} color={color} />;
   return (
     <div className="rounded-[34px] border border-white/15 bg-[#0D0910] p-[7px] shadow-[0_40px_90px_-20px_rgba(0,0,0,0.85)]">
       <div className="relative h-[372px] overflow-hidden rounded-[28px] bg-[#252525]">
+        {/* Status bar */}
         <div className="flex items-center justify-between px-5 pt-2.5 text-[9px] font-semibold text-white">
           <span>9:41</span>
           <span className="h-[18px] w-[64px] rounded-full bg-black" />
-          <span className="flex gap-0.5">
-            <span className="h-1.5 w-3 rounded-sm bg-white/80" />
-          </span>
+          <span className="h-1.5 w-3 rounded-sm bg-[#30D158]" />
         </div>
-        <div className="flex items-center gap-3 px-4 pt-3 text-white/60">
-          <ArrowRight className="size-3 rotate-180" />
-          <span className="ml-auto flex gap-2">
-            {[0, 1, 2].map((i) => (
-              <span key={i} className="size-3 rounded-full border border-white/40" />
-            ))}
+        {/* Toolbar */}
+        <div className="flex items-center gap-1.5 px-3 pt-2.5">
+          {icon("chevron.left", 10)}
+          {icon("arrow.uturn.backward", 10)}
+          {icon("arrow.uturn.forward", 10, "rgba(171,142,226,0.45)")}
+          <span className="mx-auto flex items-center gap-1.5 rounded-full bg-white/[0.08] px-2 py-1">
+            {icon("recordingtape", 10)}
+            <span className="flex size-2.5 items-center justify-center rounded-full border border-[#FF5A52]">
+              <span className="size-1.5 rounded-full bg-[#FF5A52]" />
+            </span>
+            {icon("wand.and.sparkles", 10)}
           </span>
+          <MessagesSquare className="size-[11px] text-[#AB8EE2]" />
+          <ScrollText className="size-[11px] text-[#AB8EE2]" />
+          {icon("ellipsis.circle", 11)}
         </div>
-        <p className="mt-0.5 px-4 text-[8px] text-white/45">
-          <span className="rounded bg-[#AB8EE2]/20 px-1 text-[#AB8EE2]">AI Context</span> Cinematic, late-night…
+        <p className="mt-1.5 truncate px-3.5 text-[7.5px] text-white/45">
+          <span className="font-semibold text-white/60">AI Context</span> Cinematic, late-night · No turning back…
         </p>
-        <p className="px-4 pt-2 text-[17px] font-bold text-[#F2EDE4]">Night Ride</p>
-        <div className="mx-4 mt-1.5 flex gap-1 border-b border-white/10 pb-1.5">
+        <div className="mx-3.5 mt-1.5 flex items-center justify-between border-t border-white/10 pt-1.5">
+          <p className="text-[15px] font-bold" style={{ color: ink }}>
+            Night Ride
+          </p>
+          <span className="flex size-5 items-center justify-center rounded-full bg-white/[0.08]">{icon("sparkles", 9)}</span>
+        </div>
+        {/* Folder tabs, one per writer */}
+        <div className="mx-3 mt-1.5 flex items-end gap-0.5 border-b border-white/10">
           {WRITERS.map((w, i) => (
-            <span key={w.name} className={`flex items-center gap-1 rounded-full px-1.5 py-0.5 text-[8px] font-medium ${i === 0 ? "bg-white/10 text-white" : "text-white/55"}`}>
-              <span className="size-1.5 rounded-full" style={{ background: w.color }} />
-              {w.name}
+            <span
+              key={w.name}
+              className={`flex items-center gap-1 rounded-t-md border border-b-0 px-1.5 py-1 text-[7.5px] font-semibold ${i === 0 ? "border-white/15 bg-[#2E2E2E]" : "border-white/[0.06] bg-white/[0.03]"}`}
+              style={{ color: w.color }}
+            >
+              {i === 0 ? <span className="size-2.5 rounded-full" style={{ background: w.color }} /> : i === 1 ? "☆" : "▤"}
+              {i === 0 ? `${w.name} (You)` : w.name}
             </span>
           ))}
         </div>
-        <div className="space-y-1 px-4 pt-2.5 text-[10.5px] leading-snug text-[#F2EDE4]/90">
-          <p className="text-[9px] font-bold text-[#AB8EE2]">Verse 1</p>
-          {LYRICS.map((l) => (
+        {/* Lyrics */}
+        <div className="space-y-[5px] px-3.5 pt-2.5 text-[9.5px] leading-snug" style={{ color: ink }}>
+          <p className="text-[9.5px] font-bold" style={{ color: WRITERS[0].color }}>
+            Verse 1
+          </p>
+          {LYRICS.slice(0, 4).map((l) => (
             <p key={l}>{l}</p>
           ))}
-          <p className="pt-1.5 text-[9px] font-bold text-[#AB8EE2]">Chorus</p>
+          <p className="pt-1 text-[9.5px] font-bold" style={{ color: WRITERS[0].color }}>
+            Chorus
+          </p>
+          <p>It's just you and I</p>
           <p>I'll take you on a night ride</p>
-          <p className="text-white/45">It's just you and I…</p>
+          <p className="text-white/40">It's just you and I…</p>
         </div>
-        <div className="absolute bottom-4 right-3.5 flex flex-col gap-2">
-          <span className="flex size-8 items-center justify-center rounded-full bg-[#AB8EE2] text-[#1B0F31]">
-            <Sparkles className="size-3.5" />
+        {/* Arrange on the left; Spark and Genie on the right */}
+        <div className="absolute inset-x-2.5 bottom-4 flex items-center gap-1.5">
+          <span className="flex items-center gap-1 rounded-full border border-white/15 bg-[#3A3A3A]/80 px-2 py-1 text-[8px] font-semibold text-[#C9B6F0] backdrop-blur">
+            {icon("square.grid.2x2", 8, "#C9B6F0")} Arrange
           </span>
-          <span className="flex size-8 items-center justify-center rounded-full bg-[#AB8EE2]/80 text-[#1B0F31]">
-            <Mic className="size-3.5" />
+          <span className="ml-auto flex items-center gap-1 rounded-full bg-[#7F62C4] px-2 py-1 text-[8px] font-semibold text-white">
+            <SfIcon src="/images/lamp.svg" size={10} color="#fff" /> Spark
+          </span>
+          <span className="flex items-center gap-1 rounded-full bg-[#7F62C4] px-2 py-1 text-[8px] font-semibold text-white">
+            <SfIcon src="/images/genie-icon.svg" size={10} color="#fff" /> Genie
           </span>
         </div>
         <span className="absolute bottom-1.5 left-1/2 h-1 w-20 -translate-x-1/2 rounded-full bg-white/60" />
@@ -343,35 +379,79 @@ export function PhoneArt() {
 }
 
 /** The hero's picture: the browser app behind, the iPhone app overlapping it in front, a co-writer's chip. */
+/**
+ * The hero's picture in 3D: the browser app set back in depth, the iPhone app in front of it, a
+ * co-writer's chip nearest. The scene turns slowly by itself and leans toward the pointer. One
+ * requestAnimationFrame loop writes the transform directly (no re-renders), easing toward its target so
+ * it never jitters; with reduced motion it holds a gentle, still angle.
+ */
 export function HeroDevices() {
+  const stage = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = stage.current;
+    if (!el) return;
+    const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const rest = { x: 6, y: -14 }; // degrees: tipped back a little, turned toward the text
+    if (still) {
+      el.style.transform = `rotateX(${rest.x}deg) rotateY(${rest.y}deg)`;
+      return;
+    }
+    const pointer = { x: 0, y: 0 }; // -1..1 from the picture's centre
+    const now = { x: rest.x, y: rest.y };
+    const onMove = (e: PointerEvent) => {
+      const r = el.getBoundingClientRect();
+      pointer.x = Math.max(-1, Math.min(1, (e.clientX - (r.left + r.width / 2)) / (window.innerWidth / 2)));
+      pointer.y = Math.max(-1, Math.min(1, (e.clientY - (r.top + r.height / 2)) / (window.innerHeight / 2)));
+    };
+    window.addEventListener("pointermove", onMove, { passive: true });
+    let raf = 0;
+    const t0 = performance.now();
+    const frame = (t: number) => {
+      const s = (t - t0) / 1000;
+      // The slow drift, plus a lean toward the pointer.
+      const target = {
+        x: rest.x + Math.sin(s * 0.35) * 2.5 - pointer.y * 6,
+        y: rest.y + Math.sin(s * 0.22 + 1) * 6 + pointer.x * 10,
+      };
+      now.x += (target.x - now.x) * 0.05;
+      now.y += (target.y - now.y) * 0.05;
+      el.style.transform = `rotateX(${now.x.toFixed(2)}deg) rotateY(${now.y.toFixed(2)}deg)`;
+      raf = requestAnimationFrame(frame);
+    };
+    raf = requestAnimationFrame(frame);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("pointermove", onMove);
+    };
+  }, []);
   return (
-    <Scaled w={740} h={480}>
-      {/* Each floats on its own beat, the phone a little more (it's nearer), so they read as two objects. */}
-      <style>{`
-        @keyframes lgFloatBack { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-6px) } }
-        @keyframes lgFloatFront { 0%,100% { transform: translateY(0) rotate(2deg) } 50% { transform: translateY(-12px) rotate(2deg) } }
-        @media (prefers-reduced-motion: reduce) { .lg-float-back, .lg-float-front { animation: none !important } }
-      `}</style>
-      <div className="lg-float-back absolute left-0 top-0 w-[580px]" style={{ animation: "lgFloatBack 7s ease-in-out infinite" }}>
-        <BrowserArt />
-      </div>
-      {/* Just over the browser's right edge (about 50px), not across it. */}
-      <div className="lg-float-front absolute bottom-0 right-0 w-[200px]" style={{ animation: "lgFloatFront 6s ease-in-out -2.5s infinite" }}>
-        <PhoneArt />
-      </div>
-      <div className="lg-float-back absolute left-[-14px] top-[330px] flex items-center gap-2 rounded-2xl border border-white/10 bg-[#1B1B1B]/90 px-3 py-2 shadow-xl backdrop-blur" style={{ animation: "lgFloatBack 7s ease-in-out infinite" }}>
-        <span className="flex -space-x-1.5">
-          {WRITERS.slice(0, 2).map((w) => (
-            <span key={w.name} className="flex size-6 items-center justify-center rounded-full text-[10px] font-bold text-white" style={{ background: w.color, boxShadow: "0 0 0 2px #1B1B1B" }}>
-              {w.name[0]}
+    <Scaled w={740} h={500}>
+      <div className="absolute inset-0" style={{ perspective: 1500, perspectiveOrigin: "50% 40%" }}>
+        <div ref={stage} className="absolute inset-0" style={{ transformStyle: "preserve-3d", willChange: "transform" }}>
+          {/* Back: the browser */}
+          <div className="absolute left-[10px] top-[20px] w-[590px]" style={{ transform: "translateZ(-90px)" }}>
+            <BrowserArt />
+          </div>
+          {/* Front: the iPhone, well forward of the browser */}
+          <div className="absolute bottom-[4px] right-[30px] w-[205px]" style={{ transform: "translateZ(110px)" }}>
+            <PhoneArt />
+          </div>
+          {/* Nearest: a co-writer at work */}
+          <div className="absolute left-[-6px] top-[352px] flex items-center gap-2 rounded-2xl border border-white/10 bg-[#1B1B1B]/90 px-3 py-2 shadow-xl backdrop-blur" style={{ transform: "translateZ(170px)" }}>
+            <span className="flex -space-x-1.5">
+              {WRITERS.slice(0, 2).map((w) => (
+                <span key={w.name} className="flex size-6 items-center justify-center rounded-full text-[10px] font-bold text-white" style={{ background: w.color, boxShadow: "0 0 0 2px #1B1B1B" }}>
+                  {w.name[0]}
+                </span>
+              ))}
             </span>
-          ))}
-        </span>
-        <span className="text-[11px] leading-tight text-white/80">
-          <span className="font-semibold text-white">Anton</span> is writing
-          <br />
-          <span className="text-white/50">on his iPhone</span>
-        </span>
+            <span className="text-[11px] leading-tight text-white/80">
+              <span className="font-semibold text-white">Anton</span> is writing
+              <br />
+              <span className="text-white/50">on his iPhone</span>
+            </span>
+          </div>
+        </div>
       </div>
     </Scaled>
   );

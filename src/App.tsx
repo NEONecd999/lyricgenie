@@ -6,6 +6,10 @@ import { Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Index from "./pages/Index";
 import ProHome from "./pages/ProHome";
+import WebPage from "./pages/WebPage";
+import IPhonePage from "./pages/IPhonePage";
+import RhymeEnginePage from "./pages/RhymeEnginePage";
+import PricingPage from "./pages/PricingPage";
 import About from "./pages/About";
 import Support from "./pages/Support";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -74,6 +78,10 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/pro" element={<ProHome />} />
+            <Route path="/web" element={<WebPage />} />
+            <Route path="/iphone" element={<IPhonePage />} />
+            <Route path="/rhyme-engine" element={<RhymeEnginePage />} />
+            <Route path="/pricing" element={<PricingPage />} />
             <Route path="/about" element={<About />} />
             <Route path="/support" element={<Support />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />

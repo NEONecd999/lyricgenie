@@ -1,4 +1,4 @@
-import { ArrowRight, AudioLines, BookOpen, Quote, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { FeatureKeyframes } from "@/components/Features";
 import { Eyebrow, FinalCTA, Glow, Head, Reveal, RhymeSlidesMock, StudioPage, Window } from "@/components/studio/Studio";
 
@@ -37,26 +37,168 @@ function RhymeHero() {
   );
 }
 
-function HowItWorks() {
-  const items: [typeof AudioLines, string, string][] = [
-    [AudioLines, "Phonetic, not spelling", "Every word is matched by its sounds, from the CMU Pronouncing Dictionary. \"Through\" rhymes with \"blue\", not \"rough\"."],
-    [Sparkles, "Multi-syllable and slant", "Rhymes across two and three syllables, and near rhymes when a perfect one won't do. Slant rhymes are a switch away."],
-    [Quote, "Phrases, not just words", "Phrase rhymes drawn from how 5,646 songs use language (statistics only; no lyrics are kept), plus idioms from Wiktionary."],
-    [BookOpen, "Free, fast, no sign-up", "RhymeGold runs in your browser and works as you type. No account needed."],
+const A = "#64A8FF";
+const B = "#FF8A65";
+
+/** One syllable: stressed ones carry their anchor's colour and label; weak ones are plain. */
+function Syl({ text, anchor }: { text: string; anchor?: "A" | "B" }) {
+  const c = anchor === "A" ? A : anchor === "B" ? B : null;
+  return (
+    <span className="inline-flex flex-col items-center gap-1">
+      <span
+        className="rounded-lg px-2 py-1 text-[15px] font-semibold"
+        style={c ? { color: c, background: `${c}1f`, boxShadow: `inset 0 0 0 1.5px ${c}` } : { color: "rgba(242,237,228,0.55)", background: "rgba(255,255,255,0.05)" }}
+      >
+        {text}
+      </span>
+      <span className="h-3 text-[10px] font-bold" style={{ color: c ?? "rgba(255,255,255,0.35)" }}>
+        {anchor ?? "•"}
+      </span>
+    </span>
+  );
+}
+
+/** The column shapes, each with a real result for "highway" spelled out by syllable. */
+const SHAPES: { label: string; what: string; example: { text: string; anchor?: "A" | "B" }[] }[] = [
+  { label: "A", what: "rhymes with the first stressed syllable", example: [{ text: "fly", anchor: "A" }] },
+  { label: "B", what: "rhymes with the second", example: [{ text: "day", anchor: "B" }] },
+  { label: "A B", what: "both, side by side", example: [{ text: "drive", anchor: "A" }, { text: "way", anchor: "B" }] },
+  { label: "A • B", what: "both, one syllable between", example: [{ text: "by", anchor: "A" }, { text: "the" }, { text: "way", anchor: "B" }] },
+  { label: "A • • B", what: "both, two or more between", example: [{ text: "like", anchor: "A" }, { text: "ev" }, { text: "ery" }, { text: "day", anchor: "B" }] },
+];
+
+/**
+ * "highway" as the engine reads it: the word split into syllables, each syllable's phonemes under it
+ * (CMU notation; the numbers mark stress), the stressed vowels lit as A and B, and the dictionary entry
+ * they came from. Phonemes from the real engine (public/rhymes, 2026-10-11).
+ */
+function Phonetics() {
+  const syllables: { text: string; phones: { p: string; stress?: string }[]; anchor: "A" | "B" }[] = [
+    { text: "high", phones: [{ p: "HH" }, { p: "AY", stress: "1" }], anchor: "A" },
+    { text: "way", phones: [{ p: "W" }, { p: "EY", stress: "2" }], anchor: "B" },
   ];
   return (
-    <section className="bg-[#170E1C] py-24">
-      <div className="container mx-auto px-6">
-        <Head center eyebrow="How it works" title="A rhyming dictionary built for songwriters." />
-        <div className="mx-auto mt-12 grid max-w-5xl gap-4 sm:grid-cols-2">
-          {items.map(([Icon, title, text], i) => (
-            <Reveal key={title} delay={(i % 2) * 0.06} className="rounded-2xl border border-white/10 bg-[#1B1B1B] p-6">
-              <Icon className="size-5 text-[var(--acc)]" />
-              <p className="mt-3 text-lg font-semibold text-white">{title}</p>
-              <p className="mt-1.5 text-[15px] leading-relaxed text-white/60">{text}</p>
-            </Reveal>
-          ))}
+    <div className="flex w-full flex-col items-center">
+      {/* The word, by syllable */}
+      <p className="flex items-baseline gap-2 font-display text-[44px] font-bold leading-none sm:gap-3 sm:text-[56px] md:text-[72px]">
+        {syllables.map((sy, i) => (
+          <span key={sy.text} className="flex items-baseline gap-3">
+            {i > 0 && <span className="text-[32px] text-white/25 sm:text-[40px]">·</span>}
+            <span style={{ color: sy.anchor === "A" ? A : B }}>{sy.text}</span>
+          </span>
+        ))}
+      </p>
+      <p className="mt-2 text-sm text-white/45">2 syllables · both stressed</p>
+      {/* Each syllable's sounds */}
+      <div className="mt-6 flex flex-wrap justify-center gap-3">
+        {syllables.map((sy) => {
+          const c = sy.anchor === "A" ? A : B;
+          return (
+            <div key={sy.text} className="flex flex-col items-center gap-2">
+              <div className="flex gap-1.5 rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2.5 font-mono">
+                {sy.phones.map((x) => (
+                  <span
+                    key={x.p}
+                    className="rounded-md px-2 py-1 text-[17px]"
+                    style={x.stress ? { color: c, background: `${c}1f`, boxShadow: `inset 0 0 0 1.5px ${c}` } : { color: "rgba(242,237,228,0.55)" }}
+                  >
+                    {x.p}
+                    {x.stress && <sup className="ml-px text-[11px]">{x.stress}</sup>}
+                  </span>
+                ))}
+              </div>
+              <span className="text-[12px] font-bold" style={{ color: c }}>
+                {sy.anchor} · stressed {sy.anchor === "A" ? "“eye”" : "“ay”"}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+      {/* Where the sounds came from */}
+      <div className="mt-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-1 rounded-xl bg-black/25 px-4 py-2.5 font-mono text-[13px]">
+        <span className="font-sans text-[11px] font-semibold uppercase tracking-[0.12em] text-white/40">CMU Pronouncing Dictionary</span>
+        <span className="text-white/80">
+          HIGHWAY&nbsp;&nbsp;HH <span style={{ color: A }}>AY1</span> W <span style={{ color: B }}>EY2</span>
+        </span>
+        <span className="font-sans text-[12px] font-semibold text-[#30D158]">✓ match</span>
+      </div>
+    </div>
+  );
+}
+
+/** One step of how it works: its number on the connecting line, the words, and the picture beside them. */
+function Step({ n, title, text, last = false, children }: { n: number; title: string; text: React.ReactNode; last?: boolean; children: React.ReactNode }) {
+  return (
+    <div className="relative grid grid-cols-[40px_minmax(0,1fr)] gap-x-5 md:grid-cols-[56px_minmax(0,1fr)] md:gap-x-8">
+      {/* The number, and the line on to the next step */}
+      <div className="relative flex justify-center">
+        <span className="relative z-10 flex size-10 items-center justify-center rounded-full border border-[var(--acc)] bg-[#170E1C] font-display text-lg font-bold text-[var(--acc)] md:size-12 md:text-xl">{n}</span>
+        {!last && <span className="absolute bottom-[-4rem] top-12 w-px bg-gradient-to-b from-[var(--acc)] to-white/10" aria-hidden />}
+      </div>
+      <Reveal className={`grid items-center gap-8 lg:grid-cols-[minmax(0,0.75fr)_minmax(0,1.25fr)] lg:gap-12 ${last ? "" : "pb-16"}`}>
+        <div className="pt-1.5">
+          <p className="text-2xl font-semibold text-white md:text-[28px]">{title}</p>
+          <div className="mt-2 text-[16px] leading-relaxed text-white/60">{text}</div>
         </div>
+        <div className="min-w-0">{children}</div>
+      </Reveal>
+    </div>
+  );
+}
+
+function HowItWorks() {
+  return (
+    <section className="bg-[#170E1C] py-24 md:py-32">
+      <div className="container mx-auto px-6">
+        <Head
+          center
+          eyebrow="How it works"
+          title={
+            <>
+              Two stressed syllables. <span className="text-[#F6ECC9]">135,000 places to land.</span>
+            </>
+          }
+          lead="A rhyme lives in the stressed syllables. RhymeGold finds them, then searches every word and phrase for the same sounds in the same shape."
+        />
+        <div className="mx-auto mt-16 max-w-6xl">
+          <Step n={1} title="Find the stresses" text="It looks your word or phrase up in the CMU Pronouncing Dictionary, splits it into syllables and sounds, and finds the stressed vowels that carry the rhyme: A and B.">
+            <Phonetics />
+          </Step>
+          <Step
+            n={2}
+            title="Match by sound"
+            text={
+              <>
+                Every word and phrase is matched on those vowels and what follows them, never on spelling, so <span className="text-white">“through”</span> rhymes with{" "}
+                <span className="text-white">“blue”</span>, not <span className="text-white">“rough”</span>. Near and slant rhymes too, when a perfect one won't do.
+              </>
+            }
+          >
+            <div className="flex flex-col items-center text-center">
+              <span className="font-display text-[64px] font-bold leading-none text-[#F6ECC9] md:text-[88px]">135,000</span>
+              <span className="mt-2 text-lg text-white/70">words and phrases</span>
+              <span className="mt-4 max-w-sm text-sm text-white/45">The CMU Pronouncing Dictionary, phrases from how 5,646 songs use language (statistics only; no lyrics are kept), and Wiktionary idioms.</span>
+            </div>
+          </Step>
+          <Step n={3} last title="Sort by shape" text="Results land in columns by where the rhymes fall: on A, on B, or on both, with nothing, one, or two or more syllables between. Here's one from each for highway.">
+            <div className="divide-y divide-white/[0.08] border-y border-white/[0.08]">
+              {SHAPES.map((sh) => (
+                <div key={sh.label} className="grid items-center gap-x-4 gap-y-2 py-3.5 sm:grid-cols-[84px_minmax(0,1fr)_auto]">
+                  <span className="font-mono text-[15px] font-bold text-white">{sh.label}</span>
+                  <span className="text-[15px] text-white/55">{sh.what}</span>
+                  <span className="flex items-end gap-1.5">
+                    {sh.example.map((x, i) => (
+                      <Syl key={i} text={x.text} anchor={x.anchor} />
+                    ))}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </Step>
+        </div>
+        <p className="mx-auto mt-14 max-w-xl text-center text-sm text-white/50">
+          Free at RhymeGold.com, in your browser as you type. No sign-up.
+        </p>
       </div>
     </section>
   );

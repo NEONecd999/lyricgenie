@@ -1,5 +1,5 @@
 import { FeatureKeyframes, FreestyleSpotlight } from "@/components/Features";
-import { AppStoreCTA, CaptureMock, ChatMock, Eyebrow, FinalCTA, Glow, Head, PerformMock, PhoneArt, Reveal, Row, StudioPage, ToolsTabs } from "@/components/studio/Studio";
+import { AppStoreCTA, CaptureMock, RecordingsMock, ChatMock, Eyebrow, FinalCTA, Glow, Head, PerformMock, PhoneArt, Reveal, Row, StudioPage, ToolsTabs } from "@/components/studio/Studio";
 import { WEB_SIGNUP } from "@/lib/links";
 
 /** /iphone: Lyric Genie for iPhone, iPad and Mac. Warm coral, the mobile side's colour. */
@@ -81,6 +81,18 @@ const IPhonePage = () => (
       </Row>
       <Row
         flip
+        eyebrow="Recordings"
+        tint="rgba(232,102,60,.22)"
+        title={
+          <>
+            Every melody, <span className="text-[#F6ECC9]">right in the song.</span>
+          </>
+        }
+        text="Record a take from any line and it's linked there. Waveforms, transcripts, and playback while you keep writing."
+      >
+        {() => <RecordingsMock />}
+      </Row>
+      <Row
         eyebrow="Freestyle · iPhone only"
         tint="rgba(228,92,122,.22)"
         title={

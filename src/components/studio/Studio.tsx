@@ -1808,3 +1808,93 @@ export function ImportMock() {
     </div>
   );
 }
+
+/** The song's chat on the desk: messages with attachments (a photo of a notebook page, a take). */
+export function ChatAttachMock() {
+  return (
+    <div className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#1B1B1B] p-5 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]">
+      <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-white/45">Night Ride · chat</p>
+      <div className="mt-3 space-y-3 text-[13px]">
+        <div className="flex items-end gap-2">
+          <span className="flex size-6 shrink-0 items-center justify-center rounded-full text-[10px] font-bold text-white" style={{ background: WRITERS[1].color }}>
+            A
+          </span>
+          <div className="max-w-[78%] space-y-1.5">
+            <p className="text-[11px] font-semibold" style={{ color: WRITERS[1].color }}>
+              Anton
+            </p>
+            {/* A photo of a notebook page */}
+            <div className="relative h-28 w-48 overflow-hidden rounded-xl bg-[#EFE6CC] p-3 shadow-inner" style={{ backgroundImage: "repeating-linear-gradient(transparent 0 15px, rgba(58,123,208,.25) 15px 16px)" }}>
+              <p className="font-serif text-[12px] italic leading-[16px] text-[#2A1B33]">
+                headlights in the rain
+                <br />
+                ghost on fifth again
+                <br />
+                <span className="line-through opacity-60">burning out</span> bleeding out
+              </p>
+            </div>
+            <p className="rounded-2xl rounded-bl-md bg-white/[0.07] px-3 py-1.5 text-[#F2EDE4]">From my notebook last night. Bridge?</p>
+          </div>
+        </div>
+        <div className="flex justify-end">
+          <div className="max-w-[78%] space-y-1.5">
+            <p className="flex items-center gap-2 rounded-xl bg-[#AB8EE2]/20 px-3 py-2 text-[12px] text-[#F2EDE4]">
+              <span className="flex size-6 items-center justify-center rounded-full bg-[#AB8EE2] text-[10px] text-[#1B0F31]">▶</span>
+              <span className="flex flex-col">
+                <span className="font-medium">Bridge melody</span>
+                <span className="text-[10px] text-white/50">0:28 · added to Recordings</span>
+              </span>
+            </p>
+            <p className="rounded-2xl rounded-br-md bg-[#AB8EE2]/20 px-3 py-1.5 text-[#F2EDE4]">Sang it over your lines 👆</p>
+          </div>
+        </div>
+      </div>
+      <div className="mt-4 flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] py-1.5 pl-3 pr-1.5">
+        <span className="text-white/45">📎</span>
+        <span className="flex-1 text-[12px] text-white/40">Message your co-writers…</span>
+        <span className="rounded-full bg-[#AB8EE2] px-3 py-1 text-[11px] font-semibold text-[#1B0F31]">Send</span>
+      </div>
+    </div>
+  );
+}
+
+/** A song's takes on iPhone: each with its waveform, the line it's linked to, and a transcript; record more. */
+export function RecordingsMock() {
+  const takes = [
+    { title: "Chorus melody", time: "0:42", line: "I'll take you on a night ride", playing: true, color: "#E8663C" },
+    { title: "Bridge idea", time: "0:28", line: "Headlights bleed into the rain", playing: false, color: "#AB8EE2" },
+    { title: "Verse 2 hum", time: "1:05", line: null, playing: false, color: "#3A7BD0" },
+  ];
+  return (
+    <div className="w-full max-w-sm rounded-2xl border border-white/10 bg-[#1B1B1B] p-5 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]">
+      <div className="flex items-center justify-between">
+        <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-white/45">Night Ride · recordings</span>
+        <span className="font-mono text-[11px] text-white/40">3 takes</span>
+      </div>
+      <div className="mt-3 space-y-2.5">
+        {takes.map((t) => (
+          <div key={t.title} className={`rounded-xl px-3 py-2.5 ${t.playing ? "bg-white/[0.08]" : "bg-white/[0.04]"}`}>
+            <div className="flex items-center gap-2.5">
+              <span className="flex size-7 shrink-0 items-center justify-center rounded-full text-[10px] text-white" style={{ background: t.color }}>
+                {t.playing ? "❚❚" : "▶"}
+              </span>
+              <span className="min-w-0 flex-1 truncate text-[13px] font-medium text-[#F2EDE4]">{t.title}</span>
+              <span className="font-mono text-[11px] text-white/45">{t.time}</span>
+            </div>
+            <div className="mt-2 flex h-6 items-center gap-[2px]">
+              {Array.from({ length: 44 }, (_, i) => (
+                <span key={i} className="w-[3px] rounded-full" style={{ height: `${20 + 75 * Math.abs(Math.sin(i * 0.55 + t.title.length) * Math.cos(i * 0.21))}%`, background: t.playing && i < 18 ? t.color : "rgba(255,255,255,0.18)" }} />
+              ))}
+            </div>
+            {t.line && <p className="mt-1.5 truncate text-[11px] text-[#AB8EE2]">↳ “{t.line}”</p>}
+          </div>
+        ))}
+      </div>
+      <div className="mt-4 flex justify-center">
+        <span className="flex size-12 items-center justify-center rounded-full border-2 border-white/25">
+          <span className="size-8 rounded-full bg-[#FF5A52]" />
+        </span>
+      </div>
+    </div>
+  );
+}

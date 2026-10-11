@@ -1,5 +1,5 @@
-import { AiContextSpotlight, FeatureKeyframes, WishWorkshopSpotlight } from "@/components/Features";
-import { BrowserArt, CoWriteMock, Desk, Eyebrow, FinalCTA, Glow, More, PrimaryCTA, Reveal, Row, Scaled, SearchMock, SessionMock, StudioPage, RhymeColumnsMock } from "@/components/studio/Studio";
+import { FeatureKeyframes } from "@/components/Features";
+import { BrowserArt, CoWriteMock, Desk, Eyebrow, FinalCTA, Glow, More, PrimaryCTA, Reveal, Row, Scaled, SearchMock, SessionMock, StudioPage, ToolsTabs } from "@/components/studio/Studio";
 import { WEB_SIGNIN } from "@/lib/links";
 
 /** /web: Lyric Genie on your computer. Lavender, like the desktop app's accent. */
@@ -32,19 +32,20 @@ function WebHero() {
   );
 }
 
-function Rows() {
+/** Write together: co-writing and sessions, the desk at its best with other people. */
+function Together() {
   return (
-    <section className="lg-mock-dark py-24 md:py-32">
+    <section className="py-24 md:py-32">
       <div className="container mx-auto space-y-28 px-6 md:space-y-36">
         <Row
-          eyebrow="Co-write in real time"
+          eyebrow="Write together"
           tint="rgba(232,102,60,.22)"
           title={
             <>
               Every writer <span className="text-[#F6ECC9]">gets a tab.</span>
             </>
           }
-          text="Try ideas on your own tab, agree on the Master. Live cursors, notes on the words, chat beside the song."
+          text="Try ideas on your own tab, agree on the Master. Live cursors, notes pinned to the words, chat beside the song."
         >
           {() => <CoWriteMock />}
         </Row>
@@ -65,46 +66,18 @@ function Rows() {
         >
           {() => <SessionMock />}
         </Row>
+      </div>
+    </section>
+  );
+}
+
+/** Fast: search and shortcuts. */
+function Fast() {
+  return (
+    <section className="py-24 md:py-32">
+      <div className="container mx-auto px-6">
         <Row
-          eyebrow="AI context"
-          tint="rgba(177,155,226,.3)"
-          title={
-            <>
-              AI that knows <span className="text-[#F6ECC9]">your song.</span>
-            </>
-          }
-          text="Give it the mood, the story and your references. Every suggestion starts from there."
-        >
-          {(a) => <AiContextSpotlight active={a} />}
-        </Row>
-        <Row
-          flip
-          eyebrow="Wish Workshop"
-          tint="rgba(127,98,196,.3)"
-          title={
-            <>
-              Stuck on a line? <span className="text-[#F6ECC9]">Make a wish.</span>
-            </>
-          }
-          text="Darker, happier, more visual, or your own words. Keep the rhyme and the meter."
-        >
-          {(a) => <WishWorkshopSpotlight active={a} />}
-        </Row>
-        <Row
-          eyebrow="Rhymes"
-          tint="rgba(58,123,208,.22)"
-          title={
-            <>
-              Every rhyme, <span className="text-[#F6ECC9]">in reach.</span>
-            </>
-          }
-          text="Select anything for perfect, near, multi-syllable and phrase rhymes, synonyms and syllable counts."
-        >
-          {() => <RhymeColumnsMock aiPicks />}
-        </Row>
-        <Row
-          flip
-          eyebrow="Search and shortcuts"
+          eyebrow="Fast"
           tint="rgba(127,98,196,.25)"
           title={
             <>
@@ -131,8 +104,18 @@ const WebPage = () => (
     <FeatureKeyframes />
     <WebHero />
     <Desk />
-    <Rows />
-    <More keys={["recordings", "sheets", "import", "projects", "concepts", "perform"]} />
+    <Together />
+    <ToolsTabs
+      variant="web"
+      eyebrow="Tools in the side panel"
+      title={
+        <>
+          Help when you ask. <span className="text-[#F6ECC9]">Quiet when you don't.</span>
+        </>
+      }
+    />
+    <Fast />
+    <More keys={["sheets", "projects", "import"]} title="Ready to send." />
     <FinalCTA />
   </StudioPage>
 );

@@ -1375,3 +1375,156 @@ export function RhymeSlidesMock() {
     </div>
   );
 }
+
+// ─── Genie, the tools tabs, and the iPhone moments ──────────────────────────
+
+/** Genie in the side panel, dark mode: a question about the song, a reply, and a line edit to apply. */
+export function GenieMock() {
+  return (
+    <div className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#1B1B1B] p-5 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]">
+      <p className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.14em] text-white/45">
+        <SfIcon src="/images/genie-icon.svg" size={13} color="#AB8EE2" /> Genie
+      </p>
+      <div className="mt-3 ml-auto max-w-[80%] rounded-2xl rounded-br-md bg-[#AB8EE2]/20 px-3.5 py-2 text-[13.5px] text-[#F2EDE4]">The chorus feels flat after line two. Any ideas to lift it?</div>
+      <div className="mt-3 max-w-[92%] text-[13.5px] leading-relaxed text-white/75">
+        “Beautiful” shows up in lines two and three, so the second one lands softer. Line three has your strongest image; give it a fresh word:
+      </div>
+      <div className="mt-3 rounded-xl border border-white/10 bg-white/[0.04] p-3">
+        <p className="font-serif text-[14px] not-italic text-white/40 line-through">I'm the conductor of this beautiful mess</p>
+        <p className="mt-1 font-serif text-[14px] not-italic text-[#F2EDE4]">I'm the conductor of this glorious mess</p>
+        <div className="mt-2.5 flex justify-end gap-2">
+          <span className="rounded-full px-3 py-1 text-[11px] text-white/55">Dismiss</span>
+          <span className="rounded-full bg-[#AB8EE2] px-3 py-1 text-[11px] font-semibold text-[#1B0F31]">Apply</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const TOOL_TABS = {
+  web: [
+    { key: "genie", label: "Genie", text: "Ask about the song as it is right now. Suggested edits apply in one click, or not at all.", art: () => <GenieMock /> },
+    { key: "wish", label: "Wish Workshop", text: "Select a line, make a wish: darker, more visual, your own words. Keep the rhyme and meter.", art: (a: boolean) => <WishWorkshopSpotlight active={a} /> },
+    { key: "rhymes", label: "Rhymes", text: "Select any word for rhymes in columns, with AI Picks for the ones that fit this song.", art: () => <RhymeColumnsMock aiPicks /> },
+    { key: "context", label: "AI context", text: "Mood, story and references: every tool starts from your song, not a blank prompt.", art: (a: boolean) => <AiContextSpotlight active={a} /> },
+  ],
+  iphone: [
+    { key: "rhymes", label: "Rhymes", text: "The line that came on the walk, finished before you're home. Tap a word for rhymes in columns.", art: () => <RhymeColumnsMock aiPicks /> },
+    { key: "wish", label: "Wish Workshop", text: "Stuck in the car? Rewrite a line darker, happier or your way, keeping the rhyme.", art: (a: boolean) => <WishWorkshopSpotlight active={a} /> },
+    { key: "genie", label: "Genie", text: "Talk the song through anywhere. Genie knows its mood, story and lyrics so far.", art: () => <GenieMock /> },
+  ],
+};
+
+/**
+ * The writing tools as one section with tabs (not a row each): the same tools on both apps, framed for
+ * where you are, the desk (`web`) or on the go (`iphone`).
+ */
+export function ToolsTabs({ variant, eyebrow, title }: { variant: "web" | "iphone"; eyebrow: string; title: ReactNode }) {
+  const tabs = TOOL_TABS[variant];
+  const [active, setActive] = useState(tabs[0].key);
+  const [ref, inView] = useInView();
+  const tab = tabs.find((t) => t.key === active)!;
+  return (
+    <section className="lg-mock-dark bg-[#170E1C] py-24 md:py-32">
+      <FeatureKeyframes />
+      <div ref={ref} className="container mx-auto px-6">
+        <Head center eyebrow={eyebrow} title={title} />
+        <div className="mt-10 flex flex-wrap justify-center gap-2" role="tablist" aria-label="Writing tools">
+          {tabs.map((t) => (
+            <button
+              key={t.key}
+              type="button"
+              role="tab"
+              aria-selected={active === t.key}
+              onClick={() => setActive(t.key)}
+              className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors ${active === t.key ? "bg-[#F6ECC9] text-[#6F50B8]" : "bg-white/5 text-white/75 hover:bg-white/10 hover:text-white"}`}
+            >
+              {t.label}
+            </button>
+          ))}
+        </div>
+        <p className="mx-auto mt-5 max-w-xl text-center text-[16px] text-white/60">{tab.text}</p>
+        <div key={tab.key} className="lg-fade-up mx-auto mt-10 flex max-w-[520px] justify-center">
+          {tab.art(inView)}
+        </div>
+        <p className="mt-10 text-center text-xs text-white/40">On the web and iPhone, synced.</p>
+      </div>
+    </section>
+  );
+}
+
+/** Catching an idea on iPhone: a voice memo, its transcript (iPhone), and the line it's linked to. */
+export function CaptureMock() {
+  return (
+    <div className="w-full max-w-sm rounded-2xl border border-white/10 bg-[#1B1B1B] p-5 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]">
+      <div className="flex items-center justify-between">
+        <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-white/45">Ideas inbox</span>
+        <span className="flex items-center gap-1.5 text-[11px] font-semibold text-[#FF5A52]">
+          <span className="size-1.5 animate-pulse rounded-full bg-[#FF5A52]" /> Recording
+        </span>
+      </div>
+      <p className="mt-3 text-[15px] font-semibold text-[#F2EDE4]">Highway idea</p>
+      <div className="mt-2 flex h-10 items-center gap-[2px]">
+        {Array.from({ length: 46 }, (_, i) => (
+          <span key={i} className="w-[3px] rounded-full bg-[#FF8A65]" style={{ height: `${25 + 70 * Math.abs(Math.sin(i * 0.6) * Math.cos(i * 0.23))}%`, opacity: i < 34 ? 1 : 0.3 }} />
+        ))}
+      </div>
+      <p className="mt-1 font-mono text-[11px] text-white/45">0:42</p>
+      <div className="mt-4 rounded-xl bg-white/[0.05] p-3">
+        <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-white/40">Transcript</p>
+        <p className="mt-1 text-[13px] italic leading-relaxed text-white/75">“…we could drive until the morning, let the highway take the blame…”</p>
+      </div>
+      <p className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-[#AB8EE2]/15 px-2.5 py-1 text-[11px] font-medium text-[#AB8EE2]">↳ Linked to Night Ride · Chorus</p>
+    </div>
+  );
+}
+
+/** Perform on iPhone: the lyrics big on black, the current line lit, the next one waiting. */
+export function PerformMock() {
+  return (
+    <div className="w-full max-w-sm overflow-hidden rounded-2xl border border-white/10 bg-black p-7 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.8)]">
+      <p className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-white/40">
+        <span className="size-1.5 rounded-full bg-[#30D158]" /> Perform · Night Ride
+      </p>
+      <div className="mt-6 space-y-3 font-bold leading-tight">
+        <p className="text-[22px] text-white/25">It's just you and I</p>
+        <p className="text-[30px] text-white">I'll take you on a night ride</p>
+        <p className="text-[22px] text-white/45">It's just you and I</p>
+        <p className="text-[22px] text-white/25">We'll drive until the sunlight</p>
+      </div>
+    </div>
+  );
+}
+
+/** Co-writers in your pocket: the song's chat with a take, a session badge, and a reply. */
+export function ChatMock() {
+  return (
+    <div className="w-full max-w-sm rounded-2xl border border-white/10 bg-[#1B1B1B] p-5 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]">
+      <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-white/45">Night Ride · chat</p>
+      <div className="mt-3 space-y-2.5 text-[13px]">
+        <div className="flex items-end gap-2">
+          <span className="flex size-6 shrink-0 items-center justify-center rounded-full text-[10px] font-bold text-white" style={{ background: WRITERS[1].color }}>
+            A
+          </span>
+          <div className="max-w-[80%]">
+            <p className="mb-0.5 text-[11px] font-semibold" style={{ color: WRITERS[1].color }}>
+              Anton
+            </p>
+            <p className="rounded-2xl rounded-bl-md bg-white/[0.07] px-3 py-1.5 text-[#F2EDE4]">Hummed this on the drive home. Bridge?</p>
+            <p className="mt-1 flex items-center gap-2 rounded-xl bg-white/[0.07] px-3 py-2 text-[12px] text-white/80">
+              <span className="flex size-5 items-center justify-center rounded-full bg-[#AB8EE2] text-[9px] text-[#1B0F31]">▶</span> Bridge melody · 0:31
+            </p>
+          </div>
+        </div>
+        <p className="flex justify-center">
+          <span className="inline-flex items-center gap-1.5 rounded-full bg-white/[0.06] px-2.5 py-1 text-[11px] text-white/55">
+            <span className="size-1.5 rounded-full bg-[#30D158]" /> <span className="font-semibold" style={{ color: WRITERS[0].color }}>Edan</span> joined the session
+          </span>
+        </p>
+        <div className="flex justify-end">
+          <p className="max-w-[80%] rounded-2xl rounded-br-md bg-[#AB8EE2]/20 px-3 py-1.5 text-[#F2EDE4]">That's the one. Adding it now.</p>
+        </div>
+      </div>
+    </div>
+  );
+}

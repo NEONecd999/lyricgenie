@@ -1,5 +1,5 @@
-import { AiContextSpotlight, FeatureKeyframes, FreestyleSpotlight, WishWorkshopSpotlight } from "@/components/Features";
-import { AppStoreCTA, CoWriteMock, Eyebrow, Glow, Head, More, PhoneArt, Reveal, Row, StudioPage, RhymeColumnsMock } from "@/components/studio/Studio";
+import { FeatureKeyframes, FreestyleSpotlight } from "@/components/Features";
+import { AppStoreCTA, CaptureMock, ChatMock, Eyebrow, FinalCTA, Glow, Head, PerformMock, PhoneArt, Reveal, Row, StudioPage, ToolsTabs } from "@/components/studio/Studio";
 import { WEB_SIGNUP } from "@/lib/links";
 
 /** /iphone: Lyric Genie for iPhone, iPad and Mac. Warm coral, the mobile side's colour. */
@@ -34,73 +34,11 @@ function IPhoneHero() {
   );
 }
 
-function Rows() {
+/** The phone's moments: catching an idea, Freestyle (iPhone only), the stage, your co-writers. */
+function Moments({ children }: { children: React.ReactNode }) {
   return (
     <section className="lg-mock-dark py-24 md:py-32">
-      <div className="container mx-auto space-y-28 px-6 md:space-y-36">
-        <Row
-          eyebrow="Freestyle mode"
-          tint="rgba(228,92,122,.22)"
-          title={
-            <>
-              Mumble the melody. <span className="text-[#F6ECC9]">Get real lyrics.</span>
-            </>
-          }
-          text="Sing placeholder sounds on the melody in your head. Lyric Genie keeps the phrasing and turns it into words that fit your song."
-        >
-          {(a) => <FreestyleSpotlight active={a} />}
-        </Row>
-        <Row
-          flip
-          eyebrow="Wish Workshop"
-          tint="rgba(127,98,196,.3)"
-          title={
-            <>
-              Stuck on a line? <span className="text-[#F6ECC9]">Make a wish.</span>
-            </>
-          }
-          text="Darker, happier, more visual, or your own words. Keep the rhyme and the meter."
-        >
-          {(a) => <WishWorkshopSpotlight active={a} />}
-        </Row>
-        <Row
-          eyebrow="Rhymes"
-          tint="rgba(58,123,208,.22)"
-          title={
-            <>
-              Every rhyme, <span className="text-[#F6ECC9]">one tap away.</span>
-            </>
-          }
-          text="Perfect, near, multi-syllable and phrase rhymes, plus synonyms and sound-alikes, in one sheet."
-        >
-          {() => <RhymeColumnsMock aiPicks />}
-        </Row>
-        <Row
-          flip
-          eyebrow="AI context"
-          tint="rgba(177,155,226,.3)"
-          title={
-            <>
-              AI that knows <span className="text-[#F6ECC9]">your song.</span>
-            </>
-          }
-          text="The mood, the story and your references, so every suggestion fits."
-        >
-          {(a) => <AiContextSpotlight active={a} />}
-        </Row>
-        <Row
-          eyebrow="Co-write anywhere"
-          tint="rgba(232,102,60,.22)"
-          title={
-            <>
-              Your co-writers, <span className="text-[#F6ECC9]">on any device.</span>
-            </>
-          }
-          text="Every writer gets a tab, on iPhone or the web. Changes and takes sync live."
-        >
-          {() => <CoWriteMock />}
-        </Row>
-      </div>
+      <div className="container mx-auto space-y-28 px-6 md:space-y-36">{children}</div>
     </section>
   );
 }
@@ -124,13 +62,75 @@ const IPhonePage = () => (
     accent="#FF8A65"
     glow="#E45C7A"
     title="Lyric Genie for iPhone, iPad & Mac — Songwriting App"
-    description="Catch ideas anywhere: voice memos linked to your lyrics, Freestyle mode, Wish Workshop, rhymes and live co-writing, synced with Lyric Genie on the web."
+    description="Catch ideas anywhere: voice memos transcribed and linked to your lyrics, Freestyle mode, rhymes and Wish Workshop on the go, Perform on stage, and your co-writers in your pocket."
   >
     <FeatureKeyframes />
     <IPhoneHero />
-    <Rows />
-    <More keys={["recordings", "perform", "concepts", "sheets", "import", "projects"]} title="Everything a song needs." />
+    <Moments>
+      <Row
+        eyebrow="Catch it"
+        tint="rgba(255,138,101,.22)"
+        title={
+          <>
+            The idea, caught <span className="text-[#F6ECC9]">before it's gone.</span>
+          </>
+        }
+        text="Hum it into a voice memo. It's transcribed, waits in your Ideas inbox, and links to the line it belongs to."
+      >
+        {() => <CaptureMock />}
+      </Row>
+      <Row
+        flip
+        eyebrow="Freestyle · iPhone only"
+        tint="rgba(228,92,122,.22)"
+        title={
+          <>
+            Mumble the melody. <span className="text-[#F6ECC9]">Get real lyrics.</span>
+          </>
+        }
+        text="Sing placeholder sounds on the melody in your head. Lyric Genie keeps the phrasing and turns it into words that fit your song."
+      >
+        {(a) => <FreestyleSpotlight active={a} />}
+      </Row>
+    </Moments>
+    <ToolsTabs
+      variant="iphone"
+      eyebrow="Finish it anywhere"
+      title={
+        <>
+          The whole toolkit, <span className="text-[#F6ECC9]">in your pocket.</span>
+        </>
+      }
+    />
+    <Moments>
+      <Row
+        eyebrow="On stage"
+        tint="rgba(48,209,88,.16)"
+        title={
+          <>
+            Your lyrics, <span className="text-[#F6ECC9]">stage-ready.</span>
+          </>
+        }
+        text="Perform puts the song in big type on a black screen, readable from behind the mic."
+      >
+        {() => <PerformMock />}
+      </Row>
+      <Row
+        flip
+        eyebrow="Co-writers in your pocket"
+        tint="rgba(171,142,226,.25)"
+        title={
+          <>
+            The room, <span className="text-[#F6ECC9]">wherever you are.</span>
+          </>
+        }
+        text="Chat with your co-writers, hear their takes, see when they're writing. Join a song with a code."
+      >
+        {() => <ChatMock />}
+      </Row>
+    </Moments>
     <AppleDevices />
+    <FinalCTA />
   </StudioPage>
 );
 

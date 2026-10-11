@@ -124,7 +124,7 @@ const IPhonePage = () => (
             The room, <span className="text-[#F6ECC9]">wherever you are.</span>
           </>
         }
-        text="Chat with your co-writers, hear their takes, see when they're writing. Join a song with a code."
+        text="Chat, notes and takes from your co-writers, wherever you are. See when they're writing. Join a song with a code."
       >
         {() => <ChatMock />}
       </Row>

@@ -1534,3 +1534,46 @@ export function ChatMock() {
     </div>
   );
 }
+
+/** Notes on the words: a highlighted phrase in the lyrics, and its thread in the margin (reply, Resolve). */
+export function NotesMock() {
+  return (
+    <div className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#1B1B1B] p-5 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]">
+      <div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_11.5rem]">
+        <div className="font-serif text-[15.5px] not-italic leading-[1.9] text-[#F2EDE4]/90">
+          <p className="font-bold text-[#AB8EE2]">Verse 1</p>
+          <p>I became another stranger</p>
+          <p>No way that I could be forgiven</p>
+          <p>Oh what have I done</p>
+          <p>
+            Now I'm lost, <span className="rounded-sm bg-[#F5B642]/25 underline decoration-[#F5B642] decoration-2 underline-offset-4">like a ghost</span>,
+          </p>
+          <p>bleeding out for your love</p>
+        </div>
+        {/* The thread, beside the words it's on */}
+        <div className="self-center rounded-xl border border-[#F5B642]/40 bg-[#252525] p-3 text-[12.5px] shadow-xl">
+          <p className="flex items-center gap-1.5 font-semibold" style={{ color: C.amber }}>
+            <span className="flex size-5 items-center justify-center rounded-full text-[9px] font-bold text-white" style={{ background: WRITERS[1].color }}>
+              A
+            </span>
+            Anton
+          </p>
+          <p className="mt-1.5 text-white/85">“Ghost” again? We use it in the chorus too.</p>
+          <div className="mt-2.5 border-t border-white/10 pt-2.5">
+            <p className="flex items-center gap-1.5 font-semibold" style={{ color: WRITERS[0].color }}>
+              <span className="flex size-5 items-center justify-center rounded-full text-[9px] font-bold text-white" style={{ background: WRITERS[0].color }}>
+                E
+              </span>
+              Edan
+            </p>
+            <p className="mt-1.5 text-white/70">Good catch. Trying “like a shadow”.</p>
+          </div>
+          <div className="mt-3 flex items-center justify-between">
+            <span className="text-[11px] text-white/40">Reply…</span>
+            <span className="rounded-full bg-white/10 px-2.5 py-0.5 text-[11px] font-semibold text-white">✓ Resolve</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

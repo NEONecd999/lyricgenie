@@ -1,5 +1,5 @@
 import { FeatureKeyframes } from "@/components/Features";
-import { BrowserArt, CoWriteMock, Desk, Eyebrow, FinalCTA, Glow, More, PrimaryCTA, Reveal, Row, Scaled, SearchMock, SessionMock, StudioPage, ToolsTabs } from "@/components/studio/Studio";
+import { BrowserArt, CoWriteMock, Desk, Eyebrow, FinalCTA, Glow, More, PrimaryCTA, Reveal, Row, Scaled, SearchMock, SessionMock, StudioPage, NotesMock, ToolsTabs } from "@/components/studio/Studio";
 import { WEB_SIGNIN } from "@/lib/links";
 
 /** /web: Lyric Genie on your computer. Lavender, like the desktop app's accent. */
@@ -45,12 +45,24 @@ function Together() {
               Every writer <span className="text-[#F6ECC9]">gets a tab.</span>
             </>
           }
-          text="Try ideas on your own tab, agree on the Master. Live cursors, notes pinned to the words, chat beside the song."
+          text="Try ideas on your own tab, agree on the Master. Live cursors, and chat beside the song."
         >
           {() => <CoWriteMock />}
         </Row>
         <Row
           flip
+          eyebrow="Notes"
+          tint="rgba(245,182,66,.18)"
+          title={
+            <>
+              Notes on <span className="text-[#F6ECC9]">the words.</span>
+            </>
+          }
+          text="Highlight a phrase and leave a note. Co-writers reply, and anyone resolves it."
+        >
+          {() => <NotesMock />}
+        </Row>
+        <Row
           tint="rgba(48,209,88,.16)"
           eyebrow={
             <span className="inline-flex items-center gap-2">

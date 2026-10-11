@@ -79,7 +79,7 @@ function CoWriting() {
               Every writer <span className="text-[#F6ECC9]">gets a tab.</span>
             </>
           }
-          text="Try ideas on your own tab, agree on the Master. See who's here and where they're typing, on the web or iPhone."
+          text="Try ideas on your own tab, agree on the Master, leave notes on the words. See who's here and where they're typing, on the web or iPhone."
         >
           {() => <CoWriteMock />}
         </Row>

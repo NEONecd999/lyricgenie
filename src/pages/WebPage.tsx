@@ -1,5 +1,5 @@
 import { FeatureKeyframes } from "@/components/Features";
-import { BrowserArt, CoWriteMock, Desk, Eyebrow, FinalCTA, Glow, More, PrimaryCTA, Reveal, Row, Scaled, SearchMock, SessionMock, StudioPage, NotesMock, ToolsTabs } from "@/components/studio/Studio";
+import { CoWriteMock, Desk, Eyebrow, FinalCTA, Glow, More, PrimaryCTA, Reveal, Row, SearchMock, SessionMock, StudioPage, ExplodedWorkspace, ImportMock, NotesMock, ToolsTabs } from "@/components/studio/Studio";
 import { WEB_SIGNIN } from "@/lib/links";
 
 /** /web: Lyric Genie on your computer. Lavender, like the desktop app's accent. */
@@ -22,10 +22,9 @@ function WebHero() {
             </a>
           </div>
         </Reveal>
-        <Reveal delay={0.15} className="mx-auto mt-14 max-w-5xl">
-          <Scaled w={580} h={392}>
-            <BrowserArt />
-          </Scaled>
+        {/* The workspace's panels, coming together (the next section shows the real thing) */}
+        <Reveal delay={0.15} className="mx-auto mt-10 max-w-5xl">
+          <ExplodedWorkspace />
         </Reveal>
       </div>
     </section>
@@ -83,6 +82,28 @@ function Together() {
   );
 }
 
+/** Bring your audio in: bounces, voice memos and demos dropped onto a song (Pro keeps the originals). */
+function ImportAudio() {
+  return (
+    <section className="py-24 md:py-32">
+      <div className="container mx-auto px-6">
+        <Row
+          eyebrow="Import audio"
+          tint="rgba(58,123,208,.22)"
+          title={
+            <>
+              Drop in your bounces. <span className="text-[#F6ECC9]">Keep the originals.</span>
+            </>
+          }
+          text="Drag a mix out of your DAW, a voice memo or a demo onto the song. Each becomes a take you can play and link to a line. On Pro, the original file is kept as you uploaded it."
+        >
+          {() => <ImportMock />}
+        </Row>
+      </div>
+    </section>
+  );
+}
+
 /** Fast: search and shortcuts. */
 function Fast() {
   return (
@@ -126,8 +147,9 @@ const WebPage = () => (
         </>
       }
     />
+    <ImportAudio />
     <Fast />
-    <More keys={["sheets", "projects", "import"]} title="Ready to send." />
+    <More keys={["sheets", "projects", "concepts"]} title="Ready to send." />
     <FinalCTA />
   </StudioPage>
 );

@@ -1577,3 +1577,234 @@ export function NotesMock() {
     </div>
   );
 }
+
+// ─── The web hero: the workspace, exploded ──────────────────────────────────
+
+/** The left panel: AI context and sections. */
+function PanelContext() {
+  return (
+    <div className="h-full space-y-3 rounded-xl border border-white/10 bg-[#222] p-4">
+      <p className="text-[9px] font-bold uppercase tracking-[0.14em] text-white/45">AI context</p>
+      {[
+        ["Mood", "Cinematic, late-night"],
+        ["Theme", "Chasing a ghost down the highway"],
+        ["Similar artists", "The Weeknd, Phoebe Bridgers"],
+      ].map(([k, v]) => (
+        <div key={k}>
+          <p className="text-[9px] font-semibold text-white/45">{k}</p>
+          <p className="text-[11.5px] leading-snug text-white/85">{v}</p>
+        </div>
+      ))}
+      <p className="pt-2 text-[9px] font-bold uppercase tracking-[0.14em] text-white/45">Sections</p>
+      {["Verse 1", "Chorus", "Verse 2", "Bridge"].map((x, i) => (
+        <p key={x} className={`rounded-md px-2 py-1 text-[11.5px] font-medium ${i === 0 ? "bg-white/10 text-white" : "text-white/70"}`}>
+          {x}
+        </p>
+      ))}
+    </div>
+  );
+}
+
+/** The middle: the song, with writer tabs and a co-writer's caret. */
+function PanelSong() {
+  return (
+    <div className="h-full rounded-xl border border-white/10 bg-[#1B1B1B] px-6 py-5">
+      <p className="font-serif text-[26px] font-bold not-italic text-[#F2EDE4]">Night Ride</p>
+      <div className="mt-2 flex gap-1">
+        {WRITERS.map((w, i) => (
+          <span key={w.name} className={`flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ${i === 0 ? "bg-white/10 text-white" : "text-white/55"}`}>
+            <span className="size-1.5 rounded-full" style={{ background: w.color }} />
+            {w.name}
+          </span>
+        ))}
+      </div>
+      <p className="mt-4 font-serif text-[13px] font-bold not-italic text-[#AB8EE2]">Verse 1</p>
+      <div className="mt-1 space-y-1 font-serif text-[14px] not-italic leading-snug text-[#F2EDE4]/90">
+        {LYRICS.map((l, i) => (
+          <p key={l} className="flex items-center">
+            {l}
+            {i === 2 && (
+              <>
+                <span className="ml-0.5 inline-block h-4 w-[1.5px] rounded-full" style={{ background: WRITERS[1].color }} />
+                <span className="ml-1 rounded px-1 py-px font-sans text-[9px] font-semibold leading-none text-[#1B0F31]" style={{ background: WRITERS[1].color }}>
+                  Anton
+                </span>
+              </>
+            )}
+          </p>
+        ))}
+      </div>
+      <p className="mt-4 font-serif text-[13px] font-bold not-italic text-[#AB8EE2]">Chorus</p>
+      <div className="mt-1 space-y-1 font-serif text-[14px] not-italic leading-snug text-[#F2EDE4]/90">
+        <p>It's just you and I</p>
+        <p>I'll take you on a night ride</p>
+      </div>
+    </div>
+  );
+}
+
+/** The right panel: Spark and rhymes. */
+function PanelTools() {
+  return (
+    <div className="h-full space-y-2.5 rounded-xl border border-white/10 bg-[#222] p-4">
+      <p className="text-[9px] font-bold uppercase tracking-[0.14em] text-white/45">Spark</p>
+      <div className="grid grid-cols-2 gap-1.5">
+        {[
+          ["Sections", "linear-gradient(135deg,#7251BD,#B870DB)"],
+          ["Titles", "linear-gradient(135deg,#E05297,#F4845F)"],
+          ["Phrases", "linear-gradient(135deg,#2563EB,#38BDF8)"],
+          ["Lines", "linear-gradient(135deg,#D97706,#FBBF24)"],
+        ].map(([t, g]) => (
+          <span key={t} className="flex h-14 items-end rounded-lg p-2 text-[10px] font-bold text-white" style={{ background: g }}>
+            {t}
+          </span>
+        ))}
+      </div>
+      <p className="pt-2 text-[9px] font-bold uppercase tracking-[0.14em] text-white/45">Rhymes · stranger</p>
+      <div className="flex flex-wrap gap-1">
+        {["danger", "anger", "changer", "ranger", "safer", "stranger things"].map((r) => (
+          <span key={r} className="rounded-full bg-white/[0.07] px-2 py-0.5 text-[10px] text-white/80">
+            {r}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/**
+ * The web page's hero: the workspace's three panels (context and sections, the song, the tools) start
+ * apart in depth and glide together into one window, then the whole thing drifts and leans toward the
+ * pointer, a little layered so the panels still read as panels. One rAF loop for the lean (as HeroDevices);
+ * CSS transitions for the assembly. Still with reduced motion.
+ */
+export function ExplodedWorkspace() {
+  const stage = useRef<HTMLDivElement>(null);
+  const [assembled, setAssembled] = useState(false);
+  useEffect(() => {
+    const el = stage.current;
+    if (!el) return;
+    const still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const rest = { x: 10, y: -4 };
+    if (still) {
+      setAssembled(true);
+      el.style.transform = `rotateX(${rest.x}deg) rotateY(${rest.y}deg)`;
+      return;
+    }
+    const t = setTimeout(() => setAssembled(true), 500);
+    const pointer = { x: 0, y: 0 };
+    const now = { x: rest.x + 8, y: rest.y - 18 };
+    const onMove = (e: PointerEvent) => {
+      const r = el.getBoundingClientRect();
+      const cx = r.left + r.width / 2;
+      const cy = r.top + r.height / 2;
+      const dx = e.clientX - cx;
+      const dy = e.clientY - cy;
+      pointer.x = Math.max(-1, Math.min(1, dx / Math.max(1, dx < 0 ? cx : window.innerWidth - cx)));
+      pointer.y = Math.max(-1, Math.min(1, dy / Math.max(1, dy < 0 ? cy : window.innerHeight - cy)));
+    };
+    window.addEventListener("pointermove", onMove, { passive: true });
+    let raf = 0;
+    const t0 = performance.now();
+    const frame = (time: number) => {
+      const s = (time - t0) / 1000;
+      const target = { x: rest.x + Math.sin(s * 0.3) * 3 - pointer.y * 6, y: rest.y + Math.sin(s * 0.17 + 1) * 10 + pointer.x * 12 };
+      now.x += (target.x - now.x) * 0.04;
+      now.y += (target.y - now.y) * 0.04;
+      el.style.transform = `rotateX(${now.x.toFixed(2)}deg) rotateY(${now.y.toFixed(2)}deg)`;
+      raf = requestAnimationFrame(frame);
+    };
+    raf = requestAnimationFrame(frame);
+    return () => {
+      clearTimeout(t);
+      cancelAnimationFrame(raf);
+      window.removeEventListener("pointermove", onMove);
+    };
+  }, []);
+  // Apart: pulled out sideways and forward, turned; together: in the window, slightly layered.
+  const part = (apart: string, together: string, delay: number): React.CSSProperties => ({
+    transform: assembled ? together : apart,
+    transition: `transform 1.8s cubic-bezier(.16,1,.3,1) ${delay}ms`,
+  });
+  return (
+    <Scaled w={940} h={560}>
+      <div className="absolute inset-0" style={{ perspective: 1800, perspectiveOrigin: "50% 35%" }}>
+        <div ref={stage} className="absolute inset-0" style={{ transformStyle: "preserve-3d", willChange: "transform" }}>
+          {/* The window: chrome and app bar */}
+          <div
+            className="absolute inset-x-[20px] top-[20px] h-[500px] overflow-hidden rounded-[18px] border border-white/10 bg-[#252525] shadow-[0_60px_140px_-30px_rgba(0,0,0,0.85)]"
+            style={part("translateZ(-160px)", "translateZ(-30px)", 0)}
+          >
+            <div className="flex items-center gap-1.5 border-b border-white/10 bg-[#141015] px-4 py-2.5">
+              <span className="size-2.5 rounded-full bg-[#FF5F57]" />
+              <span className="size-2.5 rounded-full bg-[#FEBC2E]" />
+              <span className="size-2.5 rounded-full bg-[#28C840]" />
+              <span className="mx-auto rounded-md bg-white/5 px-10 py-0.5 text-[10px] text-white/45">app.lyricgenie.app</span>
+            </div>
+            <div className="flex items-center gap-4 border-b border-white/[0.07] px-5 py-2.5">
+              <Wordmark className="h-[12px] w-auto text-[#AB8EE2]" />
+              <span className="rounded-full bg-white/10 px-2.5 py-0.5 text-[10px] font-medium text-[#AB8EE2]">Songs</span>
+              <span className="text-[10px] text-white/55">Concepts</span>
+              <span className="text-[10px] text-white/55">Recordings</span>
+            </div>
+          </div>
+          {/* The panels */}
+          <div className="absolute left-[38px] top-[112px] h-[392px] w-[200px]" style={part("translate3d(-150px, 30px, 220px) rotateY(24deg)", "translateZ(10px)", 150)}>
+            <PanelContext />
+          </div>
+          <div className="absolute left-[252px] top-[112px] h-[392px] w-[436px]" style={part("translate3d(0, -40px, 300px)", "translateZ(30px)", 0)}>
+            <PanelSong />
+          </div>
+          <div className="absolute left-[702px] top-[112px] h-[392px] w-[200px]" style={part("translate3d(150px, 30px, 220px) rotateY(-24deg)", "translateZ(10px)", 300)}>
+            <PanelTools />
+          </div>
+        </div>
+      </div>
+    </Scaled>
+  );
+}
+
+// ─── Importing audio ────────────────────────────────────────────────────────
+
+/** Dropping files from the desktop onto a song: a bounce, a voice memo, a demo, each becoming a take. */
+export function ImportMock() {
+  const files = [
+    { name: "Night Ride v3 bounce.wav", from: "Logic Pro", size: "48 MB", done: 1, color: "#3A7BD0" },
+    { name: "Chorus idea.m4a", from: "Voice Memos", size: "2 MB", done: 1, color: "#E8663C" },
+    { name: "Demo_rough.mp3", from: "Files", size: "6 MB", done: 0.6, color: "#6FA83C" },
+  ];
+  return (
+    <div className="w-full max-w-lg rounded-2xl border-2 border-dashed bg-[#1B1B1B] p-5 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]" style={{ borderColor: "color-mix(in srgb, var(--acc, #AB8EE2) 50%, transparent)" }}>
+      <p className="text-center text-[13px] font-semibold text-white">Drop audio onto Night Ride</p>
+      <p className="mt-0.5 text-center text-[11px] text-white/45">WAV · AIFF · FLAC · MP3 · M4A</p>
+      <div className="mt-4 space-y-2">
+        {files.map((f) => (
+          <div key={f.name} className="rounded-xl bg-white/[0.05] px-3 py-2.5">
+            <div className="flex items-center gap-2.5">
+              <span className="flex size-7 shrink-0 items-center justify-center rounded-lg" style={{ background: f.color }}>
+                <SfIcon name="recordingtape" size={13} color="#fff" />
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block truncate text-[13px] font-medium text-[#F2EDE4]">{f.name}</span>
+                <span className="block text-[11px] text-white/45">
+                  {f.from} · {f.size}
+                </span>
+              </span>
+              <span className="text-[11px] font-semibold" style={{ color: f.done === 1 ? "#30D158" : "rgba(255,255,255,0.55)" }}>
+                {f.done === 1 ? "✓ Added" : "Adding…"}
+              </span>
+            </div>
+            <div className="mt-2 flex h-6 items-center gap-[2px]">
+              {Array.from({ length: 52 }, (_, i) => (
+                <span key={i} className="w-[3px] rounded-full" style={{ height: `${20 + 75 * Math.abs(Math.sin(i * 0.5 + f.name.length) * Math.cos(i * 0.19))}%`, background: i / 52 < f.done ? f.color : "rgba(255,255,255,0.15)" }} />
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+      <p className="mt-3 flex items-center justify-center gap-1.5 text-[11px] text-white/50">
+        <span className="rounded bg-[#F6ECC9] px-1.5 py-px text-[9px] font-bold text-[#6F50B8]">PRO</span> The original file is kept, untouched
+      </p>
+    </div>
+  );
+}

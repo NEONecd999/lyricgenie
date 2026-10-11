@@ -289,10 +289,11 @@ function CoWriteMock() {
 }
 
 function SessionMock() {
+  // Stills of a session: me at the DAW (sharing it), Sam on guitar, Maya with the lyrics.
   const tiles = [
-    { name: "You", color: C.accent, bg: "linear-gradient(135deg,#3a2a55,#1f1830)" },
-    { name: "Sam", color: C.coral, bg: "linear-gradient(135deg,#55302a,#2a1915)" },
-    { name: "Maya", color: C.blue, bg: "linear-gradient(135deg,#24364f,#151d29)" },
+    { name: "You", color: C.accent, src: "/images/pro/session-you.jpg", alt: "A producer at his keyboard and DAW, headphones on" },
+    { name: "Sam", color: C.coral, src: "/images/pro/session-sam.jpg", alt: "A songwriter playing acoustic guitar" },
+    { name: "Maya", color: C.blue, src: "/images/pro/session-maya.jpg", alt: "A songwriter smiling, pen in hand" },
   ];
   const inputs: [ReactNode, string, string, number][] = [
     [<AudioWaveform key="d" className="mr-1 inline size-3.5 text-[#AB8EE2]" />, "You · DAW", "Logic Pro · 92 BPM", 0.72],
@@ -311,11 +312,12 @@ function SessionMock() {
       </div>
       <div className="grid grid-cols-3 gap-2">
         {tiles.map((t) => (
-          <div key={t.name} className="relative aspect-[4/3] overflow-hidden rounded-xl" style={{ background: t.bg }}>
-            <span className="absolute inset-0 m-auto flex size-11 items-center justify-center rounded-full text-base font-bold text-white" style={{ background: t.color }}>
-              {t.name[0]}
+          <div key={t.name} className="relative aspect-[4/3] overflow-hidden rounded-xl bg-[#111]">
+            <img src={t.src} alt={t.alt} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+            <span className="absolute bottom-1.5 left-1.5 flex items-center gap-1 rounded-md bg-black/55 px-1.5 py-0.5 text-[11px] font-medium text-white backdrop-blur-sm">
+              <span className="size-1.5 rounded-full" style={{ background: t.color }} />
+              {t.name}
             </span>
-            <span className="absolute bottom-1.5 left-1.5 rounded-md bg-black/50 px-1.5 py-0.5 text-[11px] font-medium text-white">{t.name}</span>
           </div>
         ))}
       </div>

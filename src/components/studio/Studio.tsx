@@ -352,8 +352,9 @@ export function PhoneArt() {
   const ink = "#F2EDE4";
   const icon = (name: string, size = 11, color = "#AB8EE2") => <SfIcon name={name} size={size} color={color} />;
   return (
-    <div className="rounded-[34px] border border-white/15 bg-[#0D0910] p-[7px] shadow-[0_40px_90px_-20px_rgba(0,0,0,0.85)]">
-      <div className="relative h-[372px] overflow-hidden rounded-[28px] bg-[#252525]">
+    // A real iPhone's proportions: the screen is about 9 : 19.5, inside a thin bezel with rounded corners.
+    <div className="rounded-[15%/7%] border border-white/15 bg-[#0D0910] p-[3.2%] shadow-[0_40px_90px_-20px_rgba(0,0,0,0.85)]">
+      <div className="relative aspect-[9/19.5] overflow-hidden rounded-[12.5%/5.8%] bg-[#252525]">
         {/* Status bar */}
         <div className="flex items-center justify-between px-5 pt-2.5 text-[9px] font-semibold text-white">
           <span>9:41</span>
@@ -411,7 +412,13 @@ export function PhoneArt() {
           </p>
           <p>It's just you and I</p>
           <p>I'll take you on a night ride</p>
-          <p className="text-white/40">It's just you and I…</p>
+          <p>It's just you and I</p>
+          <p>We'll drive until the sunlight</p>
+          <p className="pt-1 text-[9.5px] font-bold" style={{ color: WRITERS[0].color }}>
+            Verse 2
+          </p>
+          <p>Headlights bleed into the rain</p>
+          <p className="text-white/40">Chasing your ghost down Fifth again…</p>
         </div>
         {/* Arrange on the left; Spark and Genie on the right */}
         <div className="absolute inset-x-2.5 bottom-4 flex items-center gap-1.5">
@@ -478,7 +485,7 @@ export function HeroDevices() {
     };
   }, []);
   return (
-    <Scaled w={740} h={500}>
+    <Scaled w={740} h={530}>
       <div className="absolute inset-0" style={{ perspective: 1500, perspectiveOrigin: "50% 40%" }}>
         <div ref={stage} className="absolute inset-0" style={{ transformStyle: "preserve-3d", willChange: "transform" }}>
           {/* Back: the browser */}
@@ -486,7 +493,7 @@ export function HeroDevices() {
             <BrowserArt />
           </div>
           {/* Front: the iPhone, well forward of the browser */}
-          <div className="absolute bottom-[4px] right-[30px] w-[205px]" style={{ transform: "translateZ(110px)" }}>
+          <div className="absolute bottom-[30px] right-[30px] w-[200px]" style={{ transform: "translateZ(110px)" }}>
             <PhoneArt />
           </div>
           {/* Nearest: a co-writer at work */}

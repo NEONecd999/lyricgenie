@@ -9,7 +9,7 @@ import WebPage from "./pages/WebPage";
 import IPhonePage from "./pages/IPhonePage";
 import RhymeEnginePage from "./pages/RhymeEnginePage";
 import PricingPage from "./pages/PricingPage";
-import HelpPage from "./pages/HelpPage";
+import SupportPage from "./pages/SupportPage";
 import About from "./pages/About";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
@@ -81,9 +81,9 @@ const App = () => {
             <Route path="/iphone" element={<IPhonePage />} />
             <Route path="/rhyme-engine" element={<RhymeEnginePage />} />
             <Route path="/pricing" element={<PricingPage />} />
-            <Route path="/help" element={<HelpPage />} />
+            <Route path="/help" element={<Navigate to="/support" replace />} />
             <Route path="/about" element={<About />} />
-            <Route path="/support" element={<HelpPage />} />
+            <Route path="/support" element={<SupportPage />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<TermsOfService />} />
             <Route path="/blog" element={<Blog />} />

@@ -4,7 +4,7 @@ import { Eyebrow, Glow, Head, Reveal, StudioPage } from "@/components/studio/Stu
 import { APP_STORE, WEB_APP } from "@/lib/links";
 
 /**
- * /help: support email, the docs, downloads and a fuller FAQ. Answers follow the docs (lyricgenie-docs
+ * /support (/help redirects here): support email, the docs, downloads and a fuller FAQ. Answers follow the docs (lyricgenie-docs
  * content/faq.md) and the apps as they are on 2026-10-11; the limits match Pricing / PricingPage.
  */
 
@@ -56,13 +56,13 @@ const GROUPS: { title: string; faqs: [string, string][] }[] = [
   },
 ];
 
-function HelpHero() {
+function SupportHero() {
   return (
     <section className="relative overflow-hidden pb-16 pt-28 md:pb-20 md:pt-36">
       <Glow className="left-1/2 top-[-260px] h-[620px] w-[1000px] -translate-x-1/2" strength={30} />
       <div className="container relative z-10 mx-auto px-6">
         <Reveal className="mx-auto max-w-2xl text-center">
-          <Eyebrow>Help</Eyebrow>
+          <Eyebrow>Support</Eyebrow>
           <h1 className="font-display text-[44px] font-bold leading-[1.05] tracking-tight text-white md:text-[60px]">
             How can we <span className="text-[#F6ECC9]">help?</span>
           </h1>
@@ -114,7 +114,7 @@ function Downloads() {
       <div className="container mx-auto px-6">
         <Head center eyebrow="Downloads" title="Get the apps." />
         <Reveal className="mx-auto mt-10 max-w-3xl divide-y divide-white/[0.07] rounded-2xl border border-white/10 bg-[#1B1B1B]">
-          <DownloadRow icon={<Smartphone className="size-5" />} title="Lyric Genie for iPhone, iPad & Mac" text="The native app, from the App Store.">
+          <DownloadRow icon={<Smartphone className="size-5" />} title="Lyric Genie for iPhone, iPad & Mac" text="The native app, from the App Store. iPhone and iPad with iOS 17 or later; Mac with macOS 14 or later.">
             <a href={APP_STORE} target="_blank" rel="noopener noreferrer" className={`${pill} bg-[#F6ECC9] text-[#6F50B8] hover:bg-[#FBF2D6]`}>
               App Store
             </a>
@@ -127,7 +127,7 @@ function Downloads() {
                 <span className="rounded-full bg-[#30D158]/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em] text-[#30D158]">Early access</span>
               </span>
             }
-            text="VST3 and AU on Mac, VST3 on Windows, for streaming your DAW into a session. Logic, Ableton, Cubase, FL Studio, Studio One, Reaper and more."
+            text="Streams your DAW into a session. Works in Logic, Ableton, Cubase, FL Studio, Studio One, Reaper and more. Mac: macOS 11 or later, Apple silicon or Intel (VST3 and AU). Windows: Windows 10 or later, 64-bit (VST3)."
           >
             <a href={PLUGIN_MAC} className={`${pill} border border-white/20 text-white hover:bg-white/5`}>
               <Download className="size-4" /> macOS
@@ -180,12 +180,12 @@ function FullFAQ() {
   );
 }
 
-const HelpPage = () => (
-  <StudioPage current="/help/" title="Help — Lyric Genie" description="Get help with Lyric Genie: email support, read the docs, download the apps and the Session plugin, and answers to common questions.">
-    <HelpHero />
+const SupportPage = () => (
+  <StudioPage current="/support/" title="Support — Lyric Genie" description="Get help with Lyric Genie: email support, read the docs, download the apps and the Session plugin, and answers to common questions.">
+    <SupportHero />
     <Downloads />
     <FullFAQ />
   </StudioPage>
 );
 
-export default HelpPage;
+export default SupportPage;

@@ -93,7 +93,7 @@ const NAV = [
   ["iPhone", "/iphone/"],
   ["RhymeGold", "/rhyme-engine/"],
   ["Pricing", "/pricing/"],
-  ["Help", "/help/"],
+  ["Support", "/support/"],
 ] as const;
 
 /** The studio pages' nav: the wordmark, the pages (the current one lit), Sign in and Start free. Phones: a

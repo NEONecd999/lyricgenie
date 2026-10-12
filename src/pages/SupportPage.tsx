@@ -174,7 +174,7 @@ function FullFAQ() {
 }
 
 const SupportPage = () => (
-  <StudioPage current="/support/" title="Support — Lyric Genie" description="Get help with Lyric Genie: email support, read the docs, download the apps and the Session plugin, and answers to common questions.">
+  <StudioPage current="/support/" title="Support — Lyric Genie" description="Get help with Lyric Genie: email support, read the docs, download the iPhone and iPad app, and find answers to common questions.">
     <SupportHero />
     <Downloads />
     <FullFAQ />

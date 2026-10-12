@@ -157,7 +157,7 @@ const WebPage = () => (
     accent="#AB8EE2"
     glow="#6F50B8"
     title="Lyric Genie for the Web — Songwriting Workspace for Mac & PC"
-    description="A full songwriting workspace in your browser: co-write live with every writer on their own tab, AI tools that know your song, rhymes, search and shortcuts, and sessions with your DAW."
+    description="A full songwriting workspace in your browser on any Mac or PC: co-write live with every writer on their own tab, notes and chat beside the lyrics, AI tools that know your song, rhymes, search and shortcuts."
   >
     <FeatureKeyframes />
     <WebHero />

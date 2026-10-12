@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
-import { ArrowRight, AudioWaveform, Check, Menu, MessageSquareText, MessagesSquare, Mic, ScrollText, Search, SlidersVertical, Video, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, AudioWaveform, Bell, BookOpen, CassetteTape, Check, ChevronDown, ChevronUp, Compass, Ellipsis, Eye, FileText, ListOrdered, Maximize2, Menu, MessageSquareText, MessagesSquare, Mic, Moon, NotebookPen, PanelLeft, PanelRight, Presentation, Redo2, ScrollText, Search, Share, SlidersVertical, Sparkles, Undo2, Users, Video, X } from "lucide-react";
 import Footer from "@/components/Footer";
 import Wordmark from "@/components/Wordmark";
 import SfIcon from "@/components/SfIcon";
@@ -1586,93 +1586,172 @@ export function NotesMock() {
 
 // ─── The web hero: the workspace, exploded ──────────────────────────────────
 
-/** The left panel: AI context and sections. */
+/** A panel heading, as the app has them: chevron, small caps, an optional expand at the end. */
+function PanelHead({ children, expand }: { children: ReactNode; expand?: boolean }) {
+  return (
+    <p className="flex items-center gap-1 text-[8.5px] font-bold uppercase tracking-[0.14em] text-white/50">
+      <ChevronDown className="size-2.5" />
+      {children}
+      {expand && <Maximize2 className="ml-auto size-2.5 text-white/35" />}
+    </p>
+  );
+}
+
+/** The left panel: AI context, sections with their first lines, recordings. */
 function PanelContext() {
   return (
-    <div className="h-full space-y-3 rounded-xl border border-white/10 bg-[#222] p-4">
-      <p className="text-[9px] font-bold uppercase tracking-[0.14em] text-white/45">AI context</p>
-      {[
-        ["Mood", "Cinematic, late-night"],
-        ["Theme", "Chasing a ghost down the highway"],
-        ["Similar artists", "The Weeknd, Phoebe Bridgers"],
-      ].map(([k, v]) => (
-        <div key={k}>
-          <p className="text-[9px] font-semibold text-white/45">{k}</p>
-          <p className="text-[11.5px] leading-snug text-white/85">{v}</p>
+    <div className="h-full overflow-hidden rounded-xl border border-white/10 bg-[#222] px-3.5 py-3">
+      <PanelHead expand>AI context</PanelHead>
+      <div className="mt-2 space-y-2">
+        {[
+          ["Mood", "Cinematic, late-night"],
+          ["Theme", "Chasing a ghost down the highway"],
+          ["Similar artists", "The Weeknd, Phoebe Bridgers"],
+        ].map(([k, v]) => (
+          <div key={k}>
+            <p className="text-[8.5px] font-semibold text-white/45">{k}</p>
+            <p className="text-[10.5px] leading-snug text-white/85">{v}</p>
+          </div>
+        ))}
+      </div>
+      <div className="mt-3 border-t border-white/[0.07] pt-2.5">
+        <PanelHead>Sections</PanelHead>
+        <div className="mt-1.5 space-y-1.5">
+          {[
+            ["Verse 1", "I became another stranger"],
+            ["Chorus", "It's just you and I"],
+            ["Verse 2", "Headlights on the overpass"],
+            ["Bridge", "If I could take it back"],
+          ].map(([t, l], i) => (
+            <div key={t} className={`rounded-md px-1.5 py-0.5 ${i === 0 ? "bg-white/[0.08]" : ""}`}>
+              <p className="text-[10px] font-semibold text-white/90">{t}</p>
+              <p className="truncate text-[9px] text-white/45">{l}</p>
+            </div>
+          ))}
         </div>
-      ))}
-      <p className="pt-2 text-[9px] font-bold uppercase tracking-[0.14em] text-white/45">Sections</p>
-      {["Verse 1", "Chorus", "Verse 2", "Bridge"].map((x, i) => (
-        <p key={x} className={`rounded-md px-2 py-1 text-[11.5px] font-medium ${i === 0 ? "bg-white/10 text-white" : "text-white/70"}`}>
-          {x}
-        </p>
-      ))}
+      </div>
+      <div className="mt-3 border-t border-white/[0.07] pt-2.5">
+        <PanelHead expand>Recordings</PanelHead>
+        <div className="mt-2 flex items-center gap-2 rounded-lg bg-white/[0.05] px-2 py-1.5">
+          <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-[#AB8EE2] text-[7px] text-[#1B0F31]">▶</span>
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-[9.5px] font-medium text-white/85">Verse 1 melody</p>
+            <div className="mt-0.5 flex h-2.5 items-center gap-[1.5px]">
+              {[3, 6, 4, 8, 5, 9, 6, 4, 7, 5, 8, 3, 6, 4, 7, 5, 3, 6].map((h, i) => (
+                <span key={i} className="w-[2px] rounded-full bg-white/35" style={{ height: h + 1 }} />
+              ))}
+            </div>
+          </div>
+          <span className="text-[8.5px] text-white/40">0:42</span>
+        </div>
+      </div>
     </div>
   );
 }
 
-/** The middle: the song, with writer tabs and a co-writer's caret. */
+/** The middle: the song, with writer tabs, a co-writer's caret, the scratchpad bar and the Genie. */
 function PanelSong() {
   return (
-    <div className="h-full rounded-xl border border-white/10 bg-[#1B1B1B] px-6 py-5">
-      <p className="font-serif text-[26px] font-bold not-italic text-[#F2EDE4]">Night Ride</p>
-      <div className="mt-2 flex gap-1">
-        {WRITERS.map((w, i) => (
-          <span key={w.name} className={`flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ${i === 0 ? "bg-white/10 text-white" : "text-white/55"}`}>
-            <span className="size-1.5 rounded-full" style={{ background: w.color }} />
-            {w.name}
-          </span>
-        ))}
+    <div className="relative h-full overflow-hidden rounded-xl border border-white/10 bg-[#1B1B1B]">
+      <div className="px-6 pt-5">
+        <p className="font-serif text-[26px] font-bold not-italic leading-none text-[#F2EDE4]">Night Ride</p>
+        <p className="mt-1.5 text-[9.5px] text-white/40">Edited just now</p>
+        <div className="mt-2.5 flex gap-1">
+          {WRITERS.map((w, i) => (
+            <span key={w.name} className={`flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-medium ${i === 0 ? "bg-white/10 text-white" : "text-white/55"}`}>
+              <span className="size-1.5 rounded-full" style={{ background: w.color }} />
+              {w.name}
+            </span>
+          ))}
+        </div>
+        <p className="mt-3.5 font-serif text-[13px] font-bold not-italic text-[#AB8EE2]">Verse 1</p>
+        <div className="mt-1 space-y-1 font-serif text-[14px] not-italic leading-snug text-[#F2EDE4]/90">
+          {LYRICS.map((l, i) => (
+            <p key={l} className="flex items-center">
+              {i === 0 ? (
+                <>
+                  I became another <span className="ml-1 rounded-sm bg-[#AB8EE2]/30 px-0.5">stranger</span>
+                </>
+              ) : (
+                l
+              )}
+              {i === 2 && (
+                <>
+                  <span className="ml-0.5 inline-block h-4 w-[1.5px] rounded-full" style={{ background: WRITERS[1].color }} />
+                  <span className="ml-1 rounded px-1 py-px font-sans text-[9px] font-semibold leading-none text-[#1B0F31]" style={{ background: WRITERS[1].color }}>
+                    Anton
+                  </span>
+                </>
+              )}
+            </p>
+          ))}
+        </div>
+        <p className="mt-3.5 font-serif text-[13px] font-bold not-italic text-[#AB8EE2]">Chorus</p>
+        <div className="mt-1 space-y-1 font-serif text-[14px] not-italic leading-snug text-[#F2EDE4]/90">
+          <p>It's just you and I</p>
+          <p>I'll take you on a night ride</p>
+          <p className="text-[#F2EDE4]/40">Windows down, the city's</p>
+        </div>
       </div>
-      <p className="mt-4 font-serif text-[13px] font-bold not-italic text-[#AB8EE2]">Verse 1</p>
-      <div className="mt-1 space-y-1 font-serif text-[14px] not-italic leading-snug text-[#F2EDE4]/90">
-        {LYRICS.map((l, i) => (
-          <p key={l} className="flex items-center">
-            {l}
-            {i === 2 && (
-              <>
-                <span className="ml-0.5 inline-block h-4 w-[1.5px] rounded-full" style={{ background: WRITERS[1].color }} />
-                <span className="ml-1 rounded px-1 py-px font-sans text-[9px] font-semibold leading-none text-[#1B0F31]" style={{ background: WRITERS[1].color }}>
-                  Anton
-                </span>
-              </>
-            )}
-          </p>
-        ))}
-      </div>
-      <p className="mt-4 font-serif text-[13px] font-bold not-italic text-[#AB8EE2]">Chorus</p>
-      <div className="mt-1 space-y-1 font-serif text-[14px] not-italic leading-snug text-[#F2EDE4]/90">
-        <p>It's just you and I</p>
-        <p>I'll take you on a night ride</p>
+      {/* The Genie, floating bottom right, and the scratchpad bar along the bottom */}
+      <span className="absolute bottom-10 right-4 flex size-9 items-center justify-center rounded-full bg-[#2A2A2A] shadow-lg ring-1 ring-white/10">
+        <img src="/images/genie-icon.svg" alt="" className="h-5 w-auto brightness-150" />
+      </span>
+      <div className="absolute inset-x-0 bottom-0 flex items-center gap-1.5 border-t border-white/10 bg-[#202020] px-4 py-2 text-[9.5px]">
+        <NotebookPen className="size-3 text-white/50" />
+        <span className="font-semibold text-white/85">Scratchpad</span>
+        <span className="truncate text-white/40">· ghost in the passenger seat? / city lights like…</span>
+        <ChevronUp className="ml-auto size-3 text-white/40" />
       </div>
     </div>
   );
 }
 
-/** The right panel: Spark and rhymes. */
+/** The right panel: Spark, rhymes for the selected word, the song's numbers. */
 function PanelTools() {
   return (
-    <div className="h-full space-y-2.5 rounded-xl border border-white/10 bg-[#222] p-4">
-      <p className="text-[9px] font-bold uppercase tracking-[0.14em] text-white/45">Spark</p>
-      <div className="grid grid-cols-2 gap-1.5">
+    <div className="h-full overflow-hidden rounded-xl border border-white/10 bg-[#222] px-3.5 py-3">
+      <PanelHead>
+        Spark <Sparkles className="ml-0.5 size-2.5 text-[#AB8EE2]" />
+      </PanelHead>
+      <p className="mt-1.5 text-[9.5px] text-white/50">Brainstorm ideas to insert at your cursor.</p>
+      <div className="mt-2 grid grid-cols-2 gap-1.5">
         {[
-          ["Sections", "linear-gradient(135deg,#7251BD,#B870DB)"],
-          ["Titles", "linear-gradient(135deg,#E05297,#F4845F)"],
-          ["Phrases", "linear-gradient(135deg,#2563EB,#38BDF8)"],
-          ["Lines", "linear-gradient(135deg,#D97706,#FBBF24)"],
-        ].map(([t, g]) => (
-          <span key={t} className="flex h-14 items-end rounded-lg p-2 text-[10px] font-bold text-white" style={{ background: g }}>
-            {t}
+          ["Sections", "Verse, chorus, bridge", "linear-gradient(135deg,#7251BD,#B870DB)"],
+          ["Titles", "Song title ideas", "linear-gradient(135deg,#E05297,#F4845F)"],
+          ["Phrases", "Phrases and hooks", "linear-gradient(135deg,#2563EB,#38BDF8)"],
+          ["Lines", "Complete lines", "linear-gradient(135deg,#D97706,#FBBF24)"],
+        ].map(([t, sub, g]) => (
+          <span key={t} className="flex h-[60px] flex-col justify-end rounded-lg p-2 text-white" style={{ background: g }}>
+            <span className="text-[10px] font-bold leading-tight">{t}</span>
+            <span className="text-[7.5px] leading-tight text-white/85">{sub}</span>
           </span>
         ))}
       </div>
-      <p className="pt-2 text-[9px] font-bold uppercase tracking-[0.14em] text-white/45">Rhymes · stranger</p>
-      <div className="flex flex-wrap gap-1">
-        {["danger", "anger", "changer", "ranger", "safer", "stranger things"].map((r) => (
-          <span key={r} className="rounded-full bg-white/[0.07] px-2 py-0.5 text-[10px] text-white/80">
-            {r}
-          </span>
-        ))}
+      <div className="mt-3 border-t border-white/[0.07] pt-2.5">
+        <PanelHead>Rhymes · stranger</PanelHead>
+        <div className="mt-2 flex flex-wrap gap-1">
+          {["danger", "anger", "changer", "ranger", "safer", "stranger things"].map((r, i) => (
+            <span key={r} className={`rounded-full px-2 py-0.5 text-[9.5px] ${i < 2 ? "bg-[#AB8EE2]/20 text-[#D9CCF5]" : "bg-white/[0.07] text-white/80"}`}>
+              {r}
+            </span>
+          ))}
+        </div>
+      </div>
+      <div className="mt-3 border-t border-white/[0.07] pt-2.5">
+        <PanelHead>This song</PanelHead>
+        <div className="mt-2 grid grid-cols-3 gap-1">
+          {[
+            ["Sections", "4"],
+            ["Lines", "16"],
+            ["Words", "112"],
+          ].map(([k, v]) => (
+            <div key={k} className="rounded-md border border-white/10 px-1.5 py-1">
+              <p className="text-[7.5px] text-white/45">{k}</p>
+              <p className="text-[12px] font-semibold text-white/90">{v}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
@@ -1733,35 +1812,93 @@ export function ExplodedWorkspace() {
     transition: `transform 1.8s cubic-bezier(.16,1,.3,1) ${delay}ms`,
   });
   return (
-    <Scaled w={940} h={560}>
+    <Scaled w={940} h={600}>
       <div className="absolute inset-0" style={{ perspective: 1800, perspectiveOrigin: "50% 35%" }}>
         <div ref={stage} className="absolute inset-0" style={{ transformStyle: "preserve-3d", willChange: "transform" }}>
-          {/* The window: chrome and app bar */}
+          {/* The window: chrome, the app bar, the song's toolbar and the two icon rails, as in the app */}
           <div
-            className="absolute inset-x-[20px] top-[20px] h-[500px] overflow-hidden rounded-[18px] border border-white/10 bg-[#252525] shadow-[0_60px_140px_-30px_rgba(0,0,0,0.85)]"
+            className="absolute inset-x-[20px] top-[20px] h-[560px] overflow-hidden rounded-[18px] border border-white/10 bg-[#252525] shadow-[0_60px_140px_-30px_rgba(0,0,0,0.85)]"
             style={part("translateZ(-160px)", "translateZ(-30px)", 0)}
           >
-            <div className="flex items-center gap-1.5 border-b border-white/10 bg-[#141015] px-4 py-2.5">
+            <div className="flex h-[30px] items-center gap-1.5 border-b border-white/10 bg-[#141015] px-4">
               <span className="size-2.5 rounded-full bg-[#FF5F57]" />
               <span className="size-2.5 rounded-full bg-[#FEBC2E]" />
               <span className="size-2.5 rounded-full bg-[#28C840]" />
               <span className="mx-auto rounded-md bg-white/5 px-10 py-0.5 text-[10px] text-white/45">app.lyricgenie.app</span>
             </div>
-            <div className="flex items-center gap-4 border-b border-white/[0.07] px-5 py-2.5">
+            <div className="flex h-[38px] items-center gap-4 border-b border-white/[0.07] px-5">
               <Wordmark className="h-[12px] w-auto text-[#AB8EE2]" />
               <span className="rounded-full bg-white/10 px-2.5 py-0.5 text-[10px] font-medium text-[#AB8EE2]">Songs</span>
               <span className="text-[10px] text-white/55">Concepts</span>
               <span className="text-[10px] text-white/55">Recordings</span>
+              <span className="ml-auto flex items-center gap-3.5 text-white/60">
+                <span className="relative">
+                  <Bell className="size-3.5" />
+                  <span className="absolute -right-0.5 -top-0.5 size-1.5 rounded-full bg-[#FF5F57]" />
+                </span>
+                <Moon className="size-3.5" />
+                <span className="flex size-6 items-center justify-center rounded-full text-[10px] font-bold text-white" style={{ background: "#7F62C4" }}>
+                  E
+                </span>
+              </span>
+            </div>
+            <div className="flex h-[40px] items-center gap-2 border-b border-white/[0.07] px-4 text-[10px] text-white/75">
+              <span className="flex items-center gap-1">
+                <ArrowLeft className="size-3" /> Songs
+              </span>
+              <ChevronUp className="size-3 text-white/45" />
+              <ChevronDown className="size-3 text-white/45" />
+              <span className="mx-1 h-4 w-px bg-white/10" />
+              <Undo2 className="size-3 text-white/45" />
+              <Redo2 className="size-3 text-white/30" />
+              {[
+                [<Sparkles key="i" className="size-3" />, "Spark"],
+                [<Eye key="i" className="size-3" />, "View ▾"],
+                [<ListOrdered key="i" className="size-3" />, "Arrange"],
+                [<span key="i" className="h-[2px] w-2.5 rounded-full bg-[#AB8EE2]" />, "Blank"],
+                [<span key="i" className="size-2 rounded-full bg-[#FF453A]" />, "Record"],
+              ].map(([icon, label]) => (
+                <span key={label as string} className="flex items-center gap-1 rounded-full border border-white/15 px-2 py-[3px]">
+                  {icon}
+                  {label}
+                </span>
+              ))}
+              <span className="ml-auto flex items-center gap-2.5 text-white/60">
+                <NotebookPen className="size-3.5" />
+                <Users className="size-3.5" />
+                <span className="flex items-center gap-1 rounded-full border border-white/15 px-2 py-[3px] text-white/75">
+                  <Presentation className="size-3" /> Perform
+                </span>
+                <Share className="size-3.5" />
+                <Ellipsis className="size-3.5" />
+              </span>
+            </div>
+            {/* Icon rails, left and right */}
+            <div className="absolute bottom-0 left-0 top-[110px] flex w-[36px] flex-col items-center gap-3.5 border-r border-white/[0.07] pt-3 text-white/45">
+              <span className="rounded-md bg-white/10 p-1 text-white/80">
+                <PanelLeft className="size-3.5" />
+              </span>
+              <Compass className="size-3.5" />
+              <CassetteTape className="size-3.5" />
+            </div>
+            <div className="absolute bottom-0 right-0 top-[110px] flex w-[36px] flex-col items-center gap-3.5 border-l border-white/[0.07] pt-3 text-white/45">
+              <img src="/images/genie-icon.svg" alt="" className="h-4 w-auto brightness-150" />
+              <span className="rounded-md bg-white/10 p-1 text-white/80">
+                <PanelRight className="size-3.5" />
+              </span>
+              <FileText className="size-3.5" />
+              <BookOpen className="size-3.5" />
+              <Sparkles className="size-3.5" />
             </div>
           </div>
           {/* The panels */}
-          <div className="absolute left-[38px] top-[112px] h-[392px] w-[200px]" style={part("translate3d(-150px, 30px, 220px) rotateY(24deg)", "translateZ(10px)", 150)}>
+          <div className="absolute left-[62px] top-[138px] h-[432px] w-[188px]" style={part("translate3d(-150px, 30px, 220px) rotateY(24deg)", "translateZ(10px)", 150)}>
             <PanelContext />
           </div>
-          <div className="absolute left-[252px] top-[112px] h-[392px] w-[436px]" style={part("translate3d(0, -40px, 300px)", "translateZ(30px)", 0)}>
+          <div className="absolute left-[260px] top-[138px] h-[432px] w-[430px]" style={part("translate3d(0, -40px, 300px)", "translateZ(30px)", 0)}>
             <PanelSong />
           </div>
-          <div className="absolute left-[702px] top-[112px] h-[392px] w-[200px]" style={part("translate3d(150px, 30px, 220px) rotateY(-24deg)", "translateZ(10px)", 300)}>
+          <div className="absolute left-[700px] top-[138px] h-[432px] w-[178px]" style={part("translate3d(150px, 30px, 220px) rotateY(-24deg)", "translateZ(10px)", 300)}>
             <PanelTools />
           </div>
         </div>

@@ -114,7 +114,7 @@ function Downloads() {
       <div className="container mx-auto px-6">
         <Head center eyebrow="Downloads" title="Get the apps." />
         <Reveal className="mx-auto mt-10 max-w-3xl divide-y divide-white/[0.07] rounded-2xl border border-white/10 bg-[#1B1B1B]">
-          <DownloadRow icon={<Smartphone className="size-5" />} title="Lyric Genie for iPhone, iPad & Mac" text="The native app, from the App Store. iPhone and iPad with iOS 17 or later; Mac with macOS 14 or later.">
+          <DownloadRow icon={<Smartphone className="size-5" />} title="Lyric Genie for iPhone, iPad & Mac" text="The native app, from the App Store. iPhone and iPad with iOS 17 or later; Mac with macOS 14 (Sonoma) or later.">
             <a href={APP_STORE} target="_blank" rel="noopener noreferrer" className={`${pill} bg-[#F6ECC9] text-[#6F50B8] hover:bg-[#FBF2D6]`}>
               App Store
             </a>
@@ -127,7 +127,7 @@ function Downloads() {
                 <span className="rounded-full bg-[#30D158]/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em] text-[#30D158]">Early access</span>
               </span>
             }
-            text="Streams your DAW into a session. Works in Logic, Ableton, Cubase, FL Studio, Studio One, Reaper and more. Mac: macOS 11 or later, Apple silicon or Intel (VST3 and AU). Windows: Windows 10 or later, 64-bit (VST3)."
+            text="Streams your DAW into a session. Works in Logic, Ableton, Cubase, FL Studio, Studio One, Reaper and more. Mac: macOS 11 (Big Sur) or later, Apple silicon or Intel (VST3 and AU). Windows: Windows 10 or later, 64-bit (VST3)."
           >
             <a href={PLUGIN_MAC} className={`${pill} border border-white/20 text-white hover:bg-white/5`}>
               <Download className="size-4" /> macOS

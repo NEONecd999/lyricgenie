@@ -2628,14 +2628,21 @@ export function PhoneHero3D() {
  */
 export function SideBySideMock() {
   const col = (who: (typeof WRITERS)[number], you: boolean, lines: ReactNode[], style?: React.CSSProperties) => (
-    <div className={`min-w-0 flex-1 ${style ? "lg-split-left" : ""}`} style={style}>
-      <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-2.5 py-0.5 text-[11px] font-medium text-white">
+    <div className={`min-w-0 flex-1 overflow-hidden ${style ? "lg-split-left" : ""}`} style={style}>
+      <span className="inline-flex max-w-full items-center gap-1.5 overflow-hidden whitespace-nowrap rounded-full bg-white/10 px-2.5 py-0.5 text-[11px] font-medium text-white">
         <span className="size-1.5 rounded-full" style={{ background: who.color }} />
         {who.name}
         {you ? " (you)" : <span className="text-white/45">· read-only</span>}
       </span>
       <p className="mt-3 font-serif text-[13px] font-bold not-italic text-[#AB8EE2]">Chorus</p>
-      <div className="mt-1 space-y-1 font-serif text-[13.5px] not-italic leading-snug text-[#F2EDE4]/90">{lines}</div>
+      {/* One line each, fading out at the column's edge: as the divider moves nothing rewraps, so the
+          mock keeps its height. */}
+      <div
+        className="mt-1 space-y-1 overflow-hidden whitespace-nowrap font-serif text-[13.5px] not-italic leading-snug text-[#F2EDE4]/90"
+        style={{ maskImage: "linear-gradient(to right, #000 85%, transparent)", WebkitMaskImage: "linear-gradient(to right, #000 85%, transparent)" }}
+      >
+        {lines}
+      </div>
     </div>
   );
   const caret = (c: string, label?: string) => (
@@ -2671,7 +2678,7 @@ export function SideBySideMock() {
         {col(WRITERS[1], false, [
           <p key="1">It's just you and I</p>,
           <p key="2">Taking you on a night ride</p>,
-          <p key="3" className="flex flex-wrap items-center">
+          <p key="3" className="flex items-center">
             Every light turns green{caret(WRITERS[1].color, "Anton")}
           </p>,
         ])}

@@ -1549,8 +1549,9 @@ export function NotesMock() {
             Now I'm lost, <span className="rounded-sm bg-[#F5B642]/25 underline decoration-[#F5B642] decoration-2 underline-offset-4">like a ghost</span>
             {/* An alternate on the same line: " / " in the accent, the option faded, ⇄ to swap it in */}
             <span className="font-bold text-[#AB8EE2]"> / </span>
-            <span className="opacity-50">like a shadow</span>
-            <span className="ml-1.5 font-sans text-[12px] text-[#AB8EE2]">⇄</span>
+            <span className="whitespace-nowrap opacity-50">
+              Now I'm lost, like a shadow<span className="ml-1.5 font-sans text-[12px] text-[#AB8EE2]">⇄</span>
+            </span>
           </p>
           <p>bleeding out for your love</p>
         </div>

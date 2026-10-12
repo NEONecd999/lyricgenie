@@ -1539,17 +1539,17 @@ export function ChatMock() {
 export function NotesMock() {
   return (
     <div className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#1B1B1B] p-5 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]">
-      <div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_10.5rem] lg:grid-cols-1 xl:grid-cols-[minmax(0,1fr)_10.5rem]">
+      <div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_10.5rem]">
         <div className="font-serif text-[13px] not-italic leading-[1.9] text-[#F2EDE4]/90 min-[390px]:text-[14px]">
           <p className="font-bold text-[#AB8EE2]">Verse 1</p>
           <p>I became another stranger</p>
           <p>No way that I could be forgiven</p>
           <p>Oh what have I done</p>
-          <p className="whitespace-nowrap">
+          <p>
             Now I'm lost, <span className="rounded-sm bg-[#F5B642]/25 underline decoration-[#F5B642] decoration-2 underline-offset-4">like a ghost</span>
             {/* An alternate on the same line: " / " in the accent, the option faded, ⇄ to swap it in */}
             <span className="font-bold text-[#AB8EE2]"> / </span>
-            <span className="whitespace-nowrap opacity-50">
+            <span className="opacity-50">
               like a shadow<span className="ml-1.5 font-sans text-[12px] text-[#AB8EE2]">⇄</span>
             </span>
           </p>

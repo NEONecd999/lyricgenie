@@ -1,5 +1,4 @@
 import { Instagram } from "lucide-react";
-import { Link } from "react-router-dom";
 
 const TikTokIcon = ({ className }: { className?: string }) => (
   <svg className={className} viewBox="0 0 24 24" fill="currentColor">
@@ -8,6 +7,35 @@ const TikTokIcon = ({ className }: { className?: string }) => (
 );
 
 const CREAM = "#F6ECC9";
+
+const FOOTER_COLUMNS: [string, [string, string][]][] = [
+  [
+    "Product",
+    [
+      ["Web App", "/web/"],
+      ["iPhone & iPad App", "/iphone/"],
+      ["RhymeGold", "/rhyme-engine/"],
+      ["Pricing", "/pricing/"],
+      ["Open the Web App", "https://app.lyricgenie.app"],
+    ],
+  ],
+  [
+    "Company",
+    [
+      ["About", "/about/"],
+      ["Blog", "/blog/"],
+      ["Support & Downloads", "/support/"],
+      ["Docs", "/docs/"],
+    ],
+  ],
+  [
+    "Legal",
+    [
+      ["Privacy", "/privacy-policy/"],
+      ["Terms of Service", "/terms/"],
+    ],
+  ],
+];
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -84,111 +112,21 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Product */}
-          <div>
-            <h5 className="mb-4 text-xs font-bold uppercase tracking-[0.12em] text-[#F6ECC9]">Product</h5>
-            <ul className="flex flex-col">
-              <li>
-                <a
-                  href="/web/"
-                  className="block py-1 text-[rgba(246,236,201,0.7)] transition-colors hover:text-[#F6ECC9]"
-                >
-                  Web App
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/docs/"
-                  className="block py-1 text-[rgba(246,236,201,0.7)] transition-colors hover:text-[#F6ECC9]"
-                >
-                  Documentation
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/rhyme-engine/"
-                  className="block py-1 text-[rgba(246,236,201,0.7)] transition-colors hover:text-[#F6ECC9]"
-                >
-                  RhymeGold
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/pricing/"
-                  className="block py-1 text-[rgba(246,236,201,0.7)] transition-colors hover:text-[#F6ECC9]"
-                >
-                  Pricing
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/iphone/"
-                  className="block py-1 text-[rgba(246,236,201,0.7)] transition-colors hover:text-[#F6ECC9]"
-                >
-                  iPhone, iPad &amp; Mac
-                </a>
-              </li>
-              <li>
-                <a href="https://app.lyricgenie.app" className="block py-1 text-[rgba(246,236,201,0.7)] transition-colors hover:text-[#F6ECC9]">
-                  Open the Web App
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Company */}
-          <div>
-            <h5 className="mb-4 text-xs font-bold uppercase tracking-[0.12em] text-[#F6ECC9]">Company</h5>
-            <ul className="flex flex-col">
-              <li>
-                <Link
-                  to="/about"
-                  className="block py-1 text-[rgba(246,236,201,0.7)] transition-colors hover:text-[#F6ECC9]"
-                >
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/blog"
-                  className="block py-1 text-[rgba(246,236,201,0.7)] transition-colors hover:text-[#F6ECC9]"
-                >
-                  Blog
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/support/"
-                  className="block py-1 text-[rgba(246,236,201,0.7)] transition-colors hover:text-[#F6ECC9]"
-                >
-                  Support
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Legal */}
-          <div>
-            <h5 className="mb-4 text-xs font-bold uppercase tracking-[0.12em] text-[#F6ECC9]">Legal</h5>
-            <ul className="flex flex-col">
-              <li>
-                <Link
-                  to="/privacy-policy"
-                  className="block py-1 text-[rgba(246,236,201,0.7)] transition-colors hover:text-[#F6ECC9]"
-                >
-                  Privacy
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/terms"
-                  className="block py-1 text-[rgba(246,236,201,0.7)] transition-colors hover:text-[#F6ECC9]"
-                >
-                  Terms
-                </Link>
-              </li>
-            </ul>
-          </div>
+          {/* Product, Company, Legal (owner's list, 2026-10-12) */}
+          {FOOTER_COLUMNS.map(([heading, links]) => (
+            <div key={heading}>
+              <h5 className="mb-4 text-xs font-bold uppercase tracking-[0.12em] text-[#F6ECC9]">{heading}</h5>
+              <ul className="flex flex-col">
+                {links.map(([label, href]) => (
+                  <li key={label}>
+                    <a href={href} className="block py-1 text-[rgba(246,236,201,0.7)] transition-colors hover:text-[#F6ECC9]">
+                      {label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
         <div

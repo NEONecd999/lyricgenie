@@ -627,6 +627,8 @@ h2:hover .hanchor, h3:hover .hanchor, .hanchor:focus { opacity: .6; }
 }
 .plat-chip-ios { background: var(--bg-muted); color: var(--fg-1); border: 1px solid var(--border-1); }
 .plat-chip-web { background: var(--lg-purple-600); color: #fff; }
+.soon-chip { background: rgba(48, 209, 88, 0.14); color: #1f9d4a; border: 1px solid rgba(48, 209, 88, 0.35); }
+[data-theme="dark"] .soon-chip, .dark .soon-chip { color: #30d158; }
 .prose h2 .plat-chip, .prose h3 .plat-chip { margin-left: .5rem; }
 
 .platform-banner {

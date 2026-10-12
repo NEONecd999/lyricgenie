@@ -1550,7 +1550,7 @@ export function NotesMock() {
             {/* An alternate on the same line: " / " in the accent, the option faded, ⇄ to swap it in */}
             <span className="font-bold text-[#AB8EE2]"> / </span>
             <span className="whitespace-nowrap opacity-50">
-              Now I'm lost, like a shadow<span className="ml-1.5 font-sans text-[12px] text-[#AB8EE2]">⇄</span>
+              like a shadow<span className="ml-1.5 font-sans text-[12px] text-[#AB8EE2]">⇄</span>
             </span>
           </p>
           <p>bleeding out for your love</p>

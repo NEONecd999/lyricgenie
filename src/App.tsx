@@ -2,9 +2,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Routes, Route } from "react-router-dom";
+import { Navigate, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
-import Index from "./pages/Index";
 import ProHome from "./pages/ProHome";
 import WebPage from "./pages/WebPage";
 import IPhonePage from "./pages/IPhonePage";
@@ -12,7 +11,6 @@ import RhymeEnginePage from "./pages/RhymeEnginePage";
 import PricingPage from "./pages/PricingPage";
 import HelpPage from "./pages/HelpPage";
 import About from "./pages/About";
-import Support from "./pages/Support";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import Blog from "./pages/Blog";
@@ -77,15 +75,15 @@ const App = () => {
         <Sonner />
           <ScrollToHash />
           <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/pro" element={<ProHome />} />
+            <Route path="/" element={<ProHome />} />
+            <Route path="/pro" element={<Navigate to="/" replace />} />
             <Route path="/web" element={<WebPage />} />
             <Route path="/iphone" element={<IPhonePage />} />
             <Route path="/rhyme-engine" element={<RhymeEnginePage />} />
             <Route path="/pricing" element={<PricingPage />} />
             <Route path="/help" element={<HelpPage />} />
             <Route path="/about" element={<About />} />
-            <Route path="/support" element={<Support />} />
+            <Route path="/support" element={<HelpPage />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms" element={<TermsOfService />} />
             <Route path="/blog" element={<Blog />} />

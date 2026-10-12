@@ -90,10 +90,10 @@ const Footer = () => {
             <ul className="flex flex-col">
               <li>
                 <a
-                  href="/#features"
+                  href="/web/"
                   className="block py-1 text-[rgba(246,236,201,0.7)] transition-colors hover:text-[#F6ECC9]"
                 >
-                  Features
+                  Web App
                 </a>
               </li>
               <li>
@@ -106,15 +106,15 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="/rhymes/"
+                  href="/rhyme-engine/"
                   className="block py-1 text-[rgba(246,236,201,0.7)] transition-colors hover:text-[#F6ECC9]"
                 >
-                  Free Rhyme Tool
+                  RhymeGold
                 </a>
               </li>
               <li>
                 <a
-                  href="/#pricing"
+                  href="/pricing/"
                   className="block py-1 text-[rgba(246,236,201,0.7)] transition-colors hover:text-[#F6ECC9]"
                 >
                   Pricing
@@ -122,10 +122,10 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href="https://apps.apple.com/us/app/lyric-genie/id6739787614"
+                  href="/iphone/"
                   className="block py-1 text-[rgba(246,236,201,0.7)] transition-colors hover:text-[#F6ECC9]"
                 >
-                  Download for iPhone
+                  iPhone, iPad &amp; Mac
                 </a>
               </li>
               <li>
@@ -149,14 +149,6 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <a
-                  href="/#philosophy"
-                  className="block py-1 text-[rgba(246,236,201,0.7)] transition-colors hover:text-[#F6ECC9]"
-                >
-                  Philosophy
-                </a>
-              </li>
-              <li>
                 <Link
                   to="/blog"
                   className="block py-1 text-[rgba(246,236,201,0.7)] transition-colors hover:text-[#F6ECC9]"
@@ -166,10 +158,10 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/support"
+                  to="/help/"
                   className="block py-1 text-[rgba(246,236,201,0.7)] transition-colors hover:text-[#F6ECC9]"
                 >
-                  Support
+                  Help
                 </Link>
               </li>
             </ul>

@@ -125,7 +125,7 @@ export function StudioNav({ current }: { current?: string }) {
   return (
     <header className={`sticky top-0 z-50 transition-colors ${scrolled || open ? "border-b border-white/10 bg-[#1E1324]/95 backdrop-blur-lg" : "border-b border-transparent"}`}>
       <div className="container mx-auto flex h-16 items-center gap-4 px-6 md:gap-8">
-        <a href="/pro/" className="flex shrink-0 items-center text-[#F6ECC9]" aria-label="Lyric Genie home">
+        <a href="/" className="flex shrink-0 items-center text-[#F6ECC9]" aria-label="Lyric Genie home">
           <Wordmark className="h-6 w-auto sm:h-7" />
         </a>
         <nav className="hidden items-center gap-6 md:flex">

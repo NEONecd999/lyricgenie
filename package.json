@@ -95,6 +95,11 @@
     "skipThirdPartyRequests": true,
     "include": [
       "/",
+      "/web",
+      "/iphone",
+      "/rhyme-engine",
+      "/pricing",
+      "/help",
       "/about",
       "/support",
       "/privacy-policy",

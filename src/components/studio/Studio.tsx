@@ -1028,40 +1028,97 @@ export function Tick({ children }: { children: ReactNode }) {
   );
 }
 
+// Yearly vs twelve monthly payments: 1 - 29.99 / 59.88 ≈ 50%.
+const SAVINGS = Math.round((1 - YEARLY / (MONTHLY * 12)) * 100);
+
+/** The two plans, with a Monthly / Yearly switch that sets the Pro price and which checkout the trial opens. */
 export function Pricing() {
+  // Yearly first: it's the better deal and the plan we'd rather sell (as the main site).
+  const [billing, setBilling] = useState<"monthly" | "yearly">("yearly");
+  const yearly = billing === "yearly";
   return (
     <section id="pricing" className="bg-[#170E1C] py-24">
       <div className="container mx-auto px-6">
         <Head center eyebrow="Pricing" title="Start free. Go Pro when you're ready." lead="One account for the web and iPhone." />
-        <div className="mx-auto mt-12 grid max-w-4xl gap-5 md:grid-cols-2">
-          <Reveal className="rounded-2xl border border-white/10 bg-[#1B1B1B] p-7">
+        <div className="mt-9 flex justify-center">
+          <div role="radiogroup" aria-label="Billing period" className="inline-flex items-center rounded-full border border-white/10 bg-[#1B1B1B] p-1">
+            {(["monthly", "yearly"] as const).map((b) => {
+              const on = billing === b;
+              return (
+                <button
+                  key={b}
+                  type="button"
+                  role="radio"
+                  aria-checked={on}
+                  onClick={() => setBilling(b)}
+                  className={`flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold transition-colors ${on ? "bg-[#6F50B8] text-white" : "text-white/60 hover:text-white"}`}
+                >
+                  {b === "monthly" ? "Monthly" : "Yearly"}
+                  {b === "yearly" && <span className={`rounded-full px-2 py-0.5 text-[11px] font-bold ${on ? "bg-white/20 text-white" : "bg-[#F6ECC9]/15 text-[#F6ECC9]"}`}>Save {SAVINGS}%</span>}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+        <div className="mx-auto mt-8 grid max-w-4xl gap-5 md:grid-cols-2">
+          <Reveal className="flex flex-col rounded-2xl border border-white/10 bg-[#1B1B1B] p-7">
             <p className="text-lg font-semibold text-white">Free</p>
-            <p className="mt-3 font-display text-4xl font-bold text-white">$0</p>
+            {/* Same rows as the Pro card (lead, price, note) so the two prices line up */}
+            <p className="mt-3 text-[15px] font-semibold text-white/60">Free forever</p>
+            <p className="mt-1 font-display text-4xl font-bold text-white">$0</p>
+            <p className="mt-1 text-sm text-white/50">No credit card needed</p>
             <ul className="mt-6 space-y-2.5">
               <Tick>Unlimited songs</Tick>
               <Tick>Real-time co-writing</Tick>
               <Tick>Try every AI tool</Tick>
             </ul>
-            <a href={WEB_SIGNUP} className="mt-8 inline-flex w-full items-center justify-center rounded-full border border-white/20 py-3 text-sm font-semibold text-white hover:bg-white/5">
-              Start free
-            </a>
+            <div className="mt-auto pt-8">
+              <a href={WEB_SIGNUP} className="inline-flex w-full items-center justify-center rounded-full border border-white/20 py-3 text-sm font-semibold text-white hover:bg-white/5">
+                Start free
+              </a>
+              <a href={APP_STORE} target="_blank" rel="noopener noreferrer" className="mt-3 block text-center text-[13px] font-medium text-white/50 hover:text-white">
+                or download for iPhone, iPad &amp; Mac
+              </a>
+            </div>
           </Reveal>
-          <Reveal delay={0.08} className="relative rounded-2xl border border-[#AB8EE2]/50 bg-gradient-to-b from-[#2A1D3A] to-[#1B1B1B] p-7">
-            <span className="absolute right-6 top-6 rounded-full bg-[#F6ECC9] px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-[#6F50B8]">14 days free</span>
+          <Reveal delay={0.08} className="relative flex flex-col rounded-2xl border border-[#AB8EE2]/50 bg-gradient-to-b from-[#2A1D3A] to-[#1B1B1B] p-7">
+            <span className="absolute right-6 top-6 rounded-full bg-[#F6ECC9] px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-[#6F50B8]">{yearly ? "Best value" : "Most popular"}</span>
             <p className="text-lg font-semibold text-white">Pro</p>
-            <p className="mt-3 font-display text-4xl font-bold text-white">
-              ${YEARLY}
-              <span className="text-base font-medium text-white/50">/year</span>
+            <p className="mt-3 text-[15px] font-semibold">
+              <span className="text-[#FF8A65]">14 days free</span>
+              <span className="text-white/60">, then</span>
             </p>
-            <p className="mt-1 text-sm text-white/50">or ${MONTHLY}/month</p>
+            <p className="mt-1 font-display text-4xl font-bold text-white">
+              ${yearly ? YEARLY : MONTHLY}
+              <span className="text-base font-medium text-white/50">{yearly ? "/year" : "/month"}</span>
+            </p>
+            <p className="mt-1 text-sm text-white/50">
+              {yearly ? (
+                <>
+                  Just ${(YEARLY / 12).toFixed(2)}/month <span className="text-white/30 line-through">${MONTHLY}</span>
+                </>
+              ) : (
+                <>
+                  Or ${YEARLY}/year and save {SAVINGS}%
+                </>
+              )}
+            </p>
             <ul className="mt-6 space-y-2.5">
               <Tick>Wish Workshop and in-line suggestions</Tick>
               <Tick>5,000 AI calls a month, unlimited rhymes</Tick>
               <Tick>10,000 minutes of recording</Tick>
             </ul>
-            <a href={webTrial("yearly")} className="mt-8 inline-flex w-full items-center justify-center rounded-full bg-[#F6ECC9] py-3 text-sm font-semibold text-[#6F50B8] hover:bg-[#FBF2D6]">
-              Start your free trial
-            </a>
+            <div className="mt-auto pt-8">
+              <a href={webTrial(billing)} className="inline-flex w-full items-center justify-center rounded-full bg-[#F6ECC9] py-3 text-sm font-semibold text-[#6F50B8] hover:bg-[#FBF2D6]">
+                Start your free trial
+              </a>
+              <p className="mt-3 text-center text-[13px] text-white/50">
+                No charge for 14 days. Cancel anytime.{" "}
+                <a href={APP_STORE} target="_blank" rel="noopener noreferrer" className="font-medium hover:text-white">
+                  Or subscribe in the iPhone app.
+                </a>
+              </p>
+            </div>
           </Reveal>
         </div>
       </div>

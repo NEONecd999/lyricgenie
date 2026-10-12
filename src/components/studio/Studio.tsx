@@ -1917,9 +1917,9 @@ export function ConceptsMock() {
         ))}
         {/* A new one, being saved */}
         <div className="flex h-[88px] flex-col justify-between rounded-xl border-[1.5px] border-dashed border-[#E45C7A]/70 bg-[#E45C7A]/10 p-2.5">
-          <p className="flex items-center text-[13px] font-bold leading-tight text-[#F2EDE4]">
+          <p className="text-[13px] font-bold leading-tight text-[#F2EDE4]">
             Nobody Knows Me Here
-            <span className="ml-0.5 inline-block h-3.5 w-[1.5px] animate-pulse bg-[#F2EDE4]" />
+            <span className="ml-0.5 inline-block h-3.5 w-[1.5px] animate-pulse bg-[#F2EDE4] align-[-2px]" />
           </p>
           <p className="text-[10px] text-white/50">New concept</p>
         </div>

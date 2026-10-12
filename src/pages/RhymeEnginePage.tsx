@@ -11,7 +11,7 @@ const RHYMEGOLD = "https://rhymegold.com";
 
 function RhymeHero() {
   return (
-    <section className="lg-mock-dark relative overflow-hidden pb-20 pt-12 md:pb-28 md:pt-16">
+    <section className="lg-mock-dark relative overflow-hidden pb-20 pt-28 md:pb-28 md:pt-32">
       <Glow className="left-[-140px] top-[-160px] h-[560px] w-[560px]" strength={30} />
       <div className="container relative z-10 mx-auto grid items-center gap-12 px-6 lg:grid-cols-2 lg:gap-16">
         <Reveal className="mx-auto max-w-xl text-center lg:mx-0 lg:text-left">

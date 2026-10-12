@@ -64,7 +64,7 @@ const PricingPage = () => (
     title="Pricing — Lyric Genie"
     description="Start free with unlimited songs and real-time co-writing. Pro adds Wish Workshop, in-line suggestions and 5,000 AI calls a month, with a 14-day free trial."
   >
-    <div className="pt-6">
+    <div className="pt-[5.5rem]">
       <Pricing />
     </div>
     <Compare />

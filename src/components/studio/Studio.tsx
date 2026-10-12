@@ -212,7 +212,8 @@ export function StudioPage({ title, description, current, accent = "#AB8EE2", gl
     <div className="min-h-screen bg-[#1E1324] font-sans text-white antialiased" style={{ ["--acc" as string]: accent, ["--glow" as string]: glow }}>
       <SEO title={title} description={description} />
       <StudioNav current={current} />
-      {children}
+      {/* Up under the sticky bar (h-16), so the hero shows through it while it's transparent; heroes add 4rem to their top padding */}
+      <div className="-mt-16">{children}</div>
       <Footer />
     </div>
   );
@@ -611,7 +612,7 @@ export function HeroDevices() {
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden pb-20 pt-12 md:pb-28 md:pt-16">
+    <section className="relative overflow-hidden pb-20 pt-28 md:pb-28 md:pt-32">
       <Glow className="left-[-120px] top-[-160px] h-[520px] w-[520px]" strength={40} />
       <Glow className="bottom-[-200px] right-[-120px] h-[560px] w-[560px]" strength={18} />
       {/* As the main home page: words on the left, the picture on the right (here, the browser app and the

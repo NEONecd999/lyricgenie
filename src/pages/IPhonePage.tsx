@@ -6,7 +6,7 @@ import { WEB_SIGNUP } from "@/lib/links";
 
 function IPhoneHero() {
   return (
-    <section className="relative overflow-hidden pb-20 pt-12 md:pb-28 md:pt-16">
+    <section className="relative overflow-hidden pb-20 pt-28 md:pb-28 md:pt-32">
       <Glow className="left-[-140px] top-[-160px] h-[560px] w-[560px]" strength={34} />
       <Glow className="bottom-[-220px] right-[-140px] h-[560px] w-[560px]" strength={18} />
       <div className="container relative z-10 mx-auto grid items-center gap-12 px-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">

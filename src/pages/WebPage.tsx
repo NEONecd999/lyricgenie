@@ -6,7 +6,7 @@ import { WEB_SIGNIN } from "@/lib/links";
 
 function WebHero() {
   return (
-    <section className="relative overflow-hidden pb-20 pt-14 md:pb-28 md:pt-20">
+    <section className="relative overflow-hidden pb-20 pt-[7.5rem] md:pb-28 md:pt-36">
       <Glow className="left-1/2 top-[-220px] h-[700px] w-[1100px] -translate-x-1/2" strength={32} />
       <div className="container relative z-10 mx-auto px-6">
         <Reveal className="mx-auto max-w-3xl text-center">

@@ -1,5 +1,5 @@
 import { FeatureKeyframes } from "@/components/Features";
-import { CoWriteMock, Desk, Eyebrow, FinalCTA, Glow, More, PrimaryCTA, Reveal, Row, SearchMock, SessionMock, StudioPage, ChatAttachMock, ExplodedWorkspace, ImportMock, NotesMock, ToolsTabs } from "@/components/studio/Studio";
+import { CoWriteMock, Desk, Eyebrow, FinalCTA, Glow, More, PrimaryCTA, Reveal, Row, SearchMock, SessionMock, SideBySideMock, StudioPage, ChatAttachMock, ExplodedWorkspace, ImportMock, NotesMock, ToolsTabs } from "@/components/studio/Studio";
 import { WEB_SIGNIN } from "@/lib/links";
 
 /** /web: Lyric Genie on your computer. Lavender, like the desktop app's accent. */
@@ -50,6 +50,18 @@ function Together() {
         </Row>
         <Row
           flip
+          eyebrow="Side by side"
+          tint="rgba(127,98,196,.25)"
+          title={
+            <>
+              Your draft and theirs, <span className="text-[#F6ECC9]">side by side.</span>
+            </>
+          }
+          text="Open a co-writer's tab or the Master beside your own and watch it change as they type. Write on the left, borrow from the right, drag the divider to make room."
+        >
+          {() => <SideBySideMock />}
+        </Row>
+        <Row
           eyebrow="Notes"
           tint="rgba(245,182,66,.18)"
           title={
@@ -62,6 +74,7 @@ function Together() {
           {() => <NotesMock />}
         </Row>
         <Row
+          flip
           eyebrow="Chat"
           tint="rgba(171,142,226,.25)"
           title={
@@ -74,7 +87,6 @@ function Together() {
           {() => <ChatAttachMock />}
         </Row>
         <Row
-          flip
           tint="rgba(48,209,88,.16)"
           eyebrow={
             <span className="inline-flex items-center gap-2">

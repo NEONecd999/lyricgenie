@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, AudioWaveform, Bell, BookOpen, CassetteTape, Check, ChevronDown, ChevronUp, Compass, Ellipsis, Eye, FileText, ListOrdered, Maximize2, Menu, MessageSquareText, MessagesSquare, Mic, Moon, NotebookPen, PanelLeft, PanelRight, Presentation, Redo2, ScrollText, Search, Share, SlidersVertical, Sparkles, Undo2, Users, Video, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, AudioWaveform, Bell, BookOpen, CassetteTape, Check, ChevronDown, Columns2, ChevronUp, Compass, Ellipsis, Eye, FileText, ListOrdered, Maximize2, Menu, MessageSquareText, MessagesSquare, Mic, Moon, NotebookPen, PanelLeft, PanelRight, Presentation, Redo2, ScrollText, Search, Share, SlidersVertical, Sparkles, Undo2, Users, Video, X } from "lucide-react";
 import Footer from "@/components/Footer";
 import Wordmark from "@/components/Wordmark";
 import SfIcon from "@/components/SfIcon";
@@ -2257,5 +2257,63 @@ export function PhoneHero3D() {
         </div>
       </div>
     </Scaled>
+  );
+}
+
+/**
+ * Side by side (web, shared songs): your own tab on the left to write in, a co-writer's tab (or the
+ * Master) read-only on the right, live as they type, with a draggable divider (LYRICGENIE-APP SongPage "compare").
+ */
+export function SideBySideMock() {
+  const col = (who: (typeof WRITERS)[number], you: boolean, lines: ReactNode[], style?: React.CSSProperties) => (
+    <div className={`min-w-0 flex-1 ${style ? "lg-split-left" : ""}`} style={style}>
+      <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-2.5 py-0.5 text-[11px] font-medium text-white">
+        <span className="size-1.5 rounded-full" style={{ background: who.color }} />
+        {who.name}
+        {you ? " (you)" : <span className="text-white/45">· read-only</span>}
+      </span>
+      <p className="mt-3 font-serif text-[13px] font-bold not-italic text-[#AB8EE2]">Chorus</p>
+      <div className="mt-1 space-y-1 font-serif text-[13.5px] not-italic leading-snug text-[#F2EDE4]/90">{lines}</div>
+    </div>
+  );
+  const caret = (c: string, label?: string) => (
+    <>
+      <span className="ml-0.5 inline-block h-3.5 w-[1.5px] translate-y-[2px] rounded-full" style={{ background: c }} />
+      {label && (
+        <span className="ml-1 rounded px-1 py-px font-sans text-[9px] font-semibold leading-none text-[#1B0F31]" style={{ background: c }}>
+          {label}
+        </span>
+      )}
+    </>
+  );
+  return (
+    <div className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#1B1B1B] p-5 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]">
+      <p className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-white/45">
+        <Columns2 className="size-3.5" /> Side by side
+      </p>
+      {/* The divider drifts as if dragged: the left column's share swings between about 40% and 62%. */}
+      <style>{`@keyframes lgSplit { 0%, 100% { flex-basis: 50% } 35% { flex-basis: 62% } 70% { flex-basis: 40% } }
+        @media (prefers-reduced-motion: reduce) { .lg-split-left { animation: none !important } }`}</style>
+      <div className="mt-4 flex gap-4">
+        {col(WRITERS[0], true, [
+          <p key="1">It's just you and I</p>,
+          <p key="2">I'll take you on a night ride</p>,
+          <p key="3" className="flex items-center">
+            Windows down, the city's{caret(WRITERS[0].color)}
+          </p>,
+        ], { flex: "0 0 50%", animation: "lgSplit 9s ease-in-out infinite" })}
+        {/* The divider, draggable */}
+        <div className="relative w-px shrink-0 bg-white/10">
+          <span className="absolute left-1/2 top-1/2 h-8 w-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#AB8EE2]/60 shadow-[0_0_10px_rgba(171,142,226,0.5)]" />
+        </div>
+        {col(WRITERS[1], false, [
+          <p key="1">It's just you and I</p>,
+          <p key="2">Taking you on a night ride</p>,
+          <p key="3" className="flex flex-wrap items-center">
+            Every light turns green{caret(WRITERS[1].color, "Anton")}
+          </p>,
+        ])}
+      </div>
+    </div>
   );
 }

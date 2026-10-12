@@ -64,6 +64,8 @@ const PricingPage = () => (
     title="Pricing — Lyric Genie"
     description="Start free with unlimited songs and real-time co-writing. Pro adds Wish Workshop, in-line suggestions and 5,000 AI calls a month, with a 14-day free trial."
   >
+    {/* The page's one h1 (the Pricing section's own heading is an h2, as on the home page). */}
+    <h1 className="sr-only">Lyric Genie pricing: Free and Pro plans</h1>
     <div className="pt-[5.5rem]">
       <Pricing />
     </div>

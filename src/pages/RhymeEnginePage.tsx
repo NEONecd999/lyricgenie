@@ -177,7 +177,6 @@ function HowItWorks() {
             <div className="flex flex-col items-center text-center">
               <span className="font-display text-[64px] font-bold leading-none text-[#F6ECC9] md:text-[88px]">135,000</span>
               <span className="mt-2 text-lg text-white/70">words and phrases</span>
-              <span className="mt-4 max-w-sm text-sm text-white/45">The CMU Pronouncing Dictionary, phrases from how 5,646 songs use language (statistics only; no lyrics are kept), and Wiktionary idioms.</span>
             </div>
           </Step>
           <Step n={3} last title="Sort by shape" text="Results land in columns by where the rhymes fall: on A, on B, or on both, with nothing, one, or two or more syllables between. Here's one from each for highway.">

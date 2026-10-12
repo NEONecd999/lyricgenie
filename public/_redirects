@@ -10,3 +10,6 @@
 # their actual locations under public/ — no further rewriting needed.
 /                /rhymegold/index.html  200
 /index.html      /rhymegold/index.html  200
+
+# rhymegold.com's own sitemap: lyricgenie.app's /sitemap.xml (GitHub Pages) is a different file.
+/sitemap.xml     /rhymegold/sitemap.xml  200

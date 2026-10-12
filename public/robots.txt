@@ -3,5 +3,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://lyricgenie.app/docs/sitemap.xml
+Sitemap: https://lyricgenie.app/sitemap.xml
 Sitemap: https://rhymegold.com/sitemap.xml

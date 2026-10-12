@@ -1,16 +1,16 @@
-import BlogArticle from "@/components/BlogArticle";
+import Article from "@/components/studio/Article";
 import { Link } from "react-router-dom";
 
 const HitSongsWrittenFast = () => {
   return (
-    <BlogArticle
+    <Article
       title="7 Hit Songs That Were Written in Under 30 Minutes (And What They Have in Common)"
       description="Discover how iconic songs like 'I Will Always Love You' and 'Yesterday' were written in under 30 minutes. Learn the patterns behind lightning-fast songwriting."
       date="January 15, 2025"
       readTime="5 min read"
       category="Inspiration"
     >
-      <p className="text-xl leading-relaxed mb-8">
+      <p className="lead">
         Here's a truth that might blow your mind: some of the most iconic songs in music history were written faster than it takes to watch an episode of your favorite show.
       </p>
 
@@ -18,22 +18,22 @@ const HitSongsWrittenFast = () => {
         We're not talking about throwaway tracks. We're talking about songs that topped charts, won Grammys, and became the soundtrack to millions of lives. And they were born in moments of pure creative flow that lasted less than half an hour.
       </p>
 
-      <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">"I Will Always Love You" – 15 Minutes</h2>
+      <h2>"I Will Always Love You" – 15 Minutes</h2>
       <p>
         Dolly Parton wrote this classic in about 15 minutes. She's said it "just fell out" while she was thinking about her professional split from Porter Wagoner. The song has since been covered by Whitney Houston in what became one of the best-selling singles of all time.
       </p>
 
-      <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">"Yesterday" – The Time It Takes to Wake Up</h2>
+      <h2>"Yesterday" – The Time It Takes to Wake Up</h2>
       <p>
         Paul McCartney literally woke up with the melody in his head. The entire song came to him in a dream, and he spent weeks asking people if they'd heard it before because he couldn't believe he'd actually written it. The lyrics came later, but the hook—that immortal melody—arrived fully formed.
       </p>
 
-      <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">"Rolling in the Deep" – About 20 Minutes</h2>
+      <h2>"Rolling in the Deep" – About 20 Minutes</h2>
       <p>
         Adele and producer Paul Epworth wrote this Grammy-winning powerhouse in a single session that lasted about as long as your morning commute. The raw emotion was fresh, the ideas were flowing, and they knew better than to overthink it.
       </p>
 
-      <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">What These Songs Have in Common</h2>
+      <h2>What These Songs Have in Common</h2>
       
       <p>
         After studying dozens of "lightning strike" songs, a clear pattern emerges:
@@ -55,7 +55,7 @@ const HitSongsWrittenFast = () => {
         <strong>4. The melody was memorable from the start.</strong> You can overthink lyrics. You can rewrite verses. But if your melody doesn't hook people immediately, no amount of revision will save it.
       </p>
 
-      <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">The Myth of the Long Writing Session</h2>
+      <h2>The Myth of the Long Writing Session</h2>
       
       <p>
         Here's what the music industry doesn't want you to know: sometimes the best songs come fast, and sometimes the songs you agonize over for months never quite work.
@@ -69,7 +69,7 @@ const HitSongsWrittenFast = () => {
         <strong>Just write.</strong>
       </p>
 
-      <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">How to Set Yourself Up for Lightning Strikes</h2>
+      <h2>How to Set Yourself Up for Lightning Strikes</h2>
 
       <p>
         You can't force a hit song to happen in 30 minutes, but you can create conditions that make it more likely:
@@ -91,7 +91,7 @@ const HitSongsWrittenFast = () => {
         <strong>Know your tools inside and out.</strong> Whether it's your instrument, your rhyming dictionary, or your recording setup, mastery of your tools means you won't fumble when the magic happens.
       </p>
 
-      <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">The Bottom Line</h2>
+      <h2>The Bottom Line</h2>
 
       <p>
         Your next great song might take months of careful revision. Or it might pour out of you in the time it takes to drink your morning coffee. The key is being prepared for both scenarios—and trusting the process either way.
@@ -104,7 +104,7 @@ const HitSongsWrittenFast = () => {
       <p>
         Maybe today's the day it happens for you.
       </p>
-    </BlogArticle>
+    </Article>
   );
 };
 

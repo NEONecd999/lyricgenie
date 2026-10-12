@@ -6,9 +6,56 @@ export interface BlogPost {
   date: string;
   category: string;
   image?: string;
+  /** Written, not yet published: listed with a Draft chip for review, kept out of related links. */
+  draft?: boolean;
 }
 
 export const blogPosts: BlogPost[] = [
+  {
+    slug: "how-to-co-write-a-song-remotely",
+    title: "How to Co-Write a Song Remotely: A Working Guide",
+    excerpt: "Who holds the pen, how to keep one version of the lyric, and how to finish the song when you're not in the same room.",
+    readTime: "5 min read",
+    date: "",
+    category: "Co-writing",
+    draft: true,
+  },
+  {
+    slug: "multisyllabic-rhymes-examples",
+    title: "Multisyllabic Rhymes: What They Are, With Examples",
+    excerpt: "Why rhymes that match two or three syllables land harder, and how to find them, with original lines taken apart.",
+    readTime: "5 min read",
+    date: "",
+    category: "Craft",
+    draft: true,
+  },
+  {
+    slug: "rhyme-schemes-explained",
+    title: "Rhyme Schemes Explained: AABB, ABAB, ABCB and More",
+    excerpt: "The patterns you'll use most, what each one does to a section, and when to switch between them.",
+    readTime: "5 min read",
+    date: "",
+    category: "Craft",
+    draft: true,
+  },
+  {
+    slug: "songwriting-credits-splits-lyric-sheet",
+    title: "Splitting Songwriting Credits (and What Your Lyric Sheet Should Include)",
+    excerpt: "Talking splits on the day, PROs and IPI numbers in plain terms, and the fields every lyric sheet should carry.",
+    readTime: "5 min read",
+    date: "",
+    category: "Business",
+    draft: true,
+  },
+  {
+    slug: "best-songwriting-apps-mac-pc-2026",
+    title: "The Best Songwriting Apps for Mac and PC in 2026",
+    excerpt: "Documents, rhyming dictionaries, DAWs and songwriting workspaces: what each is good at, and how to choose.",
+    readTime: "5 min read",
+    date: "",
+    category: "Tools & Resources",
+    draft: true,
+  },
   {
     slug: "ai-music-tools-2026",
     title: "AI Music Tools in 2026: What's Real, What's Hype, and What Songwriters Actually Need",

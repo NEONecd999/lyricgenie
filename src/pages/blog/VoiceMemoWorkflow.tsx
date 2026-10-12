@@ -1,16 +1,16 @@
-import BlogArticle from "@/components/BlogArticle";
+import Article from "@/components/studio/Article";
 import { Link } from "react-router-dom";
 
 const VoiceMemoWorkflow = () => {
   return (
-    <BlogArticle
+    <Article
       title="From Voice Memo to Finished Song: The Workflow That Changed Everything"
       description="Stop losing your best song ideas. Learn the capture-develop-archive system that professional songwriters use to turn voice memos into finished songs."
       date="January 2, 2025"
       readTime="6 min read"
       category="Workflow"
     >
-      <p className="text-xl leading-relaxed mb-8">
+      <p className="lead">
         It's 2am. You're half-asleep. And suddenly, there it is—a melody so perfect it wakes you up. You grab your phone, sing it into a voice memo, and drift back to sleep, confident you've captured something special.
       </p>
 
@@ -26,7 +26,7 @@ const VoiceMemoWorkflow = () => {
         The gap between capturing an idea and turning it into a finished song is where most great songs die. But it doesn't have to be this way.
       </p>
 
-      <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">The Capture Problem</h2>
+      <h2>The Capture Problem</h2>
 
       <p>
         Ideas are fragile. They arrive unannounced, often at inconvenient times, and they don't wait for you to be ready. If you don't capture them immediately, they evaporate.
@@ -36,7 +36,7 @@ const VoiceMemoWorkflow = () => {
         But capture is just step one. The real challenge is building a system that lets you:
       </p>
 
-      <ul className="list-disc pl-6 space-y-2 my-4">
+      <ul>
         <li>Find that idea again when you're ready to develop it</li>
         <li>Understand what you were thinking when you recorded it</li>
         <li>Connect related ideas that came at different times</li>
@@ -47,13 +47,13 @@ const VoiceMemoWorkflow = () => {
         Professional songwriters who maintain prolific output have solved this problem. Here's how.
       </p>
 
-      <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">The Three-Second Context Rule</h2>
+      <h2>The Three-Second Context Rule</h2>
 
       <p>
         Whenever you capture a voice memo, spend three extra seconds adding context. Before or after singing your melody, say:
       </p>
 
-      <ul className="list-disc pl-6 space-y-2 my-4">
+      <ul>
         <li>What the song is about</li>
         <li>The mood you're going for</li>
         <li>A potential title</li>
@@ -67,7 +67,7 @@ const VoiceMemoWorkflow = () => {
         "Upbeat breakup song, maybe called 'Thank You, Next'"—now when you play this memo in a month, you instantly know what you were going for.
       </p>
 
-      <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">The Inbox → Develop → Archive System</h2>
+      <h2>The Inbox → Develop → Archive System</h2>
 
       <p>
         Here's the workflow that professional writers swear by:
@@ -89,7 +89,7 @@ const VoiceMemoWorkflow = () => {
         Apps like <Link to="/">Lyric Genie</Link> are built around exactly this workflow—giving you a dedicated place for song ideas with voice memos, lyrics, and notes all connected together. The key is having everything in one place so ideas don't get lost across different apps.
       </p>
 
-      <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">The Weekly Review Ritual</h2>
+      <h2>The Weekly Review Ritual</h2>
 
       <p>
         Capturing ideas is useless if you never revisit them. Build a weekly habit:
@@ -99,7 +99,7 @@ const VoiceMemoWorkflow = () => {
         Every Sunday (or whatever day works for you), spend 20 minutes reviewing your captured ideas. Listen to your voice memos. Read your lyric fragments. Ask yourself:
       </p>
 
-      <ul className="list-disc pl-6 space-y-2 my-4">
+      <ul>
         <li>Which of these still excites me?</li>
         <li>Can any of these ideas combine into something bigger?</li>
         <li>What should I work on this week?</li>
@@ -109,7 +109,7 @@ const VoiceMemoWorkflow = () => {
         This ritual keeps your creative pipeline flowing. You'll never sit down to write and face a blank page—you'll have a library of starting points waiting for you.
       </p>
 
-      <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">From Fragment to Structure</h2>
+      <h2>From Fragment to Structure</h2>
 
       <p>
         So you have a great verse idea. Now what?
@@ -119,7 +119,7 @@ const VoiceMemoWorkflow = () => {
         The next step is identifying what piece of the puzzle you have. Is it:
       </p>
 
-      <ul className="list-disc pl-6 space-y-2 my-4">
+      <ul>
         <li><strong>A melodic hook?</strong> This probably wants to be your chorus.</li>
         <li><strong>A story premise?</strong> This is your verse material.</li>
         <li><strong>A twist or surprise?</strong> This might be your bridge.</li>
@@ -130,7 +130,7 @@ const VoiceMemoWorkflow = () => {
         Once you know what part of the song you have, you can focus your energy on building out what's missing.
       </p>
 
-      <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">The Scaffolding Technique</h2>
+      <h2>The Scaffolding Technique</h2>
 
       <p>
         Staring at an empty song structure is paralyzing. Try this instead:
@@ -140,7 +140,7 @@ const VoiceMemoWorkflow = () => {
         Start with placeholder lyrics. Write the worst, most obvious lines you can think of—lines that convey the meaning you want but have zero craft.
       </p>
 
-      <p className="italic bg-muted/50 p-4 rounded-lg my-4">
+      <p className="lyric">
         "I'm really sad because you left / Now I feel bad and bereft"
       </p>
 
@@ -152,7 +152,7 @@ const VoiceMemoWorkflow = () => {
         "Write drunk, edit sober" isn't literally about alcohol—it's about separating creation from criticism. Get the ideas down first. Make them good second.
       </p>
 
-      <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">The Finish Line Problem</h2>
+      <h2>The Finish Line Problem</h2>
 
       <p>
         Many songwriters start strong but struggle to finish. They have folders full of 80%-done songs that never quite got there.
@@ -166,13 +166,13 @@ const VoiceMemoWorkflow = () => {
         External accountability transforms "someday" into "Tuesday." And honestly? A finished imperfect song teaches you more than a perfect unfinished one.
       </p>
 
-      <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">The Complete Workflow</h2>
+      <h2>The Complete Workflow</h2>
 
       <p>
         Here's everything put together:
       </p>
 
-      <ol className="list-decimal pl-6 space-y-3 my-4">
+      <ol>
         <li><strong>Capture everywhere.</strong> Phone always ready. Three seconds of context on every memo.</li>
         <li><strong>Inbox weekly.</strong> Review captures every week. Move promising ideas to active development.</li>
         <li><strong>Scaffold first.</strong> Use placeholder lyrics to build structure before crafting.</li>
@@ -184,7 +184,7 @@ const VoiceMemoWorkflow = () => {
       <p>
         The system matters more than any individual idea. Build the right workflow, and you'll never waste another 2am melody again.
       </p>
-    </BlogArticle>
+    </Article>
   );
 };
 

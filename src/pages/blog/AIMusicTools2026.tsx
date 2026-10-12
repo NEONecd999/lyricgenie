@@ -1,10 +1,10 @@
-import BlogArticle from "@/components/BlogArticle";
+import Article from "@/components/studio/Article";
 import { Link } from "react-router-dom";
 import aiMusicImage from "@/assets/blog-ai-music.jpg";
 
 const AIMusicTools2026 = () => {
   return (
-    <BlogArticle
+    <Article
       title="AI Music Tools in 2026: What's Real, What's Hype, and What Songwriters Actually Need"
       description="Cut through the AI music hype. A practical guide to Suno, Udio, and AI lyric tools—what works, what doesn't, and how to use AI without losing your voice."
       date="January 18, 2026"
@@ -18,7 +18,7 @@ const AIMusicTools2026 = () => {
       <img 
         src={aiMusicImage} 
         alt="Abstract visualization of AI and music with sound waves and neural patterns" 
-        className="w-full rounded-xl my-8"
+        className="w-full"
       />
 
       <p>
@@ -151,7 +151,7 @@ const AIMusicTools2026 = () => {
       <p>
         <strong>The songwriters who thrive in this new landscape will be those who use AI as a tool in their creative toolkit—not a replacement for their creative voice.</strong>
       </p>
-    </BlogArticle>
+    </Article>
   );
 };
 

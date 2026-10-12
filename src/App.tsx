@@ -21,6 +21,11 @@ import CoWritingSecrets from "./pages/blog/CoWritingSecrets";
 import VoiceMemoWorkflow from "./pages/blog/VoiceMemoWorkflow";
 import SongwritingToolsGuide from "./pages/blog/SongwritingToolsGuide";
 import AIMusicTools2026 from "./pages/blog/AIMusicTools2026";
+import CoWriteRemotely from "./pages/blog/CoWriteRemotely";
+import MultisyllabicRhymes from "./pages/blog/MultisyllabicRhymes";
+import RhymeSchemesExplained from "./pages/blog/RhymeSchemesExplained";
+import CreditsAndLyricSheets from "./pages/blog/CreditsAndLyricSheets";
+import BestSongwritingAppsMacPC from "./pages/blog/BestSongwritingAppsMacPC";
 import NotFound from "./pages/NotFound";
 import ScrollToHash from "./components/ScrollToHash";
 
@@ -94,6 +99,12 @@ const App = () => {
             <Route path="/blog/voice-memos-to-finished-songs" element={<VoiceMemoWorkflow />} />
             <Route path="/blog/songwriting-tools-guide-2026" element={<SongwritingToolsGuide />} />
             <Route path="/blog/ai-music-tools-2026" element={<AIMusicTools2026 />} />
+            {/* Drafts for review (noindex until published) */}
+            <Route path="/blog/how-to-co-write-a-song-remotely" element={<CoWriteRemotely />} />
+            <Route path="/blog/multisyllabic-rhymes-examples" element={<MultisyllabicRhymes />} />
+            <Route path="/blog/rhyme-schemes-explained" element={<RhymeSchemesExplained />} />
+            <Route path="/blog/songwriting-credits-splits-lyric-sheet" element={<CreditsAndLyricSheets />} />
+            <Route path="/blog/best-songwriting-apps-mac-pc-2026" element={<BestSongwritingAppsMacPC />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

@@ -1,24 +1,24 @@
-import BlogArticle from "@/components/BlogArticle";
+import Article from "@/components/studio/Article";
 import { Link } from "react-router-dom";
 import cowritingImage from "@/assets/blog-cowriting.jpg";
 
 const CoWritingSecrets = () => {
   return (
-    <BlogArticle
+    <Article
       title="Inside the Room: Co-Writing Secrets from Nashville's Top Songwriters"
       description="Learn the unwritten rules of professional co-writing sessions. Nashville songwriters share tips on collaboration, splits, and building lasting partnerships."
       date="January 5, 2025"
       readTime="8 min read"
       category="Industry"
     >
-      <p className="text-xl leading-relaxed mb-8">
+      <p className="lead">
         In Nashville, co-writing isn't optional—it's the culture. The biggest hits on country radio, and increasingly pop and R&B too, come from writing rooms where two, three, or four writers bounce ideas off each other until something magic happens.
       </p>
 
       <img 
         src={cowritingImage} 
         alt="Two songwriters collaborating in a cozy Nashville-style writing room" 
-        className="w-full rounded-xl my-8"
+        className="w-full"
       />
 
       <p>
@@ -29,7 +29,7 @@ const CoWritingSecrets = () => {
         We talked to professional songwriters who've been in thousands of co-writes to find out.
       </p>
 
-      <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">The 15-Minute Rule</h2>
+      <h2>The 15-Minute Rule</h2>
 
       <p>
         Every experienced co-writer knows: the first 15 minutes of a session aren't about the song. They're about establishing connection.
@@ -43,7 +43,7 @@ const CoWritingSecrets = () => {
         "If you skip the small talk and go straight to 'What should we write about?', the session always feels forced," one Nashville writer told us. "The best songs come when the room is relaxed."
       </p>
 
-      <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">Coming Prepared (But Not Too Prepared)</h2>
+      <h2>Coming Prepared (But Not Too Prepared)</h2>
 
       <p>
         Here's the balance that takes years to master: you want to bring ideas to a co-write, but you can't be married to them.
@@ -61,7 +61,7 @@ const CoWritingSecrets = () => {
         "The worst co-writers are the ones who come in having already written the song in their head," explains one veteran. "Then they just want you to validate their vision. That's not collaboration. That's dictation."
       </p>
 
-      <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">The Yes, And Principle</h2>
+      <h2>The Yes, And Principle</h2>
 
       <p>
         Improv comedians have a rule: never say no to what your scene partner contributes. Instead, say "yes, and"—accept the idea and build on it.
@@ -75,7 +75,7 @@ const CoWritingSecrets = () => {
         "I've written hundreds of songs, and some of my biggest hits came from ideas I initially thought were wrong," one writer admits. "You have to stay open. Your first reaction isn't always right."
       </p>
 
-      <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">Protecting the Flow</h2>
+      <h2>Protecting the Flow</h2>
 
       <p>
         When a co-write is working—when that flow state kicks in—experienced writers know to protect it at all costs.
@@ -89,7 +89,7 @@ const CoWritingSecrets = () => {
         "When we're in the zone, I won't even get up to use the bathroom," laughs one writer. "You can feel when the magic is happening, and you don't break that spell for anything."
       </p>
 
-      <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">The Unspoken Rules of Splits</h2>
+      <h2>The Unspoken Rules of Splits</h2>
 
       <p>
         How do you divide up credit when three people write a song together but one person contributed the main hook?
@@ -107,7 +107,7 @@ const CoWritingSecrets = () => {
         "Equal splits make people more generous," notes one writer. "When you know you're getting your share no matter what, you stop holding back your best stuff."
       </p>
 
-      <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">Reading the Room</h2>
+      <h2>Reading the Room</h2>
 
       <p>
         Sometimes a co-write just isn't working. The ideas aren't clicking. The vibe is off. What do you do?
@@ -125,7 +125,7 @@ const CoWritingSecrets = () => {
         "I'd rather write zero songs in a session than write a mediocre song I'm not proud of," says one writer. "My catalog is my reputation. I protect it."
       </p>
 
-      <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">Building Long-Term Co-Writing Relationships</h2>
+      <h2>Building Long-Term Co-Writing Relationships</h2>
 
       <p>
         The best co-writes happen between writers who've worked together for years. They know each other's strengths. They have shorthand. They trust each other completely.
@@ -139,7 +139,7 @@ const CoWritingSecrets = () => {
         "My favorite co-writers are people I'd hang out with even if we never wrote another song together," one veteran explains. "The friendship is the foundation. The songs are what we build on top."
       </p>
 
-      <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">Making It Work Remotely</h2>
+      <h2>Making It Work Remotely</h2>
 
       <p>
         Since 2020, remote co-writing has exploded. Writers who used to drive across Nashville now collaborate with people in LA, London, Stockholm.
@@ -153,7 +153,7 @@ const CoWritingSecrets = () => {
         Many remote writers use shared workspaces or apps like <Link to="/">Lyric Genie</Link> to keep ideas organized and accessible to all collaborators. Having a centralized place for lyrics, voice notes, and song structures makes remote sessions feel almost as smooth as being in the room together.
       </p>
 
-      <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">The Courage to Be Vulnerable</h2>
+      <h2>The Courage to Be Vulnerable</h2>
 
       <p>
         At its heart, co-writing requires vulnerability. You're sharing half-formed ideas with another person. You're exposing your creative process. You're trusting someone else with your artistic vision.
@@ -166,7 +166,7 @@ const CoWritingSecrets = () => {
       <p>
         "Some of my best songs came from me saying, 'This might be stupid, but...' and then saying the stupid thing anyway," one writer reflects. "The willingness to be wrong is what opens you up to being really, really right."
       </p>
-    </BlogArticle>
+    </Article>
   );
 };
 

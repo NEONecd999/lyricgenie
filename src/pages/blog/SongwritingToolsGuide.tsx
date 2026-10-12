@@ -1,10 +1,10 @@
-import BlogArticle from "@/components/BlogArticle";
+import Article from "@/components/studio/Article";
 import { Link } from "react-router-dom";
 import songwritingToolsImage from "@/assets/blog-songwriting-tools.jpg";
 
 const SongwritingToolsGuide = () => {
   return (
-    <BlogArticle
+    <Article
       title="The Ultimate Songwriter's Toolkit: Every Tool You Need in 2026"
       description="A comprehensive guide to the best songwriting tools in 2026. From rhyme dictionaries to collaboration apps, build the perfect toolkit for your workflow."
       date="January 15, 2026"
@@ -18,7 +18,7 @@ const SongwritingToolsGuide = () => {
       <img 
         src={songwritingToolsImage} 
         alt="Songwriting tools on a desk including phone, notebook, and headphones" 
-        className="w-full rounded-xl my-8"
+        className="w-full"
       />
 
       <p>
@@ -154,7 +154,7 @@ const SongwritingToolsGuide = () => {
       <p>
         <strong>The best songwriting tool is the one that's ready when inspiration strikes.</strong> Build a toolkit that works with your creative process, not against it.
       </p>
-    </BlogArticle>
+    </Article>
   );
 };
 

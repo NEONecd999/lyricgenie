@@ -1,16 +1,16 @@
-import BlogArticle from "@/components/BlogArticle";
+import Article from "@/components/studio/Article";
 import { Link } from "react-router-dom";
 
 const SongwritingMistakes = () => {
   return (
-    <BlogArticle
+    <Article
       title="5 Songwriting Mistakes That Are Killing Your Songs (And How Top Writers Avoid Them)"
       description="Avoid the common songwriting pitfalls that hold good writers back. Learn professional techniques for stronger hooks, better verses, and finished songs."
       date="January 8, 2025"
       readTime="6 min read"
       category="Tips"
     >
-      <p className="text-xl leading-relaxed mb-8">
+      <p className="lead">
         You've written dozens of songs. Maybe hundreds. But something's not clicking. The songs feel... fine. Just fine. Not memorable. Not the kind of songs that make people stop what they're doing and really listen.
       </p>
 
@@ -18,7 +18,7 @@ const SongwritingMistakes = () => {
         After talking to professional songwriters who've written for major artists—and studying what separates album cuts from hits—we've identified the five most common mistakes that hold good songwriters back from becoming great ones.
       </p>
 
-      <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">Mistake #1: Starting With the Wrong Idea</h2>
+      <h2>Mistake #1: Starting With the Wrong Idea</h2>
 
       <p>
         Here's a harsh truth: not every song idea deserves to be a song.
@@ -36,7 +36,7 @@ const SongwritingMistakes = () => {
         Professional writers often generate dozens of ideas before committing to one. They use tools like <Link to="/">Lyric Genie</Link> to capture every melody and phrase that comes to them, then review later with fresh ears to identify which ideas have real potential.
       </p>
 
-      <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">Mistake #2: Telling Instead of Showing</h2>
+      <h2>Mistake #2: Telling Instead of Showing</h2>
 
       <p>
         "I was so sad" tells us nothing. It's abstract. It doesn't create an image or a feeling.
@@ -54,7 +54,7 @@ const SongwritingMistakes = () => {
         <strong>The fix:</strong> For every abstract emotion word in your lyrics (sad, happy, angry, lonely), challenge yourself to replace it with a concrete image or action. What does that emotion look like? What does someone do when they feel it?
       </p>
 
-      <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">Mistake #3: Burying the Hook</h2>
+      <h2>Mistake #3: Burying the Hook</h2>
 
       <p>
         Your hook is the most memorable part of your song—the part people sing in the shower, the part that gets stuck in heads. And too many writers hide it.
@@ -72,7 +72,7 @@ const SongwritingMistakes = () => {
         Listen to any Top 40 hit. Notice how the hook announces itself immediately. That's not an accident.
       </p>
 
-      <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">Mistake #4: Forgetting the Second Verse Problem</h2>
+      <h2>Mistake #4: Forgetting the Second Verse Problem</h2>
 
       <p>
         First verses are easy. You're introducing the story. You have all the obvious details to work with.
@@ -90,7 +90,7 @@ const SongwritingMistakes = () => {
         Great second verses add new information while maintaining the emotional thread. They make the listener think, "Oh, now I understand more about this situation."
       </p>
 
-      <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">Mistake #5: Editing Too Soon (or Not at All)</h2>
+      <h2>Mistake #5: Editing Too Soon (or Not at All)</h2>
 
       <p>
         This is actually two opposite mistakes, but they come from the same place: not understanding the difference between creative mode and editorial mode.
@@ -112,7 +112,7 @@ const SongwritingMistakes = () => {
         Many pro writers use <Link to="/">Lyric Genie's</Link> note system to flag lines they're unsure about during writing—without stopping to fix them—then return later specifically to address those flagged moments.
       </p>
 
-      <h2 className="text-2xl font-bold mt-10 mb-4 text-foreground">The Meta-Mistake: Not Writing Enough</h2>
+      <h2>The Meta-Mistake: Not Writing Enough</h2>
 
       <p>
         All five of these mistakes have something in common: they get better with practice. The more songs you write, the faster you'll learn to recognize when you're telling instead of showing, or when an idea doesn't have legs.
@@ -129,7 +129,7 @@ const SongwritingMistakes = () => {
       <p>
         Awareness is the first step. Now you have it. The rest is up to you.
       </p>
-    </BlogArticle>
+    </Article>
   );
 };
 

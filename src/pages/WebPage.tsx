@@ -57,7 +57,7 @@ function Together() {
               Notes on <span className="text-[#F6ECC9]">the words.</span>
             </>
           }
-          text="Highlight a phrase and leave a note. Co-writers reply, and anyone resolves it."
+          text="Highlight a phrase and leave a note. Co-writers reply, and anyone resolves it. Keep options right on the line, main / alt, and swap one in when you decide."
         >
           {() => <NotesMock />}
         </Row>

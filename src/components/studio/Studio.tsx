@@ -198,16 +198,9 @@ export const Glow = ({ className, strength = 30 }: { className: string; strength
 
 /**
  * One studio page: dark plum throughout, its own accent (eyebrows, highlights) and glow colour, the nav
- * and the footer. Kept out of search while these are drafts.
+ * and the footer.
  */
 export function StudioPage({ title, description, current, accent = "#AB8EE2", glow = "#6F50B8", children }: { title: string; description: string; current?: string; accent?: string; glow?: string; children: ReactNode }) {
-  useEffect(() => {
-    const m = document.createElement("meta");
-    m.name = "robots";
-    m.content = "noindex";
-    document.head.appendChild(m);
-    return () => m.remove();
-  }, []);
   return (
     <div className="min-h-screen bg-[#1E1324] font-sans text-white antialiased" style={{ ["--acc" as string]: accent, ["--glow" as string]: glow }}>
       <SEO title={title} description={description} />

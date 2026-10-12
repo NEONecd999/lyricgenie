@@ -2121,3 +2121,50 @@ export function ConceptsMock() {
     </div>
   );
 }
+
+/**
+ * Rhyme colours and the rhyme scheme (web app View → Rhyme colors): rhyming words tinted with a
+ * full-colour underline, groups in order of first appearance, and each line's scheme letter in the
+ * margin in its group's colour (LYRICGENIE-APP editor/extensions/rhymeHighlight.ts, margins.ts).
+ */
+export function RhymeSchemeMock() {
+  const blue = C.blue;
+  const green = C.green;
+  const sunset = "#F4845F";
+  const hl = (word: string, c: string) => (
+    <span className="rounded-[3px] underline decoration-2 underline-offset-[3px]" style={{ background: `${c}59`, textDecorationColor: c }}>
+      {word}
+    </span>
+  );
+  const lines: [ReactNode, string, string][] = [
+    [<>I became another {hl("stranger", blue)}</>, "A", blue],
+    [<>Every exit leads to {hl("danger", blue)}</>, "A", blue],
+    [<>Headlights on the {hl("overpass", green)}</>, "B", green],
+    [<>Shadows dancing on the {hl("glass", green)}</>, "B", green],
+    [<>Streets are burning {hl("bright", sunset)} {hl("tonight", sunset)}</>, "C", sunset],
+    [<>Racing through the city {hl("light", sunset)}</>, "C", sunset],
+  ];
+  return (
+    <div className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#1B1B1B] p-5 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]">
+      <div className="flex items-center gap-1.5">
+        <span className="mr-auto text-[11px] font-bold uppercase tracking-[0.14em] text-white/45">View</span>
+        {["Rhyme colors", "Rhyme scheme"].map((t) => (
+          <span key={t} className="flex items-center gap-1 rounded-full bg-[#AB8EE2]/15 px-2.5 py-0.5 text-[11px] font-semibold text-[#D9CCF5]">
+            <Check className="size-3" /> {t}
+          </span>
+        ))}
+      </div>
+      <p className="mt-4 font-serif text-[14px] font-bold not-italic text-[#AB8EE2]">Verse 1</p>
+      <div className="mt-1 space-y-1.5 font-serif text-[16px] not-italic leading-snug text-[#F2EDE4]/90">
+        {lines.map(([l, letter, c], i) => (
+          <p key={i} className="flex items-baseline">
+            <span className="flex-1">{l}</span>
+            <span className="w-6 text-right font-sans text-[12px] font-bold" style={{ color: c }}>
+              {letter}
+            </span>
+          </p>
+        ))}
+      </div>
+    </div>
+  );
+}

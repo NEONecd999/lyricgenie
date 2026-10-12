@@ -1890,3 +1890,41 @@ export function RecordingsMock() {
     </div>
   );
 }
+
+/** Concepts on iPhone: mood-coloured cards for titles and hooks, a new one being saved, Spark for more. */
+export function ConceptsMock() {
+  const cards = [
+    { title: "Highway Ghost", note: "haunted by what could have been", g: "linear-gradient(135deg,#2563EB,#38BDF8)" },
+    { title: "Red Light Runner", note: "reckless, desperate to feel something", g: "linear-gradient(135deg,#E05297,#F4845F)" },
+    { title: "Golden Hour", note: "a perfect moment, slipping away", g: "linear-gradient(135deg,#D97706,#FBBF24)" },
+    { title: "Ghost Mode", note: "detached but quietly watching", g: "linear-gradient(135deg,#7251BD,#B870DB)" },
+    { title: "Airplane Mode", note: "unreachable, on purpose", g: "linear-gradient(135deg,#059669,#34D399)" },
+  ];
+  return (
+    <div className="w-full max-w-sm rounded-2xl border border-white/10 bg-[#1B1B1B] p-4 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]">
+      <div className="flex items-center justify-between px-1">
+        <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-white/45">Concepts</span>
+        <span className="flex items-center gap-1 rounded-full bg-[#AB8EE2]/15 px-2 py-0.5 text-[10px] font-semibold text-[#AB8EE2]">
+          <SfIcon name="sparkles" size={9} color="#AB8EE2" /> Spark more
+        </span>
+      </div>
+      <div className="mt-3 grid grid-cols-2 gap-2">
+        {cards.map((c) => (
+          <div key={c.title} className="flex h-[88px] flex-col justify-between rounded-xl p-2.5 text-white" style={{ background: c.g }}>
+            <p className="text-[13px] font-bold leading-tight">{c.title}</p>
+            <p className="text-[10px] leading-snug text-white/85">{c.note}</p>
+          </div>
+        ))}
+        {/* A new one, being saved */}
+        <div className="flex h-[88px] flex-col justify-between rounded-xl border-[1.5px] border-dashed border-[#E45C7A]/70 bg-[#E45C7A]/10 p-2.5">
+          <p className="flex items-center text-[13px] font-bold leading-tight text-[#F2EDE4]">
+            Nobody Knows Me Here
+            <span className="ml-0.5 inline-block h-3.5 w-[1.5px] animate-pulse bg-[#F2EDE4]" />
+          </p>
+          <p className="text-[10px] text-white/50">New concept</p>
+        </div>
+      </div>
+      <div className="mt-3 rounded-full bg-[#F6ECC9] py-2 text-center text-[12px] font-semibold text-[#6F50B8]">Start a song from Highway Ghost</div>
+    </div>
+  );
+}

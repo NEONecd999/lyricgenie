@@ -1,5 +1,5 @@
 import { FeatureKeyframes, FreestyleSpotlight } from "@/components/Features";
-import { AppStoreCTA, CaptureMock, RecordingsMock, ChatMock, Eyebrow, FinalCTA, Glow, Head, PerformMock, PhoneArt, Reveal, Row, StudioPage, ToolsTabs } from "@/components/studio/Studio";
+import { AppStoreCTA, CaptureMock, ConceptsMock, RecordingsMock, ChatMock, Eyebrow, FinalCTA, Glow, Head, PerformMock, PhoneArt, Reveal, Row, StudioPage, ToolsTabs } from "@/components/studio/Studio";
 import { WEB_SIGNUP } from "@/lib/links";
 
 /** /iphone: Lyric Genie for iPhone, iPad and Mac. Warm coral, the mobile side's colour. */
@@ -81,6 +81,18 @@ const IPhonePage = () => (
       </Row>
       <Row
         flip
+        eyebrow="Concepts"
+        tint="rgba(127,98,196,.25)"
+        title={
+          <>
+            Keep every title <span className="text-[#F6ECC9]">and hook.</span>
+          </>
+        }
+        text="Save the idea in seconds, coloured by mood. Stuck? Spark suggests more. Start a song from any of them, later at your desk."
+      >
+        {() => <ConceptsMock />}
+      </Row>
+      <Row
         eyebrow="Recordings"
         tint="rgba(232,102,60,.22)"
         title={
@@ -93,6 +105,7 @@ const IPhonePage = () => (
         {() => <RecordingsMock />}
       </Row>
       <Row
+        flip
         eyebrow="Freestyle · iPhone only"
         tint="rgba(228,92,122,.22)"
         title={

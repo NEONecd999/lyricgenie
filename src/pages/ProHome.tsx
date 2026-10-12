@@ -49,14 +49,14 @@ function TwoWays() {
           lead="The same songs, synced live. Start a line on your phone, finish the song at your desk."
         />
         <div className="mx-auto mt-12 grid max-w-5xl gap-5 md:grid-cols-2">
-          <AppCard href="/web/" eyebrow="On your computer" title="Lyric Genie for the web" points={["A full workspace in your browser", "Co-write live, every writer on a tab", "Sessions with video and your DAW"]} cta="Explore the web app">
+          <AppCard href="/web/" eyebrow="On your computer" title="Lyric Genie for the web" points={["A full workspace in your browser", "Co-write live, every writer on a tab", "Coming soon: sessions with your DAW"]} cta="Explore the web app">
             <div className="w-full">
               <Scaled w={580} h={300}>
                 <BrowserArt />
               </Scaled>
             </div>
           </AppCard>
-          <AppCard href="/iphone/" eyebrow="On your iPhone" title="Lyric Genie for iPhone" points={["Catch ideas the moment they land", "Freestyle a melody into lyrics", "Also on iPad and Mac"]} cta="Explore the iPhone app">
+          <AppCard href="/iphone/" eyebrow="On your iPhone" title="Lyric Genie for iPhone" points={["Catch ideas the moment they land", "Freestyle a melody into lyrics", "Also on iPad"]} cta="Explore the iPhone app">
             <div className="w-[170px]">
               <PhoneArt />
             </div>

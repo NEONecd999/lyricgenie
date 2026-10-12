@@ -52,7 +52,7 @@ function Compare() {
             </tbody>
           </table>
         </Reveal>
-        <p className="mt-5 text-center text-sm text-white/45">One account across the web, iPhone, iPad and Mac. One Pro subscription covers them all.</p>
+        <p className="mt-5 text-center text-sm text-white/45">One account across the web, iPhone and iPad. One Pro subscription covers them all.</p>
       </div>
     </section>
   );

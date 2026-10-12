@@ -593,7 +593,7 @@ export function HeroDevices() {
                 <span className="size-1 rounded-full bg-[#30D158]" /> Live
               </span>
             </span>
-            <span className="px-1 text-[9.5px] font-medium text-white/75">Session · 3 here</span>
+            <span className="px-1 text-[9.5px] font-medium text-white/75">Sessions · coming soon</span>
           </Float>
         </div>
       </div>
@@ -833,7 +833,7 @@ export function Features() {
           tint="rgba(48,209,88,.16)"
           eyebrow={
             <span className="inline-flex items-center gap-2">
-              Sessions <span className="rounded-full bg-[#30D158]/15 px-2 py-0.5 text-[10px] tracking-[0.12em] text-[#30D158]">Early access</span>
+              Sessions <span className="rounded-full bg-[#30D158]/15 px-2 py-0.5 text-[10px] tracking-[0.12em] text-[#30D158]">Coming soon</span>
             </span>
           }
           title={
@@ -947,7 +947,7 @@ export function IPhone() {
           <div className="mt-8">
             <AppStoreCTA>Download on the App Store</AppStoreCTA>
           </div>
-          <p className="mt-6 text-sm text-white/45">iPhone, iPad and Mac · One account, synced live with the web</p>
+          <p className="mt-6 text-sm text-white/45">iPhone and iPad · One account, synced live with the web</p>
         </div>
         <Reveal delay={0.1} className="relative flex justify-center">
           <div className="pointer-events-none absolute inset-[-8%_-4%] rounded-full bg-[#E45C7A]/20 opacity-60 blur-[80px]" />
@@ -1070,7 +1070,7 @@ export function Pricing() {
                 Start free
               </a>
               <a href={APP_STORE} target="_blank" rel="noopener noreferrer" className="mt-3 block text-center text-[13px] font-medium text-white/50 hover:text-white">
-                or download for iPhone, iPad &amp; Mac
+                or download for iPhone &amp; iPad
               </a>
             </div>
           </Reveal>
@@ -1122,7 +1122,7 @@ export function Pricing() {
 export const FAQS = [
   ["Is my lyric data used to train AI?", "No. We never train on your lyrics and never share them. Your songs are private by default."],
   ["Can co-writers join without the app?", "Yes. Send a link and they can write with you in their browser or on iPhone, free."],
-  ["Does it work on iPad and Mac?", "Yes. There's a native app for iPhone, iPad and Mac, and the web app runs on any computer. Everything syncs."],
+  ["Does it work on iPad and computers?", "Yes. There's a native app for iPhone and iPad, and on a computer Lyric Genie runs in your browser, Mac or PC. Everything syncs."],
   ["Is there a free trial?", "Yes. Pro starts with 14 days free, on the web or iPhone. One subscription covers both."],
   ["Can I export my lyrics?", "Yes. Lyric sheets open at their own link, with publishing info if you want it."],
 ];
@@ -1575,7 +1575,7 @@ export function ChatMock() {
         </div>
         <p className="flex justify-center">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-white/[0.06] px-2.5 py-1 text-[11px] text-white/55">
-            <span className="size-1.5 rounded-full bg-[#30D158]" /> <span className="font-semibold" style={{ color: WRITERS[0].color }}>Edan</span> joined the session
+            <span className="size-1.5 rounded-full bg-[#30D158]" /> <span className="font-semibold" style={{ color: WRITERS[0].color }}>Edan</span> is writing in Chorus
           </span>
         </p>
         <div className="flex justify-end">
@@ -2166,5 +2166,96 @@ export function RhymeSchemeMock() {
         ))}
       </div>
     </div>
+  );
+}
+
+/**
+ * The iPhone page's hero: the phone in depth, with a captured voice memo behind it and an idea in front,
+ * flying in, then drifting and leaning toward the pointer like the home and web heroes (one rAF loop;
+ * still with reduced motion).
+ */
+export function PhoneHero3D() {
+  const stage = useRef<HTMLDivElement>(null);
+  const [arrived, setArrived] = useState(false);
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return setArrived(true);
+    let b = 0;
+    const a = requestAnimationFrame(() => (b = requestAnimationFrame(() => setArrived(true))));
+    return () => {
+      cancelAnimationFrame(a);
+      cancelAnimationFrame(b);
+    };
+  }, []);
+  const fly = (z: number, from: [number, number, number], delay: number): React.CSSProperties => ({
+    transform: arrived ? `translateZ(${z}px)` : `translate3d(${from[0]}px, ${from[1]}px, ${z + from[2]}px)`,
+    opacity: arrived ? 1 : 0,
+    transition: `transform 1.6s cubic-bezier(.16,1,.3,1) ${delay}ms, opacity .9s ease ${delay}ms`,
+  });
+  useEffect(() => {
+    const el = stage.current;
+    if (!el) return;
+    const rest = { x: 4, y: 14 }; // tipped back a little, turned toward the text on its left
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      el.style.transform = `rotateX(${rest.x}deg) rotateY(${rest.y}deg)`;
+      return;
+    }
+    const pointer = { x: 0, y: 0 };
+    const now = { x: rest.x, y: rest.y };
+    const onMove = (e: PointerEvent) => {
+      const r = el.getBoundingClientRect();
+      const cx = r.left + r.width / 2;
+      const cy = r.top + r.height / 2;
+      const dx = e.clientX - cx;
+      const dy = e.clientY - cy;
+      pointer.x = Math.max(-1, Math.min(1, dx / Math.max(1, dx < 0 ? cx : window.innerWidth - cx)));
+      pointer.y = Math.max(-1, Math.min(1, dy / Math.max(1, dy < 0 ? cy : window.innerHeight - cy)));
+    };
+    window.addEventListener("pointermove", onMove, { passive: true });
+    let raf = 0;
+    const t0 = performance.now();
+    const frame = (t: number) => {
+      const s = (t - t0) / 1000;
+      const target = { x: rest.x + Math.sin(s * 0.35) * 3 - pointer.y * 8, y: rest.y + Math.sin(s * 0.2 + 1) * 10 + pointer.x * 18 };
+      now.x += (target.x - now.x) * 0.05;
+      now.y += (target.y - now.y) * 0.05;
+      el.style.transform = `rotateX(${now.x.toFixed(2)}deg) rotateY(${now.y.toFixed(2)}deg)`;
+      raf = requestAnimationFrame(frame);
+    };
+    raf = requestAnimationFrame(frame);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("pointermove", onMove);
+    };
+  }, []);
+  const card = "absolute rounded-2xl border border-white/10 bg-[#1B1B1B]/95 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.7)] backdrop-blur";
+  return (
+    <Scaled w={420} h={560}>
+      <div className="absolute inset-0" style={{ perspective: 1400, perspectiveOrigin: "50% 40%" }}>
+        <div ref={stage} className="absolute inset-0" style={{ transformStyle: "preserve-3d", willChange: "transform" }}>
+          {/* Behind: a voice memo, just captured */}
+          <div className={`${card} left-0 top-[86px] w-[176px] p-3`} style={fly(-70, [-160, 40, -200], 250)}>
+            <p className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-[#FF8A65]">
+              <Mic className="size-3" /> Voice memo
+            </p>
+            <div className="mt-2 flex h-6 items-center gap-[2px]">
+              {[4, 9, 6, 13, 8, 15, 10, 6, 12, 7, 14, 9, 5, 11, 8, 13, 6, 10].map((h, i) => (
+                <span key={i} className="w-[3px] rounded-full bg-[#FF8A65]/70" style={{ height: h + 2 }} />
+              ))}
+            </div>
+            <p className="mt-1.5 text-[10px] text-white/50">0:24 · transcribed</p>
+          </div>
+          {/* The phone */}
+          <div className="absolute left-[95px] top-[20px] w-[230px]" style={fly(30, [0, 80, -260], 0)}>
+            <PhoneArt />
+          </div>
+          {/* In front: an idea, caught */}
+          <div className={`${card} right-0 top-[330px] w-[168px] p-3`} style={fly(130, [170, 30, 220], 450)}>
+            <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-white/45">Ideas</p>
+            <p className="mt-1.5 font-serif text-[14px] not-italic leading-snug text-[#F2EDE4]">“Headlights on the overpass”</p>
+            <p className="mt-1.5 text-[10px] text-white/45">Added to Night Ride</p>
+          </div>
+        </div>
+      </div>
+    </Scaled>
   );
 }

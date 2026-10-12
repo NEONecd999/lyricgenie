@@ -78,7 +78,7 @@ function Together() {
           tint="rgba(48,209,88,.16)"
           eyebrow={
             <span className="inline-flex items-center gap-2">
-              Sessions <span className="rounded-full bg-[#30D158]/15 px-2 py-0.5 text-[10px] tracking-[0.12em] text-[#30D158]">Early access</span>
+              Sessions <span className="rounded-full bg-[#30D158]/15 px-2 py-0.5 text-[10px] tracking-[0.12em] text-[#30D158]">Coming soon</span>
             </span>
           }
           title={

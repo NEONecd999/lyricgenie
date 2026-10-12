@@ -1,8 +1,8 @@
 import { FeatureKeyframes, FreestyleSpotlight } from "@/components/Features";
-import { AppStoreCTA, CaptureMock, ConceptsMock, RecordingsMock, ChatMock, Eyebrow, FinalCTA, Glow, Head, PerformMock, PhoneArt, Reveal, Row, StudioPage, ToolsTabs } from "@/components/studio/Studio";
+import { AppStoreCTA, CaptureMock, ConceptsMock, RecordingsMock, ChatMock, Eyebrow, FinalCTA, Glow, Head, PerformMock, PhoneHero3D, Reveal, Row, StudioPage, ToolsTabs } from "@/components/studio/Studio";
 import { WEB_SIGNUP } from "@/lib/links";
 
-/** /iphone: Lyric Genie for iPhone, iPad and Mac. Warm coral, the mobile side's colour. */
+/** /iphone: Lyric Genie for iPhone and iPad (computers are pointed at the web app). Warm coral, the mobile side's colour. */
 
 function IPhoneHero() {
   return (
@@ -11,7 +11,7 @@ function IPhoneHero() {
       <Glow className="bottom-[-220px] right-[-140px] h-[560px] w-[560px]" strength={18} />
       <div className="container relative z-10 mx-auto grid items-center gap-12 px-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
         <Reveal className="mx-auto max-w-xl text-center lg:mx-0 lg:text-left">
-          <Eyebrow>Lyric Genie for iPhone, iPad &amp; Mac</Eyebrow>
+          <Eyebrow>Lyric Genie for iPhone &amp; iPad</Eyebrow>
           <h1 className="font-display text-[46px] font-bold leading-[1.03] tracking-tight text-white md:text-[68px]">
             Your studio, <span className="text-[#F6ECC9]">in your pocket.</span>
           </h1>
@@ -24,9 +24,8 @@ function IPhoneHero() {
           </div>
         </Reveal>
         <Reveal delay={0.15} className="flex justify-center">
-          <div className="w-[250px]" style={{ animation: "lgFloatFront 6s ease-in-out infinite" }}>
-            <style>{`@keyframes lgFloatFront { 0%,100% { transform: translateY(0) rotate(2deg) } 50% { transform: translateY(-12px) rotate(2deg) } }`}</style>
-            <PhoneArt />
+          <div className="w-full max-w-[420px]">
+            <PhoneHero3D />
           </div>
         </Reveal>
       </div>
@@ -47,7 +46,7 @@ function AppleDevices() {
   return (
     <section className="bg-[#170E1C] py-20">
       <div className="container mx-auto px-6">
-        <Head center eyebrow="iPhone, iPad and Mac" title="One app. Every Apple device." lead="A native app for iPhone, iPad and Mac, and the same account on the web. Everything syncs live." />
+        <Head center eyebrow="iPhone and iPad" title="In your pocket. On your desk." lead="A native app for iPhone and iPad, and the same account in your browser on any computer. Everything syncs live." />
         <div className="mt-8 flex justify-center">
           <AppStoreCTA>Download on the App Store</AppStoreCTA>
         </div>
@@ -61,7 +60,7 @@ const IPhonePage = () => (
     current="/iphone/"
     accent="#FF8A65"
     glow="#E45C7A"
-    title="Lyric Genie for iPhone, iPad & Mac — Songwriting App"
+    title="Lyric Genie for iPhone & iPad — Songwriting App"
     description="Catch ideas anywhere: voice memos transcribed and linked to your lyrics, Freestyle mode, rhymes and Wish Workshop on the go, Perform on stage, and your co-writers in your pocket."
   >
     <FeatureKeyframes />

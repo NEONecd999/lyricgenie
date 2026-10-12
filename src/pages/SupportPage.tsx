@@ -1,4 +1,4 @@
-import { ArrowUpRight, AudioWaveform, BookOpen, Download, Mail, Smartphone } from "lucide-react";
+import { ArrowUpRight, AudioWaveform, BookOpen, Mail, Smartphone } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Eyebrow, Glow, Head, Reveal, StudioPage } from "@/components/studio/Studio";
 import { APP_STORE, WEB_APP } from "@/lib/links";
@@ -9,16 +9,12 @@ import { APP_STORE, WEB_APP } from "@/lib/links";
  */
 
 const SUPPORT = "support@lyricgenie.app";
-// The Session plugin's installers, as the web app serves them (LYRICGENIE-APP sessions/dawBridge.ts
-// PLUGIN_DOWNLOADS); bump together when a new build ships.
-const PLUGIN_MAC = `${WEB_APP}/downloads/LyricGenieSession-0.1.1-mac.pkg`;
-const PLUGIN_WINDOWS = `${WEB_APP}/downloads/LyricGenieSession-0.1.1-windows.exe`;
 
 const GROUPS: { title: string; faqs: [string, string][] }[] = [
   {
     title: "Getting started",
     faqs: [
-      ["Is there a web version?", "Yes. The web app is at app.lyricgenie.app and runs in any computer's browser. There's also a native app for iPhone, iPad and Mac. Almost everything is on both: Freestyle and transcriptions are iPhone only for now, and Sessions are web only for now."],
+      ["Is there a web version?", "Yes. The web app is at app.lyricgenie.app and runs in any computer's browser. There's also a native app for iPhone and iPad. Almost everything is on both: Freestyle and transcriptions are iPhone only for now, and Sessions are web only for now."],
       ["Do my songs sync between devices?", "Yes. Sign in with the same Google or Apple account everywhere and your songs, recordings, concepts and projects are on every device, live."],
       ["How do I sign in?", "With Google or Apple. There's no separate password to remember."],
       ["I signed in with Google before and now with Apple. Where are my songs?", "In the other account. Google and Apple sign-ins are separate accounts, even with the same email behind them. Sign out and back in with the other button, and nothing is lost."],
@@ -29,7 +25,7 @@ const GROUPS: { title: string; faqs: [string, string][] }[] = [
     title: "Plans and billing",
     faqs: [
       ["Do I need Pro?", "Not to write, record or co-write. Free gives you unlimited songs, real-time co-writing, 15 AI calls and 50 quick AI calls to try every tool, 30 rhyme lookups a day and 60 minutes of recording. Pro raises the limits and adds Wish Workshop, in-line suggestions, smart dictionaries and syllable control."],
-      ["Is there a free trial?", "Yes. Pro starts with 14 days free, on the web or iPhone. One subscription covers the web, iPhone, iPad and Mac."],
+      ["Is there a free trial?", "Yes. Pro starts with 14 days free, on the web or iPhone. One subscription covers the web, iPhone and iPad."],
       ["Can my co-writer use the free plan?", "Yes. Co-writing is free on both sides, and a free co-writer can do everything on a shared song that a Pro one can."],
       ["How do I cancel?", "Cancel where you subscribed. Subscribed on the web: open Settings in the web app and choose Cancel subscription. Subscribed in the iPhone app: cancel in the App Store's subscriptions on any Apple device. Either way, Pro stays on until the end of the period you paid for."],
       ["I have a promo code. Where does it go?", "On the web, open the upgrade dialog and choose “Have a code?”."],
@@ -41,7 +37,7 @@ const GROUPS: { title: string; faqs: [string, string][] }[] = [
       ["Do co-writers need to download anything?", "No. Send an invite link and they can write with you in their browser, or in the app if they have it. It's free for them."],
       ["How many people can write on one song?", "As many as you like. Every writer gets their own tab, so nobody types over anybody."],
       ["What's the Master tab?", "The version you've agreed on. Everyone builds it by sending their best sections to it from their own tab."],
-      ["What are Sessions?", "Video and voice inside the song, with your DAW streaming in full quality through the Lyric Genie Session plugin. Starting a session needs Pro; any co-writer can join a session a Pro writer is in, free. Sessions are in early access on the web."],
+      ["What are Sessions?", "Coming soon: video and voice inside the song, with your DAW streaming in full quality through the Lyric Genie Session plugin. Starting a session will need Pro; any co-writer can join a session a Pro writer is in, free."],
     ],
   },
   {
@@ -114,7 +110,7 @@ function Downloads() {
       <div className="container mx-auto px-6">
         <Head center eyebrow="Downloads" title="Get the apps." />
         <Reveal className="mx-auto mt-10 max-w-3xl divide-y divide-white/[0.07] rounded-2xl border border-white/10 bg-[#1B1B1B]">
-          <DownloadRow icon={<Smartphone className="size-5" />} title="Lyric Genie for iPhone, iPad & Mac" text="The native app, from the App Store. iPhone and iPad with iOS 17 or later; Mac with macOS 14 (Sonoma) or later.">
+          <DownloadRow icon={<Smartphone className="size-5" />} title="Lyric Genie for iPhone & iPad" text="The native app, from the App Store. iOS 17 or later.">
             <a href={APP_STORE} target="_blank" rel="noopener noreferrer" className={`${pill} bg-[#F6ECC9] text-[#6F50B8] hover:bg-[#FBF2D6]`}>
               App Store
             </a>
@@ -124,17 +120,14 @@ function Downloads() {
             title={
               <span className="inline-flex items-center gap-2">
                 Lyric Genie Session plugin
-                <span className="rounded-full bg-[#30D158]/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em] text-[#30D158]">Early access</span>
+                <span className="rounded-full bg-[#30D158]/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em] text-[#30D158]">Coming soon</span>
               </span>
             }
             text="Streams your DAW into a session. Works in Logic, Ableton, Cubase, FL Studio, Studio One, Reaper and more. Mac: macOS 11 (Big Sur) or later, Apple silicon or Intel (VST3 and AU). Windows: Windows 10 or later, 64-bit (VST3)."
           >
-            <a href={PLUGIN_MAC} className={`${pill} border border-white/20 text-white hover:bg-white/5`}>
-              <Download className="size-4" /> macOS
-            </a>
-            <a href={PLUGIN_WINDOWS} className={`${pill} border border-white/20 text-white hover:bg-white/5`}>
-              <Download className="size-4" /> Windows
-            </a>
+            {/* Sessions aren't open yet (testers get the plugin inside the web app). When they are, link the
+                installers here: ${WEB_APP}/downloads/LyricGenieSession-<version>-mac.pkg and -windows.exe. */}
+            <span className={`${pill} border border-white/10 text-white/40`}>Coming soon</span>
           </DownloadRow>
         </Reveal>
         <p className="mt-4 text-center text-sm text-white/45">

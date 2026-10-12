@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, AudioWaveform, Bell, BookOpen, CassetteTape, Check, ChevronDown, Columns2, ChevronUp, Compass, Ellipsis, Eye, FileText, ListOrdered, Maximize2, Menu, MessageSquareText, MessagesSquare, Mic, Moon, NotebookPen, PanelLeft, PanelRight, Presentation, Redo2, ScrollText, Search, Share, SlidersVertical, Sparkles, Undo2, Users, Video, X } from "lucide-react";
 import Footer from "@/components/Footer";
 import Wordmark from "@/components/Wordmark";
@@ -716,6 +716,106 @@ export function Row({ eyebrow, title, text, flip = false, tint, children }: { ey
   );
 }
 
+// ─── Mockup motion ──────────────────────────────────────────────────────────
+// Each mockup plays a short demo of its feature while it's on screen and rests on its finished picture,
+// which is the still one: off screen, with reduced motion, and in react-snap's prerender (whose HTML is
+// hydrated, and is what the email screenshots show). Nothing that arrives takes room it didn't have.
+
+/** Mockups stay still: with reduced motion, and while react-snap prerenders. */
+const stillMocks = () => typeof window === "undefined" || window.matchMedia("(prefers-reduced-motion: reduce)").matches || navigator.userAgent.includes("ReactSnap");
+
+/** Whether the mockup is on screen and allowed to move. */
+function usePlaying(): [React.RefObject<HTMLDivElement>, boolean] {
+  const [ref, inView] = useInView(0.3);
+  return [ref, inView && !stillMocks()];
+}
+
+/**
+ * A demo as a timeline: `step` counts the cues passed (ms from the start of a loop), so 0 is the start
+ * and cues.length the finished picture. It starts over each time the mockup comes on screen, holds the
+ * finished picture for `rest` ms between loops, and stays on it while still.
+ */
+function useTimeline(cues: number[], rest = 3500): [React.RefObject<HTMLDivElement>, number, boolean] {
+  const [ref, playing] = usePlaying();
+  const end = cues.length;
+  const [step, setStep] = useState(end);
+  const key = cues.join();
+  useEffect(() => {
+    if (!playing || !end) return setStep(end);
+    let timers: number[] = [];
+    const run = () => {
+      setStep(0);
+      timers = cues.map((t, i) => window.setTimeout(() => setStep(i + 1), t));
+      timers.push(window.setTimeout(run, cues[end - 1] + rest));
+    };
+    run();
+    return () => timers.forEach(clearTimeout);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- the cues are compared by value (key)
+  }, [playing, key, rest, end]);
+  return [ref, step, playing];
+}
+
+/** Fades and rises into place when `on` (and leaves quickly); its room is kept either way. */
+const arrive = (on: boolean, delay = 0, from = "translateY(8px)"): React.CSSProperties => ({
+  opacity: on ? 1 : 0,
+  transform: on ? "none" : from,
+  transition: on ? `opacity .45s ease ${delay}ms, transform .55s cubic-bezier(.2,.7,.2,1) ${delay}ms` : "opacity .25s ease, transform .25s ease",
+});
+
+/**
+ * Text typing itself in, letter by letter (or word by word, like a streamed reply). The untyped rest is
+ * laid out invisibly, so lines wrap where they'll end up and nothing moves; `caret` rides the typing point.
+ */
+function TypeOn({ text, phase, speed = 60, words = false, caret }: { text: string; phase: "empty" | "typing" | "full"; speed?: number; words?: boolean; caret?: ReactNode }) {
+  const [n, setN] = useState(phase === "empty" ? 0 : text.length);
+  useEffect(() => {
+    if (phase !== "typing") return setN(phase === "empty" ? 0 : text.length);
+    const stops = words ? [...text.matchAll(/\S+\s*/g)].map((m) => m.index! + m[0].length) : Array.from(text, (_, i) => i + 1);
+    let i = 0;
+    setN(0);
+    const t = window.setInterval(() => {
+      setN(stops[i]);
+      if (++i >= stops.length) clearInterval(t);
+    }, speed);
+    return () => clearInterval(t);
+  }, [phase, text, speed, words]);
+  return (
+    <>
+      {text.slice(0, n)}
+      {caret}
+      <span className="invisible">{text.slice(n)}</span>
+    </>
+  );
+}
+
+/** A typing caret that takes no room. */
+const RideCaret = ({ color = "#F2EDE4", className = "h-[1.1em]" }: { color?: string; className?: string }) => (
+  <span className={`relative inline-block w-0 align-[-0.2em] ${className}`}>
+    <span className="lg-mk-blink absolute left-px top-0 h-full w-[1.5px] rounded-full" style={{ background: color }} />
+  </span>
+);
+
+/** The ping behind a presence or live dot (the dot itself needs `relative`). */
+const Ping = ({ color }: { color: string }) => <span className="lg-mk-ping absolute inset-0 rounded-full" style={{ background: color }} />;
+
+/**
+ * A waveform with a coloured part that grows from the left (a progress or a playhead): a dim row of bars,
+ * and the same bars coloured on top, clipped to the first `lit` of them. Bars are 3px with 2px gaps.
+ */
+function Bars({ count, height, lit, dim, color, ms = 0, ease = "linear", barClass = "" }: { count: number; height: (i: number) => string; lit: number; dim: string; color: string; ms?: number; ease?: string; barClass?: string }) {
+  const row = (bg: string, cls = "") =>
+    Array.from({ length: count }, (_, i) => <span key={i} className={`w-[3px] shrink-0 rounded-full ${cls}`} style={{ height: height(i), background: bg, animationDelay: `${-i * 73}ms` }} />);
+  return (
+    <>
+      <span className="absolute inset-0 flex items-center gap-[2px]">{row(dim)}</span>
+      <span className="absolute inset-0 flex items-center gap-[2px]" style={{ clipPath: `inset(0 calc(100% - ${Math.max(0, lit * 5 - 2)}px) 0 0)`, transition: ms ? `clip-path ${ms}ms ${ease}` : "none" }}>
+        {row(color, barClass)}
+      </span>
+    </>
+  );
+}
+
+/** Co-writing: everyone's tab, Sam typing the last line of the chorus (their caret and name ride along), Maya's note. */
 export function CoWriteMock() {
   const tabs = [
     { name: "You", color: C.accent, on: true },
@@ -723,12 +823,20 @@ export function CoWriteMock() {
     { name: "Maya", color: C.blue },
     { name: "Master", color: C.amber },
   ];
+  // Sam's caret waits at the start of the line, types it, and the loop rests on the finished chorus.
+  const line = "I'm the conductor of this beautiful mess";
+  const speed = 70;
+  const [ref, step, playing] = useTimeline([900, 900 + line.length * speed + 250], 3800);
+  const typing = step < 2;
+  const samLabel = "rounded-md px-1.5 py-0.5 font-sans text-[11px] font-semibold leading-none text-[#1B0F31]";
   return (
-    <div className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#1B1B1B] p-6 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]">
+    <div ref={ref} className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#1B1B1B] p-6 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]">
       <div className="flex flex-wrap items-center gap-1 border-b border-white/10 pb-3">
         {tabs.map((t) => (
           <span key={t.name} className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[13px] font-medium ${t.on ? "bg-white/10 text-white" : "text-white/55"}`}>
-            <span className="size-2 rounded-full" style={{ background: t.color }} />
+            <span className="relative size-2 rounded-full" style={{ background: t.color }}>
+              {playing && t.name === "Sam" && <Ping color={t.color} />}
+            </span>
             {t.name}
           </span>
         ))}
@@ -740,9 +848,26 @@ export function CoWriteMock() {
           Nothing makes sense in the <span className="rounded-sm bg-[#F5B642]/20 underline decoration-[#F5B642] decoration-2 underline-offset-4">most beautiful way</span>
         </p>
         <p className="flex items-center">
-          I'm the conductor of this beautiful mess
-          <span className="ml-0.5 inline-block h-5 w-0.5 rounded-full" style={{ background: C.coral }} />
-          <span className="ml-1 rounded-md px-1.5 py-0.5 font-sans text-[11px] font-semibold leading-none text-[#1B0F31]" style={{ background: C.coral }}>
+          <span>
+            <TypeOn
+              text={line}
+              phase={step === 0 ? "empty" : step === 1 ? "typing" : "full"}
+              speed={speed}
+              caret={
+                typing && (
+                  // While typing, Sam's caret and name ride the typing point (taking no room)
+                  <span className="relative inline-block h-5 w-0 align-middle">
+                    <span className="absolute left-0.5 top-0 h-5 w-0.5 rounded-full" style={{ background: C.coral }} />
+                    <span className={`absolute left-2 top-1/2 -translate-y-1/2 whitespace-nowrap ${samLabel}`} style={{ background: C.coral }}>
+                      Sam
+                    </span>
+                  </span>
+                )
+              }
+            />
+          </span>
+          <span className={`ml-0.5 inline-block h-5 w-0.5 rounded-full ${typing ? "invisible" : ""}`} style={{ background: C.coral }} />
+          <span className={`ml-1 ${samLabel} ${typing ? "invisible" : ""}`} style={{ background: C.coral }}>
             Sam
           </span>
         </p>
@@ -757,6 +882,13 @@ export function CoWriteMock() {
   );
 }
 
+/** The input meters' resting levels, and how each one moves while live. */
+const SESSION_INPUTS: [string, string, number][] = [
+  ["You · DAW", "Logic Pro · 92 BPM", 0.72],
+  ["You · Mic", "", 0.38],
+  ["Sam · Mic", "", 0.22],
+];
+
 export function SessionMock() {
   // Stills of a session: me at the DAW (sharing it), Sam on guitar, Maya with the lyrics.
   const tiles = [
@@ -764,29 +896,75 @@ export function SessionMock() {
     { name: "Sam", color: C.coral, src: "/images/pro/session-sam.jpg", alt: "A songwriter playing acoustic guitar" },
     { name: "Maya", color: C.blue, src: "/images/pro/session-maya.jpg", alt: "A songwriter smiling, pen in hand" },
   ];
-  const inputs: [ReactNode, string, string, number][] = [
-    [<AudioWaveform key="d" className="mr-1 inline size-3.5 text-[#AB8EE2]" />, "You · DAW", "Logic Pro · 92 BPM", 0.72],
-    [<Mic key="m" className="mr-1 inline size-3.5 text-white/50" />, "You · Mic", "", 0.38],
-    [<Mic key="s" className="mr-1 inline size-3.5 text-white/50" />, "Sam · Mic", "", 0.22],
+  const icons: ReactNode[] = [
+    <AudioWaveform key="d" className="mr-1 inline size-3.5 text-[#AB8EE2]" />,
+    <Mic key="m" className="mr-1 inline size-3.5 text-white/50" />,
+    <Mic key="s" className="mr-1 inline size-3.5 text-white/50" />,
   ];
+  const [ref, playing] = usePlaying();
+  // Live: the speaking ring passes You → Sam → Maya, and the meters move (one rAF, widths set directly).
+  const [speaker, setSpeaker] = useState(-1);
+  const speakerNow = useRef(-1);
+  speakerNow.current = speaker;
+  const meters = useRef<(HTMLSpanElement | null)[]>([]);
+  useEffect(() => {
+    if (!playing) return setSpeaker(-1);
+    let i = 0;
+    setSpeaker(0);
+    const t = window.setInterval(() => setSpeaker((i = (i + 1) % 3)), 2800);
+    return () => clearInterval(t);
+  }, [playing]);
+  useEffect(() => {
+    const rest = () => meters.current.forEach((el, k) => el && (el.style.width = `${SESSION_INPUTS[k][2] * 100}%`));
+    if (!playing) return rest();
+    let raf = 0;
+    const t0 = performance.now();
+    const voice = [1, 0, 0]; // how much each input is "on": the DAW always, a mic while its writer speaks
+    const tick = (now: number) => {
+      const t = (now - t0) / 1000;
+      meters.current.forEach((el, k) => {
+        if (!el) return;
+        const level = SESSION_INPUTS[k][2];
+        let v: number;
+        if (k === 0) {
+          // The DAW: a steady mix, breathing with the beat (92 BPM ≈ 1.53 Hz) and a little texture
+          v = level + 0.09 * Math.sin(t * 2 * Math.PI * 1.53) + 0.06 * Math.sin(t * 3.7 + 1) + 0.03 * Math.sin(t * 9.1 + 2);
+        } else {
+          // A mic: low room noise, swelling smoothly when its writer speaks (You on mic 1, Sam on mic 2)
+          voice[k] += ((speakerNow.current === k - 1 ? 1 : 0) - voice[k]) * 0.04;
+          const talk = 0.55 + 0.25 * Math.sin(t * 6.3 + k) + 0.2 * Math.sin(t * 2.2 + k * 2);
+          v = 0.06 + 0.02 * Math.sin(t * 1.7 + k) + voice[k] * (level + 0.25) * talk;
+        }
+        el.style.width = `${Math.min(0.96, Math.max(0.03, v)) * 100}%`;
+      });
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => {
+      cancelAnimationFrame(raf);
+      rest();
+    };
+  }, [playing]);
   return (
-    <div className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#1B1B1B] p-5 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]">
+    <div ref={ref} className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#1B1B1B] p-5 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]">
       <div className="mb-3 flex items-center justify-between">
         <span className="flex items-center gap-2 text-[13px] font-semibold text-white">
           <Video className="size-4 text-white/60" /> Session
         </span>
         <span className="flex items-center gap-1.5 rounded-full bg-[#30D158]/15 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide text-[#30D158]">
-          <span className="size-1.5 rounded-full bg-[#30D158]" /> Live
+          <span className="relative size-1.5 rounded-full bg-[#30D158]">{playing && <Ping color="#30D158" />}</span> Live
         </span>
       </div>
       <div className="grid grid-cols-3 gap-2">
-        {tiles.map((t) => (
+        {tiles.map((t, i) => (
           <div key={t.name} className="relative aspect-[4/3] overflow-hidden rounded-xl bg-[#111]">
             <img src={t.src} alt={t.alt} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
             <span className="absolute bottom-1.5 left-1.5 flex items-center gap-1 rounded-md bg-black/55 px-1.5 py-0.5 text-[11px] font-medium text-white backdrop-blur-sm">
               <span className="size-1.5 rounded-full" style={{ background: t.color }} />
               {t.name}
             </span>
+            {/* Speaking */}
+            <span className="pointer-events-none absolute inset-0 rounded-xl transition-opacity duration-700" style={{ boxShadow: `inset 0 0 0 2px ${t.color}, inset 0 0 18px ${t.color}55`, opacity: speaker === i ? 1 : 0 }} />
           </div>
         ))}
       </div>
@@ -794,15 +972,15 @@ export function SessionMock() {
         <p className="mb-2 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide text-white/45">
           <SlidersVertical className="size-3.5" /> Audio inputs
         </p>
-        {inputs.map(([icon, label, detail, level]) => (
+        {SESSION_INPUTS.map(([label, detail, level], k) => (
           <div key={label} className="flex items-center gap-3 py-1.5 text-[12.5px]">
             <span className="w-36 shrink-0 truncate text-white/85">
-              {icon}
+              {icons[k]}
               {label}
               {detail && <span className="block text-[11px] text-white/45">{detail}</span>}
             </span>
             <span className="relative block h-1.5 flex-1 overflow-hidden rounded-full bg-white/10">
-              <span className="absolute inset-y-0 left-0 rounded-full bg-[#30D158]" style={{ width: `${level * 100}%` }} />
+              <span ref={(el) => (meters.current[k] = el)} className="absolute inset-y-0 left-0 rounded-full bg-[#30D158]" style={{ width: `${level * 100}%` }} />
             </span>
           </div>
         ))}
@@ -1169,6 +1347,7 @@ export function FinalCTA() {
 
 // ─── Search and shortcuts (the web app's ⌘K) ───────────────────────────────
 
+/** The web app's ⌘K: one query across songs, lyrics, notes, recordings and concepts. */
 export function SearchMock() {
   const results: [string, string, string][] = [
     ["Songs", "Night Ride", "Edited today"],
@@ -1177,19 +1356,25 @@ export function SearchMock() {
     ["Recordings", "Ghost melody, take 2", "Night Ride"],
     ["Concepts", "Ghost Mode", "Late-night · haunted"],
   ];
+  // The query types in, the groups arrive, and the selection steps down and back up to the lyric line.
+  const [ref, step] = useTimeline([500, 500 + 5 * 130 + 200, 2300, 3000, 3700], 4000);
+  const typing = step < 2;
+  const selected = [-1, -1, 0, 1, 2, 1][step];
   return (
-    <div className="w-full max-w-lg overflow-hidden rounded-2xl border border-white/10 bg-[#1B1B1B] shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]">
+    <div ref={ref} className="w-full max-w-lg overflow-hidden rounded-2xl border border-white/10 bg-[#1B1B1B] shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]">
       <div className="flex items-center gap-3 border-b border-white/10 px-4 py-3.5">
         <Search className="size-4 text-white/50" />
-        <span className="text-[15px] text-white">ghost</span>
-        <span className="h-5 w-px animate-pulse bg-[var(--acc,#AB8EE2)]" />
+        <span className="text-[15px] text-white">
+          <TypeOn text="ghost" phase={step === 0 ? "empty" : typing ? "typing" : "full"} speed={130} caret={typing && <RideCaret color="var(--acc,#AB8EE2)" />} />
+        </span>
+        <span className={`h-5 w-px animate-pulse bg-[var(--acc,#AB8EE2)] ${typing ? "invisible" : ""}`} />
         <kbd className="ml-auto rounded-md border border-white/15 px-1.5 py-0.5 font-sans text-[11px] font-semibold text-white/50">⌘K</kbd>
       </div>
       <div className="p-2">
         {results.map(([group, title, detail], i) => (
-          <div key={group}>
+          <div key={group} style={arrive(!typing, i * 90, "translateY(6px)")}>
             <p className="px-3 pb-1 pt-2.5 text-[10.5px] font-semibold uppercase tracking-[0.12em] text-white/40">{group}</p>
-            <div className={`rounded-xl px-3 py-2 ${i === 1 ? "bg-white/[0.08]" : ""}`}>
+            <div className={`rounded-xl px-3 py-2 transition-colors duration-300 ${i === selected ? "bg-white/[0.08]" : ""}`}>
               <span className={`block truncate text-sm text-white ${group === "Lyrics" ? "font-serif not-italic" : "font-medium"}`}>{title}</span>
               <span className="block truncate text-xs text-white/45">{detail}</span>
             </div>
@@ -1240,8 +1425,11 @@ const RHYME_COLS = [
  * reason each); without it, the plain engine, as RhymeGold.com shows it.
  */
 export function RhymeColumnsMock({ aiPicks = false }: { aiPicks?: boolean }) {
+  // AI Picks arrive one by one, across the columns, each with a shimmer (the plain engine stays still).
+  const order = RHYME_COLS[0].picks.flatMap((_, r) => RHYME_COLS.map((_, c) => `${c}.${r}`));
+  const [ref, step, playing] = useTimeline(aiPicks ? order.map((_, k) => 500 + k * 380) : [], 6500);
   return (
-    <div className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#1B1B1B] p-5 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]">
+    <div ref={ref} className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#1B1B1B] p-5 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]">
       <div className="flex items-center gap-3">
         {aiPicks && (
           <span className="inline-flex items-center gap-1 rounded-full bg-gradient-to-br from-[#8F6FDC] to-[#B98BE8] px-2.5 py-1 text-xs font-semibold text-white">
@@ -1266,7 +1454,7 @@ export function RhymeColumnsMock({ aiPicks = false }: { aiPicks?: boolean }) {
         ))}
       </div>
       <div className="mt-3 grid grid-cols-2 gap-2.5">
-        {RHYME_COLS.map((c) => (
+        {RHYME_COLS.map((c, ci) => (
           <div key={c.ending} className="overflow-hidden rounded-xl border-[1.5px]" style={{ borderColor: c.color }}>
             <div className="border-b px-3 py-2" style={{ borderColor: `${c.color}55`, background: `${c.color}14` }}>
               <p className="flex items-baseline justify-between gap-2">
@@ -1283,14 +1471,18 @@ export function RhymeColumnsMock({ aiPicks = false }: { aiPicks?: boolean }) {
             <div className="relative h-[232px] overflow-hidden px-2 pb-2">
               {aiPicks ? (
                 <div className="space-y-1.5 pt-2">
-                  {c.picks.map(([w, why]) => (
-                    <div key={w} className="rounded-lg bg-white/[0.06] px-2.5 py-2">
+                  {c.picks.map(([w, why], r) => {
+                    const shown = step > order.indexOf(`${ci}.${r}`);
+                    return (
+                    <div key={w} className="relative overflow-hidden rounded-lg bg-white/[0.06] px-2.5 py-2" style={arrive(shown, 0, "translateY(6px) scale(.98)")}>
+                      {playing && shown && <span className="lg-mk-shimmer pointer-events-none absolute inset-0" />}
                       <p className="flex items-center gap-1.5 text-[14px] font-semibold text-[#F2EDE4]">
                         <SfIcon name="sparkle" size={10} color="#AB8EE2" /> {w}
                       </p>
                       <p className="mt-0.5 text-[11px] leading-snug text-white/55">{why}</p>
                     </div>
-                  ))}
+                    );
+                  })}
                 </div>
               ) : (
                 c.sections.map((sec) => (
@@ -1430,22 +1622,42 @@ export function RhymeSlidesMock() {
 // ─── Genie, the tools tabs, and the iPhone moments ──────────────────────────
 
 /** Genie in the side panel, dark mode: a question about the song, a reply, and a line edit to apply. */
+const GENIE_REPLY = "“Beautiful” shows up in lines two and three, so the second one lands softer. Line three has your strongest image; give it a fresh word:";
 export function GenieMock() {
+  // The question, Genie thinking, the reply streaming in, then the edit: the old line struck, the new one
+  // in, and Apply pulsing once.
+  const [ref, step, playing] = useTimeline([300, 1000, 2200, 4300, 4900, 5500, 6300], 4000);
+  const struck = step >= 5;
   return (
-    <div className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#1B1B1B] p-5 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]">
+    <div ref={ref} className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#1B1B1B] p-5 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]">
       <p className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.14em] text-white/45">
         <SfIcon src="/images/genie-icon.svg" size={13} color="#AB8EE2" /> Genie
       </p>
-      <div className="mt-3 ml-auto max-w-[80%] rounded-2xl rounded-br-md bg-[#AB8EE2]/20 px-3.5 py-2 text-[13.5px] text-[#F2EDE4]">The chorus feels flat after line two. Any ideas to lift it?</div>
-      <div className="mt-3 max-w-[92%] text-[13.5px] leading-relaxed text-white/75">
-        “Beautiful” shows up in lines two and three, so the second one lands softer. Line three has your strongest image; give it a fresh word:
+      <div className="mt-3 ml-auto max-w-[80%] rounded-2xl rounded-br-md bg-[#AB8EE2]/20 px-3.5 py-2 text-[13.5px] text-[#F2EDE4]" style={arrive(step >= 1)}>
+        The chorus feels flat after line two. Any ideas to lift it?
       </div>
-      <div className="mt-3 rounded-xl border border-white/10 bg-white/[0.04] p-3">
-        <p className="font-serif text-[14px] not-italic text-white/40 line-through">I'm the conductor of this beautiful mess</p>
-        <p className="mt-1 font-serif text-[14px] not-italic text-[#F2EDE4]">I'm the conductor of this glorious mess</p>
+      <div className="relative mt-3 max-w-[92%] text-[13.5px] leading-relaxed text-white/75">
+        <TypeOn text={GENIE_REPLY} phase={step < 3 ? "empty" : step === 3 ? "typing" : "full"} speed={55} words />
+        {/* Thinking */}
+        <span className="absolute left-0 top-1.5 flex gap-1 transition-opacity duration-300" style={{ opacity: step === 2 ? 1 : 0 }} aria-hidden>
+          {[0, 1, 2].map((d) => (
+            <span key={d} className="lg-mk-dot size-1.5 rounded-full bg-white/60" style={{ animationDelay: `${d * 150}ms` }} />
+          ))}
+        </span>
+      </div>
+      <div className="mt-3 rounded-xl border border-white/10 bg-white/[0.04] p-3" style={arrive(step >= 4)}>
+        <p
+          className="font-serif text-[14px] not-italic line-through"
+          style={{ color: struck ? "rgba(255,255,255,.4)" : "rgba(242,237,228,.85)", textDecorationColor: struck ? "rgba(255,255,255,.4)" : "rgba(255,255,255,0)", transition: "color .5s ease, text-decoration-color .5s ease" }}
+        >
+          I'm the conductor of this beautiful mess
+        </p>
+        <p className="mt-1 font-serif text-[14px] not-italic text-[#F2EDE4]" style={arrive(step >= 6, 0, "translateY(4px)")}>
+          I'm the conductor of this glorious mess
+        </p>
         <div className="mt-2.5 flex justify-end gap-2">
           <span className="rounded-full px-3 py-1 text-[11px] text-white/55">Dismiss</span>
-          <span className="rounded-full bg-[#AB8EE2] px-3 py-1 text-[11px] font-semibold text-[#1B0F31]">Apply</span>
+          <span className={`rounded-full bg-[#AB8EE2] px-3 py-1 text-[11px] font-semibold text-[#1B0F31] ${playing && step === 7 ? "lg-mk-ring" : ""}`}>Apply</span>
         </div>
       </div>
     </div>
@@ -1511,9 +1723,23 @@ export function ToolsTabs({ variant, eyebrow, title }: { variant: keyof typeof T
 }
 
 /** Catching an idea on iPhone: a voice memo, its transcript (iPhone), and the line it's linked to. */
+const CAPTURE_TRANSCRIPT = "“…we could drive until the morning, let the highway take the blame…”";
 export function CaptureMock() {
+  // Recording: the waveform grows (its live part moving) and the clock runs to 0:42; then the transcript
+  // types in and the link appears.
+  const recordMs = 3200;
+  const typeMs = CAPTURE_TRANSCRIPT.length * 30;
+  const [ref, step, playing] = useTimeline([300, 300 + recordMs + 200, 300 + recordMs + 400 + typeMs], 3500);
+  const recording = playing && step === 1;
+  const [secs, setSecs] = useState(42);
+  useEffect(() => {
+    if (step !== 1) return setSecs(step === 0 ? 0 : 42);
+    const t0 = performance.now();
+    const t = window.setInterval(() => setSecs(Math.min(42, Math.round(((performance.now() - t0) / recordMs) * 42))), 100);
+    return () => clearInterval(t);
+  }, [step]);
   return (
-    <div className="w-full max-w-sm rounded-2xl border border-white/10 bg-[#1B1B1B] p-5 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]">
+    <div ref={ref} className="w-full max-w-sm rounded-2xl border border-white/10 bg-[#1B1B1B] p-5 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]">
       <div className="flex items-center justify-between">
         <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-white/45">Ideas inbox</span>
         <span className="flex items-center gap-1.5 text-[11px] font-semibold text-[#FF5A52]">
@@ -1521,33 +1747,76 @@ export function CaptureMock() {
         </span>
       </div>
       <p className="mt-3 text-[15px] font-semibold text-[#F2EDE4]">Highway idea</p>
-      <div className="mt-2 flex h-10 items-center gap-[2px]">
-        {Array.from({ length: 46 }, (_, i) => (
-          <span key={i} className="w-[3px] rounded-full bg-[#FF8A65]" style={{ height: `${25 + 70 * Math.abs(Math.sin(i * 0.6) * Math.cos(i * 0.23))}%`, opacity: i < 34 ? 1 : 0.3 }} />
-        ))}
+      <div className="relative mt-2 h-10">
+        <Bars
+          count={46}
+          height={(i) => `${25 + 70 * Math.abs(Math.sin(i * 0.6) * Math.cos(i * 0.23))}%`}
+          lit={step === 0 ? 0 : 34}
+          dim="rgba(255,138,101,.3)"
+          color="#FF8A65"
+          ms={step === 1 ? recordMs : 0}
+          barClass={recording ? "lg-mk-wave" : ""}
+        />
       </div>
-      <p className="mt-1 font-mono text-[11px] text-white/45">0:42</p>
+      <p className="mt-1 font-mono text-[11px] text-white/45">0:{String(secs).padStart(2, "0")}</p>
       <div className="mt-4 rounded-xl bg-white/[0.05] p-3">
         <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-white/40">Transcript</p>
-        <p className="mt-1 text-[13px] italic leading-relaxed text-white/75">“…we could drive until the morning, let the highway take the blame…”</p>
+        <p className="mt-1 text-[13px] italic leading-relaxed text-white/75">
+          <TypeOn text={CAPTURE_TRANSCRIPT} phase={step < 2 ? "empty" : step === 2 ? "typing" : "full"} speed={30} />
+        </p>
       </div>
-      <p className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-[#AB8EE2]/15 px-2.5 py-1 text-[11px] font-medium text-[#AB8EE2]">↳ Linked to Night Ride · Chorus</p>
+      <p className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-[#AB8EE2]/15 px-2.5 py-1 text-[11px] font-medium text-[#AB8EE2]" style={arrive(step >= 3, 0, "translateY(4px)")}>
+        ↳ Linked to Night Ride · Chorus
+      </p>
     </div>
   );
 }
 
 /** Perform on iPhone: the lyrics big on black, the current line lit, the next one waiting. */
+const PERFORM = ["It's just you and I", "I'll take you on a night ride", "It's just you and I", "We'll drive until the sunlight"];
+const performLook = (i: number, cur: number) => ({ fontSize: i === cur ? 30 : 22, color: `rgba(255,255,255,${i === cur ? 1 : i === cur + 1 ? 0.45 : 0.25})` });
 export function PerformMock() {
+  // Live, it scrolls like a teleprompter: a line every 2.4 s, round the verse, holding longer each time it
+  // comes back to the still picture (line two lit). The still lines keep the room; the scrolling ones
+  // play over them, clipped to it.
+  const [ref, playing] = usePlaying();
+  const [cur, setCur] = useState(1);
+  useEffect(() => {
+    if (!playing) return setCur(1);
+    let c = 1;
+    let t = 0;
+    const next = () => {
+      setCur(++c);
+      t = window.setTimeout(next, (c - 1) % PERFORM.length === 0 ? 4600 : 2400);
+    };
+    t = window.setTimeout(next, 2400);
+    return () => clearTimeout(t);
+  }, [playing]);
   return (
-    <div className="w-full max-w-sm overflow-hidden rounded-2xl border border-white/10 bg-black p-7 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.8)]">
+    <div ref={ref} className="w-full max-w-sm overflow-hidden rounded-2xl border border-white/10 bg-black p-7 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.8)]">
       <p className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-white/40">
         <span className="size-1.5 rounded-full bg-[#30D158]" /> Perform · Night Ride
       </p>
-      <div className="mt-6 space-y-3 font-bold leading-tight">
-        <p className="text-[22px] text-white/25">It's just you and I</p>
-        <p className="text-[30px] text-white">I'll take you on a night ride</p>
-        <p className="text-[22px] text-white/45">It's just you and I</p>
-        <p className="text-[22px] text-white/25">We'll drive until the sunlight</p>
+      <div className="relative mt-6 font-bold leading-tight">
+        <div className={`space-y-3 ${playing ? "invisible" : ""}`}>
+          <p className="text-[22px] text-white/25">It's just you and I</p>
+          <p className="text-[30px] text-white">I'll take you on a night ride</p>
+          <p className="text-[22px] text-white/45">It's just you and I</p>
+          <p className="text-[22px] text-white/25">We'll drive until the sunlight</p>
+        </div>
+        {playing && (
+          <div className="absolute inset-0 overflow-hidden" aria-hidden>
+            <AnimatePresence initial={false}>
+              {[cur - 1, cur, cur + 1, cur + 2].map((i) => (
+                <motion.div key={i} className="overflow-hidden" initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.9, ease: [0.4, 0, 0.2, 1] }}>
+                  <p className="pb-3" style={{ ...performLook(i, cur), transition: "font-size .9s cubic-bezier(.4,0,.2,1), color .9s cubic-bezier(.4,0,.2,1)" }}>
+                    {PERFORM[i % PERFORM.length]}
+                  </p>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -1555,30 +1824,34 @@ export function PerformMock() {
 
 /** Co-writers in your pocket: the song's chat with a take, a session badge, and a reply. */
 export function ChatMock() {
+  // The messages arrive one by one.
+  const [ref, step] = useTimeline([300, 1100, 2000, 2900], 4500);
   return (
-    <div className="w-full max-w-sm rounded-2xl border border-white/10 bg-[#1B1B1B] p-5 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]">
+    <div ref={ref} className="w-full max-w-sm rounded-2xl border border-white/10 bg-[#1B1B1B] p-5 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]">
       <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-white/45">Night Ride · chat</p>
       <div className="mt-3 space-y-2.5 text-[13px]">
         <div className="flex items-end gap-2">
-          <span className="flex size-6 shrink-0 items-center justify-center rounded-full text-[10px] font-bold text-white" style={{ background: WRITERS[1].color }}>
+          <span className="flex size-6 shrink-0 items-center justify-center rounded-full text-[10px] font-bold text-white" style={{ background: WRITERS[1].color, ...arrive(step >= 1) }}>
             A
           </span>
           <div className="max-w-[80%]">
-            <p className="mb-0.5 text-[11px] font-semibold" style={{ color: WRITERS[1].color }}>
-              Anton
-            </p>
-            <p className="rounded-2xl rounded-bl-md bg-white/[0.07] px-3 py-1.5 text-[#F2EDE4]">Hummed this on the drive home. Bridge?</p>
-            <p className="mt-1 flex items-center gap-2 rounded-xl bg-white/[0.07] px-3 py-2 text-[12px] text-white/80">
+            <div style={arrive(step >= 1)}>
+              <p className="mb-0.5 text-[11px] font-semibold" style={{ color: WRITERS[1].color }}>
+                Anton
+              </p>
+              <p className="rounded-2xl rounded-bl-md bg-white/[0.07] px-3 py-1.5 text-[#F2EDE4]">Hummed this on the drive home. Bridge?</p>
+            </div>
+            <p className="mt-1 flex items-center gap-2 rounded-xl bg-white/[0.07] px-3 py-2 text-[12px] text-white/80" style={arrive(step >= 2)}>
               <span className="flex size-5 items-center justify-center rounded-full bg-[#AB8EE2] text-[9px] text-[#1B0F31]">▶</span> Bridge melody · 0:31
             </p>
           </div>
         </div>
-        <p className="flex justify-center">
+        <p className="flex justify-center" style={arrive(step >= 3, 0, "scale(.94)")}>
           <span className="inline-flex items-center gap-1.5 rounded-full bg-white/[0.06] px-2.5 py-1 text-[11px] text-white/55">
             <span className="size-1.5 rounded-full bg-[#30D158]" /> <span className="font-semibold" style={{ color: WRITERS[0].color }}>Edan</span> is writing in Chorus
           </span>
         </p>
-        <div className="flex justify-end">
+        <div className="flex justify-end" style={arrive(step >= 4)}>
           <p className="max-w-[80%] rounded-2xl rounded-br-md bg-[#AB8EE2]/20 px-3 py-1.5 text-[#F2EDE4]">That's the one. Adding it now.</p>
         </div>
       </div>
@@ -1588,8 +1861,15 @@ export function ChatMock() {
 
 /** Notes on the words: a highlighted phrase in the lyrics, and its thread in the margin (reply, Resolve). */
 export function NotesMock() {
+  // The highlight sweeps onto the words, Anton's note slides in, Edan replies and adds the alternate;
+  // the ⇄ nudges and the two swap, then swap back.
+  const [ref, step] = useTimeline([400, 1300, 2700, 3400, 4600, 5100, 5300, 6700, 6900], 3500);
+  const marked = step >= 1;
+  const swapped = step === 7 || step === 8;
+  const fading = step === 6 || step === 8;
+  const [main, alt] = swapped ? ["like a shadow", "like a ghost"] : ["like a ghost", "like a shadow"];
   return (
-    <div className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#1B1B1B] p-5 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]">
+    <div ref={ref} className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#1B1B1B] p-5 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]">
       <div className="grid gap-4 sm:grid-cols-[minmax(0,1fr)_10.5rem]">
         <div className="font-serif text-[13px] not-italic leading-[1.9] text-[#F2EDE4]/90 min-[390px]:text-[14px]">
           <p className="font-bold text-[#AB8EE2]">Verse 1</p>
@@ -1597,17 +1877,33 @@ export function NotesMock() {
           <p>No way that I could be forgiven</p>
           <p>Oh what have I done</p>
           <p>
-            Now I'm lost, <span className="rounded-sm bg-[#F5B642]/25 underline decoration-[#F5B642] decoration-2 underline-offset-4">like a ghost</span>
-            {/* An alternate on the same line: " / " in the accent, the option faded, ⇄ to swap it in */}
-            <span className="font-bold text-[#AB8EE2]"> / </span>
-            <span className="opacity-50">
-              like a shadow<span className="ml-1.5 font-sans text-[12px] text-[#AB8EE2]">⇄</span>
+            Now I'm lost, <span style={{ opacity: fading ? 0 : 1, transition: "opacity .18s ease" }}>
+              <span
+                className="rounded-sm underline decoration-2 underline-offset-4"
+                style={{
+                  backgroundImage: "linear-gradient(rgba(245,182,66,.25), rgba(245,182,66,.25))",
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: marked ? "100% 100%" : "0% 100%",
+                  textDecorationColor: marked ? "#F5B642" : "rgba(245,182,66,0)",
+                  transition: "background-size .7s cubic-bezier(.4,0,.2,1), text-decoration-color .4s ease .45s",
+                }}
+              >
+                {main}
+              </span>
+              {/* An alternate on the same line: " / " in the accent, the option faded, ⇄ to swap it in */}
+              <span style={{ opacity: step >= 4 ? 1 : 0, transition: "opacity .5s ease" }}>
+                <span className="font-bold text-[#AB8EE2]"> / </span>
+                <span className="opacity-50">
+                  {alt}
+                  <span className={`ml-1.5 inline-block font-sans text-[12px] text-[#AB8EE2] ${step === 5 ? "lg-mk-nudge" : ""}`}>⇄</span>
+                </span>
+              </span>
             </span>
           </p>
           <p>bleeding out for your love</p>
         </div>
         {/* The thread, beside the words it's on */}
-        <div className="self-center rounded-xl border border-[#F5B642]/40 bg-[#252525] p-3 text-[12.5px] shadow-xl">
+        <div className="self-center rounded-xl border border-[#F5B642]/40 bg-[#252525] p-3 text-[12.5px] shadow-xl" style={arrive(step >= 2, 0, "translateX(12px)")}>
           <p className="flex items-center gap-1.5 font-semibold" style={{ color: C.amber }}>
             <span className="flex size-5 items-center justify-center rounded-full text-[9px] font-bold text-white" style={{ background: WRITERS[1].color }}>
               A
@@ -1615,7 +1911,7 @@ export function NotesMock() {
             Anton
           </p>
           <p className="mt-1.5 text-white/85">“Ghost” again? We use it in the chorus too.</p>
-          <div className="mt-2.5 border-t border-white/10 pt-2.5">
+          <div className="mt-2.5 border-t border-white/10 pt-2.5" style={arrive(step >= 3, 0, "translateY(6px)")}>
             <p className="flex items-center gap-1.5 font-semibold" style={{ color: WRITERS[0].color }}>
               <span className="flex size-5 items-center justify-center rounded-full text-[9px] font-bold text-white" style={{ background: WRITERS[0].color }}>
                 E
@@ -1966,34 +2262,47 @@ export function ImportMock() {
     { name: "Chorus idea.m4a", from: "Voice Memos", size: "2 MB", done: 1, color: "#E8663C" },
     { name: "Demo_rough.mp3", from: "Files", size: "6 MB", done: 0.6, color: "#6FA83C" },
   ];
+  // Each file drops in, its waveform fills as it uploads, and it's added as a take (the last one still
+  // on its way). Steps per file: dropped, filling, added.
+  const [ref, step] = useTimeline([300, 700, 2100, 2500, 2900, 4000, 4400, 4800], 4500);
   return (
-    <div className="w-full max-w-lg rounded-2xl border-2 border-dashed bg-[#1B1B1B] p-5 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]" style={{ borderColor: "color-mix(in srgb, var(--acc, #AB8EE2) 50%, transparent)" }}>
+    <div ref={ref} className="w-full max-w-lg rounded-2xl border-2 border-dashed bg-[#1B1B1B] p-5 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]" style={{ borderColor: "color-mix(in srgb, var(--acc, #AB8EE2) 50%, transparent)" }}>
       <p className="text-center text-[13px] font-semibold text-white">Drop audio onto Night Ride</p>
       <p className="mt-0.5 text-center text-[11px] text-white/45">WAV · AIFF · FLAC · MP3 · M4A</p>
       <div className="mt-4 space-y-2">
-        {files.map((f) => (
-          <div key={f.name} className="rounded-xl bg-white/[0.05] px-3 py-2.5">
-            <div className="flex items-center gap-2.5">
-              <span className="flex size-7 shrink-0 items-center justify-center rounded-lg" style={{ background: f.color }}>
-                <SfIcon name="recordingtape" size={13} color="#fff" />
-              </span>
-              <span className="min-w-0 flex-1">
-                <span className="block truncate text-[13px] font-medium text-[#F2EDE4]">{f.name}</span>
-                <span className="block text-[11px] text-white/45">
-                  {f.from} · {f.size}
+        {files.map((f, k) => {
+          const filling = step >= 3 * k + 2;
+          const added = f.done === 1 && step >= 3 * k + 3;
+          return (
+            <div key={f.name} className="rounded-xl bg-white/[0.05] px-3 py-2.5" style={arrive(step >= 3 * k + 1, 0, "translateY(-14px) scale(.97)")}>
+              <div className="flex items-center gap-2.5">
+                <span className="flex size-7 shrink-0 items-center justify-center rounded-lg" style={{ background: f.color }}>
+                  <SfIcon name="recordingtape" size={13} color="#fff" />
                 </span>
-              </span>
-              <span className="text-[11px] font-semibold" style={{ color: f.done === 1 ? "#30D158" : "rgba(255,255,255,0.55)" }}>
-                {f.done === 1 ? "✓ Added" : "Adding…"}
-              </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block truncate text-[13px] font-medium text-[#F2EDE4]">{f.name}</span>
+                  <span className="block text-[11px] text-white/45">
+                    {f.from} · {f.size}
+                  </span>
+                </span>
+                <span className="text-[11px] font-semibold transition-colors" style={{ color: added ? "#30D158" : "rgba(255,255,255,0.55)" }}>
+                  {added ? "✓ Added" : "Adding…"}
+                </span>
+              </div>
+              <div className="relative mt-2 h-6">
+                <Bars
+                  count={52}
+                  height={(i) => `${20 + 75 * Math.abs(Math.sin(i * 0.5 + f.name.length) * Math.cos(i * 0.19))}%`}
+                  lit={filling ? Array.from({ length: 52 }, (_, i) => i).filter((i) => i / 52 < f.done).length : 0}
+                  dim="rgba(255,255,255,0.15)"
+                  color={f.color}
+                  ms={filling ? (f.done === 1 ? 1300 : 1500) : 0}
+                  ease="cubic-bezier(.4,0,.3,1)"
+                />
+              </div>
             </div>
-            <div className="mt-2 flex h-6 items-center gap-[2px]">
-              {Array.from({ length: 52 }, (_, i) => (
-                <span key={i} className="w-[3px] rounded-full" style={{ height: `${20 + 75 * Math.abs(Math.sin(i * 0.5 + f.name.length) * Math.cos(i * 0.19))}%`, background: i / 52 < f.done ? f.color : "rgba(255,255,255,0.15)" }} />
-              ))}
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
       <p className="mt-3 flex items-center justify-center gap-1.5 text-[11px] text-white/50">
         <span className="rounded bg-[#F6ECC9] px-1.5 py-px text-[9px] font-bold text-[#6F50B8]">PRO</span> The original file is kept, untouched
@@ -2004,33 +2313,48 @@ export function ImportMock() {
 
 /** The song's chat on the desk: messages with attachments (the single's artwork, a take). */
 export function ChatAttachMock() {
+  // The messages arrive one by one; the take plays (its progress along the bottom), then shows it was
+  // added to Recordings, and the reply follows.
+  const [ref, step, playing] = useTimeline([300, 1100, 2000, 2500, 4900, 5500], 4000);
+  const takePlaying = playing && step === 4;
   return (
-    <div className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#1B1B1B] p-5 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]">
+    <div ref={ref} className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#1B1B1B] p-5 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]">
       <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-white/45">Night Ride · chat</p>
       <div className="mt-3 space-y-3 text-[13px]">
         <div className="flex items-end gap-2">
-          <span className="flex size-6 shrink-0 items-center justify-center rounded-full text-[10px] font-bold text-white" style={{ background: WRITERS[1].color }}>
+          <span className="flex size-6 shrink-0 items-center justify-center rounded-full text-[10px] font-bold text-white" style={{ background: WRITERS[1].color, ...arrive(step >= 1) }}>
             A
           </span>
           <div className="max-w-[78%] space-y-1.5">
-            <p className="text-[11px] font-semibold" style={{ color: WRITERS[1].color }}>
+            <p className="text-[11px] font-semibold" style={{ color: WRITERS[1].color, ...arrive(step >= 1) }}>
               Anton
             </p>
             {/* An image attachment: the single's artwork (Deane, "Night Ride"; the owner's, shared with permission) */}
-            <img src="/images/pro/night-ride-art.jpg" alt="Night Ride single artwork by Deane" width={176} height={176} loading="lazy" className="size-44 rounded-xl object-cover shadow-lg" />
-            <p className="rounded-2xl rounded-bl-md bg-white/[0.07] px-3 py-1.5 text-[#F2EDE4]">Art's back for Night Ride. Let's write the bridge to this.</p>
+            <img src="/images/pro/night-ride-art.jpg" alt="Night Ride single artwork by Deane" width={176} height={176} loading="lazy" className="size-44 rounded-xl object-cover shadow-lg" style={arrive(step >= 1, 80)} />
+            <p className="rounded-2xl rounded-bl-md bg-white/[0.07] px-3 py-1.5 text-[#F2EDE4]" style={arrive(step >= 2)}>
+              Art's back for Night Ride. Let's write the bridge to this.
+            </p>
           </div>
         </div>
         <div className="flex justify-end">
           <div className="max-w-[78%] space-y-1.5">
-            <p className="flex items-center gap-2 rounded-xl bg-[#AB8EE2]/20 px-3 py-2 text-[12px] text-[#F2EDE4]">
-              <span className="flex size-6 items-center justify-center rounded-full bg-[#AB8EE2] text-[10px] text-[#1B0F31]">▶</span>
+            <p className="relative flex items-center gap-2 overflow-hidden rounded-xl bg-[#AB8EE2]/20 px-3 py-2 text-[12px] text-[#F2EDE4]" style={arrive(step >= 3)}>
+              <span className="flex size-6 items-center justify-center rounded-full bg-[#AB8EE2] text-[10px] text-[#1B0F31]">{takePlaying ? "❚❚" : "▶"}</span>
               <span className="flex flex-col">
                 <span className="font-medium">Bridge melody</span>
-                <span className="text-[10px] text-white/50">0:28 · added to Recordings</span>
+                <span className="text-[10px] text-white/50">
+                  0:28<span className="transition-opacity duration-500" style={{ opacity: step >= 5 ? 1 : 0 }}> · added to Recordings</span>
+                </span>
               </span>
+              {/* Playing */}
+              <span
+                className="absolute bottom-0 left-0 h-[2px] w-full origin-left bg-[#AB8EE2]"
+                style={{ transform: `scaleX(${step >= 4 ? 1 : 0})`, opacity: takePlaying ? 1 : 0, transition: takePlaying ? "transform 2.3s linear, opacity .2s" : "opacity .4s" }}
+              />
             </p>
-            <p className="rounded-2xl rounded-br-md bg-[#AB8EE2]/20 px-3 py-1.5 text-[#F2EDE4]">Love it. Here's a melody for it 👆</p>
+            <p className="rounded-2xl rounded-br-md bg-[#AB8EE2]/20 px-3 py-1.5 text-[#F2EDE4]" style={arrive(step >= 6)}>
+              Love it. Here's a melody for it 👆
+            </p>
           </div>
         </div>
       </div>
@@ -2050,8 +2374,14 @@ export function RecordingsMock() {
     { title: "Bridge idea", time: "0:28", line: "Headlights bleed into the rain", playing: false, color: "#AB8EE2" },
     { title: "Verse 2 hum", time: "1:05", line: null, playing: false, color: "#3A7BD0" },
   ];
+  // The playing take plays through (a playhead crossing its waveform, its linked line lit), then settles
+  // back to where the still picture has it.
+  const [ref, step] = useTimeline([300, 7000], 3000);
+  const through = step === 1;
+  const lit = step === 0 ? 0 : step === 1 ? 44 : 18;
+  const ms = step === 1 ? 6600 : step === 2 ? 500 : 0;
   return (
-    <div className="w-full max-w-sm rounded-2xl border border-white/10 bg-[#1B1B1B] p-5 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]">
+    <div ref={ref} className="w-full max-w-sm rounded-2xl border border-white/10 bg-[#1B1B1B] p-5 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]">
       <div className="flex items-center justify-between">
         <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-white/45">Night Ride · recordings</span>
         <span className="font-mono text-[11px] text-white/40">3 takes</span>
@@ -2066,12 +2396,28 @@ export function RecordingsMock() {
               <span className="min-w-0 flex-1 truncate text-[13px] font-medium text-[#F2EDE4]">{t.title}</span>
               <span className="font-mono text-[11px] text-white/45">{t.time}</span>
             </div>
-            <div className="mt-2 flex h-6 items-center gap-[2px]">
-              {Array.from({ length: 44 }, (_, i) => (
-                <span key={i} className="w-[3px] rounded-full" style={{ height: `${20 + 75 * Math.abs(Math.sin(i * 0.55 + t.title.length) * Math.cos(i * 0.21))}%`, background: t.playing && i < 18 ? t.color : "rgba(255,255,255,0.18)" }} />
-              ))}
+            <div className="relative mt-2 h-6">
+              {t.playing ? (
+                <>
+                  <Bars count={44} height={(i) => `${20 + 75 * Math.abs(Math.sin(i * 0.55 + t.title.length) * Math.cos(i * 0.21))}%`} lit={lit} dim="rgba(255,255,255,0.18)" color={t.color} ms={ms} ease={step === 1 ? "linear" : "ease"} />
+                  {/* The playhead */}
+                  <span
+                    className="absolute inset-y-0 left-0 w-[2px] rounded-full bg-white/85"
+                    style={{ transform: `translateX(${Math.max(0, lit * 5 - 2)}px)`, opacity: through ? 1 : 0, transition: ms ? `transform ${ms}ms ${step === 1 ? "linear" : "ease"}, opacity .3s` : "opacity .3s" }}
+                  />
+                </>
+              ) : (
+                <Bars count={44} height={(i) => `${20 + 75 * Math.abs(Math.sin(i * 0.55 + t.title.length) * Math.cos(i * 0.21))}%`} lit={0} dim="rgba(255,255,255,0.18)" color={t.color} />
+              )}
             </div>
-            {t.line && <p className="mt-1.5 truncate text-[11px] text-[#AB8EE2]">↳ “{t.line}”</p>}
+            {t.line && (
+              <p className="mt-1.5 truncate text-[11px] text-[#AB8EE2]">
+                {/* Lit while its take plays */}
+                <span className="rounded-[3px] transition-colors duration-500" style={t.playing && through ? { background: "rgba(171,142,226,.2)", color: "#D9CCF5" } : undefined}>
+                  ↳ “{t.line}”
+                </span>
+              </p>
+            )}
           </div>
         ))}
       </div>
@@ -2093,8 +2439,15 @@ export function ConceptsMock() {
     { title: "Ghost Mode", note: "detached but quietly watching", g: "linear-gradient(135deg,#7251BD,#B870DB)" },
     { title: "Airplane Mode", note: "unreachable, on purpose", g: "linear-gradient(135deg,#059669,#34D399)" },
   ];
+  // Starting from the still picture (a title typed, not yet saved): it saves (the border goes solid, a
+  // small pop), clears, and the title types in again.
+  const title = "Nobody Knows Me Here";
+  const speed = 85;
+  const [ref, step, playing] = useTimeline([1400, 3200, 3700, 3700 + title.length * speed + 200], 2600);
+  const saved = step === 1;
+  const typing = step === 3;
   return (
-    <div className="w-full max-w-sm rounded-2xl border border-white/10 bg-[#1B1B1B] p-4 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]">
+    <div ref={ref} className="w-full max-w-sm rounded-2xl border border-white/10 bg-[#1B1B1B] p-4 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]">
       <div className="flex items-center justify-between px-1">
         <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-white/45">Concepts</span>
         <span className="flex items-center gap-1 rounded-full bg-[#AB8EE2]/15 px-2 py-0.5 text-[10px] font-semibold text-[#AB8EE2]">
@@ -2109,10 +2462,10 @@ export function ConceptsMock() {
           </div>
         ))}
         {/* A new one, being saved */}
-        <div className="flex h-[88px] flex-col justify-between rounded-xl border-[1.5px] border-dashed border-[#E45C7A]/70 bg-[#E45C7A]/10 p-2.5">
-          <p className="text-[13px] font-bold leading-tight text-[#F2EDE4]">
-            Nobody Knows Me Here
-            <span className="ml-0.5 inline-block h-3.5 w-[1.5px] animate-pulse bg-[#F2EDE4] align-[-2px]" />
+        <div className={`flex h-[88px] flex-col justify-between rounded-xl border-[1.5px] border-[#E45C7A]/70 bg-[#E45C7A]/10 p-2.5 ${saved ? "border-solid" : "border-dashed"} ${playing && saved ? "lg-mk-pop" : ""}`}>
+          <p className="text-[13px] font-bold leading-tight text-[#F2EDE4] transition-opacity duration-300" style={{ opacity: step === 2 ? 0 : 1 }}>
+            <TypeOn text={title} phase={typing ? "typing" : "full"} speed={speed} caret={typing && <RideCaret className="h-3.5" />} />
+            <span className={`ml-0.5 inline-block h-3.5 w-[1.5px] animate-pulse bg-[#F2EDE4] align-[-2px] ${step === 0 || step === 4 ? "" : "invisible"}`} />
           </p>
           <p className="text-[10px] text-white/50">New concept</p>
         </div>
@@ -2131,21 +2484,28 @@ export function RhymeSchemeMock() {
   const blue = C.blue;
   const green = C.green;
   const sunset = "#F4845F";
-  const hl = (word: string, c: string) => (
-    <span className="rounded-[3px] underline decoration-2 underline-offset-[3px]" style={{ background: `${c}59`, textDecorationColor: c }}>
+  // The colours fill in pair by pair (the second line just after the first), each line's letter popping in after.
+  const [ref, step] = useTimeline([500, 1300, 2100], 4500);
+  const on = (line: number) => step > line >> 1;
+  const delay = (line: number) => (on(line) ? (line % 2) * 160 : 0);
+  const hl = (word: string, c: string, line: number) => (
+    <span
+      className="rounded-[3px] underline decoration-2 underline-offset-[3px]"
+      style={{ background: on(line) ? `${c}59` : `${c}00`, textDecorationColor: on(line) ? c : `${c}00`, transition: `background-color .5s ease ${delay(line)}ms, text-decoration-color .5s ease ${delay(line)}ms` }}
+    >
       {word}
     </span>
   );
   const lines: [ReactNode, string, string][] = [
-    [<>I became another {hl("stranger", blue)}</>, "A", blue],
-    [<>Every exit leads to {hl("danger", blue)}</>, "A", blue],
-    [<>Headlights on the {hl("overpass", green)}</>, "B", green],
-    [<>Shadows dancing on the {hl("glass", green)}</>, "B", green],
-    [<>Streets are burning {hl("bright", sunset)} {hl("tonight", sunset)}</>, "C", sunset],
-    [<>Racing through the city {hl("light", sunset)}</>, "C", sunset],
+    [<>I became another {hl("stranger", blue, 0)}</>, "A", blue],
+    [<>Every exit leads to {hl("danger", blue, 1)}</>, "A", blue],
+    [<>Headlights on the {hl("overpass", green, 2)}</>, "B", green],
+    [<>Shadows dancing on the {hl("glass", green, 3)}</>, "B", green],
+    [<>Streets are burning {hl("bright", sunset, 4)} {hl("tonight", sunset, 4)}</>, "C", sunset],
+    [<>Racing through the city {hl("light", sunset, 5)}</>, "C", sunset],
   ];
   return (
-    <div className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#1B1B1B] p-5 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]">
+    <div ref={ref} className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#1B1B1B] p-5 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]">
       <div className="flex items-center gap-1.5">
         <span className="mr-auto text-[11px] font-bold uppercase tracking-[0.14em] text-white/45">View</span>
         {["Rhyme colors", "Rhyme scheme"].map((t) => (
@@ -2160,7 +2520,9 @@ export function RhymeSchemeMock() {
           <p key={i} className="flex items-baseline">
             <span className="flex-1">{l}</span>
             <span className="w-6 text-right font-sans text-[12px] font-bold" style={{ color: c }}>
-              {letter}
+              <span className="inline-block" style={{ ...arrive(on(i), delay(i) + 250, "scale(.4)"), transformOrigin: "100% 70%" }}>
+                {letter}
+              </span>
             </span>
           </p>
         ))}

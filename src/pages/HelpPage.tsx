@@ -12,6 +12,7 @@ const SUPPORT = "support@lyricgenie.app";
 // The Session plugin's installers, as the web app serves them (LYRICGENIE-APP sessions/dawBridge.ts
 // PLUGIN_DOWNLOADS); bump together when a new build ships.
 const PLUGIN_MAC = `${WEB_APP}/downloads/LyricGenieSession-0.1.1-mac.pkg`;
+const PLUGIN_WINDOWS = `${WEB_APP}/downloads/LyricGenieSession-0.1.1-windows.exe`;
 
 const GROUPS: { title: string; faqs: [string, string][] }[] = [
   {
@@ -40,7 +41,7 @@ const GROUPS: { title: string; faqs: [string, string][] }[] = [
       ["Do co-writers need to download anything?", "No. Send an invite link and they can write with you in their browser, or in the app if they have it. It's free for them."],
       ["How many people can write on one song?", "As many as you like. Every writer gets their own tab, so nobody types over anybody."],
       ["What's the Master tab?", "The version you've agreed on. Everyone builds it by sending their best sections to it from their own tab."],
-      ["What are Sessions?", "Video and voice inside the song, with your DAW streaming in full quality through the Lyric Genie Session plugin. Sessions are in early access on the web."],
+      ["What are Sessions?", "Video and voice inside the song, with your DAW streaming in full quality through the Lyric Genie Session plugin. Starting a session needs Pro; any co-writer can join a session a Pro writer is in, free. Sessions are in early access on the web."],
     ],
   },
   {
@@ -126,12 +127,14 @@ function Downloads() {
                 <span className="rounded-full bg-[#30D158]/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em] text-[#30D158]">Early access</span>
               </span>
             }
-            text="VST3 and AU, for streaming your DAW into a session. Logic, Ableton, Cubase, FL Studio, Studio One, Reaper and more."
+            text="VST3 and AU on Mac, VST3 on Windows, for streaming your DAW into a session. Logic, Ableton, Cubase, FL Studio, Studio One, Reaper and more."
           >
             <a href={PLUGIN_MAC} className={`${pill} border border-white/20 text-white hover:bg-white/5`}>
               <Download className="size-4" /> macOS
             </a>
-            <span className={`${pill} border border-white/10 text-white/35`}>Windows soon</span>
+            <a href={PLUGIN_WINDOWS} className={`${pill} border border-white/20 text-white hover:bg-white/5`}>
+              <Download className="size-4" /> Windows
+            </a>
           </DownloadRow>
         </Reveal>
         <p className="mt-4 text-center text-sm text-white/45">

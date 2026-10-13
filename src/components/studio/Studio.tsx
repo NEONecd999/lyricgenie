@@ -1232,7 +1232,7 @@ export function Pricing() {
     <section id="pricing" className="bg-[#170E1C] py-24">
       <div className="container mx-auto px-6">
         <Head center eyebrow="Pricing" title="Start free. Go Pro when you're ready." lead="One account for the web and iPhone." />
-        <div className="mt-9 flex justify-center">
+        <Reveal delay={0.05} className="mt-9 flex justify-center">
           <div role="radiogroup" aria-label="Billing period" className="inline-flex items-center rounded-full border border-white/10 bg-[#1B1B1B] p-1">
             {(["monthly", "yearly"] as const).map((b) => {
               const on = billing === b;
@@ -1251,7 +1251,7 @@ export function Pricing() {
               );
             })}
           </div>
-        </div>
+        </Reveal>
         <div className="mx-auto mt-8 grid max-w-4xl gap-5 md:grid-cols-2">
           <Reveal className="flex flex-col rounded-2xl border border-white/10 bg-[#1B1B1B] p-7">
             <p className="text-lg font-semibold text-white">Free</p>

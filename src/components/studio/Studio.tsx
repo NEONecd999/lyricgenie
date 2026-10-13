@@ -635,6 +635,7 @@ export function Hero() {
 export const SHOTS = [
   { key: "workspace", tab: "Workspace", src: "/images/web/editor.jpg", caption: "Your song in the middle, every tool around it." },
   { key: "genie", tab: "Genie", src: "/images/web/genie-chat.jpg", caption: "An assistant that reads your song. You decide what stays." },
+  { key: "session", tab: "Sessions", src: "/images/web/session.jpg", caption: "Write together live, on video, from anywhere." },
   { key: "wish", tab: "Wish Workshop", src: "/images/web/wish.jpg", caption: "Rewrites previewed right in your lyrics." },
   { key: "rhymes", tab: "Rhymes", src: "/images/web/rhymes.jpg", caption: "Rhymes, synonyms and syllables for anything you select." },
 ] as const;

@@ -640,11 +640,26 @@ export const SHOTS = [
   { key: "rhymes", tab: "Rhymes", src: "/images/web/rhymes.jpg", caption: "Rhymes, synonyms and syllables for anything you select." },
 ] as const;
 
+/** How long each desk shot shows before the next (owner, 2026-10-13). */
+const DESK_STEP_MS = 5000;
+
 export function Desk() {
   const [active, setActive] = useState<(typeof SHOTS)[number]["key"]>("workspace");
   const shot = SHOTS.find((s) => s.key === active)!;
+  // Steps through the tabs on its own while on screen; pauses while the pointer is on the screenshot, and stops for good
+  // once a tab is picked. Not with reduced motion.
+  const [ref, inView] = useInView(0.3);
+  const [hover, setHover] = useState(false);
+  const [picked, setPicked] = useState(false);
+  useEffect(() => {
+    if (!inView || hover || picked || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const t = setTimeout(() => {
+      setActive((k) => SHOTS[(SHOTS.findIndex((s) => s.key === k) + 1) % SHOTS.length].key);
+    }, DESK_STEP_MS);
+    return () => clearTimeout(t);
+  }, [active, inView, hover, picked]);
   return (
-    <section className="bg-[#170E1C] py-24">
+    <section ref={ref} className="bg-[#170E1C] py-24">
       <div className="container mx-auto px-6">
         <Head
           center
@@ -662,22 +677,27 @@ export function Desk() {
               type="button"
               role="tab"
               aria-selected={active === s.key}
-              onClick={() => setActive(s.key)}
+              onClick={() => {
+                setPicked(true);
+                setActive(s.key);
+              }}
               className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors ${active === s.key ? "bg-[#F6ECC9] text-[#6F50B8]" : "bg-white/5 text-white/75 hover:bg-white/10 hover:text-white"}`}
             >
               {s.tab}
             </button>
           ))}
         </div>
-        <Reveal className="mx-auto max-w-6xl">
-          <Window>
-            <div className="relative aspect-[16/10]">
-              {SHOTS.map((s) => (
-                <img key={s.key} src={s.src} alt={s.caption} width={1920} height={1200} loading="lazy" className={`absolute inset-0 h-full w-full object-cover object-top transition-opacity duration-500 ${active === s.key ? "opacity-100" : "opacity-0"}`} />
-              ))}
-            </div>
-          </Window>
-        </Reveal>
+        <div onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+          <Reveal className="mx-auto max-w-6xl">
+            <Window>
+              <div className="relative aspect-[16/10]">
+                {SHOTS.map((s) => (
+                  <img key={s.key} src={s.src} alt={s.caption} width={1920} height={1200} loading="lazy" className={`absolute inset-0 h-full w-full object-cover object-top transition-opacity duration-500 ${active === s.key ? "opacity-100" : "opacity-0"}`} />
+                ))}
+              </div>
+            </Window>
+          </Reveal>
+        </div>
         <p className="mx-auto mt-5 max-w-xl text-center text-[15px] text-white/60">{shot.caption}</p>
       </div>
     </section>

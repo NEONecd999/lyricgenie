@@ -146,14 +146,14 @@ const CoWriteRemotely = () => {
         It runs on iPhone and iPad, and in the browser on any Mac or PC, so it doesn't matter what each writer has in front of them. Everything syncs.
       </p>
 
-      <h2>Coming soon: Sessions</h2>
+      <h2>Sessions: the call, inside the song</h2>
 
       <p>
-        The one part of a remote write we don't cover yet is the call itself, and the track. Right now most writers run a video app in one window and the lyric in another, with someone sharing their DAW over a screen share that wasn't built for music.
+        The other half of a remote write is the call itself, and the track. Most writers run a video app in one window and the lyric in another, with someone sharing their DAW over a screen share that wasn't built for music.
       </p>
 
       <p>
-        We're building Sessions to bring that inside the song: video and voice next to the lyric, with your DAW streaming in full quality through a VST3 and AU plugin. Sessions aren't available yet. They're coming soon. Until they ship, use whatever call app works for your group, and keep the lyric in one place.
+        Sessions bring that inside the song: video and voice next to the lyric, with your DAW streaming in full quality through a VST3 and AU plugin. Starting a session needs Pro, and any co-writer can join a session a Pro writer is in, free.
       </p>
 
       <h2>The short version</h2>

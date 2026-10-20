@@ -593,7 +593,7 @@ export function HeroDevices() {
                 <span className="size-1 rounded-full bg-[#30D158]" /> Live
               </span>
             </span>
-            <span className="px-1 text-[9.5px] font-medium text-white/75">Sessions · coming soon</span>
+            <span className="px-1 text-[9.5px] font-medium text-white/75">Sessions · live in the song</span>
           </Float>
         </div>
       </div>
@@ -1032,7 +1032,7 @@ export function Features() {
           tint="rgba(48,209,88,.16)"
           eyebrow={
             <span className="inline-flex items-center gap-2">
-              Sessions <span className="rounded-full bg-[#30D158]/15 px-2 py-0.5 text-[10px] tracking-[0.12em] text-[#30D158]">Coming soon</span>
+              Sessions <span className="rounded-full bg-[#30D158]/15 px-2 py-0.5 text-[10px] tracking-[0.12em] text-[#30D158]">New</span>
             </span>
           }
           title={

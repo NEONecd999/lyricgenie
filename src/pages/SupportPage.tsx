@@ -37,7 +37,7 @@ const GROUPS: { title: string; faqs: [string, string][] }[] = [
       ["Do co-writers need to download anything?", "No. Send an invite link and they can write with you in their browser, or in the app if they have it. It's free for them."],
       ["How many people can write on one song?", "As many as you like. Every writer gets their own tab, so nobody types over anybody."],
       ["What's the Master tab?", "The version you've agreed on. Everyone builds it by sending their best sections to it from their own tab."],
-      ["What are Sessions?", "Coming soon: video and voice inside the song, with your DAW streaming in full quality through the Lyric Genie Session plugin. Starting a session will need Pro; any co-writer can join a session a Pro writer is in, free."],
+      ["What are Sessions?", "Video and voice inside the song, with your DAW streaming in full quality through the Lyric Genie Session plugin. Starting a session will need Pro; any co-writer can join a session a Pro writer is in, free."],
     ],
   },
   {
@@ -120,14 +120,16 @@ function Downloads() {
             title={
               <span className="inline-flex items-center gap-2">
                 Lyric Genie Session plugin
-                <span className="rounded-full bg-[#30D158]/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.12em] text-[#30D158]">Coming soon</span>
               </span>
             }
             text="Streams your DAW into a session. Works in Logic, Ableton, Cubase, FL Studio, Studio One, Reaper and more. Mac: macOS 11 (Big Sur) or later, Apple silicon or Intel (VST3 and AU). Windows: Windows 10 or later, 64-bit (VST3)."
           >
-            {/* Sessions aren't open yet (testers get the plugin inside the web app). When they are, link the
-                installers here: ${WEB_APP}/downloads/LyricGenieSession-<version>-mac.pkg and -windows.exe. */}
-            <span className={`${pill} border border-white/10 text-white/40`}>Coming soon</span>
+            <a href={`${WEB_APP}/downloads/LyricGenieSession-0.1.1-mac.pkg`} className={`${pill} bg-[#F6ECC9] text-[#6F50B8] hover:bg-[#FBF2D6]`}>
+              Mac
+            </a>
+            <a href={`${WEB_APP}/downloads/LyricGenieSession-0.1.1-windows.exe`} className={`${pill} bg-[#F6ECC9] text-[#6F50B8] hover:bg-[#FBF2D6]`}>
+              Windows
+            </a>
           </DownloadRow>
         </Reveal>
         <p className="mt-4 text-center text-sm text-white/45">

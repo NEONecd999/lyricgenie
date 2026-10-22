@@ -17,6 +17,7 @@ const ROWS: [string, string | boolean, string | boolean][] = [
   ["Smart dictionaries", false, true],
   ["AI song titles & concepts", false, true],
   ["Syllable control", false, true],
+  ["Video sessions with your DAW", "Join", "Host & join"],
   ["Voice recording", "60 min (5 min a take)", "10,000 min (60 min a take)"],
 ];
 

@@ -1299,6 +1299,7 @@ export function Pricing() {
               <Tick>Wish Workshop and in-line suggestions</Tick>
               <Tick>5,000 AI calls a month, unlimited rhymes</Tick>
               <Tick>10,000 minutes of recording</Tick>
+              <Tick>Host video sessions with your DAW</Tick>
             </ul>
             <div className="mt-auto pt-8">
               <a href={webTrial(billing)} className="inline-flex w-full items-center justify-center rounded-full bg-[#F6ECC9] py-3 text-sm font-semibold text-[#6F50B8] hover:bg-[#FBF2D6]">

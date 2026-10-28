@@ -6,17 +6,18 @@ import { FAQ, FinalCTA, Head, Pricing, Reveal, StudioPage } from "@/components/s
  * (components/Pricing.tsx: FREE_FEATURES / PRO_FEATURES); keep them in step.
  */
 
+// "Try": the free plan's 15 AI calls cover every AI feature (as the apps and docs/account/plans say), 2026-10-28.
 const ROWS: [string, string | boolean, string | boolean][] = [
   ["Songs", "Unlimited", "Unlimited"],
   ["Real-time co-writing", true, true],
   ["Lyric sheets, linked recordings, arranging", true, true],
   ["AI calls", "15 + 50 quick", "5,000 a month + 20,000 quick"],
   ["Rhyme lookups", "30 a day", "Unlimited"],
-  ["Wish Workshop", false, true],
-  ["In-line suggestions", false, true],
-  ["Smart dictionaries", false, true],
-  ["AI song titles & concepts", false, true],
-  ["Syllable control", false, true],
+  ["Wish Workshop", "Try", true],
+  ["In-line suggestions", "Try", true],
+  ["Smart dictionaries", "Try", true],
+  ["AI song titles & concepts", "Try", true],
+  ["Syllable control", "Try", true],
   ["Video sessions with your DAW", "Join", "Host & join"],
   ["Voice recording", "60 min (5 min a take)", "10,000 min (60 min a take)"],
 ];

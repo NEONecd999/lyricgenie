@@ -26,6 +26,9 @@ import MultisyllabicRhymes from "./pages/blog/MultisyllabicRhymes";
 import RhymeSchemesExplained from "./pages/blog/RhymeSchemesExplained";
 import CreditsAndLyricSheets from "./pages/blog/CreditsAndLyricSheets";
 import BestSongwritingAppsMacPC from "./pages/blog/BestSongwritingAppsMacPC";
+import AISongwritingAppPage from "./pages/AISongwritingAppPage";
+import CoWritingAppPage from "./pages/CoWritingAppPage";
+import RhymeAppPage from "./pages/RhymeAppPage";
 import NotFound from "./pages/NotFound";
 import ScrollToHash from "./components/ScrollToHash";
 
@@ -105,6 +108,10 @@ const App = () => {
             <Route path="/blog/rhyme-schemes-explained" element={<RhymeSchemesExplained />} />
             <Route path="/blog/songwriting-credits-splits-lyric-sheet" element={<CreditsAndLyricSheets />} />
             <Route path="/blog/best-songwriting-apps-mac-pc-2026" element={<BestSongwritingAppsMacPC />} />
+            {/* Answer-first pages, drafts for review (noindex, not in the sitemap or prerender list until published) */}
+            <Route path="/ai-songwriting-app" element={<AISongwritingAppPage />} />
+            <Route path="/co-writing-app" element={<CoWritingAppPage />} />
+            <Route path="/rhyme-app-for-songwriters" element={<RhymeAppPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

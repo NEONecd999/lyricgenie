@@ -49,7 +49,7 @@ export interface ArticleProps {
 }
 
 /** Keeps a draft out of search results while it's being reviewed on the preview. */
-function NoIndex() {
+export function NoIndex() {
   useEffect(() => {
     const meta = document.createElement("meta");
     meta.name = "robots";

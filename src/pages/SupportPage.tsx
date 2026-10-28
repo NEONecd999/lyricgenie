@@ -14,7 +14,7 @@ const GROUPS: { title: string; faqs: [string, string][] }[] = [
   {
     title: "Getting started",
     faqs: [
-      ["Is there a web version?", "Yes. The web app is at app.lyricgenie.app and runs in any computer's browser. There's also a native app for iPhone and iPad. Almost everything is on both: Freestyle and transcriptions are iPhone only for now, and Sessions are web only for now."],
+      ["Is there a web version?", "Yes. The web app is at app.lyricgenie.app and runs in any computer's browser. There's also a native app for iPhone and iPad. Almost everything is on both: Freestyle and transcriptions are iPhone only for now. Sessions work on both (iPhone from version 2.23), and sharing your DAW or computer audio needs a computer."],
       ["Do my songs sync between devices?", "Yes. Sign in with the same Google or Apple account everywhere and your songs, recordings, concepts and projects are on every device, live."],
       ["How do I sign in?", "With Google or Apple. There's no separate password to remember."],
       ["I signed in with Google before and now with Apple. Where are my songs?", "In the other account. Google and Apple sign-ins are separate accounts, even with the same email behind them. Sign out and back in with the other button, and nothing is lost."],

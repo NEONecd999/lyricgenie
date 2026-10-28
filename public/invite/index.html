@@ -55,7 +55,7 @@
     <div id="buttons"></div>
     <p class="note" id="missing" hidden>
       Didn't open? You may not have the app yet.
-      <a href="https://apps.apple.com/app/id6739787614">Get it on the App Store</a>, or continue on the web.
+      <a href="https://apps.apple.com/app/id6739787614">Get it on the App Store</a><span id="orWeb">, or continue on the web</span>.
     </p>
     <p class="note" id="store">
       No iPhone app yet? <a href="https://apps.apple.com/app/id6739787614">Get it on the App Store</a>
@@ -66,13 +66,28 @@
       var params = new URLSearchParams(location.search);
       var code = params.get("code");
       var query = location.search || "";
-      var appUrl = code ? "lyricgenie://invite?code=" + encodeURIComponent(code) : "lyricgenie://";
+      var token = params.get("token");
+      // An email invitation's token goes to the app too (2.30 accepts it by token, so it works even when the
+      // person signed in with another address, e.g. Hide My Email); older apps ignore it and just open.
+      // A chat's reusable link (iOS 2.30: ?link=…&chat=1) opens in the app as it is.
+      var link = params.get("link");
+      var appUrl = link ? "lyricgenie://invite" + query
+        : code ? "lyricgenie://invite?code=" + encodeURIComponent(code)
+        : token ? "lyricgenie://invite?token=" + encodeURIComponent(token) : "lyricgenie://";
       var webUrl = "https://app.lyricgenie.app/invite" + query;
       // iPhone / iPad (iPadOS reports a Mac with touch).
       var ios = /iPhone|iPad|iPod/.test(navigator.userAgent) || (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
       var mac = !ios && /Macintosh/.test(navigator.userAgent);
+      // A chat that isn't a song yet (iOS 2.24 adds &chat=1 to its codes). Chats open in the iPhone app
+      // only for now: the web app can't join one yet, so no web button for these.
+      var chat = params.get("chat") === "1";
 
-      if (code || params.get("token")) {
+      if (chat && (code || link)) {
+        document.getElementById("title").textContent = "You're invited to a chat";
+        document.getElementById("subtitle").textContent = link
+          ? "Join the chat in the Lyric Genie iPhone app (version 2.30 or later)."
+          : "Join the chat in the Lyric Genie iPhone app (version 2.24 or later).";
+      } else if (code || link || token) {
         document.getElementById("title").textContent = "You're invited to write together";
         document.getElementById("subtitle").textContent = "Open the song in the iPhone app or right here in your browser. It's the same account either way.";
       }
@@ -96,12 +111,13 @@
 
       // The likely choice first: the app on iPhone / iPad, the web everywhere else. The app button
       // shows on Macs too (Apple silicon Macs can run the iPhone app); not on Android or Windows.
-      var order = ios ? [app, web] : mac ? [web, app] : [web];
+      var order = chat ? [app] : ios ? [app, web] : mac ? [web, app] : [web];
       order.forEach(function (el, i) {
         el.className = "btn " + (i === 0 ? "primary" : "secondary");
         document.getElementById("buttons").appendChild(el);
       });
-      if (!ios && !mac) document.getElementById("store").hidden = true;
+      if (chat) document.getElementById("orWeb").hidden = true;
+      if (!ios && !mac && !chat) document.getElementById("store").hidden = true;
     })();
   </script>
 </body>

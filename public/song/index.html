@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Open your song in Lyric Genie</title>
+  <meta name="robots" content="noindex">
+  <!--
+    Song links (lyricgenie.app/song?id=…, from the day-after email, functions/src/sendDayAfterNudge.ts) land here:
+    the iPhone app (lyricgenie://song?id=…, which opens the song from 2.30; older builds just open) or the web
+    app (app.lyricgenie.app/songs/{id}). Not in the apple-app-site-association file, like /invite.
+  -->
+  <link rel="preload" href="/fonts/Lufga-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/Lufga-Bold.woff2" as="font" type="font/woff2" crossorigin>
+  <style>
+    /* Lufga, as on the rest of the site (src/index.css). */
+    @font-face { font-family: 'Lufga'; src: url('/fonts/Lufga-Regular.woff2') format('woff2'), url('/fonts/Lufga-Regular.woff') format('woff'); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Lufga'; src: url('/fonts/Lufga-Medium.woff2') format('woff2'), url('/fonts/Lufga-Medium.woff') format('woff'); font-weight: 500; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Lufga'; src: url('/fonts/Lufga-Bold.woff2') format('woff2'), url('/fonts/Lufga-Bold.woff') format('woff'); font-weight: 700; font-style: normal; font-display: swap; }
+    :root { --bg: #1E1324; --card: #2A1C33; --cream: #F6ECC9; --purple: #6F50B8; --text: #fff; --muted: rgba(255,255,255,.68); --line: rgba(255,255,255,.12); }
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Lufga', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      margin: 0; min-height: 100vh; min-height: 100dvh;
+      display: flex; align-items: center; justify-content: center;
+      background: radial-gradient(900px 500px at 50% -10%, rgba(111,80,184,.35), transparent 70%), var(--bg);
+      color: var(--text); padding: 24px 16px;
+    }
+    .card { width: 100%; max-width: 420px; text-align: center; }
+    .logo { width: 56px; height: 56px; border-radius: 14px; margin: 0 auto 20px; display: block; }
+    h1 { font-size: 1.6rem; line-height: 1.2; margin: 0 0 10px; letter-spacing: -.01em; }
+    p { color: var(--muted); margin: 0 0 24px; line-height: 1.5; }
+    .btn {
+      display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%;
+      padding: 15px 20px; border-radius: 999px; font-weight: 600; font-size: 1rem;
+      text-decoration: none; border: 0; cursor: pointer; margin-bottom: 12px; font-family: inherit;
+    }
+    .primary { background: var(--cream); color: var(--purple); }
+    .secondary { background: transparent; color: var(--text); border: 1px solid var(--line); }
+    .btn:hover { filter: brightness(1.05); }
+    .note { font-size: .875rem; margin: 8px 0 0; }
+    .note a { color: var(--cream); }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <img class="logo" src="/favicon-96x96.png" alt="" onerror="this.remove()">
+    <h1>Your song is waiting</h1>
+    <p>Open it in the iPhone app or right here in your browser. It's the same account either way.</p>
+    <div id="buttons"></div>
+    <p class="note" id="missing" hidden>
+      Didn't open? You may not have the app yet.
+      <a href="https://apps.apple.com/app/id6739787614">Get it on the App Store</a>, or continue on the web.
+    </p>
+    <p class="note" id="store">
+      No iPhone app yet? <a href="https://apps.apple.com/app/id6739787614">Get it on the App Store</a>
+    </p>
+  </main>
+  <script>
+    (function () {
+      var id = new URLSearchParams(location.search).get("id") || "";
+      var appUrl = id ? "lyricgenie://song?id=" + encodeURIComponent(id) : "lyricgenie://";
+      var webUrl = "https://app.lyricgenie.app/" + (id ? "songs/" + encodeURIComponent(id) : "");
+      // iPhone / iPad (iPadOS reports a Mac with touch).
+      var ios = /iPhone|iPad|iPod/.test(navigator.userAgent) || (/Macintosh/.test(navigator.userAgent) && navigator.maxTouchPoints > 1);
+      var mac = !ios && /Macintosh/.test(navigator.userAgent);
+
+      var app = document.createElement("a");
+      app.href = appUrl;
+      app.textContent = ios ? "Open in the iPhone app" : "Open in the Lyric Genie app";
+      app.addEventListener("click", function () {
+        // If the page is still showing a moment later, the app probably isn't installed.
+        setTimeout(function () {
+          if (!document.hidden) document.getElementById("missing").hidden = false;
+        }, 1600);
+      });
+      var web = document.createElement("a");
+      web.href = webUrl;
+      web.textContent = ios ? "Continue on the web" : "Open in your browser";
+
+      // The likely choice first, as on /invite: the app on iPhone / iPad, the web everywhere else.
+      var order = ios ? [app, web] : mac ? [web, app] : [web];
+      order.forEach(function (el, i) {
+        el.className = "btn " + (i === 0 ? "primary" : "secondary");
+        document.getElementById("buttons").appendChild(el);
+      });
+      if (!ios && !mac) document.getElementById("store").hidden = true;
+    })();
+  </script>
+</body>
+</html>

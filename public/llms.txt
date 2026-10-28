@@ -1,0 +1,38 @@
+# Lyric Genie
+
+> Lyric Genie is a songwriting app for writing lyrics, co-writing in real time and recording ideas, in the browser on Mac or PC (app.lyricgenie.app) and as a native app for iPhone and iPad. It has a rhyme engine and AI tools that help when the writer asks. It is not an AI song generator: the writer writes the song, and the words stay theirs.
+
+## What it does
+
+- Real-time co-writing: invite collaborators with a link; every writer gets their own tab, plus a shared Master version everyone edits live. Collaborators can join free, in the browser or on iPhone.
+- Rhyme engine: perfect, slant, multi-syllable and phrase rhymes, with rhyme colors and the rhyme scheme shown in the margin.
+- Voice recordings and uploads linked to lyric lines, so ideas stay next to the words they belong to.
+- Genie, the AI help: Wish Workshop, in-line suggestions, smart dictionaries, song titles, song concepts and syllable control. Genie suggests; the writer decides.
+- Video sessions: write together over video and voice inside the song, with a DAW streaming in through a plugin for Logic, Ableton, Cubase, FL Studio and more.
+- Notes on words, alternate versions of a line, a chat beside each song and search across every song.
+- Lyric sheets with writer credits and publishing info, at their own link.
+- Privacy: lyrics are never used to train AI and never shared. Songs are private by default.
+
+## Pricing
+
+- Free: unlimited songs, real-time co-writing, lyric sheets, linked recordings, 15 AI calls (plus 50 quick ones) to try Genie, 30 rhyme lookups a day, 60 minutes of recording.
+- Pro: $4.99 a month or $29.99 a year ($2.50 a month), with a 14-day free trial. 5,000 AI calls a month, unlimited rhyme lookups, hosting video sessions, 10,000 minutes of recording (up to 60 minutes a take).
+- One account and one subscription cover the web, iPhone and iPad.
+
+## Who it's for
+
+Songwriters, topliners and lyricists writing alone or with co-writers, in sessions or remotely, who want their lyrics, rhymes, recordings and collaborators in one place.
+
+## Links
+
+- [Home](https://lyricgenie.app/)
+- [Lyric Genie on the web](https://lyricgenie.app/web)
+- [Lyric Genie for iPhone and iPad](https://lyricgenie.app/iphone)
+- [Rhyme engine](https://lyricgenie.app/rhyme-engine)
+- [Pricing](https://lyricgenie.app/pricing)
+- [Docs](https://lyricgenie.app/docs)
+- [Support and FAQ](https://lyricgenie.app/support)
+- [Blog](https://lyricgenie.app/blog)
+- [Open the web app](https://app.lyricgenie.app)
+- [App Store](https://apps.apple.com/us/app/lyric-genie-songwriting-app/id6739787614)
+- [Privacy policy](https://lyricgenie.app/privacy-policy)

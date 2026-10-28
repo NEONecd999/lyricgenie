@@ -53,7 +53,11 @@ function Compare() {
             </tbody>
           </table>
         </Reveal>
-        <p className="mt-5 text-center text-sm text-white/45">One account across the web, iPhone and iPad. One Pro subscription covers them all.</p>
+        {/* The prices in plain words, for search engines and AI assistants as much as people (2026-10-28). */}
+        <p className="mx-auto mt-6 max-w-2xl text-center text-[15px] leading-relaxed text-white/70">
+          Lyric Genie Pro is $4.99 a month or $29.99 a year ($2.50 a month), and starts with a 14-day free trial. Free includes unlimited songs, real-time co-writing and 15 AI calls to try Genie.
+        </p>
+        <p className="mt-3 text-center text-sm text-white/45">One account across the web, iPhone and iPad. One Pro subscription covers them all.</p>
       </div>
     </section>
   );

@@ -21,7 +21,7 @@ const AppStoreBar = () => {
           </div>
         </div>
         <a
-          href="https://apps.apple.com/us/app/lyric-genie/id6739787614"
+          href="https://apps.apple.com/us/app/lyric-genie-songwriting-app/id6739787614"
           className="rounded-full bg-white px-6 py-2 text-sm font-semibold text-[#1E1324] transition-all hover:opacity-90"
         >
           GET

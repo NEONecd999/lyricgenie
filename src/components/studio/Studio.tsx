@@ -1325,13 +1325,23 @@ export const FAQS = [
   ["Does it work on iPad and computers?", "Yes. There's a native app for iPhone and iPad, and on a computer Lyric Genie runs in your browser, Mac or PC. Everything syncs."],
   ["Is there a free trial?", "Yes. Pro starts with 14 days free, on the web or iPhone. One subscription covers both."],
   ["Can I export my lyrics?", "Yes. Lyric sheets open at their own link, with publishing info if you want it."],
+  ["How much does Pro cost?", `Pro is $4.99 a month or $29.99 a year ($2.50 a month), and starts with a 14-day free trial. Free includes unlimited songs, real-time co-writing and 15 AI calls to try Genie.`],
+  ["Does Lyric Genie write songs for me?", "No. It's not a song generator. You write the song; Genie helps when you ask, with rhymes, a fresher word or a next-line idea, and the words stay yours."],
 ];
+
+/** FAQPage structured data for the FAQ section, so search engines and AI assistants can read the answers. */
+const faqJsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQS.map(([q, a]) => ({ "@type": "Question", name: q, acceptedAnswer: { "@type": "Answer", text: a } })),
+});
 
 export function FAQ() {
   return (
     <section id="faq" className="py-24">
       <div className="container mx-auto max-w-3xl px-6">
         <Head center eyebrow="FAQ" title="Questions, answered." />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: faqJsonLd }} />
         <Accordion type="single" collapsible className="mt-10">
           {FAQS.map(([q, a]) => (
             <AccordionItem key={q} value={q} className="border-white/10">

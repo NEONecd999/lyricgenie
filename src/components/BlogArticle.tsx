@@ -159,7 +159,7 @@ const BlogArticle = ({ title, description, date, readTime, category, children }:
             </p>
             <Button asChild size="lg" className="bg-primary hover:bg-primary/90">
               <a
-                href="https://apps.apple.com/us/app/lyric-genie/id6739787614"
+                href="https://apps.apple.com/us/app/lyric-genie-songwriting-app/id6739787614"
                 target="_blank"
                 rel="noopener noreferrer"
               >

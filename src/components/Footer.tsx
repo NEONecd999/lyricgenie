@@ -141,7 +141,8 @@ const Footer = () => {
           className="mt-13 flex flex-col items-center justify-between gap-2 border-t border-[rgba(246,236,201,0.15)] pt-7 text-xs text-[rgba(246,236,201,0.65)] md:flex-row"
           style={{ marginTop: 52 }}
         >
-          <span>&copy; {currentYear} Edan Dover Inc. All rights reserved.</span>
+          {/* USPTO Reg. No. 8,366,218 (Jul. 28, 2026), owned by Edan Dover Inc: ® is right, and the notice is what lets damages be claimed. */}
+          <span className="text-center md:text-left">&copy; {currentYear} Edan Dover Inc. All rights reserved. Lyric Genie&reg; is a registered trademark of Edan Dover Inc.</span>
           <span>Made with ♫ in Los Angeles</span>
         </div>
       </div>

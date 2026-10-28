@@ -36,3 +36,5 @@ Songwriters, topliners and lyricists writing alone or with co-writers, in sessio
 - [Open the web app](https://app.lyricgenie.app)
 - [App Store](https://apps.apple.com/us/app/lyric-genie-songwriting-app/id6739787614)
 - [Privacy policy](https://lyricgenie.app/privacy-policy)
+
+Lyric Genie® is a registered trademark of Edan Dover Inc. (U.S. Reg. No. 8,366,218).

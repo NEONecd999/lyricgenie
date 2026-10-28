@@ -88,6 +88,11 @@ const TermsOfService = () => {
           </section>
 
           <section className="bg-white rounded-2xl p-8 shadow-sm">
+            <h2 className="text-2xl font-bold mb-4 text-[rgb(127,98,196)] font-display">Trademarks</h2>
+            <p className="mb-4 leading-relaxed text-gray-700">Lyric Genie&reg; is a registered trademark of Edan Dover Inc. (U.S. Reg. No. 8,366,218). You may not use the Lyric Genie name or logo without our written permission, except to refer to Lyric Genie accurately.</p>
+          </section>
+
+          <section className="bg-white rounded-2xl p-8 shadow-sm">
             <h2 className="text-2xl font-bold mb-4 text-[rgb(127,98,196)] font-display">Ending your account</h2>
             <p className="mb-4 leading-relaxed text-gray-700">You can stop using Lyric Genie and delete your account at any time from the app. If you have a subscription, cancel it first so it does not renew. We may suspend or close accounts that break these terms.</p>
           </section>

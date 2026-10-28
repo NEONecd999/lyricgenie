@@ -123,7 +123,7 @@ function RhymeTeaser() {
 }
 
 const ProHome = () => (
-  <StudioPage title="Lyric Genie — The Songwriting Studio" description="Lyric Genie is a songwriting app for writing lyrics, co-writing live and recording ideas, in your browser on Mac or PC and on iPhone. Rhymes and AI help built in.">
+  <StudioPage title="Lyric Genie — The Songwriting Studio and Lyric Writing App" description="Lyric Genie is a songwriting app for writing lyrics, co-writing live and recording ideas, in your browser on Mac or PC and on iPhone. Rhymes and AI help built in.">
     <FeatureKeyframes />
     <Hero />
     <TwoWays />

@@ -612,7 +612,8 @@ export function Hero() {
           iPhone app together: the studio and its partner). */}
       <div className="container relative z-10 mx-auto grid grid-cols-1 items-center gap-12 px-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-14">
         <Reveal className="mx-auto max-w-xl text-center lg:mx-0 lg:text-left">
-          <Eyebrow>Built by pro songwriters in LA</Eyebrow>
+          {/* The brand by name, with ®, where Google and people look first (USPTO Reg. No. 8,366,218). */}
+          <Eyebrow>Lyric Genie&reg; · Built by pro songwriters in LA</Eyebrow>
           <h1 className="font-display text-[48px] font-bold leading-[1.02] tracking-tight text-white md:text-[72px]">
             The songwriting <span className="text-[#F6ECC9]">studio.</span>
           </h1>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lyric Genie — The Songwriting Studio</title>
+    <title>Lyric Genie — The Songwriting Studio and Lyric Writing App</title>
     <meta name="description" content="Lyric Genie is a songwriting app for writing lyrics, co-writing live and recording ideas, in your browser on Mac or PC and on iPhone. Rhymes and AI help built in." />
     <meta name="author" content="Edan Dover" />
     <meta name="keywords" content="lyric genie, lyricgenie, songwriting, lyrics, songwriter, co-writing, music, rhyme dictionary, lyric app, songwriting app, lyric writing app, songwriting notepad, iOS songwriting app, iPad songwriter, Mac songwriting, web songwriting app, AI songwriting help, Edan Dover" />
@@ -53,11 +53,7 @@
         "name": "Edan Dover",
         "url": "https://lyricgenie.app/about"
       },
-      "publisher": {
-        "@type": "Organization",
-        "name": "Edan Dover Inc",
-        "url": "https://lyricgenie.app"
-      },
+      "publisher": { "@id": "https://lyricgenie.app/#organization" },
       "creator": {
         "@type": "Person",
         "name": "Edan Dover"
@@ -77,8 +73,24 @@
         "Lyric sheets with writer credits"
       ],
       "sameAs": [
-        "https://apps.apple.com/us/app/lyric-genie-songwriting-app/id6739787614"
+        "https://apps.apple.com/us/app/lyric-genie-songwriting-app/id6739787614",
+        "https://instagram.com/lyricgenieapp",
+        "https://tiktok.com/@lyricgenieapp"
       ]
+    }
+    </script>
+
+    <!-- The brand, for Google's site name and knowledge panel (2026-10-28): "Lyric Genie" is the site and the
+         organization (USPTO Reg. No. 8,366,218, owned by Edan Dover Inc), linked to its official profiles. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": "https://lyricgenie.app/#website",
+      "name": "Lyric Genie",
+      "alternateName": ["LyricGenie", "Lyric Genie app"],
+      "url": "https://lyricgenie.app/",
+      "publisher": { "@id": "https://lyricgenie.app/#organization" }
     }
     </script>
 
@@ -86,19 +98,22 @@
     {
       "@context": "https://schema.org",
       "@type": "Organization",
-      "name": "Edan Dover Inc",
-      "url": "https://lyricgenie.app",
+      "@id": "https://lyricgenie.app/#organization",
+      "name": "Lyric Genie",
+      "legalName": "Edan Dover Inc",
+      "url": "https://lyricgenie.app/",
+      "logo": "https://lyricgenie.app/images/app-icon.jpg",
+      "description": "Lyric Genie® is a songwriting app for writing lyrics, co-writing in real time and recording ideas, on the web and iPhone. A registered trademark of Edan Dover Inc.",
+      "foundingDate": "2025-01-18",
       "founder": {
         "@type": "Person",
         "name": "Edan Dover"
       },
-      "makesOffer": {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "MobileApplication",
-          "name": "Lyric Genie"
-        }
-      }
+      "sameAs": [
+        "https://apps.apple.com/us/app/lyric-genie-songwriting-app/id6739787614",
+        "https://instagram.com/lyricgenieapp",
+        "https://tiktok.com/@lyricgenieapp"
+      ]
     }
     </script>
 

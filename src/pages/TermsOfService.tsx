@@ -124,7 +124,7 @@ const TermsOfService = () => {
       <footer className="border-t border-gray-200/50 bg-[#F4EFD8]">
         <div className="container mx-auto px-6 py-8">
           <p className="text-center text-gray-600 text-sm">
-            © {new Date().getFullYear()} Lyric Genie. All rights reserved.
+            © {new Date().getFullYear()} Edan Dover Inc. All rights reserved. Lyric Genie® is a registered trademark of Edan Dover Inc.
           </p>
         </div>
       </footer>

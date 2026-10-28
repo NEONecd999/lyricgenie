@@ -5,8 +5,8 @@ import { NoIndex } from "@/components/studio/Article";
 /**
  * Answer-first pages for the questions people ask search engines and AI assistants ("AI songwriting app",
  * "co-writing app", "Lyric Genie vs RhymeBook"), 2026-10-28. The answer comes first, in plain words, then
- * sections and an FAQ (with FAQPage structured data). `draft`: noindex, kept out of the sitemap and the
- * prerender list until the owner approves it.
+ * sections and an FAQ (with FAQPage structured data). `draft`: noindex and kept out of the sitemap until
+ * the owner approves it (it is prerendered, as GitHub Pages serves only prerendered routes).
  */
 
 export type LandingSection = { title: string; body: ReactNode };

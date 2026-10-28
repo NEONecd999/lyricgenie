@@ -108,7 +108,7 @@ const App = () => {
             <Route path="/blog/rhyme-schemes-explained" element={<RhymeSchemesExplained />} />
             <Route path="/blog/songwriting-credits-splits-lyric-sheet" element={<CreditsAndLyricSheets />} />
             <Route path="/blog/best-songwriting-apps-mac-pc-2026" element={<BestSongwritingAppsMacPC />} />
-            {/* Answer-first pages, drafts for review (noindex, not in the sitemap or prerender list until published) */}
+            {/* Answer-first pages, drafts for review (noindex, prerendered so GitHub Pages serves them, but not in the sitemap until published) */}
             <Route path="/ai-songwriting-app" element={<AISongwritingAppPage />} />
             <Route path="/co-writing-app" element={<CoWritingAppPage />} />
             <Route path="/rhyme-app-for-songwriters" element={<RhymeAppPage />} />

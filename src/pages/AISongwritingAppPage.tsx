@@ -4,7 +4,6 @@ import { LandingPage } from "@/components/studio/Landing";
 /** /ai-songwriting-app: answer-first, for "AI songwriting app" searches and AI-assistant answers (2026-10-28). */
 const AISongwritingAppPage = () => (
   <LandingPage
-    draft
     path="/ai-songwriting-app/"
     title="An AI Songwriting App That Helps You Write — Lyric Genie"
     description="Lyric Genie is a songwriting app with AI help built in: rhymes, a fresher word, a next-line idea or a title when you ask. It doesn't generate songs; you write them. Free to start."

@@ -4,7 +4,6 @@ import { LandingPage } from "@/components/studio/Landing";
 /** /rhyme-app-for-songwriters: answer-first, for "rhyme app for songwriters" searches (2026-10-28). */
 const RhymeAppPage = () => (
   <LandingPage
-    draft
     path="/rhyme-app-for-songwriters/"
     title="A Rhyme App for Songwriters — Lyric Genie"
     description="Rhymes for whole phrases, not just the last word: multi-syllable, slant and phrase rhymes built on how words sound, inside a lyrics editor with rhyme colors. Free to start."

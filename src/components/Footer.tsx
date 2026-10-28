@@ -20,6 +20,14 @@ const FOOTER_COLUMNS: [string, [string, string][]][] = [
     ],
   ],
   [
+    "Use cases",
+    [
+      ["AI songwriting app", "/ai-songwriting-app/"],
+      ["Co-writing app", "/co-writing-app/"],
+      ["Rhyme app for songwriters", "/rhyme-app-for-songwriters/"],
+    ],
+  ],
+  [
     "Company",
     [
       ["About", "/about/"],
@@ -43,7 +51,7 @@ const Footer = () => {
   return (
     <footer className="bg-[#1B0F31] text-[rgba(246,236,201,0.7)]" style={{ padding: "64px 0 40px", fontSize: 14 }}>
       <div className="container mx-auto px-6">
-        <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+        <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr_1fr_1fr]">
           {/* Brand column */}
           <div>
             <div className="mb-5">

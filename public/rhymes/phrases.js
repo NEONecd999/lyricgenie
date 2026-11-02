@@ -394,6 +394,7 @@ window.PHRASES = {
   "ANDROID":               "AE1 N D R OY2 D",   // already in CMU but reinforce
   "UBERED":                "Y UW1 B ER0 D",
   "UBERING":               "Y UW1 B ER0 IH0 NG",
+  "SLO-MO":                phrase("SLO MO",                "S L OW1 | M OW1"),  // slow motion (owner, 2026-11-01)
 
   // Letter-spelling acronyms not yet covered. LMAO and STFU and OMW are
   // sometimes pronounced as letters in lyrics (or improvised words).

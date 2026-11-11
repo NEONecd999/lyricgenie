@@ -18,9 +18,11 @@ const About = () => (
         </Reveal>
         <Reveal delay={0.1} className="mt-14 flex flex-col items-center gap-8 md:flex-row md:items-start">
           <img
-            src="/lovable-uploads/25d869a9-59be-49cc-afa7-9343c0f9f5b6.jpg"
+            src="/images/about/edan-avatar.jpg"
             alt="Edan Dover"
-            className="size-40 shrink-0 rounded-3xl object-cover object-top ring-1 ring-white/10 md:size-44"
+            width={512}
+            height={512}
+            className="size-40 shrink-0 rounded-3xl object-cover ring-1 ring-white/10 md:size-44"
           />
           <div className="space-y-5 text-[17px] leading-relaxed text-white/75">
             <p className="text-white">

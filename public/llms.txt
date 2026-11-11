@@ -4,7 +4,7 @@
 
 ## What it does
 
-- Real-time co-writing: invite collaborators with a link; every writer gets their own tab, plus a shared Master version everyone edits live. Collaborators can join free, in the browser or on iPhone.
+- Real-time co-writing: invite collaborators with a link; every writer gets their own tab, plus a shared Master version that one writer types into at a time while everyone sees it change live. Collaborators can join free, in the browser or on iPhone.
 - Rhyme engine: perfect, slant, multi-syllable and phrase rhymes, with rhyme colors and the rhyme scheme shown in the margin.
 - Voice recordings and uploads linked to lyric lines, so ideas stay next to the words they belong to.
 - Genie, the AI help: Wish Workshop, in-line suggestions, smart dictionaries, song titles, song concepts and syllable control. Genie suggests; the writer decides.

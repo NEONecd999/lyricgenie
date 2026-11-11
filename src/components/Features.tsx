@@ -1320,10 +1320,10 @@ const CompactSheet = () => (
     <div style={{ fontSize: 6.5, letterSpacing: ".14em", fontWeight: 700, color: LG_INK_MUTED, marginTop: 6 }}>
       MUSIC &amp; LYRICS BY
     </div>
-    <div style={{ fontSize: 9, fontWeight: 700, marginTop: 2 }}>Edan Dover</div>
-    <div style={{ color: LG_INK_SOFT, fontSize: 7.5 }}>Universal · ASCAP · 50%</div>
-    <div style={{ fontSize: 9, fontWeight: 700, marginTop: 4 }}>Victor Anton</div>
-    <div style={{ color: LG_INK_SOFT, fontSize: 7.5 }}>AntonMusic · PRS · 50%</div>
+    <div style={{ fontSize: 9, fontWeight: 700, marginTop: 2 }}>Jordan Hale</div>
+    <div style={{ color: LG_INK_SOFT, fontSize: 7.5 }}>Northbound Songs · ASCAP · 50%</div>
+    <div style={{ fontSize: 9, fontWeight: 700, marginTop: 4 }}>Riley Marsh</div>
+    <div style={{ color: LG_INK_SOFT, fontSize: 7.5 }}>Marsh Lane Music · PRS · 50%</div>
     <div style={{ height: 1, background: "rgb(var(--mk-ink-rgb, 30 19 36) / .1)", margin: "8px 0" }} />
     <div style={{ fontSize: 9, fontWeight: 700 }}>Verse 1</div>
     <div style={{ marginTop: 2, lineHeight: 1.45, fontSize: 7.5 }}>

@@ -1,6 +1,6 @@
 import { ArrowRight, Check } from "lucide-react";
 import { FeatureKeyframes } from "@/components/Features";
-import { BrowserArt, CoWriteMock, FinalCTA, Glow, Head, Hero, PhoneArt, Pricing, Reveal, Row, Scaled, StudioPage, Testimonials, RhymeColumnsMock, ToolsTabs } from "@/components/studio/Studio";
+import { AllInOneMock, BrowserArt, LiveMasterMock, FinalCTA, Head, Hero, More, PhoneArt, Pricing, Reveal, Row, Scaled, StudioPage, Testimonials, ToolsTabs } from "@/components/studio/Studio";
 
 /**
  * /pro: the new home page (to become /). The pitch in half a minute: the studio on both devices, a door
@@ -38,17 +38,22 @@ function TwoWays() {
   return (
     <section className="bg-[#170E1C] py-24">
       <div className="container mx-auto px-6">
+        {/* One section, not two intros: the apps a song is scattered across become one studio, and the
+            studio's two ways in follow straight on. */}
         <Head
           center
-          eyebrow="One studio, two ways in"
+          eyebrow="One studio"
           title={
             <>
-              At your desk. <span className="text-[#F6ECC9]">On the go.</span>
+              Eight apps, <span className="text-[#F6ECC9]">all in one.</span>
             </>
           }
-          lead="The same songs, synced live. Start a line on your phone, finish the song at your desk."
+          lead="All the apps songwriters juggle, no longer scattered in different places. Your lyrics, ideas, voice memos, rhymes, AI help, files, conversations and video sessions live together, right in the song."
         />
-        <div className="mx-auto mt-12 grid max-w-5xl gap-5 md:grid-cols-2">
+        <div className="mt-8">
+          <AllInOneMock />
+        </div>
+        <div className="mx-auto mt-14 grid max-w-5xl gap-5 md:grid-cols-2">
           <AppCard href="/web/" eyebrow="On your computer" title="Lyric Genie for the web" points={["A full workspace in your browser", "Co-write live, every writer on a tab", "Live sessions, with your DAW"]} cta="Explore the web app">
             <div className="w-full">
               <Scaled w={580} h={300}>
@@ -56,7 +61,7 @@ function TwoWays() {
               </Scaled>
             </div>
           </AppCard>
-          <AppCard href="/iphone/" eyebrow="On your iPhone" title="Lyric Genie for iPhone" points={["Catch ideas the moment they land", "Freestyle a melody into lyrics", "Also on iPad"]} cta="Explore the iPhone app">
+          <AppCard href="/iphone/" eyebrow="On your iPhone" title="Lyric Genie for iPhone" points={["Catch ideas the moment they land", "Chats and live sessions with your collaborators", "Freestyle a melody into lyrics"]} cta="Explore the iPhone app">
             <div className="w-[170px]">
               <PhoneArt />
             </div>
@@ -72,51 +77,21 @@ function CoWriting() {
     <section className="py-24 md:py-32">
       <div className="container mx-auto px-6">
         <Row
-          eyebrow="Co-write in real time"
+          eyebrow={
+            <span className="inline-flex items-center gap-2">
+              Live editing <span className="rounded-full bg-[#30D158]/15 px-2 py-0.5 text-[10px] tracking-[0.12em] text-[#30D158]">New</span>
+            </span>
+          }
           tint="rgba(232,102,60,.22)"
           title={
             <>
-              Every writer <span className="text-[#F6ECC9]">gets a tab.</span>
+              Write together, <span className="text-[#F6ECC9]">live.</span>
             </>
           }
-          text="Try ideas on your own tab, agree on the Master, leave notes on the words. See who's here and where they're typing, on the web or iPhone."
+          text="One shared version of the song that everyone writes in at once, like a shared doc, with every writer's cursor in their colour. Plus a tab of your own to try ideas first. On the web or iPhone."
         >
-          {() => <CoWriteMock />}
+          {() => <LiveMasterMock />}
         </Row>
-      </div>
-    </section>
-  );
-}
-
-function RhymeTeaser() {
-  return (
-    <section className="lg-mock-dark relative overflow-hidden bg-[#170E1C] py-24">
-      <div className="container mx-auto grid max-w-6xl items-center gap-12 px-6 lg:grid-cols-2 lg:gap-16">
-        <div className="w-full max-w-md justify-self-center">
-          <Head
-            eyebrow="RhymeGold"
-            title={
-              <>
-                The rhyme engine <span className="text-[#F6ECC9]">inside.</span>
-              </>
-            }
-            lead="Multi-syllable, slant and phrase rhymes from 135,000 words and phrases. The same engine runs free at RhymeGold.com."
-          />
-          <div className="mt-7 flex flex-wrap items-center gap-5">
-            <a href="/rhyme-engine/" className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#F6ECC9]">
-              How it works <ArrowRight className="size-4" />
-            </a>
-            <a href="https://rhymegold.com" className="text-sm font-semibold text-white/60 hover:text-white">
-              Try RhymeGold free
-            </a>
-          </div>
-        </div>
-        <Reveal delay={0.1} className="relative flex w-full max-w-[520px] justify-center justify-self-center">
-          <Glow className="inset-[-8%_-4%] opacity-60" strength={20} />
-          <div className="relative z-10 w-full max-w-[520px]">
-            <RhymeColumnsMock aiPicks />
-          </div>
-        </Reveal>
       </div>
     </section>
   );
@@ -128,6 +103,7 @@ const ProHome = () => (
     <Hero />
     <TwoWays />
     <CoWriting />
+    <Testimonials />
     <ToolsTabs
       variant="home"
       eyebrow="Tools that help"
@@ -137,8 +113,15 @@ const ProHome = () => (
         </>
       }
     />
-    <RhymeTeaser />
-    <Testimonials />
+    <More
+      eyebrow="The details"
+      keys={["versions", "alternates", "notes", "sheets", "siri", "blanks"]}
+      title={
+        <>
+          We thought of <span className="text-[#F6ECC9]">everything.</span>
+        </>
+      }
+    />
     <Pricing />
     <FinalCTA />
   </StudioPage>

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, AudioWaveform, Bell, BookOpen, CassetteTape, Check, ChevronDown, Columns2, ChevronUp, Compass, Ellipsis, Eye, FileText, ListOrdered, Maximize2, Menu, MessageSquareText, MessagesSquare, Mic, Moon, NotebookPen, PanelLeft, PanelRight, Presentation, Redo2, ScrollText, Search, Share, SlidersVertical, Sparkles, Undo2, Users, Video, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, AudioWaveform, Bell, BookOpen, Bot, CassetteTape, Check, ChevronDown, Columns2, ChevronUp, Compass, Ellipsis, Eye, FileText, FolderOpen, ListOrdered, Maximize2, Menu, MessageSquareText, MessagesSquare, Mic, Moon, NotebookPen, PanelLeft, PanelRight, Presentation, Redo2, ScrollText, Search, Share, SlidersVertical, Sparkles, Undo2, Users, Video, X } from "lucide-react";
 import Footer from "@/components/Footer";
 import Wordmark from "@/components/Wordmark";
 import SfIcon from "@/components/SfIcon";
@@ -1089,6 +1089,89 @@ export function Features() {
 
 // ─── And more ───────────────────────────────────────────────────────────────
 
+/** Small still pictures for the "We thought of everything" cards (dark, no motion). */
+const Tile = ({ children }: { children: ReactNode }) => <div className="absolute inset-x-6 top-5 bottom-0 rounded-t-xl border border-white/10 bg-[#161216] px-4 pt-3.5 font-sans text-[11px] text-white/75">{children}</div>;
+
+const CompactVersions = () => (
+  <Tile>
+    <p className="mb-2 text-[9.5px] font-bold uppercase tracking-[0.14em] text-white/40">Versions</p>
+    {[
+      ["Before the bridge rewrite", "Today 4:12 PM", true],
+      ["Start of Nov 5", "Automatic", false],
+      ["First draft", "Oct 28", false],
+    ].map(([name, when, on]) => (
+      <div key={name as string} className={`mb-1.5 flex items-center justify-between rounded-lg px-2.5 py-1.5 ${on ? "bg-white/[0.08]" : ""}`}>
+        <span>
+          <span className="block font-semibold text-white/90">{name}</span>
+          <span className="text-[9.5px] text-white/45">{when}</span>
+        </span>
+        {on && <span className="rounded-full bg-[#AB8EE2] px-2.5 py-0.5 text-[10px] font-semibold text-[#1B0F31]">Restore</span>}
+      </div>
+    ))}
+  </Tile>
+);
+
+const CompactAlternates = () => (
+  <Tile>
+    <p className="mb-2 text-[9.5px] font-bold uppercase tracking-[0.14em] text-white/40">Verse 1</p>
+    <p className="font-serif text-[13px] leading-[1.9] text-white/85">I became another stranger</p>
+    <p className="font-serif text-[13px] leading-[1.9] text-white/85">
+      Now I'm lost, like a ghost <span style={{ color: C.accent }}>/</span> <span className="opacity-45">like a shadow</span> <span className="text-[11px]" style={{ color: C.accent }}>⇄</span>
+    </p>
+    <p className="font-serif text-[13px] leading-[1.9] text-white/85">bleeding out for your love</p>
+  </Tile>
+);
+
+const CompactNotes = () => (
+  <Tile>
+    <p className="font-serif text-[13px] leading-[1.9] text-white/85">
+      Nothing makes sense in the <span className="rounded-sm bg-[#F5B642]/20 underline decoration-[#F5B642] decoration-2 underline-offset-4">most beautiful way</span>
+    </p>
+    <div className="mt-2 rounded-lg bg-white/[0.06] p-2.5">
+      <p className="text-[10.5px]">
+        <span className="font-semibold" style={{ color: C.blue }}>Maya</span> "Beautiful" twice. Swap one?
+      </p>
+      <p className="mt-1 text-[10.5px]">
+        <span className="font-semibold" style={{ color: C.coral }}>Sam</span> On it.
+      </p>
+    </div>
+  </Tile>
+);
+
+const CompactSiri = () => (
+  <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 font-sans">
+    <div className="flex items-center gap-3 rounded-full bg-black px-4 py-2 shadow-[0_10px_30px_-10px_rgba(0,0,0,.8)]">
+      <span className="relative size-2.5 rounded-full bg-[#FF453A]">
+        <span className="lg-mk-ping absolute inset-0 rounded-full bg-[#FF453A]" />
+      </span>
+      <span className="text-[12px] font-semibold text-white">Idea · 0:12</span>
+      <span className="rounded-full bg-white/15 px-2.5 py-0.5 text-[11px] font-semibold text-white">Stop</span>
+    </div>
+    <p className="text-[12px] italic text-white/55">"Hey Siri, record an idea in Lyric Genie"</p>
+  </div>
+);
+
+const CompactBlanks = () => (
+  <Tile>
+    <p className="font-serif text-[13px] leading-[1.9] text-white/85">
+      And I would{" "}
+      <span className="inline-block w-[70px] translate-y-[3px] border-b-2 text-center text-[9px] leading-none" style={{ borderColor: C.accent, color: C.accent }}>
+        • • •
+      </span>{" "}
+      over again
+    </p>
+    <div className="mt-2.5 flex flex-wrap gap-1.5">
+      {["fall for you", "do it all", "walk the line"].map((f) => (
+        <span key={f} className="rounded-full border border-white/10 bg-white/[0.06] px-2.5 py-1 text-[10.5px] text-white/80">
+          {f}
+        </span>
+      ))}
+    </div>
+    <p className="mt-2 text-[9.5px] text-white/40">3 syllables · fits the line</p>
+  </Tile>
+);
+
+
 export const MORE = {
   recordings: { eyebrow: "Recordings", title: "Hum it. Keep it linked.", text: "Takes pinned to the line they belong to.", preview: <CompactVoice />, tint: "#E8663C" },
   concepts: { eyebrow: "Concepts", title: "Capture half-formed ideas.", text: "Titles, themes and hooks for later.", preview: <CompactConcepts />, tint: "#7F62C4" },
@@ -1096,14 +1179,19 @@ export const MORE = {
   perform: { eyebrow: "Perform", title: "Stage-ready lyrics.", text: "Big type on a black screen.", preview: <CompactPerformance />, tint: "#30D158" },
   import: { eyebrow: "Import audio", title: "Demos from anywhere.", text: "Logic bounces, voice memos, files.", preview: <CompactImport />, tint: "#3A7BD0" },
   projects: { eyebrow: "Projects", title: "Your catalog, organised.", text: "Group songs by album, EP or client.", preview: <CompactProjects />, tint: "#E45C7A" },
+  versions: { eyebrow: "Versions", title: "Every version, kept.", text: "Save the whole song, look back at any tab, restore it in a tap.", preview: <CompactVersions />, tint: "#AB8EE2" },
+  alternates: { eyebrow: "Alternate lines", title: "Can't decide? Keep both.", text: "Two versions of a line, side by side, until you choose.", preview: <CompactAlternates />, tint: "#64A8FF" },
+  notes: { eyebrow: "Notes", title: "Notes right on the words.", text: "Highlight a phrase and leave a note for your collaborators.", preview: <CompactNotes />, tint: "#F5B642" },
+  siri: { eyebrow: "Siri", title: "Record before it's gone.", text: "Start a take from the Lock Screen or the Action Button, without opening the app.", preview: <CompactSiri />, tint: "#FF453A" },
+  blanks: { eyebrow: "Blanks", title: "Leave a gap. Fill it later.", text: "Fills that fit the syllables and the rhyme.", preview: <CompactBlanks />, tint: "#30D158" },
 };
 
 /** "And more": small cards with the main home page's previews, in dark mode. */
-export function More({ keys, title = "Built for how songs get finished." }: { keys: (keyof typeof MORE)[]; title?: string }) {
+export function More({ keys, title = "Built for how songs get finished.", eyebrow = "And more" }: { keys: (keyof typeof MORE)[]; title?: ReactNode; eyebrow?: string }) {
   return (
     <section className="lg-mock-dark bg-[#170E1C] py-24">
       <div className="container mx-auto px-6">
-        <Head center eyebrow="And more" title={title} />
+        <Head center eyebrow={eyebrow} title={title} />
         <div className="mx-auto mt-12 grid max-w-6xl gap-5 md:grid-cols-3">
           {keys.map((k, i) => {
             const it = MORE[k];
@@ -1704,14 +1792,30 @@ const TOOL_TABS = {
     { key: "rhymes", label: "Rhymes", text: "Select any word for rhymes in columns, with AI Picks for the ones that fit this song.", art: () => <RhymeColumnsMock aiPicks /> },
     { key: "context", label: "AI context", text: "Mood, story and references: every tool starts from your song, not a blank prompt.", art: (a: boolean) => <AiContextSpotlight active={a} /> },
   ],
-  // Home has its own rhyme-engine section, so its tabs leave Rhymes out.
+  // Home folds the rhyme engine in as a tab (it was its own section until 2026-11-10), with its links.
   home: [
+    {
+      key: "rhymes",
+      label: "Rhymes",
+      text: "Multi-syllable, slant and phrase rhymes from 135,000 words and phrases, with AI Picks for the ones that fit this song.",
+      art: () => <RhymeColumnsMock aiPicks />,
+      more: (
+        <>
+          <a href="/rhyme-engine/" className="inline-flex items-center gap-1.5 font-semibold text-[#F6ECC9]">
+            How it works <ArrowRight className="size-4" />
+          </a>
+          <a href="https://rhymegold.com" className="font-semibold text-white/60 hover:text-white">
+            The same engine runs free at RhymeGold.com
+          </a>
+        </>
+      ),
+    },
     { key: "genie", label: "Genie", text: "Ask about the song as it is right now. Suggested edits apply in one click, or not at all.", art: () => <GenieMock /> },
     { key: "wish", label: "Wish Workshop", text: "Select a line, make a wish: darker, more visual, your own words. Keep the rhyme and meter.", art: (a: boolean) => <WishWorkshopSpotlight active={a} /> },
     { key: "context", label: "AI context", text: "Mood, story and references: every tool starts from your song, not a blank prompt.", art: (a: boolean) => <AiContextSpotlight active={a} /> },
   ],
   iphone: [
-    { key: "rhymes", label: "Rhymes", text: "The line that came on the walk, finished before you're home. Tap a word for rhymes in columns.", art: () => <RhymeColumnsMock aiPicks /> },
+    { key: "rhymes", label: "Rhymes", text: "The line that came on the walk, finished before you're home. Tap a word for rhymes in columns, Sounds Like and Word Map.", art: () => <RhymeColumnsMock aiPicks /> },
     { key: "wish", label: "Wish Workshop", text: "Stuck in the car? Rewrite a line darker, happier or your way, keeping the rhyme.", art: (a: boolean) => <WishWorkshopSpotlight active={a} /> },
     { key: "genie", label: "Genie", text: "Talk the song through anywhere. Genie knows its mood, story and lyrics so far.", art: () => <GenieMock /> },
   ],
@@ -1746,6 +1850,7 @@ export function ToolsTabs({ variant, eyebrow, title }: { variant: keyof typeof T
           ))}
         </div>
         <p className="mx-auto mt-5 max-w-xl text-center text-[16px] text-white/60">{tab.text}</p>
+        {"more" in tab && tab.more && <div className="mt-4 flex flex-wrap items-center justify-center gap-5 text-sm">{tab.more}</div>}
         <div key={tab.key} className="lg-fade-up mx-auto mt-10 flex max-w-[520px] justify-center">
           {tab.art(inView)}
         </div>
@@ -2715,6 +2820,202 @@ export function SideBySideMock() {
             Every light turns green{caret(WRITERS[1].color, "Anton")}
           </p>,
         ])}
+      </div>
+    </div>
+  );
+}
+
+// ─── All in one ─────────────────────────────────────────────────────────────
+
+/**
+ * The apps a song gets scattered across, drawn as generic tools (never other companies' icons or names),
+ * joined by the back-and-forth line, then pulled into the middle and replaced by the Lyric Genie icon.
+ * Rests on the finished picture: the icon, with what it holds listed underneath.
+ */
+const SCATTERED: { label: string; icon: typeof FileText; color: string; x: number; y: number; holds: string }[] = [
+  { label: "Docs", icon: FileText, color: C.blue, x: 22, y: 16, holds: "Lyrics" },
+  { label: "Notes", icon: NotebookPen, color: C.amber, x: 50, y: 9, holds: "Ideas" },
+  { label: "Voice memos", icon: AudioWaveform, color: C.coral, x: 78, y: 16, holds: "Melodies" },
+  { label: "Rhyme dictionary", icon: BookOpen, color: C.accent, x: 91, y: 48, holds: "Rhymes" },
+  { label: "AI chat", icon: Bot, color: "#F6ECC9", x: 78, y: 82, holds: "AI help" },
+  { label: "Shared folder", icon: FolderOpen, color: "#E45C7A", x: 50, y: 89, holds: "Files" },
+  { label: "Video call", icon: Video, color: "#5AC8FA", x: 22, y: 82, holds: "Sessions" },
+  { label: "Group chat", icon: MessagesSquare, color: C.green, x: 9, y: 48, holds: "Chat" },
+];
+
+export function AllInOneMock() {
+  // 0 scattered and drifting · 1 the line runs between them · 2 they pull in · 3 the icon lands · 4 what it holds.
+  const [ref, step] = useTimeline([500, 2100, 2900, 3500], 4200);
+  const pulled = step >= 2;
+  const path = SCATTERED.map((a) => `${a.x},${a.y}`).join(" ");
+  return (
+    <div ref={ref} className="mx-auto w-full max-w-3xl">
+      <style>{`@keyframes lg-drift{0%,100%{translate:0 0}50%{translate:0 -6px}}`}</style>
+      <div className="relative h-[300px] md:h-[360px]">
+        <svg className="absolute inset-0 h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden>
+          <polygon
+            points={path}
+            fill="none"
+            stroke="rgba(255,255,255,.28)"
+            strokeWidth={1.2}
+            strokeDasharray="4 5"
+            vectorEffect="non-scaling-stroke"
+            style={{ opacity: step === 1 ? 1 : 0, transition: "opacity .5s ease" }}
+          />
+        </svg>
+        {SCATTERED.map((a, i) => {
+          const Icon = a.icon;
+          return (
+            <div
+              key={a.label}
+              className="absolute flex w-24 flex-col items-center gap-2 text-center"
+              style={{
+                left: `${pulled ? 50 : a.x}%`,
+                top: `${pulled ? 50 : a.y}%`,
+                transform: `translate(-50%,-50%) scale(${pulled ? 0.35 : 1})`,
+                opacity: pulled || step >= 4 ? 0 : 1,
+                transition: pulled ? `left .7s cubic-bezier(.6,0,.3,1) ${i * 50}ms, top .7s cubic-bezier(.6,0,.3,1) ${i * 50}ms, transform .7s ease ${i * 50}ms, opacity .35s ease ${450 + i * 50}ms` : "opacity .4s ease",
+              }}
+            >
+              <span
+                className="flex size-14 items-center justify-center rounded-[18px] border border-white/10 md:size-16"
+                style={{ background: `linear-gradient(160deg, ${a.color}55, ${a.color}22)`, animation: pulled ? "none" : `lg-drift ${3 + (i % 3) * 0.6}s ease-in-out ${i * 0.3}s infinite` }}
+              >
+                <Icon className="size-6 md:size-7" style={{ color: a.color }} />
+              </span>
+              <span className="text-[12px] font-medium text-white/60 md:text-[13px]">{a.label}</span>
+            </div>
+          );
+        })}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+          <div className="pointer-events-none absolute inset-[-60%] rounded-full blur-[50px]" style={{ background: "rgba(171,142,226,.45)", opacity: step >= 3 ? 1 : 0, transition: "opacity .8s ease" }} />
+          <img
+            src="/images/app-icon-glass.png"
+            alt="The Lyric Genie app icon"
+            className="relative size-28 rounded-[26px] shadow-[0_30px_80px_-20px_rgba(111,80,184,.8)] md:size-32"
+            style={{ opacity: step >= 3 ? 1 : 0, transform: step >= 3 ? "scale(1)" : "scale(.6)", transition: step >= 3 ? "opacity .4s ease, transform .6s cubic-bezier(.2,1.4,.4,1)" : "opacity .2s ease, transform .2s ease" }}
+          />
+        </div>
+      </div>
+      <ul className="-mt-4 flex flex-wrap justify-center gap-2 md:-mt-6" style={arrive(step >= 4)}>
+        {SCATTERED.map((a) => (
+          <li key={a.holds} className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.05] px-3 py-1 text-[13px] text-white/75">
+            <Check className="size-3.5" style={{ color: a.color }} /> {a.holds}
+          </li>
+        ))}
+      </ul>
+      {/* Says what the drawn tools stand for, in words (for search too), always on the page. Names only, no logos. */}
+      <p className="mx-auto mt-5 max-w-xl text-center text-[14px] leading-relaxed text-white/45">
+        No more bouncing between Google Docs, Notes, Voice Memos, rhyme sites, ChatGPT, Dropbox, group texts and Zoom or Google Meet.
+      </p>
+    </div>
+  );
+}
+
+/** One writer's edits as a script: type text, backspace n characters, or pause. */
+type EditStep = { type: string } | { back: number } | { pause: number };
+const applyEdits = (from: string, steps: EditStep[]) =>
+  steps.reduce((t, e) => ("type" in e ? t + e.type : "back" in e ? t.slice(0, -e.back) : t), from);
+
+/**
+ * Text edited live, letter by letter: typing, backspacing and pauses, from `initial`. Before it starts it
+ * shows `initial`; once played (or still) it shows the result. The caret rides the edit point.
+ */
+function EditOn({ initial = "", steps, phase, speed = 60, caret }: { initial?: string; steps: EditStep[]; phase: "empty" | "typing" | "full"; speed?: number; caret?: ReactNode }) {
+  const final = applyEdits(initial, steps);
+  const [text, setText] = useState(phase === "empty" ? initial : final);
+  const key = JSON.stringify(steps);
+  useEffect(() => {
+    if (phase !== "typing") return setText(phase === "empty" ? initial : final);
+    // Flatten to one character change per tick (pauses are empty ticks).
+    const ticks: ((t: string) => string)[] = [];
+    for (const e of steps) {
+      if ("type" in e) for (const ch of e.type) ticks.push((t) => t + ch);
+      else if ("back" in e) for (let i = 0; i < e.back; i++) ticks.push((t) => t.slice(0, -1));
+      else for (let i = 0; i < Math.round(e.pause / speed); i++) ticks.push((t) => t);
+    }
+    let i = 0;
+    let cur = initial;
+    setText(cur);
+    const t = window.setInterval(() => {
+      cur = ticks[i](cur);
+      setText(cur);
+      if (++i >= ticks.length) clearInterval(t);
+    }, speed);
+    return () => clearInterval(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- the steps are compared by value (key)
+  }, [phase, initial, key, speed]);
+  return (
+    <>
+      {text}
+      {caret}
+      {/* Keep the line's room for whichever is longer, so nothing reflows. */}
+      <span className="invisible">{final.length > text.length ? final.slice(text.length) : ""}</span>
+    </>
+  );
+}
+
+/**
+ * Live editing: the Master tab (first, as in the apps), with three writers in it at once, like a shared
+ * doc. Sam writes a line and changes his mind on a word; Maya backspaces the repeated "beautiful" and
+ * types "wonderful"; you write the last line and fix its ending. Each caret carries its writer's name.
+ * Rests on the finished chorus with everyone's caret still there.
+ */
+export function LiveMasterMock() {
+  const tabs = [
+    { name: "Master", color: C.amber, on: true },
+    { name: "You", color: C.accent },
+    { name: "Sam", color: C.coral },
+    { name: "Maya", color: C.blue },
+  ];
+  const [, you, sam, maya] = tabs;
+  const samSteps: EditStep[] = [{ type: "I'm the conductor of this crazy" }, { pause: 500 }, { back: 5 }, { pause: 200 }, { type: "beautiful mess" }];
+  const mayaSteps: EditStep[] = [{ pause: 300 }, { back: 9 }, { pause: 400 }, { type: "wonderful" }];
+  const yourSteps: EditStep[] = [{ type: "I wouldn't change a thing" }, { pause: 450 }, { back: 5 }, { pause: 200 }, { type: "single thing, I confess" }];
+  // 1 Sam starts · 2 Maya starts · 3 you start · 4 everyone's done.
+  const [ref, step, playing] = useTimeline([600, 1500, 2600, 2600 + 70 * 62 + 600], 4200);
+  const phase = (from: number): "empty" | "typing" | "full" => (step < from ? "empty" : step < 4 ? "typing" : "full");
+  const label = "rounded-md px-1.5 py-0.5 font-sans text-[11px] font-semibold leading-none text-[#1B0F31]";
+  const caret = (who: { name: string; color: string }) => (
+    <span className="relative inline-block h-5 w-0 align-middle">
+      <span className="absolute left-0.5 top-0 h-5 w-0.5 rounded-full" style={{ background: who.color }} />
+      <span className={`absolute left-2 top-1/2 -translate-y-1/2 whitespace-nowrap ${label}`} style={{ background: who.color }}>
+        {who.name}
+      </span>
+    </span>
+  );
+  return (
+    <div ref={ref} className="w-full max-w-lg rounded-2xl border border-white/10 bg-[#1B1B1B] p-6 shadow-[0_40px_100px_-30px_rgba(0,0,0,0.7)]">
+      <div className="flex flex-wrap items-center gap-1 border-b border-white/10 pb-3">
+        {tabs.map((t) => (
+          <span key={t.name} className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[13px] font-medium ${t.on ? "bg-white/10 text-white" : "text-white/55"}`}>
+            <span className="relative size-2 rounded-full" style={{ background: t.color }} />
+            {t.name}
+          </span>
+        ))}
+        <span className="ml-auto flex items-center gap-2 text-[12px] text-white/50">
+          <span className="flex -space-x-1.5">
+            {[you, sam, maya].map((w) => (
+              <span key={w.name} className="relative size-4 rounded-full ring-2 ring-[#1B1B1B]" style={{ background: w.color }}>
+                {playing && <Ping color={w.color} />}
+              </span>
+            ))}
+          </span>
+          3 writing
+        </span>
+      </div>
+      <div className="pt-5 font-serif text-[17px] not-italic leading-[1.85] text-white/90">
+        <p className="font-bold text-[#F5B642]">Chorus</p>
+        <p>Brain fog symphony playing all day</p>
+        <p>
+          Nothing makes sense in the most <EditOn initial="beautiful" steps={mayaSteps} phase={phase(2)} speed={85} caret={step >= 2 && caret(maya)} /> way
+        </p>
+        <p className="min-h-[1.85em]">
+          <EditOn steps={samSteps} phase={phase(1)} speed={55} caret={step >= 1 && caret(sam)} />
+        </p>
+        <p className="min-h-[1.85em]">
+          <EditOn steps={yourSteps} phase={phase(3)} speed={60} caret={step >= 3 && caret(you)} />
+        </p>
       </div>
     </div>
   );

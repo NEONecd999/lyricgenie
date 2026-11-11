@@ -1,6 +1,9 @@
 import { FeatureKeyframes, FreestyleSpotlight } from "@/components/Features";
-import { AppStoreCTA, CaptureMock, ConceptsMock, RecordingsMock, ChatMock, Eyebrow, FinalCTA, Glow, Head, PerformMock, PhoneHero3D, Reveal, Row, StudioPage, ToolsTabs } from "@/components/studio/Studio";
+import { AppStoreCTA, CaptureMock, LiveMasterMock, ConceptsMock, RecordingsMock, ChatMock, Eyebrow, FinalCTA, Glow, Head, PerformMock, PhoneHero3D, Reveal, Row, StudioPage, ToolsTabs } from "@/components/studio/Studio";
 import { WEB_SIGNUP } from "@/lib/links";
+
+/** Flip when iOS 2.31 (live Master on prod) is approved. */
+const IPHONE_LIVE_EDITING = false;
 
 /** /iphone: Lyric Genie for iPhone and iPad (computers are pointed at the web app). Warm coral, the mobile side's colour. */
 
@@ -61,7 +64,7 @@ const IPhonePage = () => (
     accent="#FF8A65"
     glow="#E45C7A"
     title="Lyric Genie for iPhone & iPad — Songwriting App"
-    description="Catch ideas anywhere: voice memos transcribed and linked to your lyrics, Freestyle mode, rhymes and Wish Workshop on the go, Perform on stage, and your co-writers in your pocket."
+    description="Catch ideas anywhere: voice memos transcribed and linked to your lyrics, Freestyle mode, rhymes and Wish Workshop on the go, sessions and chats with your co-writers, and Perform on stage."
   >
     <FeatureKeyframes />
     <IPhoneHero />
@@ -99,7 +102,7 @@ const IPhonePage = () => (
             Every melody, <span className="text-[#F6ECC9]">right in the song.</span>
           </>
         }
-        text="Record a take from any line and it's linked there. Waveforms, transcripts, and playback while you keep writing."
+        text="Record a take from any line and it's linked there. Waveforms, transcripts, and a player that keeps going across the app and on your Lock Screen. Share any take with a link."
       >
         {() => <RecordingsMock />}
       </Row>
@@ -148,10 +151,29 @@ const IPhonePage = () => (
             The room, <span className="text-[#F6ECC9]">wherever you are.</span>
           </>
         }
-        text="Chat, notes and takes from your co-writers, wherever you are. See when they're writing. Join a song with a code."
+        text="Every song's chat in one Chats tab, with notes and takes from your collaborators. Share a photo or voice memo into a chat from any app. Invite the whole room with one link."
       >
         {() => <ChatMock />}
       </Row>
+      {/* Shown once iOS 2.31 (live editing on iPhone) is on the App Store. */}
+      {IPHONE_LIVE_EDITING && (
+      <Row
+        eyebrow={
+          <span className="inline-flex items-center gap-2">
+            Live editing <span className="rounded-full bg-[#30D158]/15 px-2 py-0.5 text-[10px] tracking-[0.12em] text-[#30D158]">New</span>
+          </span>
+        }
+        tint="rgba(232,102,60,.22)"
+        title={
+          <>
+            Write together, <span className="text-[#F6ECC9]">live from your phone.</span>
+          </>
+        }
+        text="Write in the song's shared version at the same time as your collaborators, from your phone or their computers, and watch every word land. Jump into a video session from the song, and it keeps going while you write."
+      >
+        {() => <LiveMasterMock />}
+      </Row>
+      )}
     </Moments>
     <AppleDevices />
     <FinalCTA />

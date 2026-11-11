@@ -102,18 +102,19 @@ document.documentElement.setAttribute('data-platform',p==='web'?'web':'ios');})(
       <p class="eyebrow">Reference</p>
       <h1>What's new</h1>
       <p class="lede">What changed in each release of Lyric Genie, newest first.</p>
-      
+      <p class="platform-switch">Showing the <strong class="only-ios">iOS app</strong><strong class="only-web">web app</strong><span aria-hidden="true"> · </span><button type="button" class="only-ios" data-platform-choice="web">Switch to the web app</button><button type="button" class="only-web" data-platform-choice="ios">Switch to the iOS app</button></p>
       <p>Every page of these docs says which version of the app it was written against,
 at the foot of the page. This is where that number leads: what actually changed,
 newest first.</p>
-<p>Both apps are logged here, newest first. Each release is headed with the app it
-is for: <strong>iPhone</strong> releases (which cover iPad too) and <strong>Web</strong> releases. When a
-feature reaches both apps, each entry says where else it is. The iPhone log
-starts at 2.19. Anything older shipped before we kept one.</p>
+<p>Both apps are logged here, newest first, and the iOS / Web switch at the top
+picks which one you see. <strong>iPhone</strong> releases cover iPad too. When a feature
+reaches both apps, each entry says where else it is. The iPhone log starts at
+2.19. Anything older shipped before we kept one.</p>
+<div class="platform-block only-ios">
 <h2 id="iphone-231">iPhone 2.31<a class="hanchor" href="#iphone-231" aria-label="Link to this section">#</a></h2>
 <p><em>November 2026</em></p>
 <p>Everyone writes in the Master at once. On the web since
-<a href="#web-09">Web 0.9</a>.</p>
+<a href="/docs/changelog/?platform=web#web-09">Web 0.9</a>.</p>
 <p><strong>Everyone writes in the Master at once.</strong> There is no lock any more. Type in
 the Master while your collaborators do, like a shared doc: each writer's
 cursor shows with their name, in their colour. See
@@ -122,11 +123,13 @@ cursor shows with their name, in their colour. See
 own. Master's Arrange works line by line, like any other tab.</p>
 <p>Collaborators on 2.30 or earlier still get the locked Master, and their
 changes merge in. Ask them to update for live editing.</p>
+</div>
+<div class="platform-block only-ios">
 <h2 id="iphone-230">iPhone 2.30<a class="hanchor" href="#iphone-230" aria-label="Link to this section">#</a></h2>
 <p><em>November 2026</em></p>
 <p>Versions, a Chats tab, a player that follows you around the app, and one
 invite link per song.
-Versions, Chats and invite links are on the web too, from <a href="#web-09">Web 0.9</a>.</p>
+Versions, Chats and invite links are on the web too, from <a href="/docs/changelog/?platform=web#web-09">Web 0.9</a>.</p>
 <h3 id="versions">Versions<a class="hanchor" href="#versions" aria-label="Link to this section">#</a></h3>
 <p><strong>Save a version of the whole song</strong>: every writer's tab, the Master and the
 title. Look back at any tab, read-only, and restore the ones you can edit.
@@ -198,11 +201,13 @@ always when you leave the song or the app.</li>
 <li>Refine Context results use the smaller AI text size.</li>
 <li>Fixed a crash when opening some songs on iPhone, and plenty of speed fixes.</li>
 </ul>
+</div>
+<div class="platform-block only-web">
 <h2 id="web-09">Web 0.9<a class="hanchor" href="#web-09" aria-label="Link to this section">#</a></h2>
 <p><em>November 2026</em></p>
 <p>Live editing in the Master, Versions, Chats and one invite link per song. On
-iPhone, Versions, Chats and invite links came in <a href="#iphone-230">iPhone 2.30</a>,
-and live editing in <a href="#iphone-231">iPhone 2.31</a>.</p>
+iPhone, Versions, Chats and invite links came in <a href="/docs/changelog/?platform=ios#iphone-230">iPhone 2.30</a>,
+and live editing in <a href="/docs/changelog/?platform=ios#iphone-231">iPhone 2.31</a>.</p>
 <h3 id="writing-together">Writing together<a class="hanchor" href="#writing-together" aria-label="Link to this section">#</a></h3>
 <ul>
 <li><strong>Live editing.</strong> Everyone types in the Master at once, with a named cursor
@@ -238,6 +243,8 @@ invites and the lyric sheet.</li>
 <li>Link any take that is not linked yet, a collaborator's too, to any tab
 including the Master. A linked take stays its recorder's to move.</li>
 </ul>
+</div>
+<div class="platform-block only-ios">
 <h2 id="iphone-223">iPhone 2.23<a class="hanchor" href="#iphone-223" aria-label="Link to this section">#</a></h2>
 <p><em>October 2026</em></p>
 <p>Type straight into the Master, record an idea without opening the app, and
@@ -294,6 +301,8 @@ Master editing.</li>
 cannot pay twice. See <a href="/docs/account/plans/">Plans and Pro</a>.</li>
 <li>Wish Workshop's Keep meter and in-line suggestions are more accurate.</li>
 </ul>
+</div>
+<div class="platform-block only-web">
 <h2 id="web-04-to-08">Web 0.4 to 0.8<a class="hanchor" href="#web-04-to-08" aria-label="Link to this section">#</a></h2>
 <p><em>October 2026</em></p>
 <h3 id="the-master-editable-2">The Master, editable<a class="hanchor" href="#the-master-editable-2" aria-label="Link to this section">#</a></h3>
@@ -365,6 +374,8 @@ explains how to open the page in your real browser. See
 <a href="/docs/account/signing-in/">Signing in</a>.</li>
 <li>&quot;Co-writers&quot; are now <strong>collaborators</strong> everywhere in the app.</li>
 </ul>
+</div>
+<div class="platform-block only-ios">
 <h2 id="iphone-222">iPhone 2.22<a class="hanchor" href="#iphone-222" aria-label="Link to this section">#</a></h2>
 <p><em>October 2026</em></p>
 <p>The biggest iPhone update since launch: chat with your collaborators, Genie,
@@ -397,6 +408,8 @@ a sideways row of every action for the selection. See
 <a href="/docs/reference/limits/">Plan limits</a>.</li>
 <li>Perform fills the whole screen.</li>
 </ul>
+</div>
+<div class="platform-block only-ios">
 <h2 id="iphone-221">iPhone 2.21<a class="hanchor" href="#iphone-221" aria-label="Link to this section">#</a></h2>
 <p><em>October 2026</em></p>
 <h3 id="blanks">Blanks<a class="hanchor" href="#blanks" aria-label="Link to this section">#</a></h3>
@@ -408,6 +421,8 @@ selection into one, and Wish Workshop fills them too. See
 <h3 id="a-private-scratchpad">A private scratchpad<a class="hanchor" href="#a-private-scratchpad" aria-label="Link to this section">#</a></h3>
 <p>On a shared song, each writer's Scratchpad is their own, and nobody else sees
 it.</p>
+</div>
+<div class="platform-block only-web">
 <h2 id="web-03">Web 0.3<a class="hanchor" href="#web-03" aria-label="Link to this section">#</a></h2>
 <p><em>October 2026</em></p>
 <h3 id="search-everything">Search everything<a class="hanchor" href="#search-everything" aria-label="Link to this section">#</a></h3>
@@ -421,6 +436,8 @@ you type. The search button in the top bar opens the same thing. See
 <li>A session's comings and goings show in the song's chat, so you can see who
 joined and when.</li>
 </ul>
+</div>
+<div class="platform-block only-web">
 <h2 id="web-02">Web 0.2<a class="hanchor" href="#web-02" aria-label="Link to this section">#</a></h2>
 <p><em>October 2026</em></p>
 <h3 id="sessions-in-early-access">Sessions, in early access<a class="hanchor" href="#sessions-in-early-access" aria-label="Link to this section">#</a></h3>
@@ -443,6 +460,8 @@ your profile.</p>
 with <strong>Stop Sharing &amp; Delete</strong> in the song's menu.</li>
 <li>News from Lyric Genie appears in the notifications bell.</li>
 </ul>
+</div>
+<div class="platform-block only-web">
 <h2 id="web-01">Web 0.1<a class="hanchor" href="#web-01" aria-label="Link to this section">#</a></h2>
 <p><em>October 2026</em></p>
 <p>The web app, at app.lyricgenie.app. Sign in with the same Google or Apple
@@ -505,6 +524,8 @@ Collaborators see changes straight away.</li>
 and if two edits clash on the same line, yours is kept as a separate copy of
 the song.</li>
 </ul>
+</div>
+<div class="platform-block only-ios">
 <h2 id="iphone-220">iPhone 2.20<a class="hanchor" href="#iphone-220" aria-label="Link to this section">#</a></h2>
 <p><em>September 2026</em></p>
 <p>Waveforms that show up wherever the recording goes, a fix for long lyrics, and
@@ -530,6 +551,8 @@ rather than cramming or stretching them to fit.</li>
 inserting a transcription or pasting a large block of text. The editor now
 always makes room for all of it.</li>
 </ul>
+</div>
+<div class="platform-block only-ios">
 <h2 id="iphone-219">iPhone 2.19<a class="hanchor" href="#iphone-219" aria-label="Link to this section">#</a></h2>
 <p><em>September 2026</em></p>
 <p>Projects have colours, the Action Button can start a take without you opening
@@ -582,6 +605,7 @@ described as though it replaced it. See
 written up with screenshots, and searchable.</p>
 </div>
 </aside>
+</div>
 
     </article>
     <nav class="pager">

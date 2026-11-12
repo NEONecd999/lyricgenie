@@ -3,7 +3,7 @@ import { AppStoreCTA, CaptureMock, LiveMasterMock, ConceptsMock, RecordingsMock,
 import { WEB_SIGNUP } from "@/lib/links";
 
 /** Flip when iOS 2.31 (live Master on prod) is approved. */
-const IPHONE_LIVE_EDITING = false;
+const IPHONE_LIVE_EDITING = true;
 
 /** /iphone: Lyric Genie for iPhone and iPad (computers are pointed at the web app). Warm coral, the mobile side's colour. */
 

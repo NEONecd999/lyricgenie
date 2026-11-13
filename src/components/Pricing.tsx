@@ -24,6 +24,7 @@ const PRO_FEATURES = [
   "5,000 AI calls a month + 20,000 quick AI calls (suggestions, rhyme picks)",
   "Unlimited rhyme lookups",
   "10,000 minutes of voice recording (60 min per take)",
+  "Hi-fi playback: imports play from the original file (WAV, FLAC…), kept untouched",
 ];
 
 const MONTHLY = 4.99;

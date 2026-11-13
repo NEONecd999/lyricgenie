@@ -210,19 +210,19 @@ screen. <strong>Done</strong>, pinned at the right, puts the keyboard away.</p>
 </thead>
 <tbody>
 <tr>
-<td><strong>Rewrite</strong></td>
-<td>Hands the selection to <a href="/docs/editor/wish-workshop/">Wish Workshop</a> to change.</td>
-<td>Your own tab. Up to six lines.</td>
+<td><strong>Wish</strong></td>
+<td>Opens <a href="/docs/editor/wish-workshop/">Wish Workshop</a> on the selection, without starting a wish. <strong>Rewrite</strong> is the first wish inside.</td>
+<td>Your own tab, or the Scratchpad. Up to six lines.</td>
 </tr>
 <tr>
 <td><strong>Rhyme</strong></td>
 <td>Opens the <a href="/docs/editor/rhymes/">rhyme sheet</a> for what you selected.</td>
-<td>The selection is one line or less.</td>
+<td>The selection is one line or less. Hidden otherwise.</td>
 </tr>
 <tr>
 <td><strong>Thesaurus</strong></td>
 <td>Opens synonyms and related words.</td>
-<td>The selection is one line or less.</td>
+<td>The selection is one line or less. Hidden otherwise.</td>
 </tr>
 <tr>
 <td><strong>Sounds Like</strong></td>
@@ -311,13 +311,15 @@ three words. Shorten the selection and they come back.</p>
 </div>
 </aside>
 <h2 id="why-the-buttons-go-grey">Why the buttons go grey<a class="hanchor" href="#why-the-buttons-go-grey" aria-label="Link to this section">#</a></h2>
-<p>Rhyme and Thesaurus do not disappear when the selection is too long. They dim,
-so you can see what you are missing. The other actions are left off the row
-when they do not apply.</p>
+<div class="platform-block only-ios">
+<p>In the iOS app, actions that do not apply are left off the row. Select more
+than one line and Rhyme and Thesaurus go, rather than dimming.</p>
+</div>
 <div class="platform-block only-web">
-<p>Rewrite, Rhyme and Thesaurus dim on the web too. To Master, To Me and the
-syllable buttons are different: they are left off the bar when they do not
-apply.</p>
+<p>On the web, Rewrite, Rhyme and Thesaurus do not disappear when the selection
+is too long. They dim, so you can see what you are missing. To Master, To Me
+and the syllable buttons are different: they are left off the bar when they do
+not apply.</p>
 </div>
 <figure class="fig only-ios" style="max-width:min(23rem, 330px)">
   <div class="fig-shot">
@@ -413,7 +415,7 @@ your words. Arrange mode moves your words around without changing them.</p>
     <footer class="page-footer">
       <p>Something missing or wrong on this page? Email
         <a href="mailto:support@lyricgenie.app">support@lyricgenie.app</a>.</p>
-      <p class="footer-version only-ios">Written for Lyric Genie <a href="/docs/changelog/"><strong>v2.30</strong></a>. Your version is under the logo in <a href="/docs/tabs/settings/">Settings</a>.</p><p class="footer-version only-web">Written for Lyric Genie for web <strong>0.8.15</strong> and iOS <a href="/docs/changelog/"><strong>v2.30</strong></a>. Your web version is at the bottom of <a href="/docs/tabs/settings/">Settings</a>.</p>
+      <p class="footer-version only-ios">Written for Lyric Genie <a href="/docs/changelog/"><strong>v2.32</strong></a>. Your version is under the logo in <a href="/docs/tabs/settings/">Settings</a>.</p><p class="footer-version only-web">Written for Lyric Genie for web <strong>0.9.20</strong> and iOS <a href="/docs/changelog/"><strong>v2.32</strong></a>. Your web version is at the bottom of <a href="/docs/tabs/settings/">Settings</a>.</p>
     </footer>
   </main>
   <nav class="toc" aria-label="On this page">

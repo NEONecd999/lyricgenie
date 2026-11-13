@@ -20,6 +20,9 @@ const ROWS: [string, string | boolean, string | boolean][] = [
   ["Syllable control", "Try", true],
   ["Video sessions with your DAW", "Join", "Host & join"],
   ["Voice recording", "60 min (5 min a take)", "10,000 min (60 min a take)"],
+  // Hi-fi (2026-11-12): imports play from their original file; Pro records at a higher bitrate.
+  ["Hi-fi playback & recording", false, true],
+  ["Original files kept (WAV, FLAC…)", false, true],
 ];
 
 const Cell = ({ v }: { v: string | boolean }) =>

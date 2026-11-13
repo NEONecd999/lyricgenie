@@ -1388,6 +1388,7 @@ export function Pricing() {
               <Tick>Wish Workshop and in-line suggestions</Tick>
               <Tick>5,000 AI calls a month, unlimited rhymes</Tick>
               <Tick>10,000 minutes of recording</Tick>
+              <Tick>Hi-fi playback of your original files</Tick>
               <Tick>Host video sessions with your DAW</Tick>
             </ul>
             <div className="mt-auto pt-8">
@@ -2443,7 +2444,7 @@ export function ImportMock() {
         })}
       </div>
       <p className="mt-3 flex items-center justify-center gap-1.5 text-[11px] text-white/50">
-        <span className="rounded bg-[#F6ECC9] px-1.5 py-px text-[9px] font-bold text-[#6F50B8]">PRO</span> The original file is kept, untouched
+        <span className="rounded bg-[#F6ECC9] px-1.5 py-px text-[9px] font-bold text-[#6F50B8]">PRO</span> The original file is kept, untouched, and plays in hi-fi
       </p>
     </div>
   );

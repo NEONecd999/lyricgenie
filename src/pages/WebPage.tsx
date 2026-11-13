@@ -120,7 +120,7 @@ function ImportAudio() {
               Drop in your bounces. <span className="text-[#F6ECC9]">Keep the originals.</span>
             </>
           }
-          text="Drag a mix out of your DAW, a voice memo or a demo onto the song. Each becomes a take you can play and link to a line. On Pro, the original file is kept as you uploaded it."
+          text="Drag a mix out of your DAW, a voice memo or a demo onto the song. Each becomes a take you can play and link to a line. On Pro, the original file is kept as you uploaded it and plays back in hi-fi."
         >
           {() => <ImportMock />}
         </Row>

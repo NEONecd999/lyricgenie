@@ -1313,7 +1313,7 @@ export function Tick({ children }: { children: ReactNode }) {
 const SAVINGS = Math.round((1 - YEARLY / (MONTHLY * 12)) * 100);
 
 /** The two plans, with a Monthly / Yearly switch that sets the Pro price and which checkout the trial opens. */
-export function Pricing() {
+export function Pricing({ compareLink = true }: { compareLink?: boolean } = {}) {
   // Yearly first: it's the better deal and the plan we'd rather sell (as the main site).
   const [billing, setBilling] = useState<"monthly" | "yearly">("yearly");
   const yearly = billing === "yearly";
@@ -1404,6 +1404,14 @@ export function Pricing() {
             </div>
           </Reveal>
         </div>
+        {/* The full Free vs Pro comparison lives on /pricing (owner, 2026-11-13); not shown on /pricing itself. */}
+        {compareLink && (
+          <Reveal delay={0.1} className="mt-8 text-center">
+            <a href="/pricing/#compare" className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#F6ECC9] hover:text-white">
+              Compare everything in Free and Pro <span aria-hidden>→</span>
+            </a>
+          </Reveal>
+        )}
       </div>
     </section>
   );

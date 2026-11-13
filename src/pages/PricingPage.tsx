@@ -30,7 +30,7 @@ const Cell = ({ v }: { v: string | boolean }) =>
 
 function Compare() {
   return (
-    <section className="py-24">
+    <section id="compare" className="scroll-mt-20 py-24">
       <div className="container mx-auto px-6">
         <Head center eyebrow="Compare" title="Everything in each plan." />
         <Reveal className="mx-auto mt-10 max-w-4xl overflow-hidden rounded-2xl border border-white/10 bg-[#1B1B1B]">
@@ -76,7 +76,7 @@ const PricingPage = () => (
     {/* The page's one h1 (the Pricing section's own heading is an h2, as on the home page). */}
     <h1 className="sr-only">Lyric Genie pricing: Free and Pro plans</h1>
     <div className="pt-[5.5rem]">
-      <Pricing />
+      <Pricing compareLink={false} />
     </div>
     <Compare />
     <FAQ />

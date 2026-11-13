@@ -183,10 +183,10 @@ than over them.</p>
 </div>
 <figure class="fig only-ios" style="max-width:min(23rem, 375px)">
   <div class="fig-shot">
-    <img src="/docs/img/selection-toolbar.webp" alt="A word selected in the chorus, with the bar along the bottom showing Rewrite, Rhyme, Thesaurus and Sounds Like" width="375" height="815" loading="lazy" decoding="async">
-    <span class="fig-mark" style="left:13.9%;top:93.7%;width:22%;height:4.5%;aspect-ratio:auto" aria-label="Rewrite (Wish Workshop)"><span class="fig-badge">1</span></span><span class="fig-mark" style="left:37.8%;top:93.7%;width:20%;height:4.5%;aspect-ratio:auto" aria-label="Rhymes"><span class="fig-badge">2</span></span><span class="fig-mark" style="left:63%;top:93.7%;width:25%;height:4.5%;aspect-ratio:auto" aria-label="Thesaurus"><span class="fig-badge">3</span></span><span class="fig-mark" style="left:94%;top:93.7%;width:4%" aria-label="More tools: the row scrolls sideways"><span class="fig-badge">4</span></span>
+    <img src="/docs/img/selection-toolbar.webp" alt="A word selected in the chorus, with the bar along the bottom showing Wish, Rhyme and Thesaurus, an arrow to the rest, and Genie" width="375" height="815" loading="lazy" decoding="async">
+    <span class="fig-mark" style="left:13%;top:93%;width:22%;height:4.5%;aspect-ratio:auto" aria-label="Wish: Wish Workshop on the selection"><span class="fig-badge">1</span></span><span class="fig-mark" style="left:37%;top:93%;width:23%;height:4.5%;aspect-ratio:auto" aria-label="Rhymes"><span class="fig-badge">2</span></span><span class="fig-mark" style="left:66.8%;top:93%;width:30%;height:4.5%;aspect-ratio:auto" aria-label="Thesaurus"><span class="fig-badge">3</span></span><span class="fig-mark" style="left:82%;top:93%;width:6%" aria-label="More tools: the row scrolls sideways"><span class="fig-badge">4</span></span><span class="fig-mark" style="left:92.4%;top:93%;width:9%" aria-label="Ask Genie about it"><span class="fig-badge">5</span></span>
   </div>
-  <ol class="fig-legend"><li><span class="fig-key">1</span>Rewrite (Wish Workshop)</li><li><span class="fig-key">2</span>Rhymes</li><li><span class="fig-key">3</span>Thesaurus</li><li><span class="fig-key">4</span>More tools: the row scrolls sideways</li></ol>
+  <ol class="fig-legend"><li><span class="fig-key">1</span>Wish: Wish Workshop on the selection</li><li><span class="fig-key">2</span>Rhymes</li><li><span class="fig-key">3</span>Thesaurus</li><li><span class="fig-key">4</span>More tools: the row scrolls sideways</li><li><span class="fig-key">5</span>Ask Genie about it</li></ol>
   <figcaption>A word selected, so the bottom bar turns into the selection row.</figcaption>
 </figure>
 <figure class="fig only-web fig-web" style="max-width:min(46rem, 1280px)">
@@ -212,7 +212,7 @@ screen. <strong>Done</strong>, pinned at the right, puts the keyboard away.</p>
 <tr>
 <td><strong>Wish</strong></td>
 <td>Opens <a href="/docs/editor/wish-workshop/">Wish Workshop</a> on the selection, without starting a wish. <strong>Rewrite</strong> is the first wish inside.</td>
-<td>Your own tab, or the Scratchpad. Up to six lines.</td>
+<td>Your own tab, or the Scratchpad. Up to six lines. Hidden otherwise.</td>
 </tr>
 <tr>
 <td><strong>Rhyme</strong></td>
@@ -230,8 +230,8 @@ screen. <strong>Done</strong>, pinned at the right, puts the keyboard away.</p>
 <td>Three words or fewer.</td>
 </tr>
 <tr>
-<td><strong>Word Associations</strong></td>
-<td>Words that go with it.</td>
+<td><strong>Word Map</strong></td>
+<td>Opens <a href="/docs/editor/rhymes/">Word Map</a> on the selection: related words and phrases, laid out as a map.</td>
 <td>Three words or fewer.</td>
 </tr>
 <tr>
@@ -306,14 +306,15 @@ on your own tab.</p>
 <aside class="callout callout-tip only-ios">
 <p class="callout-title"><span class="callout-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg></span>Tip</p>
 <div class="callout-body">
-<p>If <strong>Sounds Like</strong> and <strong>Word Associations</strong> are missing, you selected more than
+<p>If <strong>Sounds Like</strong> and <strong>Word Map</strong> are missing, you selected more than
 three words. Shorten the selection and they come back.</p>
 </div>
 </aside>
 <h2 id="why-the-buttons-go-grey">Why the buttons go grey<a class="hanchor" href="#why-the-buttons-go-grey" aria-label="Link to this section">#</a></h2>
 <div class="platform-block only-ios">
 <p>In the iOS app, actions that do not apply are left off the row. Select more
-than one line and Rhyme and Thesaurus go, rather than dimming.</p>
+than one line and Rhyme and Thesaurus go, rather than dimming; past six lines
+Wish goes too.</p>
 </div>
 <div class="platform-block only-web">
 <p>On the web, Rewrite, Rhyme and Thesaurus do not disappear when the selection
@@ -321,11 +322,11 @@ is too long. They dim, so you can see what you are missing. To Master, To Me
 and the syllable buttons are different: they are left off the bar when they do
 not apply.</p>
 </div>
-<figure class="fig only-ios" style="max-width:min(23rem, 330px)">
+<figure class="fig only-ios" style="max-width:min(23rem, 329px)">
   <div class="fig-shot">
-    <img src="/docs/img/selection-too-large.png" alt="The whole song selected, with the line tools dimmed" width="330" height="717" loading="lazy" decoding="async">
+    <img src="/docs/img/selection-too-large.png" alt="The whole song selected, with the bottom bar starting at Move to Scratchpad and Note, Wish, Rhyme and Thesaurus gone" width="329" height="717" loading="lazy" decoding="async">
   </div>
-  <figcaption>Select the whole song and the line tools dim, because they work on a line at most.</figcaption>
+  <figcaption>Select the whole song and the tools that work on a line or a few lines step aside: the bar starts at what still applies.</figcaption>
 </figure>
 <figure class="fig only-web fig-web" style="max-width:min(46rem, 1280px)">
   <div class="fig-shot">
@@ -385,7 +386,7 @@ tools are in the floating toolbar's <strong>⋯ More</strong> menu:</p>
 </tr>
 </tbody>
 </table></div>
-<p><strong>Sounds Like</strong>, <strong>Word Associations</strong> and <strong>Save to Concepts</strong> from the app's
+<p><strong>Sounds Like</strong> and <strong>Save to Concepts</strong> from the app's
 menu are not on the web selection toolbar.</p>
 <figure class="fig only-web fig-web" style="max-width:min(46rem, 1280px)">
   <div class="fig-shot">

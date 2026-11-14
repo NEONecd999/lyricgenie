@@ -3,8 +3,8 @@ import { FeatureKeyframes } from "@/components/Features";
 import { Eyebrow, FinalCTA, Glow, Head, Reveal, RhymeColumnsMock, RhymeSlidesMock, StudioPage } from "@/components/studio/Studio";
 
 /**
- * /rhyme-engine: the rhyme technology behind Lyric Genie, the same engine that runs free at
- * RhymeGold.com. Gold. Facts from RhymeGold's own credits (public/rhymegold) and /rhymes.
+ * /rhyme-engine: the rhyme technology behind Lyric Genie, the same engine that runs free in the Rhyme Generator
+ * (/rhyme-generator/; it was RhymeGold.com until 2026-11-14, which now redirects there). Gold. Facts from RhymeGold's own credits (public/rhymegold) and /rhymes.
  */
 
 const RHYMEGOLD = "/rhyme-generator/"; // RhymeGold.com moved here, 2026-11-14
@@ -22,7 +22,7 @@ function RhymeHero() {
           <p className="mt-5 text-lg text-white/70">Built on how words sound, not how they're spelled. 135,000 words and phrases, with the multi-syllable and slant rhymes songs actually use.</p>
           <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row lg:items-start">
             <a href={RHYMEGOLD} className="inline-flex items-center gap-2 rounded-full bg-[#F6ECC9] px-7 py-3.5 text-[15.5px] font-semibold text-[#6F50B8] hover:bg-[#FBF2D6]">
-              Try RhymeGold free <ArrowRight className="size-5" />
+              Try the free Rhyme Generator <ArrowRight className="size-5" />
             </a>
             <a href="#inside" className="text-sm font-semibold text-white/70 hover:text-white sm:self-center">
               It's built into Lyric Genie ↓
@@ -196,7 +196,7 @@ function HowItWorks() {
           </Step>
         </div>
         <p className="mx-auto mt-14 max-w-xl text-center text-sm text-white/50">
-          Free in the Rhyme Generator, in your browser as you type. No sign-up.
+          Free in the <a href={RHYMEGOLD} className="text-[#F6ECC9] underline">Rhyme Generator</a>, in your browser as you type. No sign-up. Or browse <a href="/rhymes-with/" className="text-[#F6ECC9] underline">rhymes A–Z</a>.
         </p>
       </div>
     </section>

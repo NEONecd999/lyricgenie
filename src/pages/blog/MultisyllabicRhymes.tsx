@@ -176,7 +176,7 @@ const MultisyllabicRhymes = () => {
       </p>
 
       <p>
-        When you get stuck, <a href="/rhyme-generator/">search the phrase on RhymeGold</a> and see what comes back.
+        When you get stuck, <a href="/rhyme-generator/">search the phrase in the free Rhyme Generator</a> and see what comes back.
       </p>
     </Article>
   );

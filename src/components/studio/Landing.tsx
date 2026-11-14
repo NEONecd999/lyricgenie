@@ -22,6 +22,7 @@ export function LandingPage({
   sections,
   faqs,
   draft = false,
+  tool,
   children,
 }: {
   path: string;
@@ -35,6 +36,8 @@ export function LandingPage({
   sections: LandingSection[];
   faqs: [string, string][];
   draft?: boolean;
+  /** A free tool, right under the heading (the syllable counter, say). */
+  tool?: ReactNode;
   /** Anything after the sections and before the FAQ (a comparison table, say). */
   children?: ReactNode;
 }) {
@@ -59,6 +62,8 @@ export function LandingPage({
           </Reveal>
         </div>
       </section>
+
+      {tool}
 
       <section className="pb-8">
         <div className="container mx-auto max-w-3xl space-y-12 px-6">

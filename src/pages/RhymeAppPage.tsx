@@ -24,7 +24,7 @@ const RhymeAppPage = () => (
               Most rhyming dictionaries take one word and give you words that end the same way. Lyric Genie takes your phrase, works out which syllables carry the rhyme, and finds words and phrases that match all of them. That's how you find the internal and multi-syllable rhymes that make a line stick.
             </p>
             <p>
-              The same engine runs free at <a href="https://rhymegold.com">RhymeGold</a>, with 135,000 words and phrases. <Link to="/rhyme-engine/">How the rhyme engine works</Link>.
+              The same engine runs free in the <Link to="/rhyme-generator/">Rhyme Generator</Link>, with 135,000 words and phrases. <Link to="/rhyme-engine/">How the rhyme engine works</Link>.
             </p>
           </>
         ),
@@ -52,7 +52,7 @@ const RhymeAppPage = () => (
     faqs={[
       ["Does it find multi-syllable rhymes?", "Yes. It matches every stressed syllable in a phrase, so it finds multi-syllable and internal rhymes, not just words that end the same way."],
       ["Does it find slant rhymes?", "Yes. Slant (near) rhymes are included, because songs use them as much as perfect rhymes."],
-      ["Is it free?", "Yes, for 30 rhyme lookups a day. Pro makes them unlimited. The same engine is free to use at RhymeGold.com."],
+      ["Is it free?", "Yes, for 30 rhyme lookups a day. Pro makes them unlimited. The same engine is free to use in the Rhyme Generator at lyricgenie.app/rhyme-generator."],
       ["Does it work on a computer?", "Yes. Lyric Genie runs in the browser on any Mac or PC, and there's an app for iPhone and iPad."],
     ]}
   />

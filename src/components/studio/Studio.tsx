@@ -1813,8 +1813,8 @@ const TOOL_TABS = {
           <a href="/rhyme-engine/" className="inline-flex items-center gap-1.5 font-semibold text-[#F6ECC9]">
             How it works <ArrowRight className="size-4" />
           </a>
-          <a href="https://rhymegold.com" className="font-semibold text-white/60 hover:text-white">
-            The same engine runs free at RhymeGold.com
+          <a href="/rhyme-generator/" className="font-semibold text-white/60 hover:text-white">
+            The same engine runs free in the Rhyme Generator
           </a>
         </>
       ),

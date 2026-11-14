@@ -80,7 +80,7 @@ const BestSongwritingAppsMacPC = () => {
       </p>
 
       <p>
-        <a href="https://rhymegold.com" target="_blank" rel="noopener noreferrer">RhymeGold</a> is ours, and it's free too. It's built on how words sound rather than how they're spelled, with 135,000 words and phrases, and it focuses on the multi-syllable, slant and phrase rhymes songs tend to use.
+        <a href="/rhyme-generator/">RhymeGold</a> is ours, and it's free too. It's built on how words sound rather than how they're spelled, with 135,000 words and phrases, and it focuses on the multi-syllable, slant and phrase rhymes songs tend to use.
       </p>
 
       <p>

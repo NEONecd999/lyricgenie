@@ -7,7 +7,7 @@ import { Eyebrow, FinalCTA, Glow, Head, Reveal, RhymeColumnsMock, RhymeSlidesMoc
  * RhymeGold.com. Gold. Facts from RhymeGold's own credits (public/rhymegold) and /rhymes.
  */
 
-const RHYMEGOLD = "https://rhymegold.com";
+const RHYMEGOLD = "/rhyme-generator/"; // RhymeGold.com moved here, 2026-11-14
 
 function RhymeHero() {
   return (
@@ -196,7 +196,7 @@ function HowItWorks() {
           </Step>
         </div>
         <p className="mx-auto mt-14 max-w-xl text-center text-sm text-white/50">
-          Free at RhymeGold.com, in your browser as you type. No sign-up.
+          Free in the Rhyme Generator, in your browser as you type. No sign-up.
         </p>
       </div>
     </section>

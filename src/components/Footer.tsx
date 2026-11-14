@@ -25,7 +25,9 @@ const FOOTER_COLUMNS: [string, [string, string][]][] = [
       ["AI songwriting app", "/ai-songwriting-app/"],
       ["Co-writing app", "/co-writing-app/"],
       ["Rhyme app for songwriters", "/rhyme-app-for-songwriters/"],
+      ["Free Rhyme Generator", "/rhyme-generator/"],
       ["Free Syllable Counter", "/syllable-counter/"],
+      ["Rhymes A–Z", "/rhymes-with/"],
     ],
   ],
   [

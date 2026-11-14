@@ -162,7 +162,7 @@ const MultisyllabicRhymes = () => {
       </p>
 
       <p>
-        That's why we built <a href="https://rhymegold.com" target="_blank" rel="noopener noreferrer">RhymeGold</a>. It's free, and it's built on how words sound rather than how they're spelled: 135,000 words and phrases, with multi-syllable, slant and phrase rhymes. You type a word or a phrase, and it shows you what actually rhymes when sung.
+        That's why we built <a href="/rhyme-generator/">RhymeGold</a>. It's free, and it's built on how words sound rather than how they're spelled: 135,000 words and phrases, with multi-syllable, slant and phrase rhymes. You type a word or a phrase, and it shows you what actually rhymes when sung.
       </p>
 
       <p>
@@ -176,7 +176,7 @@ const MultisyllabicRhymes = () => {
       </p>
 
       <p>
-        When you get stuck, <a href="https://rhymegold.com" target="_blank" rel="noopener noreferrer">search the phrase on RhymeGold</a> and see what comes back.
+        When you get stuck, <a href="/rhyme-generator/">search the phrase on RhymeGold</a> and see what comes back.
       </p>
     </Article>
   );

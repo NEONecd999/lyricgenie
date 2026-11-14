@@ -1,0 +1,14 @@
+    /* lyricgenie.app/rhymes-with additions (2026-11-14) */
+    .word-hero h1 .eyebrow { display: block; letter-spacing: 0.12em; line-height: 1.4; }
+    .crumbs { max-width: 980px; margin: 0 auto; padding: 16px 24px 0; font-size: 13px; color: var(--ink-muted); }
+    .crumbs a { color: var(--ink-muted); text-decoration: none; }
+    .crumbs a:hover { color: var(--ink); text-decoration: underline; }
+    .rhyme-link.has-page { border-color: var(--accent); }
+    .faq dl { margin: 0; }
+    .faq dt { font-weight: 600; color: var(--ink); margin: 18px 0 6px; }
+    .faq dd { margin: 0; color: var(--ink-muted); line-height: 1.6; }
+    .write-with p, .related-links { color: var(--ink-muted); line-height: 1.7; }
+    .write-with a, .related-links a, .word-hero .summary a { color: var(--accent); }
+    .letters { text-align: center; font-family: var(--font-display); font-size: 18px; word-spacing: 6px; }
+    .letters a { color: var(--accent); text-decoration: none; }
+    @media (max-width: 720px) { .word-nav .nav-link { display: none; } }

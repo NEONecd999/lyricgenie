@@ -119,7 +119,8 @@
       "/ai-songwriting-app",
       "/co-writing-app",
       "/rhyme-app-for-songwriters",
-      "/syllable-counter"
+      "/syllable-counter",
+      "/rhyme-scheme-finder"
     ],
     "crawl": false
   }

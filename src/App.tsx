@@ -30,6 +30,7 @@ import AISongwritingAppPage from "./pages/AISongwritingAppPage";
 import CoWritingAppPage from "./pages/CoWritingAppPage";
 import RhymeAppPage from "./pages/RhymeAppPage";
 import SyllableCounterPage from "./pages/SyllableCounterPage";
+import RhymeSchemePage from "./pages/RhymeSchemePage";
 import NotFound from "./pages/NotFound";
 import ScrollToHash from "./components/ScrollToHash";
 
@@ -114,6 +115,7 @@ const App = () => {
             <Route path="/co-writing-app" element={<CoWritingAppPage />} />
             <Route path="/rhyme-app-for-songwriters" element={<RhymeAppPage />} />
             <Route path="/syllable-counter" element={<SyllableCounterPage />} />
+            <Route path="/rhyme-scheme-finder" element={<RhymeSchemePage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

@@ -6,7 +6,7 @@ const RhymeAppPage = () => (
   <LandingPage
     path="/rhyme-app-for-songwriters/"
     title="A Rhyme App for Songwriters — Lyric Genie"
-    description="Rhymes for whole phrases, not just the last word: multi-syllable, slant and phrase rhymes built on how words sound, inside a lyrics editor with rhyme colors. Free to start."
+    description="Rhymes for whole phrases, not just the last word: multi-syllable and slant rhymes built on how words sound, in a lyrics editor with rhyme colors. Free to start."
     eyebrow="Rhyme app for songwriters"
     heading="Rhymes that sound right,"
     accent="for whole phrases."

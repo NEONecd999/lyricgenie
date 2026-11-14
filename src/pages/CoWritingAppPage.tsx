@@ -6,7 +6,7 @@ const CoWritingAppPage = () => (
   <LandingPage
     path="/co-writing-app/"
     title="A Co-Writing App for Songwriters — Lyric Genie"
-    description="Write songs with collaborators in real time, in the room or remotely. Every writer gets their own tab, plus a shared Master version, with chat, recordings and video sessions in the song. Free to join."
+    description="Write songs with collaborators in real time, in the room or remotely. Each writer gets their own tab plus a shared Master, with chat and video sessions. Free."
     eyebrow="Co-writing app"
     heading="Write together,"
     accent="in real time."

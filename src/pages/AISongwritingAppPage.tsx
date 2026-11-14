@@ -6,7 +6,7 @@ const AISongwritingAppPage = () => (
   <LandingPage
     path="/ai-songwriting-app/"
     title="An AI Songwriting App That Helps You Write — Lyric Genie"
-    description="Lyric Genie is a songwriting app with AI help built in: rhymes, a fresher word, a next-line idea or a title when you ask. It doesn't generate songs; you write them. Free to start."
+    description="A songwriting app with AI help built in: rhymes, a fresher word, a next-line idea or a title when you ask. It doesn't write your songs; you do. Free to start."
     eyebrow="AI songwriting app"
     heading="AI that helps you write,"
     accent="not writes for you."

@@ -297,7 +297,7 @@ const RhymeEnginePage = () => (
     accent="#F5B642"
     glow="#C9932E"
     title="RhymeGold — The Rhyme Engine Behind Lyric Genie"
-    description="RhymeGold is a phonetic rhyming dictionary for songwriters: 135,000 words and phrases, multi-syllable, slant and phrase rhymes. Free at RhymeGold.com, and built into Lyric Genie."
+    description="RhymeGold is a phonetic rhyming dictionary for songwriters: multi-syllable, slant and phrase rhymes for 135,000 words. Free, and built into Lyric Genie."
   >
     <FeatureKeyframes />
     <RhymeHero />

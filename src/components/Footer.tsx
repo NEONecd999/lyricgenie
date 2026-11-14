@@ -123,7 +123,7 @@ const Footer = () => {
           {/* Product, Company, Legal (owner's list, 2026-10-12) */}
           {FOOTER_COLUMNS.map(([heading, links]) => (
             <div key={heading}>
-              <h5 className="mb-4 text-xs font-bold uppercase tracking-[0.12em] text-[#F6ECC9]">{heading}</h5>
+              <h2 className="mb-4 text-xs font-bold uppercase tracking-[0.12em] text-[#F6ECC9]">{heading}</h2>
               <ul className="flex flex-col">
                 {links.map(([label, href]) => (
                   <li key={label}>

@@ -64,7 +64,7 @@ const IPhonePage = () => (
     accent="#FF8A65"
     glow="#E45C7A"
     title="Lyric Genie for iPhone & iPad — Songwriting App"
-    description="Catch ideas anywhere: voice memos transcribed and linked to your lyrics, Freestyle mode, rhymes and Wish Workshop on the go, sessions and chats with your co-writers, and Perform on stage."
+    description="A songwriting app for iPhone: voice memos transcribed and linked to your lyrics, Freestyle, rhymes and Wish Workshop on the go, and Perform on stage."
   >
     <FeatureKeyframes />
     <IPhoneHero />

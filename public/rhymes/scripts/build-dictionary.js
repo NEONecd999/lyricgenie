@@ -50,7 +50,7 @@ const ALWAYS_KEEP = new Set([
   "ember", "embers", "ablaze", "smolder", "smoldering", "shimmer", "shimmering",
   "moonlit", "starlit", "midnight", "twilight", "dusk", "nightfall", "daybreak",
   "silken", "molten", "gilded", "windswept", "stormy", "stormswept",
-  "wildfire", "wildfires", "kindling", "thunderhead",
+  "wildfire", "wildfires", "kindling", "thunderhead", "meteor", "meteors", "meteorite", "meteorites",
   // Body / sensation
   "kindred", "cradle", "cradling", "whisper", "whispers", "whispered",
   "whispering", "echoes", "echoed", "trembling", "tremor", "shudder",

@@ -521,6 +521,7 @@ window.DICTIONARY = Object.assign({}, window.MINED_PHRASES || {}, window.WIKTION
   "AFRO": "AE1 F R OW0",
   "AFT": "AE1 F T",
   "AFTER": "AE1 F T ER0",
+  "AFTERGLOW": "AE1 F T ER0 G L OW2",
   "AFTERMARKET": "AE1 F T ER0 M AA2 R K IH0 T",
   "AFTERMARKETS": "AE1 F T ER0 M AA2 R K IH0 T S",
   "AFTERMATH": "AE1 F T ER0 M AE2 TH",
